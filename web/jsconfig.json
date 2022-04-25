@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "emitDecoratorMetadata": true,
+        "jsx": "preserve",
+        "experimentalDecorators": true,
+        "baseUrl": "./",
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ]
+        }
+    }
+}

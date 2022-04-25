@@ -1,0 +1,22 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ELIFECYCLE",
+    "errno": "ENOENT",
+    "syscall": "spawn",
+    "file": "sh",
+    "pkgid": "gin-vue-admin@2.5.0",
+    "stage": "serve",
+    "script": "node openDocument.js && vite --host --mode development",
+    "pkgname": "gin-vue-admin",
+    "err": {
+      "name": "pnpm",
+      "message": "gin-vue-admin@2.5.0 serve: `node openDocument.js && vite --host --mode development`\nspawn ENOENT",
+      "code": "ELIFECYCLE",
+      "stack": "pnpm: gin-vue-admin@2.5.0 serve: `node openDocument.js && vite --host --mode development`\nspawn ENOENT\n    at ChildProcess.<anonymous> (/usr/local/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.7/node_modules/pnpm/dist/pnpm.cjs:92292:22)\n    at ChildProcess.emit (node:events:390:28)\n    at maybeClose (node:internal/child_process:1064:16)\n    at Process.ChildProcess._handle.onexit (node:internal/child_process:301:5)"
+    }
+  },
+  "2 warn pnpm:global": " Local package.json exists, but node_modules missing, did you mean to install?"
+}
