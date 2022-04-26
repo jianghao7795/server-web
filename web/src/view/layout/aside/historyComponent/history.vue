@@ -200,7 +200,7 @@ const setTab = (route) => {
     delete obj.meta.matched;
     obj.query = route.query;
     obj.params = route.params;
-    console.log(obj);
+    // console.log(obj);
     historys.value.push(obj);
   }
   window.sessionStorage.setItem("activeValue", getFmtString(route));

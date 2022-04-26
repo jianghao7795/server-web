@@ -49,11 +49,11 @@ func (i *initCasbin) InitializeData(ctx context.Context) (context.Context, error
 		{PType: "p", V0: "888", V1: "/user/admin_register", V2: "POST"},
 
 		{PType: "p", V0: "888", V1: "/api/createApi", V2: "POST"},
-		{PType: "p", V0: "888", V1: "/api/getApiList", V2: "POST"},
-		{PType: "p", V0: "888", V1: "/api/getApiById", V2: "POST"},
-		{PType: "p", V0: "888", V1: "/api/deleteApi", V2: "POST"},
-		{PType: "p", V0: "888", V1: "/api/updateApi", V2: "POST"},
-		{PType: "p", V0: "888", V1: "/api/getAllApis", V2: "POST"},
+		{PType: "p", V0: "888", V1: "/api/getApiList", V2: "GET"},
+		{PType: "p", V0: "888", V1: "/api/getApiById", V2: "GET"},
+		{PType: "p", V0: "888", V1: "/api/deleteApi", V2: "DELETE"},
+		{PType: "p", V0: "888", V1: "/api/updateApi", V2: "PUT"},
+		{PType: "p", V0: "888", V1: "/api/getAllApis", V2: "GET"},
 		{PType: "p", V0: "888", V1: "/api/deleteApisByIds", V2: "DELETE"},
 
 		{PType: "p", V0: "888", V1: "/authority/copyAuthority", V2: "POST"},
