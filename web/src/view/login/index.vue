@@ -56,13 +56,19 @@
             </div>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" style="width: 46%" size="large" @click="checkInit">
+            <el-button
+              type="primary"
+              style="width: 46%"
+              size="large"
+              v-if="isInit"
+              @click="checkInit"
+            >
               前往初始化
             </el-button>
             <el-button
               type="primary"
               size="large"
-              style="width: 46%; margin-left: 8%"
+              :style="isInit ? { width: '46%', marginLeft: '8%' } : { width: '100%' }"
               @click="submitForm"
             >
               登 录
@@ -104,11 +110,21 @@ export default {
 import { captcha } from "@/api/user";
 import { checkDB } from "@/api/initdb";
 import bootomInfo from "@/view/layout/bottomInfo/bottomInfo.vue";
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
 const router = useRouter();
+
+// 是否需要初始化
+const isInit = ref(false);
+onMounted(async () => {
+  const resp = await checkDB();
+  if (resp.data?.needInit) {
+    isInit.value = true;
+  }
+});
+
 // 验证函数
 const checkUsername = (rule, value, callback) => {
   if (value.length < 5) {
@@ -187,18 +203,22 @@ const submitForm = () => {
 
 // 跳转初始化
 const checkInit = async () => {
-  const res = await checkDB();
-  if (res.code === 0) {
-    if (res.data?.needInit) {
-      userStore.NeedInit();
-      router.push({ name: "Init" });
-    } else {
-      ElMessage({
-        type: "info",
-        message: "已配置数据库信息，无法初始化",
-      });
-    }
+  if (isInit) {
+    userStore.NeedInit();
+    router.push({ name: "Init" });
   }
+  // const res = await checkDB();
+  // if (res.code === 0) {
+  //   if (res.data?.needInit) {
+  //     userStore.NeedInit();
+
+  //   } else {
+  //     // ElMessage({
+  //     //   type: "info",
+  //     //   message: "已配置数据库信息，无法初始化",
+  //     // });
+  //   }
+  // }
 };
 </script>
 
