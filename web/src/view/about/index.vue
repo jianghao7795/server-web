@@ -9,7 +9,8 @@
           <div>
             <el-row>
               <el-col :span="8" :offset="0">
-                我是？？？ <ButtonSlot type="4444">我的 是 你的</ButtonSlot>
+                我是？？？
+                <ButtonSlot :action="['default']">我的 是 你的 呜呜</ButtonSlot>
               </el-col>
             </el-row>
           </div>
@@ -27,41 +28,41 @@ export default {
 
 <script setup>
 import { ref } from "vue";
-import { Commits, Members } from "@/api/github";
+// import { Commits, Members } from "@/api/github";
 import ButtonSlot from "./slot";
 const page = ref(0);
 
-const loadMore = () => {
-  page.value++;
-  loadCommits();
-};
+// const loadMore = () => {
+//   page.value++;
+//   loadCommits();
+// };
 
 const dataTimeline = ref([]);
-const loadCommits = () => {
-  Commits(page.value).then(({ data }) => {
-    data.forEach((element) => {
-      if (element.commit.message) {
-        dataTimeline.value.push({
-          from: new Date(element.commit.author.date),
-          title: element.commit.author.name,
-          showDayAndMonth: true,
-          message: element.commit.message,
-        });
-      }
-    });
-  });
-};
+// const loadCommits = () => {
+//   Commits(page.value).then(({ data }) => {
+//     data.forEach((element) => {
+//       if (element.commit.message) {
+//         dataTimeline.value.push({
+//           from: new Date(element.commit.author.date),
+//           title: element.commit.author.name,
+//           showDayAndMonth: true,
+//           message: element.commit.message,
+//         });
+//       }
+//     });
+//   });
+// };
 
-const members = ref([]);
-const loadMembers = () => {
-  Members().then(({ data }) => {
-    members.value = data;
-    members.value.sort();
-  });
-};
+// const members = ref([]);
+// const loadMembers = () => {
+//   Members().then(({ data }) => {
+//     members.value = data;
+//     members.value.sort();
+//   });
+// };
 
-loadCommits();
-loadMembers();
+// loadCommits();
+// loadMembers();
 </script>
 
 <style scoped>
