@@ -34,7 +34,7 @@ func Zap() (logger *zap.Logger) {
 		return lev >= zap.ErrorLevel
 	})
 
-	var path = global.GVA_CONFIG.Zap.Director + "/" + time.Now().Format("20060102")
+	var path = global.GVA_CONFIG.Zap.Director
 
 	cores := [...]zapcore.Core{
 		getEncoderCore(fmt.Sprintf("./%s/server_debug.log", path), debugPriority),
