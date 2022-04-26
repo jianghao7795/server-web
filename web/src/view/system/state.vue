@@ -2,6 +2,7 @@
   <div>
     <el-row :gutter="15" class="system_state">
       <el-col :span="12">
+        <Button></Button>
         <el-card v-if="state.os" class="card_item">
           <template #header>
             <div>Runtime</div>
@@ -84,12 +85,8 @@
             </el-row>
             <el-row v-for="(item, index) in state.cpu.cpus" :key="index" :gutter="10">
               <el-col :span="12">core {{ index }}:</el-col>
-              <el-col
-                :span="12"
-              ><el-progress
-                type="line"
-                :percentage="+item.toFixed(0)"
-                :color="colors"
+              <el-col :span="12"
+                ><el-progress type="line" :percentage="+item.toFixed(0)" :color="colors"
               /></el-col>
             </el-row>
           </div>
@@ -117,10 +114,7 @@
                 </el-row>
                 <el-row :gutter="10">
                   <el-col :span="12">used (GB)</el-col>
-                  <el-col
-                    :span="12"
-                    v-text="(state.ram.usedMb / 1024).toFixed(2)"
-                  />
+                  <el-col :span="12" v-text="(state.ram.usedMb / 1024).toFixed(2)" />
                 </el-row>
               </el-col>
               <el-col :span="12">
@@ -139,37 +133,37 @@
 </template>
 
 <script setup>
-import { getSystemState } from '@/api/system'
-import { onUnmounted, ref } from 'vue'
-const timer = ref(null)
-const state = ref({})
+import { getSystemState } from "@/api/system";
+import { onUnmounted, ref } from "vue";
+import Button from "./button";
+const timer = ref(null);
+const state = ref({});
 const colors = ref([
-  { color: '#5cb87a', percentage: 20 },
-  { color: '#e6a23c', percentage: 40 },
-  { color: '#f56c6c', percentage: 80 }
-])
+  { color: "#5cb87a", percentage: 20 },
+  { color: "#e6a23c", percentage: 40 },
+  { color: "#f56c6c", percentage: 80 },
+]);
 
-const reload = async() => {
-  const { data } = await getSystemState()
-  state.value = data.server
-}
+const reload = async () => {
+  const { data } = await getSystemState();
+  state.value = data.server;
+};
 
-reload()
+reload();
 timer.value = setInterval(() => {
-  reload()
-}, 1000 * 10)
+  reload();
+}, 1000 * 10);
 
 onUnmounted(() => {
-  clearInterval(timer.value)
-  timer.value = null
-})
-
+  clearInterval(timer.value);
+  timer.value = null;
+});
 </script>
 
 <script>
 export default {
-  name: 'State',
-}
+  name: "State",
+};
 </script>
 
 <style>

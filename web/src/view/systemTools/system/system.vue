@@ -11,13 +11,13 @@
             <el-input v-model.number="config.system.addr" />
           </el-form-item>
           <el-form-item label="数据库类型">
-            <el-select v-model="config.system['db-type']" style="width:100%">
+            <el-select v-model="config.system['db-type']" style="width: 100%">
               <el-option value="mysql" />
               <el-option value="pgsql" />
             </el-select>
           </el-form-item>
           <el-form-item label="Oss类型">
-            <el-select v-model="config.system['oss-type']" style="width:100%">
+            <el-select v-model="config.system['oss-type']" style="width: 100%">
               <el-option value="local" />
               <el-option value="qiniu" />
               <el-option value="tencent-cos" />
@@ -267,7 +267,6 @@
               <el-input v-model="config['hua-wei-obs']['secret-key']" />
             </el-form-item>
           </template>
-
         </el-collapse-item>
 
         <el-collapse-item title="Excel上传配置" name="11">
@@ -325,9 +324,9 @@
           <el-form-item label="Spec(CRON表达式)">
             <el-input v-model="config.timer.spec" />
           </el-form-item>
-          <template v-for="(item,k) in config.timer.detail">
-            <div v-for="(key,k2) in item" :key="k2">
-              <el-form-item :key="k+k2" :label="k2">
+          <template v-for="(item, k) in config.timer.detail">
+            <div v-for="(key, k2) in item" :key="k2">
+              <el-form-item :key="k + k2" :label="k2">
                 <el-input v-model="item[k2]" />
               </el-form-item>
             </div>
@@ -337,27 +336,29 @@
     </el-form>
     <div class="gva-btn-list">
       <el-button type="primary" size="small" @click="update">立即更新</el-button>
-      <el-button type="primary" size="small" @click="reload">重启服务（开发中）</el-button>
+      <el-button type="primary" size="small" @click="reload"
+        >重启服务（开发中）</el-button
+      >
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Config'
-}
+  name: "Config",
+};
 </script>
 <script setup>
-import { getSystemConfig, setSystemConfig } from '@/api/system'
-import { emailTest } from '@/api/email'
-import { ref, reactive } from 'vue'
-import { ElMessage } from 'element-plus'
+import { getSystemConfig, setSystemConfig } from "@/api/system";
+import { emailTest } from "@/api/email";
+import { ref, reactive } from "vue";
+import { ElMessage } from "element-plus";
 
-const activeNames = reactive([])
+const activeNames = reactive([]);
 const config = ref({
   system: {
-    'iplimit-count': 0,
-    'iplimit-time': 0
+    "iplimit-count": 0,
+    "iplimit-time": 0,
   },
   jwt: {},
   casbin: {},
@@ -367,58 +368,57 @@ const config = ref({
   autocode: {},
   redis: {},
   qiniu: {},
-  'tencent-cos': {},
-  'aliyun-oss': {},
-  'hua-wei-obs': {},
+  "tencent-cos": {},
+  "aliyun-oss": {},
+  "hua-wei-obs": {},
   captcha: {},
   zap: {},
   local: {},
   email: {},
   timer: {
-    detail: {}
-  }
-})
+    detail: {},
+  },
+});
 
-const initForm = async() => {
-  const res = await getSystemConfig()
+const initForm = async () => {
+  const res = await getSystemConfig();
   if (res.code === 0) {
-    config.value = res.data.config
+    config.value = res.data.config;
   }
-}
-initForm()
-const reload = () => {}
-const update = async() => {
-  const res = await setSystemConfig({ config: config.value })
+};
+initForm();
+const reload = () => {};
+const update = async () => {
+  const res = await setSystemConfig({ config: config.value });
   if (res.code === 0) {
     ElMessage({
-      type: 'success',
-      message: '配置文件设置成功'
-    })
-    await initForm()
+      type: "success",
+      message: "配置文件设置成功",
+    });
+    await initForm();
   }
-}
-const email = async() => {
-  const res = await emailTest()
+};
+const email = async () => {
+  const res = await emailTest(config.value.email);
   if (res.code === 0) {
     ElMessage({
-      type: 'success',
-      message: '邮件发送成功'
-    })
-    await initForm()
+      type: "success",
+      message: "邮件发送成功",
+    });
+    await initForm();
   } else {
     ElMessage({
-      type: 'error',
-      message: '邮件发送失败'
-    })
+      type: "error",
+      message: "邮件发送失败",
+    });
   }
-}
-
+};
 </script>
 
 <style lang="scss">
 .system {
   background: #fff;
-  padding:36px;
+  padding: 36px;
   border-radius: 2px;
   h2 {
     padding: 10px;
@@ -426,11 +426,11 @@ const email = async() => {
     font-size: 16px;
     box-shadow: -4px 0px 0px 0px #e7e8e8;
   }
-  ::v-deep(.el-input-number__increase){
-    top:5px !important;
+  ::v-deep(.el-input-number__increase) {
+    top: 5px !important;
   }
-  .gva-btn-list{
-    margin-top:16px;
+  .gva-btn-list {
+    margin-top: 16px;
   }
 }
 </style>

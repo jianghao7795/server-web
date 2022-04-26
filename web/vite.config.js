@@ -6,10 +6,11 @@ import * as path from 'path';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import vuePlugin from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 // @see https://cn.vitejs.dev/config/
 export default ({ command, mode }) => {
   // mode development and production
-  console.log(command, mode)
+  console.log(command, mode);
   if (command === 'serve') {
     // return {
     //   // dev 独有配置
@@ -97,6 +98,7 @@ export default ({ command, mode }) => {
         ],
       }),
       vuePlugin(),
+      vueJsx(),
       [Banner(`\n Build based on gin-vue-admin \n Time : ${timestamp}`)],
     ],
     css: {

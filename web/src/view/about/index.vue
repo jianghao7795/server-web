@@ -8,7 +8,9 @@
           </template>
           <div>
             <el-row>
-              <el-col :span="8" :offset="0"> 我是？？？ </el-col>
+              <el-col :span="8" :offset="0">
+                我是？？？ <ButtonSlot type="4444">我的 是 你的</ButtonSlot>
+              </el-col>
             </el-row>
           </div>
         </el-card>
@@ -26,6 +28,7 @@ export default {
 <script setup>
 import { ref } from "vue";
 import { Commits, Members } from "@/api/github";
+import ButtonSlot from "./slot";
 const page = ref(0);
 
 const loadMore = () => {

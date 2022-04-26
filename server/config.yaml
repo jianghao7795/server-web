@@ -65,12 +65,12 @@ db-list:
   log-mode: ""
   log-zap: false
 email:
-  to: xxx@qq.com
+  to: 978561120@qq.com
   port: 465
-  from: xxx@163.com
+  from: cadencehao@163.com
   host: smtp.163.com
   is-ssl: true
-  secret: xxx
+  secret: wuwuwuwuwuwuwuw
   nickname: test
 excel:
   dir: ./resource/excel/
