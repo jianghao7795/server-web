@@ -1,8 +1,8 @@
 <template>
   <div>
-    <warning-bar
+    <!-- <warning-bar
       title="获取字典且缓存方法已在前端utils/dictionary 已经封装完成 不必自己书写 使用方法查看文件内注释"
-    />
+    /> -->
     <div class="gva-search-box">
       <el-form :inline="true" :model="searchInfo">
         <el-form-item label="字典名（中）">
@@ -167,7 +167,7 @@ import {
   findSysDictionary,
   getSysDictionaryList,
 } from "@/api/sysDictionary"; //  此处请自行替换地址
-import warningBar from "@/components/warningBar/warningBar.vue";
+// import warningBar from "@/components/warningBar/warningBar.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";

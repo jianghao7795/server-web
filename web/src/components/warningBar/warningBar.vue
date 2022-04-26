@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="warning-bar"
-  >
+  <div class="warning-bar">
     <el-icon>
       <warning-filled />
     </el-icon>
@@ -11,31 +9,31 @@
   </div>
 </template>
 <script setup>
-import { WarningFilled } from '@element-plus/icons-vue'
+import { WarningFilled } from "@element-plus/icons-vue";
 defineProps({
   title: {
     type: String,
-    default: ''
+    default: "",
   },
-})
+});
 </script>
 <style lang="scss" scoped>
-.warning-bar{
-    background-color: #FFF5ED;
-    font-size: 14px;
-    padding: 6px 14px;
-    display: flex;
-    align-items: center;
-    border-radius: 2px;
-    .el-icon{
-      font-size: 18px;
-      color: #ED6A0C;
-    }
-    margin-bottom: 12px;
-    span{
-        line-height: 22px;
-        color:#F67207;
-        margin-left: 8px;
-    }
+.warning-bar {
+  background-color: #fff5ed;
+  font-size: 14px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  border-radius: 2px;
+  .el-icon {
+    font-size: 18px;
+    color: #ed6a0c;
+  }
+  margin-bottom: 12px;
+  span {
+    line-height: 22px;
+    color: #f67207;
+    margin-left: 8px;
+  }
 }
 </style>
