@@ -1,9 +1,9 @@
 <template>
   <div class="bottom-info">
     <div>
-      <span>Powered by</span>
+      <span>Powered by Ours</span>
       <el-divider direction="vertical" />
-      <span>Copyright</span>
+      <span>Copyright Ours</span>
     </div>
   </div>
 </template>
