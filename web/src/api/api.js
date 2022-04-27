@@ -1,5 +1,5 @@
-import service from '@/utils/request'
-import { stringify } from 'qs'
+import service from '@/utils/request';
+import { stringify } from 'qs';
 // @Tags api
 // @Summary 分页获取角色列表
 // @Security ApiKeyAuth
@@ -17,8 +17,8 @@ export const getApiList = (data) => {
   return service({
     url: `/api/getApiList?${stringify(data)}`,
     method: 'get',
-  })
-}
+  });
+};
 
 // @Tags Api
 // @Summary 创建基础api
@@ -32,9 +32,9 @@ export const createApi = (data) => {
   return service({
     url: '/api/createApi',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags menu
 // @Summary 根据id获取菜单
@@ -46,10 +46,10 @@ export const createApi = (data) => {
 // @Router /menu/getApiById [post]
 export const getApiById = (data) => {
   return service({
-    url: '/api/getApiById/' + data.id,
+    url: `/api/getApiById/${data.id}`,
     method: 'get',
-  })
-}
+  });
+};
 
 // @Tags Api
 // @Summary 更新api
@@ -63,9 +63,9 @@ export const updateApi = (data) => {
   return service({
     url: '/api/updateApi',
     method: 'put',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags Api
 // @Summary 更新api
@@ -79,9 +79,9 @@ export const setAuthApi = (data) => {
   return service({
     url: '/api/setAuthApi',
     method: 'put',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags Api
 // @Summary 获取所有的Api 不分页
@@ -94,9 +94,9 @@ export const getAllApis = (data) => {
   return service({
     url: '/api/getAllApis',
     method: 'get',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags Api
 // @Summary 删除指定api
@@ -110,9 +110,9 @@ export const deleteApi = (data) => {
   return service({
     url: '/api/deleteApi',
     method: 'delete',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags SysApi
 // @Summary 删除选中Api
@@ -126,6 +126,6 @@ export const deleteApisByIds = (data) => {
   return service({
     url: '/api/deleteApisByIds',
     method: 'delete',
-    data
-  })
-}
+    data,
+  });
+};

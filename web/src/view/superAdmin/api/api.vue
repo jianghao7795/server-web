@@ -347,8 +347,11 @@ const closeDialog = () => {
 
 const editApiFunc = async (row) => {
   const res = await getApiById({ id: row.ID });
-  form.value = res.data.api;
-  openDialog("edit");
+  // console.log(res);
+  if (res.code === 0) {
+    form.value = res.data.api;
+    openDialog("edit");
+  }
 };
 
 const enterDialog = async () => {

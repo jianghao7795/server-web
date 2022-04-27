@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"log"
 	"server/global"
 	"server/model/common/response"
 	"server/service"
@@ -24,6 +25,7 @@ func CasbinHandler() gin.HandlerFunc {
 		e := casbinService.Casbin()
 		// 判断策略中是否存在
 		success, _ := e.Enforce(sub, obj, act)
+		log.Println(obj, act, sub, e)
 		if global.GVA_CONFIG.System.Env == "develop" || success {
 			c.Next()
 		} else {

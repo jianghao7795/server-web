@@ -64,7 +64,7 @@ func (i *initApi) InitializeData(ctx context.Context) (context.Context, error) {
 		{ApiGroup: "api", Method: "PUT", Path: "/api/updateApi", Description: "更新Api"},
 		{ApiGroup: "api", Method: "GET", Path: "/api/getApiList", Description: "获取api列表"},
 		{ApiGroup: "api", Method: "GET", Path: "/api/getAllApis", Description: "获取所有api"},
-		{ApiGroup: "api", Method: "GET", Path: "/api/getApiById", Description: "获取api详细信息"},
+		{ApiGroup: "api", Method: "GET", Path: "/api/getApiById/:id", Description: "获取api详细信息"},
 		{ApiGroup: "api", Method: "DELETE", Path: "/api/deleteApisByIds", Description: "批量删除api"},
 
 		{ApiGroup: "角色", Method: "POST", Path: "/authority/copyAuthority", Description: "拷贝角色"},
