@@ -198,11 +198,7 @@ onMounted(() => {
     userStore.loadingInstance.close();
   }
 });
-
 const userStore = useUserStore();
-
-console.log(userStore.userInfo.nickName);
-
 const textColor = computed(() => {
   if (userStore.sideMode === "dark") {
     return "#fff";

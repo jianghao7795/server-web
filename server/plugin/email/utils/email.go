@@ -56,13 +56,12 @@ func EmailTest(subject string, body string) error {
 
 func send(to []string, subject string, body string) error {
 	from := global.GlobalConfig.From
-	// nickname := global.GlobalConfig.Nickname
+	nickname := global.GlobalConfig.Nickname
 	secret := global.GlobalConfig.Secret
 	host := global.GlobalConfig.Host
 	port := global.GlobalConfig.Port
 	isSSL := global.GlobalConfig.IsSSL
 
-	nickname := "978561120@qq.com"
 	log.Println("from: ", from, "nickname: ", nickname, secret, host, port, isSSL)
 	auth := smtp.PlainAuth("", from, secret, host)
 	e := email.NewEmail()

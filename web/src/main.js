@@ -19,8 +19,8 @@ app
   .use(run)
   .use(store)
   .use(auth)
-  .use(router)
   .use(ElementPlus, { locale: zhCn })
+  .use(router)
   .mount('#app');
 
 export default app;

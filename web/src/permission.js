@@ -37,7 +37,7 @@ async function handleKeepAlive(to) {
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore();
   to.meta.matched = [...to.matched];
-  handleKeepAlive(to);
+  await handleKeepAlive(to);
   const token = userStore.token;
   // 在白名单中的判断情况
   document.title = getPageTitle(to.meta.title);
