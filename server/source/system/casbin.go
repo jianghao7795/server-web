@@ -241,7 +241,10 @@ func (i *initCasbin) InitializeData(ctx context.Context) (context.Context, error
 	if err := db.Create(&entities).Error; err != nil {
 		return ctx, errors.Wrap(err, "Casbin 表 ("+i.InitializerName()+") 数据初始化失败!")
 	}
-	next := context.WithValue(ctx, i.InitializerName(), entities)
+	type myString string
+	name := i.InitializerName()
+	myName := myString(name)
+	next := context.WithValue(ctx, myName, entities)
 	return next, nil
 }
 

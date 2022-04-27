@@ -9,8 +9,10 @@
           <div>
             <el-row>
               <el-col :span="8" :offset="0">
-                我是？？？
-                <ButtonSlot :action="['default']">我的 是 你的 呜呜</ButtonSlot>
+                <ButtonSlot :action="['default']">bilibili</ButtonSlot>
+              </el-col>
+              <el-col>
+                <draggable-vue />
               </el-col>
             </el-row>
           </div>
@@ -27,17 +29,18 @@ export default {
 </script>
 
 <script setup>
-import { ref } from "vue";
+// import { ref } from "vue";
 // import { Commits, Members } from "@/api/github";
 import ButtonSlot from "./slot";
-const page = ref(0);
+import draggableVue from "./draggable.vue";
+// const page = ref(0);
 
 // const loadMore = () => {
 //   page.value++;
 //   loadCommits();
 // };
 
-const dataTimeline = ref([]);
+// const dataTimeline = ref([]);
 // const loadCommits = () => {
 //   Commits(page.value).then(({ data }) => {
 //     data.forEach((element) => {

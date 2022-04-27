@@ -39,6 +39,7 @@ specifiers:
   vite-plugin-importer: ^0.2.5
   vue: ^3.2.25
   vue-router: ^4.0.0-0
+  vuedraggable: '4'
 
 dependencies:
   '@element-plus/icons-vue': 0.2.7_vue@3.2.33
@@ -57,6 +58,7 @@ dependencies:
   spark-md5: 3.0.2
   vue: 3.2.33
   vue-router: 4.0.14_vue@3.2.33
+  vuedraggable: 4.1.0_vue@3.2.33
 
 devDependencies:
   '@babel/core': 7.17.9
@@ -8336,6 +8338,10 @@ packages:
       is-plain-obj: 1.1.0
     dev: true
 
+  /sortablejs/1.14.0:
+    resolution: {integrity: sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==}
+    dev: false
+
   /source-list-map/2.0.1:
     resolution: {integrity: sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==}
     dev: true
@@ -9289,6 +9295,15 @@ packages:
       '@vue/runtime-dom': 3.2.33
       '@vue/server-renderer': 3.2.33_vue@3.2.33
       '@vue/shared': 3.2.33
+    dev: false
+
+  /vuedraggable/4.1.0_vue@3.2.33:
+    resolution: {integrity: sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==}
+    peerDependencies:
+      vue: ^3.0.1
+    dependencies:
+      sortablejs: 1.14.0
+      vue: 3.2.33
     dev: false
 
   /watchpack-chokidar2/2.0.1:
