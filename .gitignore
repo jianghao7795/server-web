@@ -26,5 +26,6 @@ yarn-error.log*
 /server/gva
 /server/latest_log
 /server/tmp
+/server/uploads/file/*
 
 *.iml
