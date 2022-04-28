@@ -1,5 +1,6 @@
 <template>
-  <div v-loading.fullscreen.lock="fullscreenLoading">
+  <div>
+    <!-- v-loading.fullscreen.lock="fullscreenLoading" -->
     <div class="gva-table-box">
       <div class="gva-btn-list">
         <upload-common
@@ -111,7 +112,6 @@ import { ElMessage, ElMessageBox } from "element-plus";
 
 const path = ref(import.meta.env.VITE_BASE_API);
 // const userStore = useUserStore();
-
 const imageUrl = ref("");
 const imageCommon = ref("");
 

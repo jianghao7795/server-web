@@ -59,6 +59,7 @@
         :data="tableData"
         @sort-change="sortChange"
         @selection-change="handleSelectionChange"
+        stripe
       >
         <el-table-column type="selection" width="55" />
         <el-table-column
