@@ -75,16 +75,16 @@ func (exa *CustomerService) GetCustomerInfoList(sysUserAuthorityID string, info 
 		dataId = append(dataId, v.AuthorityId)
 	}
 	var CustomerList []example.ExaCustomer
+	if info.CustomerName != "" {
+		db = db.Where("customer_name like ?", info.CustomerName)
+	}
+	if info.CustomerPhoneData != "" {
+		db = db.Where("customer_phone_data = ?", info.CustomerPhoneData)
+	}
 	err = db.Where("sys_user_authority_id in ?", dataId).Count(&total).Error
 	if err != nil {
 		return err, CustomerList, total
 	} else {
-		if info.CustomerName != "" {
-			db = db.Where("customer_name like ?", info.CustomerName)
-		}
-		if info.CustomerPhoneData != "" {
-			db = db.Where("customer_phone_data = ?", info.CustomerPhoneData)
-		}
 		err = db.Limit(limit).Offset(offset).Preload("SysUser").Where("sys_user_authority_id in ?", dataId).Find(&CustomerList).Error
 	}
 	return err, CustomerList, total
