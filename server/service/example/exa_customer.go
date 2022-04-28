@@ -2,8 +2,8 @@ package example
 
 import (
 	"server/global"
-	"server/model/common/request"
 	"server/model/example"
+	"server/model/example/request"
 	"server/model/system"
 	systemService "server/service/system"
 )
@@ -60,7 +60,7 @@ func (exa *CustomerService) GetExaCustomer(id uint) (err error, customer example
 //@param: sysUserAuthorityID string, info request.PageInfo
 //@return: err error, list interface{}, total int64
 
-func (exa *CustomerService) GetCustomerInfoList(sysUserAuthorityID string, info request.PageInfo) (err error, list interface{}, total int64) {
+func (exa *CustomerService) GetCustomerInfoList(sysUserAuthorityID string, info request.SearchCustomerParams) (err error, list interface{}, total int64) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.GVA_DB.Model(&example.ExaCustomer{})
@@ -79,6 +79,12 @@ func (exa *CustomerService) GetCustomerInfoList(sysUserAuthorityID string, info 
 	if err != nil {
 		return err, CustomerList, total
 	} else {
+		if info.CustomerName != "" {
+			db = db.Where("customer_name like ?", info.CustomerName)
+		}
+		if info.CustomerPhoneData != "" {
+			db = db.Where("customer_phone_data = ?", info.CustomerPhoneData)
+		}
 		err = db.Limit(limit).Offset(offset).Preload("SysUser").Where("sys_user_authority_id in ?", dataId).Find(&CustomerList).Error
 	}
 	return err, CustomerList, total

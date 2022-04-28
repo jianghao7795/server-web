@@ -2,9 +2,9 @@ package example
 
 import (
 	"server/global"
-	"server/model/common/request"
 	"server/model/common/response"
 	"server/model/example"
+	"server/model/example/request"
 	exampleRes "server/model/example/response"
 	"server/utils"
 
@@ -122,7 +122,7 @@ func (e *CustomerApi) GetExaCustomer(c *gin.Context) {
 // @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取权限客户列表,返回包括列表,总数,页码,每页数量"
 // @Router /customer/customerList [get]
 func (e *CustomerApi) GetExaCustomerList(c *gin.Context) {
-	var pageInfo request.PageInfo
+	var pageInfo request.SearchCustomerParams
 	_ = c.ShouldBindQuery(&pageInfo)
 	if err := utils.Verify(pageInfo, utils.PageInfoVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)

@@ -1,8 +1,27 @@
 <template>
   <div>
-    <warning-bar
+    <!-- <warning-bar
       title="在资源权限中将此角色的资源权限清空 或者不包含创建者的角色 即可屏蔽此客户资源的显示"
-    />
+    /> -->
+    <div class="gva-search-box">
+      <el-form :inline="true" ref="searchForm" :model="searchInfo">
+        <el-form-item label="姓名">
+          <el-input placeholder="请输入" v-model="searchInfo.customerName"></el-input>
+        </el-form-item>
+        <el-form-item label="电话">
+          <el-input
+            placeholder="请输入"
+            v-model="searchInfo.customerPhoneData"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button size="small" type="primary" icon="search" @click="onSubmit">
+            查询
+          </el-button>
+          <el-button size="small" icon="refresh" @click="onReset">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <div class="gva-table-box">
       <div class="gva-btn-list">
         <el-button size="small" type="primary" icon="plus" @click="openDialog">
@@ -98,10 +117,12 @@ import {
   getExaCustomer,
   getExaCustomerList,
 } from "@/api/customer";
-import warningBar from "@/components/warningBar/warningBar.vue";
+// import warningBar from "@/components/warningBar/warningBar.vue";
 import { ref } from "vue";
 import { ElMessage } from "element-plus";
 import { formatDate } from "@/utils/format";
+
+const searchInfo = ref({});
 
 const form = ref({
   customerName: "",
@@ -124,11 +145,12 @@ const handleCurrentChange = (val) => {
   getTableData();
 };
 
-// 查询
+// 查询 分页
 const getTableData = async () => {
   const table = await getExaCustomerList({
     page: page.value,
     pageSize: pageSize.value,
+    ...searchInfo.value,
   });
   if (table.code === 0) {
     tableData.value = table.data.list;
@@ -137,7 +159,17 @@ const getTableData = async () => {
     pageSize.value = table.data.pageSize;
   }
 };
-
+// 搜索 查询
+const onSubmit = async () => {
+  page.value = 1;
+  pageSize.value = 10;
+  getTableData();
+};
+// 重置
+const onReset = () => {
+  searchInfo.value = {};
+  getTableData();
+};
 getTableData();
 
 const dialogFormVisible = ref(false);
@@ -202,4 +234,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped></style>
