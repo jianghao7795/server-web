@@ -2,10 +2,11 @@ package system
 
 import (
 	"context"
-	"github.com/pkg/errors"
-	"gorm.io/gorm"
 	sysModel "server/model/system"
 	"server/service/system"
+
+	"github.com/pkg/errors"
+	"gorm.io/gorm"
 )
 
 const initOrderDict = initOrderCasbin + 1
@@ -55,7 +56,9 @@ func (i *initDict) InitializeData(ctx context.Context) (next context.Context, er
 	if err = db.Create(&entities).Error; err != nil {
 		return ctx, errors.Wrap(err, sysModel.SysDictionary{}.TableName()+"表数据初始化失败!")
 	}
-	next = context.WithValue(ctx, i.InitializerName(), entities)
+	type myString string
+	name := myString(i.InitializerName())
+	next = context.WithValue(ctx, name, entities)
 	return next, nil
 }
 

@@ -84,8 +84,6 @@ func (i *initMenuViewMysql) TableCreated(ctx context.Context) bool {
 	err1 := db.Find(&[]sysModel.SysMenu{}).Error
 	err2 := errors.New(fmt.Sprintf("Error 1146: Table '%v.%v' doesn't exist",
 		global.GVA_CONFIG.Mysql.Dbname, sysModel.SysMenu{}.TableName()))
-	if errors.As(err1, &err2) {
-		return false
-	}
-	return true
+
+	return !errors.As(err1, &err2)
 }

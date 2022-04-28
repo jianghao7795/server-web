@@ -70,8 +70,9 @@ func (i *initAuthority) InitializeData(ctx context.Context) (context.Context, er
 		return ctx, errors.Wrapf(err, "%s表数据初始化失败!",
 			db.Model(&entities[1]).Association("DataAuthorityId").Relationship.JoinTable.Name)
 	}
-
-	next := context.WithValue(ctx, i.InitializerName(), entities)
+	type myString string
+	name := myString(i.InitializerName())
+	next := context.WithValue(ctx, name, entities)
 	return next, nil
 }
 
