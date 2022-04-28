@@ -29,7 +29,7 @@ type ExcelApi struct{}
 func (e *ExcelApi) ExportExcel(c *gin.Context) {
 	var excelInfo example.ExcelInfo
 	_ = c.ShouldBindJSON(&excelInfo)
-	if strings.Index(excelInfo.FileName, "..") > -1 {
+	if strings.Contains(excelInfo.FileName, "..") {
 		response.FailWithMessage("包含非法字符", c)
 		return
 	}

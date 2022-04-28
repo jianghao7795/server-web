@@ -66,7 +66,7 @@ func OperationRecord() gin.HandlerFunc {
 			UserID: userId,
 		}
 		// 上传文件时候 中间件日志进行裁断操作
-		if strings.Index(c.GetHeader("Content-Type"), "multipart/form-data") > -1 {
+		if strings.Contains(c.GetHeader("Content-Type"), "multipart/form-data") {
 			if len(record.Body) > 512 {
 				record.Body = "File or Length out of limit"
 			}

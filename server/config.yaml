@@ -94,8 +94,8 @@ mysql:
   db-name: gva
   username: root
   password: "123456"
-  max-idle-conns: 10
-  max-open-conns: 100
+  max-idle-conns: 100
+  max-open-conns: 1000
   log-mode: error
   log-zap: false
 pgsql:
@@ -150,7 +150,7 @@ timer:
 zap:
   level: info
   format: console
-  prefix: '[server]'
+  prefix: '[server] - '
   director: log
   show-line: true
   encode-level: LowercaseColorLevelEncoder
