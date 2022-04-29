@@ -12,6 +12,7 @@
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         row-key="authorityId"
         style="width: 100%"
+        v-loading="loading"
       >
         <el-table-column label="角色ID" min-width="180" prop="authorityId" />
         <el-table-column
@@ -157,6 +158,7 @@ const AuthorityOption = ref([
     authorityName: "根角色",
   },
 ]);
+const loading = ref(false);
 const drawer = ref(false);
 const dialogType = ref("add");
 const activeRow = ref({});
@@ -188,11 +190,13 @@ const searchInfo = ref({});
 
 // 查询
 const getTableData = async () => {
+  loading.value = true;
   const table = await getAuthorityList({
     page: page.value,
     pageSize: pageSize.value,
     ...searchInfo.value,
   });
+  loading.value = false;
   if (table.code === 0) {
     tableData.value = table.data.list;
     total.value = table.data.total;

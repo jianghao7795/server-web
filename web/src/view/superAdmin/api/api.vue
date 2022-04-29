@@ -60,6 +60,7 @@
         @sort-change="sortChange"
         @selection-change="handleSelectionChange"
         stripe
+        v-loading="loading"
       >
         <el-table-column type="selection" width="55" />
         <el-table-column
@@ -197,6 +198,7 @@ const methodFiletr = (value) => {
 };
 
 const apis = ref([]);
+const loading = ref(false);
 const form = ref({
   path: "",
   apiGroup: "",
@@ -276,11 +278,13 @@ const sortChange = ({ prop, order }) => {
 
 // 查询
 const getTableData = async () => {
+  loading.value = true;
   const table = await getApiList({
     page: page.value,
     pageSize: pageSize.value,
     ...searchInfo.value,
   });
+  loading.value = false;
   if (table.code === 0) {
     tableData.value = table.data.list;
     total.value = table.data.total;

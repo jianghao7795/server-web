@@ -34,6 +34,7 @@
         style="width: 100%"
         tooltip-effect="dark"
         row-key="ID"
+        v-loading="loading"
       >
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="ID" prop="ID" width="80"></el-table-column>
@@ -129,6 +130,7 @@ const page = ref(1);
 const total = ref(0);
 const pageSize = ref(10);
 const tableData = ref([]);
+const loading = ref(false);
 
 // 分页
 const handleSizeChange = (val) => {
@@ -143,11 +145,13 @@ const handleCurrentChange = (val) => {
 
 // 查询 分页
 const getTableData = async () => {
+  loading.value = true;
   const table = await getExaCustomerList({
     page: page.value,
     pageSize: pageSize.value,
     ...searchInfo.value,
   });
+  loading.value = false;
   if (table.code === 0) {
     tableData.value = table.data.list;
     total.value = table.data.total;
