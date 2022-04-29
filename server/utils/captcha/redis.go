@@ -4,9 +4,10 @@ import (
 	"context"
 	"time"
 
+	"server/global"
+
 	"github.com/mojocn/base64Captcha"
 	"go.uber.org/zap"
-	"server/global"
 )
 
 func NewDefaultRedisStore() *RedisStore {
