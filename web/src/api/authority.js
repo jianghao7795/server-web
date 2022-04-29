@@ -1,12 +1,12 @@
-import service from '@/utils/request'
+import service from '@/utils/request';
 // @Router /authority/getAuthorityList [post]
 export const getAuthorityList = (data) => {
   return service({
     url: '/authority/getAuthorityList',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Summary 删除角色
 // @Security ApiKeyAuth
@@ -19,9 +19,9 @@ export const deleteAuthority = (data) => {
   return service({
     url: '/authority/deleteAuthority',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Summary 创建角色
 // @Security ApiKeyAuth
@@ -34,9 +34,9 @@ export const createAuthority = (data) => {
   return service({
     url: '/authority/createAuthority',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags authority
 // @Summary 拷贝角色
@@ -50,9 +50,9 @@ export const copyAuthority = (data) => {
   return service({
     url: '/authority/copyAuthority',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Summary 设置角色资源权限
 // @Security ApiKeyAuth
@@ -65,9 +65,9 @@ export const setDataAuthority = (data) => {
   return service({
     url: '/authority/setDataAuthority',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Summary 修改角色
 // @Security ApiKeyAuth
@@ -80,6 +80,6 @@ export const updateAuthority = (data) => {
   return service({
     url: '/authority/updateAuthority',
     method: 'put',
-    data
-  })
-}
+    data,
+  });
+};

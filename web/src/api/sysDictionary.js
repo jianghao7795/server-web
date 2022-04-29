@@ -1,4 +1,4 @@
-import service from '@/utils/request'
+import service from '@/utils/request';
 // @Tags SysDictionary
 // @Summary 创建SysDictionary
 // @Security ApiKeyAuth
@@ -11,9 +11,9 @@ export const createSysDictionary = (data) => {
   return service({
     url: '/sysDictionary/createSysDictionary',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags SysDictionary
 // @Summary 删除SysDictionary
@@ -27,9 +27,9 @@ export const deleteSysDictionary = (data) => {
   return service({
     url: '/sysDictionary/deleteSysDictionary',
     method: 'delete',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags SysDictionary
 // @Summary 更新SysDictionary
@@ -43,9 +43,9 @@ export const updateSysDictionary = (data) => {
   return service({
     url: '/sysDictionary/updateSysDictionary',
     method: 'put',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags SysDictionary
 // @Summary 用id查询SysDictionary
@@ -59,9 +59,9 @@ export const findSysDictionary = (params) => {
   return service({
     url: '/sysDictionary/findSysDictionary',
     method: 'get',
-    params
-  })
-}
+    params,
+  });
+};
 
 // @Tags SysDictionary
 // @Summary 分页获取SysDictionary列表
@@ -75,6 +75,6 @@ export const getSysDictionaryList = (params) => {
   return service({
     url: '/sysDictionary/getSysDictionaryList',
     method: 'get',
-    params
-  })
-}
+    params,
+  });
+};

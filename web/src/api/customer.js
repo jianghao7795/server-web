@@ -1,4 +1,4 @@
-import service from '@/utils/request'
+import service from '@/utils/request';
 // @Tags SysApi
 // @Summary 删除客户
 // @Security ApiKeyAuth
@@ -11,9 +11,9 @@ export const createExaCustomer = (data) => {
   return service({
     url: '/customer/customer',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags SysApi
 // @Summary 更新客户信息
@@ -27,9 +27,9 @@ export const updateExaCustomer = (data) => {
   return service({
     url: '/customer/customer',
     method: 'put',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags SysApi
 // @Summary 创建客户
@@ -43,9 +43,9 @@ export const deleteExaCustomer = (data) => {
   return service({
     url: '/customer/customer',
     method: 'delete',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags SysApi
 // @Summary 获取单一客户信息
@@ -59,9 +59,9 @@ export const getExaCustomer = (params) => {
   return service({
     url: '/customer/customer',
     method: 'get',
-    params
-  })
-}
+    params,
+  });
+};
 
 // @Tags SysApi
 // @Summary 获取权限客户列表
@@ -75,6 +75,6 @@ export const getExaCustomerList = (params) => {
   return service({
     url: '/customer/customerList',
     method: 'get',
-    params
-  })
-}
+    params,
+  });
+};

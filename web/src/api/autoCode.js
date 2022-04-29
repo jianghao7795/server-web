@@ -1,21 +1,21 @@
-import service from '@/utils/request'
+import service from '@/utils/request';
 
 export const preview = (data) => {
   return service({
     url: '/autoCode/preview',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 export const createTemp = (data) => {
   return service({
     url: '/autoCode/createTemp',
     method: 'post',
     data,
-    responseType: 'blob'
-  })
-}
+    responseType: 'blob',
+  });
+};
 
 // @Tags SysApi
 // @Summary 获取当前所有数据库
@@ -27,9 +27,9 @@ export const createTemp = (data) => {
 export const getDB = () => {
   return service({
     url: '/autoCode/getDB',
-    method: 'get'
-  })
-}
+    method: 'get',
+  });
+};
 
 // @Tags SysApi
 // @Summary 获取当前数据库所有表
@@ -42,9 +42,9 @@ export const getTable = (params) => {
   return service({
     url: '/autoCode/getTables',
     method: 'get',
-    params
-  })
-}
+    params,
+  });
+};
 
 // @Tags SysApi
 // @Summary 获取当前数据库所有表
@@ -57,61 +57,61 @@ export const getColumn = (params) => {
   return service({
     url: '/autoCode/getColumn',
     method: 'get',
-    params
-  })
-}
+    params,
+  });
+};
 
 export const getSysHistory = (data) => {
   return service({
     url: '/autoCode/getSysHistory',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 export const rollback = (data) => {
   return service({
     url: '/autoCode/rollback',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 export const getMeta = (data) => {
   return service({
     url: '/autoCode/getMeta',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 export const delSysHistory = (data) => {
   return service({
     url: '/autoCode/delSysHistory',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 export const createPackageApi = (data) => {
   return service({
     url: '/autoCode/createPackage',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 export const getPackageApi = () => {
   return service({
     url: '/autoCode/getPackage',
-    method: 'post'
-  })
-}
+    method: 'post',
+  });
+};
 
 export const deletePackageApi = (data) => {
   return service({
     url: '/autoCode/delPackage',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};

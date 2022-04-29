@@ -8,6 +8,10 @@
           </template>
           <div>
             <el-row>
+              <el-col>{{ x }} {{ y }}</el-col>
+              <el-col>
+                <!-- <useMouse v-slot="{ x, y }"> x: {{ x }} y: {{ y }} </useMouse> -->
+              </el-col>
               <el-col :span="8" :offset="0">
                 <ButtonSlot :action="['default']">bilibili</ButtonSlot>
               </el-col>
@@ -29,43 +33,11 @@ export default {
 </script>
 
 <script setup>
-// import { ref } from "vue";
-// import { Commits, Members } from "@/api/github";
 import ButtonSlot from "./slot";
 import draggableVue from "./draggable.vue";
-// const page = ref(0);
+import { useMouse } from "@vueuse/core";
 
-// const loadMore = () => {
-//   page.value++;
-//   loadCommits();
-// };
-
-// const dataTimeline = ref([]);
-// const loadCommits = () => {
-//   Commits(page.value).then(({ data }) => {
-//     data.forEach((element) => {
-//       if (element.commit.message) {
-//         dataTimeline.value.push({
-//           from: new Date(element.commit.author.date),
-//           title: element.commit.author.name,
-//           showDayAndMonth: true,
-//           message: element.commit.message,
-//         });
-//       }
-//     });
-//   });
-// };
-
-// const members = ref([]);
-// const loadMembers = () => {
-//   Members().then(({ data }) => {
-//     members.value = data;
-//     members.value.sort();
-//   });
-// };
-
-// loadCommits();
-// loadMembers();
+const { x, y } = useMouse();
 </script>
 
 <style scoped>

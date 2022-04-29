@@ -1,30 +1,30 @@
-import service from '@/utils/request'
-import { ElMessage } from 'element-plus'
+import service from '@/utils/request';
+import { ElMessage } from 'element-plus';
 
 const handleFileError = (res, fileName) => {
-  if (typeof (res.data) !== 'undefined') {
+  if (typeof res.data !== 'undefined') {
     if (res.data.type === 'application/json') {
-      const reader = new FileReader()
-      reader.onload = function() {
-        const message = JSON.parse(reader.result).msg
+      const reader = new FileReader();
+      reader.onload = function () {
+        const message = JSON.parse(reader.result).msg;
         ElMessage({
           showClose: true,
           message: message,
-          type: 'error'
-        })
-      }
-      reader.readAsText(new Blob([res.data]))
+          type: 'error',
+        });
+      };
+      reader.readAsText(new Blob([res.data]));
     }
   } else {
-    var downloadUrl = window.URL.createObjectURL(new Blob([res]))
-    var a = document.createElement('a')
-    a.style.display = 'none'
-    a.href = downloadUrl
-    a.download = fileName
-    var event = new MouseEvent('click')
-    a.dispatchEvent(event)
+    var downloadUrl = window.URL.createObjectURL(new Blob([res]));
+    var a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = downloadUrl;
+    a.download = fileName;
+    var event = new MouseEvent('click');
+    a.dispatchEvent(event);
   }
-}
+};
 
 // @Tags excel
 // @Summary 导出Excel
@@ -40,13 +40,13 @@ export const exportExcel = (tableData, fileName) => {
     method: 'post',
     data: {
       fileName: fileName,
-      infoList: tableData
+      infoList: tableData,
     },
-    responseType: 'blob'
+    responseType: 'blob',
   }).then((res) => {
-    handleFileError(res, fileName)
-  })
-}
+    handleFileError(res, fileName);
+  });
+};
 
 // @Tags excel
 // @Summary 导入Excel文件
@@ -59,9 +59,9 @@ export const exportExcel = (tableData, fileName) => {
 export const loadExcelData = () => {
   return service({
     url: '/excel/loadExcel',
-    method: 'get'
-  })
-}
+    method: 'get',
+  });
+};
 
 // @Tags excel
 // @Summary 下载模板
@@ -76,10 +76,10 @@ export const downloadTemplate = (fileName) => {
     url: '/excel/downloadTemplate',
     method: 'get',
     params: {
-      fileName: fileName
+      fileName: fileName,
     },
-    responseType: 'blob'
+    responseType: 'blob',
   }).then((res) => {
-    handleFileError(res, fileName)
-  })
-}
+    handleFileError(res, fileName);
+  });
+};

@@ -1,4 +1,4 @@
-import service from '@/utils/request'
+import service from '@/utils/request';
 // @Summary 用户登录 获取动态路由
 // @Produce  application/json
 // @Param 可以什么都不填 调一下即可
@@ -6,9 +6,9 @@ import service from '@/utils/request'
 export const asyncMenu = () => {
   return service({
     url: '/menu/getMenu',
-    method: 'post'
-  })
-}
+    method: 'post',
+  });
+};
 
 // @Summary 获取menu列表
 // @Produce  application/json
@@ -21,9 +21,9 @@ export const getMenuList = (data) => {
   return service({
     url: '/menu/getMenuList',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Summary 新增基础menu
 // @Produce  application/json
@@ -33,9 +33,9 @@ export const addBaseMenu = (data) => {
   return service({
     url: '/menu/addBaseMenu',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Summary 获取基础路由列表
 // @Produce  application/json
@@ -44,9 +44,9 @@ export const addBaseMenu = (data) => {
 export const getBaseMenuTree = () => {
   return service({
     url: '/menu/getBaseMenuTree',
-    method: 'post'
-  })
-}
+    method: 'post',
+  });
+};
 
 // @Summary 添加用户menu关联关系
 // @Produce  application/json
@@ -56,9 +56,9 @@ export const addMenuAuthority = (data) => {
   return service({
     url: '/menu/addMenuAuthority',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Summary 获取用户menu关联关系
 // @Produce  application/json
@@ -68,9 +68,9 @@ export const getMenuAuthority = (data) => {
   return service({
     url: '/menu/getMenuAuthority',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Summary 获取用户menu关联关系
 // @Produce  application/json
@@ -80,9 +80,9 @@ export const deleteBaseMenu = (data) => {
   return service({
     url: '/menu/deleteBaseMenu',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Summary 修改menu列表
 // @Produce  application/json
@@ -92,9 +92,9 @@ export const updateBaseMenu = (data) => {
   return service({
     url: '/menu/updateBaseMenu',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags menu
 // @Summary 根据id获取菜单
@@ -108,6 +108,6 @@ export const getBaseMenuById = (data) => {
   return service({
     url: '/menu/getBaseMenuById',
     method: 'post',
-    data
-  })
-}
+    data,
+  });
+};

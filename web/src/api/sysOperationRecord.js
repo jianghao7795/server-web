@@ -1,4 +1,4 @@
-import service from '@/utils/request'
+import service from '@/utils/request';
 // @Tags SysOperationRecord
 // @Summary 删除SysOperationRecord
 // @Security ApiKeyAuth
@@ -11,9 +11,9 @@ export const deleteSysOperationRecord = (data) => {
   return service({
     url: '/sysOperationRecord/deleteSysOperationRecord',
     method: 'delete',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags SysOperationRecord
 // @Summary 删除SysOperationRecord
@@ -27,9 +27,9 @@ export const deleteSysOperationRecordByIds = (data) => {
   return service({
     url: '/sysOperationRecord/deleteSysOperationRecordByIds',
     method: 'delete',
-    data
-  })
-}
+    data,
+  });
+};
 
 // @Tags SysOperationRecord
 // @Summary 分页获取SysOperationRecord列表
@@ -43,6 +43,6 @@ export const getSysOperationRecordList = (params) => {
   return service({
     url: '/sysOperationRecord/getSysOperationRecordList',
     method: 'get',
-    params
-  })
-}
+    params,
+  });
+};
