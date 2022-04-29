@@ -6,6 +6,7 @@ import (
 	"server/model/example/request"
 	"server/model/system"
 	systemService "server/service/system"
+	"strings"
 )
 
 type CustomerService struct{}
@@ -76,7 +77,12 @@ func (exa *CustomerService) GetCustomerInfoList(sysUserAuthorityID string, info 
 	}
 	var CustomerList []example.ExaCustomer
 	if info.CustomerName != "" {
-		db = db.Where("customer_name like ?", info.CustomerName)
+		var build strings.Builder
+		build.WriteString("%")
+		build.WriteString(info.CustomerName)
+		build.WriteString("%")
+		var customername string = build.String()
+		db = db.Where("customer_name like ?", customername)
 	}
 	if info.CustomerPhoneData != "" {
 		db = db.Where("customer_phone_data = ?", info.CustomerPhoneData)

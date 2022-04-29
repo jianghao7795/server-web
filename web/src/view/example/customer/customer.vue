@@ -36,6 +36,7 @@
         row-key="ID"
       >
         <el-table-column type="selection" width="55" />
+        <el-table-column align="left" label="ID" prop="ID" width="80"></el-table-column>
         <el-table-column align="left" label="接入日期" width="180">
           <template #default="scope">
             <span>{{ formatDate(scope.row.CreatedAt) }}</span>
@@ -43,8 +44,12 @@
         </el-table-column>
         <el-table-column align="left" label="姓名" prop="customerName" width="120" />
         <el-table-column align="left" label="电话" prop="customerPhoneData" width="120" />
-        <el-table-column align="left" label="接入人ID" prop="sysUserId" width="120" />
-        <el-table-column align="left" label="按钮组" min-width="160">
+        <el-table-column align="left" label="接入人" prop="sysUserId" width="120">
+          <template #default="{ row }">
+            <span>{{ row.sysUser.userName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="left" label="操作" min-width="160">
           <template #default="scope">
             <el-button
               size="small"
@@ -52,29 +57,20 @@
               icon="edit"
               @click="updateCustomer(scope.row)"
             >
-              变更
+              编辑
             </el-button>
-            <el-popover v-model:visible="scope.row.visible" placement="top" width="160">
-              <p>确定要删除吗？</p>
-              <div style="text-align: right; margin-top: 8px">
-                <el-button size="small" type="text" @click="scope.row.visible = false">
-                  取消
-                </el-button>
-                <el-button type="primary" size="small" @click="deleteCustomer(scope.row)">
-                  确定
-                </el-button>
-              </div>
+            <el-popconfirm
+              confirm-button-text="确定"
+              cancel-button-text="取消"
+              title="确定要删除吗？"
+              @confirm="deleteCustomer(scope.row)"
+              placement="top"
+            >
+              <!-- @click="deleteCustomer(scope.row)" -->
               <template #reference>
-                <el-button
-                  type="text"
-                  icon="delete"
-                  size="small"
-                  @click="scope.row.visible = true"
-                >
-                  删除
-                </el-button>
+                <el-button type="text" icon="delete" size="small"> 删除 </el-button>
               </template>
-            </el-popover>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>

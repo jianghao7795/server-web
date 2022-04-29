@@ -3,8 +3,9 @@ package global
 import (
 	"sync"
 
-	"github.com/songzhibin97/gkit/cache/local_cache"
 	"server/utils/timer"
+
+	"github.com/songzhibin97/gkit/cache/local_cache"
 
 	"golang.org/x/sync/singleflight"
 

@@ -14,7 +14,7 @@ import (
 	"server/utils"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/spf13/viper"
+	"github.com/spf13/viper" // 配置文件读取
 )
 
 func Viper(path ...string) *viper.Viper {
