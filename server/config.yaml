@@ -125,7 +125,7 @@ system:
   env: public
   addr: 3100
   db-type: mysql
-  oss-type: local
+  oss-type: local # 上传文件使用的服务器
   use-multipoint: false
   use-redis: true
   iplimit-count: 15000

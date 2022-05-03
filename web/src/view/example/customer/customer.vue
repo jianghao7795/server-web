@@ -45,9 +45,9 @@
         </el-table-column>
         <el-table-column align="left" label="姓名" prop="customerName" width="120" />
         <el-table-column align="left" label="电话" prop="customerPhoneData" width="120" />
-        <el-table-column align="left" label="接入人" prop="sysUserId" width="120">
+        <el-table-column align="left" label="创建人" prop="sysUserId" width="120">
           <template #default="{ row }">
-            <span>{{ row.sysUser.userName }}</span>
+            <el-tag class="ml-2" type="success">{{ row.sysUser.userName }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column align="left" label="操作" min-width="160">
