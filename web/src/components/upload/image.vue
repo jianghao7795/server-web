@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-upload
+      accept=".png,.jpeg,.jpg"
       :action="`${path}/fileUploadAndDownload/upload`"
       :headers="{ 'x-token': userStore.token }"
       :show-file-list="false"

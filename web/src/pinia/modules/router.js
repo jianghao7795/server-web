@@ -72,7 +72,7 @@ export const useRouterStore = defineStore('router', () => {
           name: '404',
           hidden: true,
           meta: {
-            title: '迷路了*。*',
+            title: '404',
             closeTab: true,
           },
           component: 'view/error/index.vue',

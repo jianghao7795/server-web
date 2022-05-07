@@ -54,7 +54,7 @@
         <el-table-column align="left" label="标签" prop="tag" width="100">
           <template #default="scope">
             <el-tag
-              :type="scope.row.tag === 'jpg' ? 'primary' : 'success'"
+              :type="scope.row.tag === 'jpg' ? 'warning' : 'success'"
               disable-transitions
             >
               {{ scope.row.tag }}
@@ -189,6 +189,7 @@ const downloadFile = (row) => {
  * @returns {Promise<void>}
  */
 const editFileNameFunc = async (row) => {
+  console.log(row);
   ElMessageBox.prompt("请输入文件名或者备注", "编辑", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
@@ -198,7 +199,7 @@ const editFileNameFunc = async (row) => {
   })
     .then(async ({ value }) => {
       row.name = value;
-      // console.log(row)
+      console.log(value);
       const res = await editFileName(row);
       if (res.code === 0) {
         ElMessage({
@@ -210,7 +211,7 @@ const editFileNameFunc = async (row) => {
     })
     .catch(() => {
       ElMessage({
-        type: "info",
+        type: "warning",
         message: "取消修改",
       });
     });
@@ -225,6 +226,7 @@ export default {
 <style scoped>
 .name {
   cursor: pointer;
+  color: #4d70ff;
 }
 .upload-btn + .upload-btn {
   margin-left: 12px;
