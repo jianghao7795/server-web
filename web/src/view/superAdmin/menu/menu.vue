@@ -48,7 +48,9 @@
               <el-icon>
                 <component :is="scope.row.meta.icon" />
               </el-icon>
-              <span>{{ scope.row.meta.icon }}</span>
+              <span>
+                {{ scope.row.meta.icon }}
+              </span>
             </div>
           </template>
         </el-table-column>
@@ -80,7 +82,6 @@
       :before-close="handleClose"
       :title="dialogTitle"
     >
-      <warning-bar title="新增菜单，需要在角色管理内配置权限才可使用" />
       <el-form
         v-if="dialogFormVisible"
         ref="menuForm"

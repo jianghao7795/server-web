@@ -15,14 +15,18 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button size="small" type="primary" icon="search" @click="onSubmit">查询</el-button>
+          <el-button size="small" type="primary" icon="search" @click="onSubmit"
+            >查询</el-button
+          >
           <el-button size="small" icon="refresh" @click="onReset">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="gva-table-box">
       <div class="gva-btn-list">
-        <el-button size="small" type="primary" icon="plus" @click="openDialog">新增字典项</el-button>
+        <el-button size="small" type="primary" icon="plus" @click="openDialog"
+          >新增字典项</el-button
+        >
       </div>
       <el-table
         ref="multipleTable"
@@ -46,17 +50,39 @@
 
         <el-table-column align="left" label="排序标记" prop="sort" width="120" />
 
-        <el-table-column align="left" label="按钮组">
+        <el-table-column align="left" label="操作">
           <template #default="scope">
-            <el-button size="small" type="text" icon="edit" @click="updateSysDictionaryDetailFunc(scope.row)">变更</el-button>
+            <el-button
+              size="small"
+              type="text"
+              icon="edit"
+              @click="updateSysDictionaryDetailFunc(scope.row)"
+            >
+              变更
+            </el-button>
             <el-popover v-model:visible="scope.row.visible" placement="top" width="160">
               <p>确定要删除吗？</p>
-              <div style="text-align: right; margin-top: 8px;">
-                <el-button size="small" type="text" @click="scope.row.visible = false">取消</el-button>
-                <el-button type="primary" size="small" @click="deleteSysDictionaryDetailFunc(scope.row)">确定</el-button>
+              <div style="text-align: right; margin-top: 8px">
+                <el-button size="small" type="text" @click="scope.row.visible = false">
+                  取消
+                </el-button>
+                <el-button
+                  type="primary"
+                  size="small"
+                  @click="deleteSysDictionaryDetailFunc(scope.row)"
+                >
+                  确定
+                </el-button>
               </div>
               <template #reference>
-                <el-button type="text" icon="delete" size="small" @click="scope.row.visible = true">删除</el-button>
+                <el-button
+                  type="text"
+                  icon="delete"
+                  size="small"
+                  @click="scope.row.visible = true"
+                >
+                  删除
+                </el-button>
               </template>
             </el-popover>
           </template>
@@ -76,14 +102,20 @@
       </div>
     </div>
 
-    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="弹窗操作">
-      <el-form ref="dialogForm" :model="formData" :rules="rules" size="medium" label-width="110px">
+    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="字典项">
+      <el-form
+        ref="dialogForm"
+        :model="formData"
+        :rules="rules"
+        size="medium"
+        label-width="110px"
+      >
         <el-form-item label="展示值" prop="label">
           <el-input
             v-model="formData.label"
             placeholder="请输入展示值"
             clearable
-            :style="{width: '100%'}"
+            :style="{ width: '100%' }"
           />
         </el-form-item>
         <el-form-item label="字典值" prop="value">
@@ -93,7 +125,7 @@
             :step="1"
             placeholder="请输入字典值"
             clearable
-            :style="{width: '100%'}"
+            :style="{ width: '100%' }"
           />
         </el-form-item>
         <el-form-item label="启用状态" prop="status" required>
@@ -115,8 +147,8 @@
 
 <script>
 export default {
-  name: 'SysDictionaryDetail'
-}
+  name: "SysDictionaryDetail",
+};
 </script>
 
 <script setup>
@@ -125,160 +157,158 @@ import {
   deleteSysDictionaryDetail,
   updateSysDictionaryDetail,
   findSysDictionaryDetail,
-  getSysDictionaryDetailList
-} from '@/api/sysDictionaryDetail' //  此处请自行替换地址
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
-import { ElMessage } from 'element-plus'
-import { formatBoolean, formatDate } from '@/utils/format'
-const route = useRoute()
+  getSysDictionaryDetailList,
+} from "@/api/sysDictionaryDetail"; //  此处请自行替换地址
+import { ref } from "vue";
+import { useRoute } from "vue-router";
+import { ElMessage } from "element-plus";
+import { formatBoolean, formatDate } from "@/utils/format";
+const route = useRoute();
 
 const formData = ref({
   label: null,
   value: null,
   status: true,
-  sort: null
-})
+  sort: null,
+});
 const rules = ref({
   label: [
     {
       required: true,
-      message: '请输入展示值',
-      trigger: 'blur'
-    }
+      message: "请输入展示值",
+      trigger: "blur",
+    },
   ],
   value: [
     {
       required: true,
-      message: '请输入字典值',
-      trigger: 'blur'
-    }
+      message: "请输入字典值",
+      trigger: "blur",
+    },
   ],
   sort: [
     {
       required: true,
-      message: '排序标记',
-      trigger: 'blur'
-    }
-  ]
-})
+      message: "排序标记",
+      trigger: "blur",
+    },
+  ],
+});
 
-const page = ref(1)
-const total = ref(0)
-const pageSize = ref(10)
-const tableData = ref([])
-const searchInfo = ref({ sysDictionaryID: Number(route.params.id) })
+const page = ref(1);
+const total = ref(0);
+const pageSize = ref(10);
+const tableData = ref([]);
+const searchInfo = ref({ sysDictionaryID: Number(route.params.id) });
 const onReset = () => {
-  searchInfo.value = { sysDictionaryID: Number(route.params.id) }
-}
+  searchInfo.value = { sysDictionaryID: Number(route.params.id) };
+};
 
 // 条件搜索前端看此方法
 const onSubmit = () => {
-  page.value = 1
-  pageSize.value = 10
-  if (searchInfo.value.status === '') {
-    searchInfo.value.status = null
+  page.value = 1;
+  pageSize.value = 10;
+  if (searchInfo.value.status === "") {
+    searchInfo.value.status = null;
   }
-  getTableData()
-}
+  getTableData();
+};
 
 // 分页
 const handleSizeChange = (val) => {
-  pageSize.value = val
-  getTableData()
-}
+  pageSize.value = val;
+  getTableData();
+};
 
 const handleCurrentChange = (val) => {
-  page.value = val
-  getTableData()
-}
+  page.value = val;
+  getTableData();
+};
 
 // 查询
-const getTableData = async() => {
+const getTableData = async () => {
   const table = await getSysDictionaryDetailList({
     page: page.value,
     pageSize: pageSize.value,
     ...searchInfo.value,
-  })
+  });
   if (table.code === 0) {
-    tableData.value = table.data.list
-    total.value = table.data.total
-    page.value = table.data.page
-    pageSize.value = table.data.pageSize
+    tableData.value = table.data.list;
+    total.value = table.data.total;
+    page.value = table.data.page;
+    pageSize.value = table.data.pageSize;
   }
-}
+};
 
-getTableData()
+getTableData();
 
-const type = ref('')
-const dialogFormVisible = ref(false)
-const updateSysDictionaryDetailFunc = async(row) => {
-  const res = await findSysDictionaryDetail({ ID: row.ID })
-  type.value = 'update'
+const type = ref("");
+const dialogFormVisible = ref(false);
+const updateSysDictionaryDetailFunc = async (row) => {
+  const res = await findSysDictionaryDetail({ ID: row.ID });
+  type.value = "update";
   if (res.code === 0) {
-    formData.value = res.data.resysDictionaryDetail
-    dialogFormVisible.value = true
+    formData.value = res.data.resysDictionaryDetail;
+    dialogFormVisible.value = true;
   }
-}
+};
 
 const closeDialog = () => {
-  dialogFormVisible.value = false
+  dialogFormVisible.value = false;
   formData.value = {
     label: null,
     value: null,
     status: true,
     sort: null,
-    sysDictionaryID: ''
-  }
-}
-const deleteSysDictionaryDetailFunc = async(row) => {
-  row.visible = false
-  const res = await deleteSysDictionaryDetail({ ID: row.ID })
+    sysDictionaryID: "",
+  };
+};
+const deleteSysDictionaryDetailFunc = async (row) => {
+  row.visible = false;
+  const res = await deleteSysDictionaryDetail({ ID: row.ID });
   if (res.code === 0) {
     ElMessage({
-      type: 'success',
-      message: '删除成功'
-    })
+      type: "success",
+      message: "删除成功",
+    });
     if (tableData.value.length === 1 && page.value > 1) {
-      page.value--
+      page.value--;
     }
-    getTableData()
+    getTableData();
   }
-}
+};
 
-const dialogForm = ref(null)
-const enterDialog = async() => {
-  formData.value.sysDictionaryID = Number(route.params.id)
-  dialogForm.value.validate(async valid => {
-    if (!valid) return
-    let res
+const dialogForm = ref(null);
+const enterDialog = async () => {
+  formData.value.sysDictionaryID = Number(route.params.id);
+  dialogForm.value.validate(async (valid) => {
+    if (!valid) return;
+    let res;
     switch (type.value) {
-      case 'create':
-        res = await createSysDictionaryDetail(formData.value)
-        break
-      case 'update':
-        res = await updateSysDictionaryDetail(formData.value)
-        break
+      case "create":
+        res = await createSysDictionaryDetail(formData.value);
+        break;
+      case "update":
+        res = await updateSysDictionaryDetail(formData.value);
+        break;
       default:
-        res = await createSysDictionaryDetail(formData.value)
-        break
+        res = await createSysDictionaryDetail(formData.value);
+        break;
     }
     if (res.code === 0) {
       ElMessage({
-        type: 'success',
-        message: '创建/更改成功'
-      })
-      closeDialog()
-      getTableData()
+        type: "success",
+        message: "创建/更改成功",
+      });
+      closeDialog();
+      getTableData();
     }
-  })
-}
+  });
+};
 const openDialog = () => {
-  type.value = 'create'
-  dialogFormVisible.value = true
-}
-
+  type.value = "create";
+  dialogFormVisible.value = true;
+};
 </script>
 
-<style>
-</style>
+<style></style>
