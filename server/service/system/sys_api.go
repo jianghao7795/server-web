@@ -3,6 +3,7 @@ package system
 import (
 	"errors"
 	"fmt"
+	"log"
 
 	"server/global"
 	"server/model/common/request"
@@ -90,11 +91,12 @@ func (apiService *ApiService) GetAPIInfoList(api system.SysApi, info request.Pag
 				} else {
 					OrderStr = order
 				}
+
 			} else { // didn't matched any order key in `orderMap`
 				err = fmt.Errorf("非法的排序字段: %v", order)
 				return err, apiList, total
 			}
-
+			log.Println("1: ", OrderStr)
 			err = db.Order(OrderStr).Find(&apiList).Error
 		} else {
 			err = db.Order("api_group").Find(&apiList).Error

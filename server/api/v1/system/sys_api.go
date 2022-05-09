@@ -73,13 +73,19 @@ func (s *SystemApiApi) DeleteApi(c *gin.Context) {
 // @Router /api/getApiList [post]
 func (s *SystemApiApi) GetApiList(c *gin.Context) {
 	var pageInfo systemReq.SearchApiParams
-	// _ = c.ShouldBind(&pageInfo)
+	// _ = c.ShouldBindQuery(&pageInfo)
 	var path = c.Query("path")
 	var description = c.Query("")
 	var page = c.DefaultQuery("page", "1")
 	var pageSize = c.DefaultQuery("pageSize", "10")
 	var apiGroup = c.Query("apiGroup")
 	var method = c.Query("method")
+	var ascDesc = c.DefaultQuery("desc", "false")
+	var order = c.Query("orderKey")
+	var boolItem = false
+	if ascDesc == "true" {
+		boolItem = true
+	}
 	pageInfo.Page, _ = strconv.Atoi(page)
 	pageInfo.PageSize, _ = strconv.Atoi(pageSize)
 	if path != "" {
@@ -94,13 +100,18 @@ func (s *SystemApiApi) GetApiList(c *gin.Context) {
 	if method != "" {
 		pageInfo.Method = method
 	}
-	fmt.Println("ApiGroup", pageInfo.ApiGroup)
+	if order != "" {
+		pageInfo.OrderKey = order
+	}
+	fmt.Println("ApiGroup.desc: ", pageInfo.Desc)
 	if err := utils.Verify(pageInfo.PageInfo, utils.PageInfoVerify); err != nil {
 		fmt.Println(err)
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	if err, list, total := apiService.GetAPIInfoList(pageInfo.SysApi, pageInfo.PageInfo, pageInfo.OrderKey, pageInfo.Desc); err != nil {
+
+	fmt.Println("boolItem: ", boolItem)
+	if err, list, total := apiService.GetAPIInfoList(pageInfo.SysApi, pageInfo.PageInfo, pageInfo.OrderKey, boolItem); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
