@@ -2,11 +2,11 @@
   <div>
     <div class="gva-form-box">
       <el-form :model="formData" label-position="right" label-width="80px">
-        <el-form-item label="标签名称:">
+        <el-form-item label="客户名:">
           <el-input v-model="formData.name" clearable placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="状态:">
-          <el-switch v-model="formData.status" active-color="#13ce66" inactive-color="#ff4949" active-text="是" inactive-text="否" clearable ></el-switch>
+        <el-form-item label="管理ID:">
+          <el-switch v-model="formData.sysUserId" active-color="#13ce66" inactive-color="#ff4949" active-text="是" inactive-text="否" clearable ></el-switch>
         </el-form-item>
         <el-form-item>
           <el-button size="mini" type="primary" @click="save">保存</el-button>
@@ -40,7 +40,7 @@ const router = useRouter()
 const type = ref('')
 const formData = ref({
         name: '',
-        status: false,
+        sysUserId: false,
         })
 
 // 初始化方法

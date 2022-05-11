@@ -129,7 +129,6 @@ func (appTabApi *AppTabApi) FindAppTab(c *gin.Context) {
 func (appTabApi *AppTabApi) GetAppTabList(c *gin.Context) {
 	var pageInfo appReq.AppTabSearch
 	_ = c.ShouldBindQuery(&pageInfo)
-	// log.Println(pageInfo.Name)
 	if err, list, total := appTabService.GetAppTabInfoList(pageInfo); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)

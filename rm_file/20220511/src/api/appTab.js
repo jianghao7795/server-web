@@ -1,4 +1,4 @@
-import service from '@/utils/request';
+import service from '@/utils/request'
 
 // @Tags AppTab
 // @Summary 创建AppTab
@@ -12,9 +12,9 @@ export const createAppTab = (data) => {
   return service({
     url: '/appTab/createAppTab',
     method: 'post',
-    data,
-  });
-};
+    data
+  })
+}
 
 // @Tags AppTab
 // @Summary 删除AppTab
@@ -28,9 +28,9 @@ export const deleteAppTab = (data) => {
   return service({
     url: '/appTab/deleteAppTab',
     method: 'delete',
-    data,
-  });
-};
+    data
+  })
+}
 
 // @Tags AppTab
 // @Summary 删除AppTab
@@ -44,9 +44,9 @@ export const deleteAppTabByIds = (data) => {
   return service({
     url: '/appTab/deleteAppTabByIds',
     method: 'delete',
-    data,
-  });
-};
+    data
+  })
+}
 
 // @Tags AppTab
 // @Summary 更新AppTab
@@ -60,9 +60,9 @@ export const updateAppTab = (data) => {
   return service({
     url: '/appTab/updateAppTab',
     method: 'put',
-    data,
-  });
-};
+    data
+  })
+}
 
 // @Tags AppTab
 // @Summary 用id查询AppTab
@@ -76,9 +76,9 @@ export const findAppTab = (params) => {
   return service({
     url: '/appTab/findAppTab',
     method: 'get',
-    params,
-  });
-};
+    params
+  })
+}
 
 // @Tags AppTab
 // @Summary 分页获取AppTab列表
@@ -92,6 +92,6 @@ export const getAppTabList = (params) => {
   return service({
     url: '/appTab/getAppTabList',
     method: 'get',
-    params,
-  });
-};
+    params
+  })
+}

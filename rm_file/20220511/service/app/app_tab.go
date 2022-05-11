@@ -3,8 +3,8 @@ package app
 import (
 	"server/global"
 	"server/model/app"
-	appReq "server/model/app/request"
 	"server/model/common/request"
+    appReq "server/model/app/request"
 )
 
 type AppTabService struct {
@@ -19,45 +19,45 @@ func (appTabService *AppTabService) CreateAppTab(appTab app.AppTab) (err error) 
 
 // DeleteAppTab 删除AppTab记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (appTabService *AppTabService) DeleteAppTab(appTab app.AppTab) (err error) {
+func (appTabService *AppTabService)DeleteAppTab(appTab app.AppTab) (err error) {
 	err = global.GVA_DB.Delete(&appTab).Error
 	return err
 }
 
 // DeleteAppTabByIds 批量删除AppTab记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (appTabService *AppTabService) DeleteAppTabByIds(ids request.IdsReq) (err error) {
-	err = global.GVA_DB.Delete(&[]app.AppTab{}, "id in ?", ids.Ids).Error
+func (appTabService *AppTabService)DeleteAppTabByIds(ids request.IdsReq) (err error) {
+	err = global.GVA_DB.Delete(&[]app.AppTab{},"id in ?",ids.Ids).Error
 	return err
 }
 
 // UpdateAppTab 更新AppTab记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (appTabService *AppTabService) UpdateAppTab(appTab app.AppTab) (err error) {
+func (appTabService *AppTabService)UpdateAppTab(appTab app.AppTab) (err error) {
 	err = global.GVA_DB.Save(&appTab).Error
 	return err
 }
 
 // GetAppTab 根据id获取AppTab记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (appTabService *AppTabService) GetAppTab(id uint) (err error, appTab app.AppTab) {
+func (appTabService *AppTabService)GetAppTab(id uint) (err error, appTab app.AppTab) {
 	err = global.GVA_DB.Where("id = ?", id).First(&appTab).Error
 	return
 }
 
 // GetAppTabInfoList 分页获取AppTab记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (appTabService *AppTabService) GetAppTabInfoList(info appReq.AppTabSearch) (err error, list interface{}, total int64) {
+func (appTabService *AppTabService)GetAppTabInfoList(info appReq.AppTabSearch) (err error, list interface{}, total int64) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
-	// 创建db
+    // 创建db
 	db := global.GVA_DB.Model(&app.AppTab{})
-	var appTabs []app.AppTab
-	// 如果有条件搜索 下方会自动创建搜索语句
+    var appTabs []app.AppTab
+    // 如果有条件搜索 下方会自动创建搜索语句
 	err = db.Count(&total).Error
-	if err != nil {
-		return
-	}
-	err = db.Where("name = ?", info.Name).Limit(limit).Offset(offset).Find(&appTabs).Error
+	if err!=nil {
+    	return
+    }
+	err = db.Limit(limit).Offset(offset).Find(&appTabs).Error
 	return err, appTabs, total
 }
