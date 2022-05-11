@@ -53,11 +53,14 @@ func (appTabService *AppTabService) GetAppTabInfoList(info appReq.AppTabSearch) 
 	// 创建db
 	db := global.GVA_DB.Model(&app.AppTab{})
 	var appTabs []app.AppTab
+	if info.Name != "" {
+		db = db.Where("name = ?", info.Name)
+	}
 	// 如果有条件搜索 下方会自动创建搜索语句
 	err = db.Count(&total).Error
 	if err != nil {
 		return
 	}
-	err = db.Where("name = ?", info.Name).Limit(limit).Offset(offset).Find(&appTabs).Error
+	err = db.Limit(limit).Offset(offset).Find(&appTabs).Error
 	return err, appTabs, total
 }
