@@ -20,15 +20,15 @@
     </div>
     <div class="gva-table-box">
       <div class="gva-btn-list">
-        <el-button size="small" type="primary" icon="plus" @click="openDialog"
-          >新增</el-button
-        >
+        <el-button size="small" type="primary" icon="plus" @click="openDialog">
+          新增
+        </el-button>
         <el-popover v-model:visible="deleteVisible" placement="top" width="160">
           <p>确定要删除吗？</p>
           <div style="text-align: right; margin-top: 8px">
-            <el-button size="small" type="text" @click="deleteVisible = false"
-              >取消</el-button
-            >
+            <el-button size="small" type="text" @click="deleteVisible = false">
+              取消
+            </el-button>
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
@@ -57,9 +57,11 @@
         </el-table-column>
         <el-table-column align="left" label="标签名称" prop="name" width="120" />
         <el-table-column align="left" label="状态" prop="status" width="120">
-          <template #default="scope">{{ formatBoolean(scope.row.status) }}</template>
+          <template #default="scope">{{
+            { 1: "显示", 0: "隐藏" }[scope.row.status]
+          }}</template>
         </el-table-column>
-        <el-table-column align="left" label="按钮组">
+        <el-table-column align="left" label="操作">
           <template #default="scope">
             <el-button
               type="text"
@@ -67,15 +69,17 @@
               size="small"
               class="table-button"
               @click="updateAppTabFunc(scope.row)"
-              >变更</el-button
             >
+              编辑
+            </el-button>
             <el-button
               type="text"
               icon="delete"
               size="small"
               @click="deleteRow(scope.row)"
-              >删除</el-button
             >
+              删除
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -91,20 +95,20 @@
         />
       </div>
     </div>
-    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="弹窗操作">
+    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="标签">
       <el-form :model="formData" label-position="right" label-width="80px">
         <el-form-item label="标签名称:">
           <el-input v-model="formData.name" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="状态:">
-          <el-switch
-            v-model="formData.status"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-            active-text="是"
-            inactive-text="否"
-            clearable
-          ></el-switch>
+          <el-select v-model="formData.status" placeholder="请选择" size="small">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -134,14 +138,14 @@ import {
 } from "@/api/appTab";
 
 // 全量引入格式化工具 请按需保留
-import { getDictFunc, formatDate, formatBoolean, filterDict } from "@/utils/format";
+import { formatDate } from "@/utils/format";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { ref } from "vue";
 
 // 自动化生成的字典（可能为空）以及字段
 const formData = ref({
   name: "",
-  status: false,
+  status: 1,
 });
 
 // =========== 表格控制部分 ===========
@@ -150,6 +154,11 @@ const total = ref(0);
 const pageSize = ref(10);
 const tableData = ref([]);
 const searchInfo = ref({});
+
+const options = ref([
+  { label: "显示", value: 1 },
+  { label: "隐藏", value: 0 },
+]);
 
 // 重置
 const onReset = () => {

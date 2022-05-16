@@ -1,20 +1,15 @@
 package global
 
 import (
+	"server/config"
+	"server/utils/timer"
 	"sync"
 
-	"server/utils/timer"
-
-	"github.com/songzhibin97/gkit/cache/local_cache"
-
-	"golang.org/x/sync/singleflight"
-
-	"go.uber.org/zap"
-
-	"server/config"
-
 	"github.com/go-redis/redis/v8"
+	"github.com/songzhibin97/gkit/cache/local_cache"
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
+	"golang.org/x/sync/singleflight"
 	"gorm.io/gorm"
 )
 

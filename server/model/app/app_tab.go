@@ -10,7 +10,7 @@ import (
 type AppTab struct {
 	global.GVA_MODEL
 	Name   string `json:"name" form:"name" gorm:"column:name;comment:标签名称;size:191;"`
-	Status *bool  `json:"status" form:"status" gorm:"column:status;comment:状态;"`
+	Status int    `json:"status" form:"status" gorm:"column:status;comment:状态;"`
 }
 
 // TableName AppTab 表名
