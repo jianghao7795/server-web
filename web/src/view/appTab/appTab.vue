@@ -304,7 +304,7 @@ const closeDialog = () => {
   dialogFormVisible.value = false;
   formData.value = {
     name: "",
-    status: false,
+    status: 1,
   };
 };
 // 弹窗确定
