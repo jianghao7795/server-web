@@ -75,7 +75,7 @@ func (s *SystemApiApi) GetApiList(c *gin.Context) {
 	var pageInfo systemReq.SearchApiParams
 	// _ = c.ShouldBindQuery(&pageInfo)
 	var path = c.Query("path")
-	var description = c.Query("")
+	var description = c.Query("description")
 	var page = c.DefaultQuery("page", "1")
 	var pageSize = c.DefaultQuery("pageSize", "10")
 	var apiGroup = c.Query("apiGroup")

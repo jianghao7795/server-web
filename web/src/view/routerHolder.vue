@@ -13,11 +13,11 @@
 
 <script>
 export default {
-  name: 'RouterHolder'
-}
+  name: "RouterHolder",
+};
 </script>
 
 <script setup>
-import { useRouterStore } from '@/pinia/modules/router'
-const routerStore = useRouterStore()
+import { useRouterStore } from "@/pinia/modules/router";
+const routerStore = useRouterStore();
 </script>
