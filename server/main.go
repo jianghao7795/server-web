@@ -1,11 +1,9 @@
 package main
 
 import (
-	"log"
 	"server/core"
 	"server/global"
 	"server/initialize"
-	"server/utils"
 
 	"go.uber.org/zap"
 )
@@ -23,7 +21,7 @@ import (
 // @name x-token
 // @BasePath /
 func main() {
-	log.Println(utils.ConfigFile)
+	// log.Println(utils.ConfigFile)
 	global.GVA_VP = core.Viper()       // 初始化Viper 配置
 	global.GVA_LOG = core.Zap()        // 初始化zap日志库
 	zap.ReplaceGlobals(global.GVA_LOG) // 部署到全局

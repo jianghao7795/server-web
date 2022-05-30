@@ -412,6 +412,7 @@ const deleteApiFunc = async (row) => {
     cancelButtonText: "取消",
     type: "warning",
   }).then(async () => {
+    console.log(row);
     const res = await deleteApi(row);
     if (res.code === 0) {
       ElMessage({

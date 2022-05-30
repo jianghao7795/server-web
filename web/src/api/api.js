@@ -61,7 +61,7 @@ export const getApiById = (data) => {
 // @Router /api/updateApi [post]
 export const updateApi = (data) => {
   return service({
-    url: '/api/updateApi',
+    url: `/api/updateApi/${data.ID}`,
     method: 'put',
     data,
   });
@@ -108,7 +108,7 @@ export const getAllApis = (data) => {
 // @Router /api/deleteApi [post]
 export const deleteApi = (data) => {
   return service({
-    url: '/api/deleteApi',
+    url: `/api/deleteApi/${data.ID}`,
     method: 'delete',
     data,
   });

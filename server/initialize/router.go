@@ -52,7 +52,7 @@ func Routers() *gin.Engine {
 		systemRouter.InitInitRouter(PublicGroup) // 自动初始化相关
 	}
 	PrivateGroup := Router.Group("")
-	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
+	PrivateGroup.Use(middleware.JWTAuth()) // .Use(middleware.CasbinHandler()) casbin的拦截规则
 	{
 		systemRouter.InitApiRouter(PrivateGroup)                 // 注册功能api路由
 		systemRouter.InitJwtRouter(PrivateGroup)                 // jwt相关路由

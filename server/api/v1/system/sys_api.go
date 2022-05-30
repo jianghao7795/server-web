@@ -2,6 +2,7 @@ package system
 
 import (
 	"fmt"
+	"log"
 	"server/global"
 	"server/model/common/request"
 	"server/model/common/response"
@@ -50,7 +51,9 @@ func (s *SystemApiApi) CreateApi(c *gin.Context) {
 // @Router /api/deleteApi [post]
 func (s *SystemApiApi) DeleteApi(c *gin.Context) {
 	var api system.SysApi
-	_ = c.ShouldBindJSON(&api)
+	id, _ := strconv.Atoi(c.Param("id"))
+	api.ID = uint(id)
+	log.Println("api: ", api.ID)
 	if err := utils.Verify(api.GVA_MODEL, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -111,7 +114,7 @@ func (s *SystemApiApi) GetApiList(c *gin.Context) {
 	}
 
 	fmt.Println("boolItem: ", boolItem)
-	if err, list, total := apiService.GetAPIInfoList(pageInfo.SysApi, pageInfo.PageInfo, pageInfo.OrderKey, boolItem); err != nil {
+	if list, total, err := apiService.GetAPIInfoList(pageInfo.SysApi, pageInfo.PageInfo, pageInfo.OrderKey, boolItem); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
@@ -181,7 +184,7 @@ func (s *SystemApiApi) UpdateApi(c *gin.Context) {
 // @Success 200 {object} response.Response{data=systemRes.SysAPIListResponse,msg=string} "获取所有的Api 不分页,返回包括api列表"
 // @Router /api/getAllApis [post]
 func (s *SystemApiApi) GetAllApis(c *gin.Context) {
-	if err, apis := apiService.GetAllApis(); err != nil {
+	if apis, err := apiService.GetAllApis(); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
