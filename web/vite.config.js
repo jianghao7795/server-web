@@ -1,6 +1,6 @@
 import legacyPlugin from '@vitejs/plugin-legacy';
 // import usePluginImport from 'vite-plugin-importer';
-import { viteLogo } from './src/core/config';
+// import { viteLogo } from './src/core/config';
 import Banner from 'vite-plugin-banner';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
@@ -10,7 +10,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 // @see https://cn.vitejs.dev/config/
 export default ({ command, mode }) => {
   // mode development and production
-  console.log(command, mode);
+  // console.log(command, mode);
   if (command === 'serve') {
     // return {
     //   // dev 独有配置
@@ -30,15 +30,15 @@ export default ({ command, mode }) => {
     }
   }
 
-  viteLogo(process.env);
+  // viteLogo(process.env);
 
   const timestamp = Date.parse(new Date());
 
   const rollupOptions = {
     output: {
-      entryFileNames: `static/vue3-[name].${timestamp}.js`,
-      chunkFileNames: `js/vue3-[name].${timestamp}.js`,
-      assetFileNames: `assets/vue3-[name].${timestamp}.[ext]`,
+      entryFileNames: `static/[name].[hash].js`,
+      chunkFileNames: `js/[name].[hash].js`,
+      assetFileNames: `assets/[name].[hash].[ext]`,
     },
   };
 
@@ -78,7 +78,7 @@ export default ({ command, mode }) => {
     },
     build: {
       target: 'es2015',
-      minify: 'terser', // 是否进行压缩,boolean | 'terser' | 'esbuild',默认使用terser
+      minify: 'esbuild', // 是否进行压缩,boolean | 'terser' | 'esbuild',默认使用terser
       manifest: false, // 是否产出maifest.json
       sourcemap: false, // 是否产出soucemap.json
       outDir: 'dist', // 产出目录

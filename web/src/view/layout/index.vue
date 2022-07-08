@@ -19,10 +19,10 @@
           name="el-fade-in-linear"
         >
           <div
+            class="topfix"
             :style="{
               width: `calc(100% - ${isMobile ? '0px' : isCollapse ? '54px' : '220px'})`,
             }"
-            class="topfix"
           >
             <el-row>
               <el-col>
