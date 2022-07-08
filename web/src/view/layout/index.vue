@@ -18,12 +18,10 @@
           mode="out-in"
           name="el-fade-in-linear"
         >
-          <div
-            class="topfix"
-            :style="{
+          <!-- :style="{
               width: `calc(100% - ${isMobile ? '0px' : isCollapse ? '54px' : '220px'})`,
-            }"
-          >
+            }" -->
+          <div class="topfix">
             <el-row>
               <el-col>
                 <el-header class="header-cont">
