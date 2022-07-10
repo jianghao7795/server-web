@@ -58,16 +58,9 @@
         <el-table-column align="left" label="标签名称" prop="name" width="120" />
         <el-table-column align="left" label="状态" prop="status" width="120">
           <template #default="scope">
-            <el-switch
-              inline-prompt
-              v-model="scope.row.status"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              active-text="显示"
-              inactive-text="隐藏"
-              :active-value="1"
-              :inactive-value="0"
-            />
+            <el-tag class="ml-2" :type="scope.row.status ? 'success' : 'danger'">{{
+              scope.row.status ? "显示" : "隐藏"
+            }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column align="left" label="操作">
@@ -110,14 +103,10 @@
           <el-input v-model="formData.name" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="状态:">
-          <el-select v-model="formData.status" placeholder="请选择" size="small">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
+          <el-radio-group v-model="formData.status">
+            <el-radio-button :label="1">显示</el-radio-button>
+            <el-radio-button :label="0">隐藏</el-radio-button>
+          </el-radio-group>
         </el-form-item>
       </el-form>
       <template #footer>
