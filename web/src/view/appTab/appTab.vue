@@ -57,9 +57,18 @@
         </el-table-column>
         <el-table-column align="left" label="标签名称" prop="name" width="120" />
         <el-table-column align="left" label="状态" prop="status" width="120">
-          <template #default="scope">{{
-            { 1: "显示", 0: "隐藏" }[scope.row.status]
-          }}</template>
+          <template #default="scope">
+            <el-switch
+              inline-prompt
+              v-model="scope.row.status"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+              active-text="显示"
+              inactive-text="隐藏"
+              :active-value="1"
+              :inactive-value="0"
+            />
+          </template>
         </el-table-column>
         <el-table-column align="left" label="操作">
           <template #default="scope">
