@@ -61,6 +61,6 @@ func (appTabService *AppTabService) GetAppTabInfoList(info appReq.AppTabSearch) 
 	if err != nil {
 		return
 	}
-	err = db.Limit(limit).Offset(offset).Find(&appTabs).Error
+	err = db.Limit(limit).Offset(offset).Order("id desc").Find(&appTabs).Error
 	return err, appTabs, total
 }
