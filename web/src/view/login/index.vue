@@ -100,6 +100,9 @@ import { reactive, ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
+import dayjs from "dayjs";
+import { setLocalStorage } from "@/utils/date";
+
 const router = useRouter();
 
 // 是否需要初始化
@@ -174,6 +177,11 @@ const submitForm = () => {
       const flag = await login();
       if (!flag) {
         loginVerify();
+      } else {
+        // console.log();
+        setLocalStorage("workTime", {
+          workStartTime: dayjs().unix().valueOf(),
+        });
       }
     } else {
       ElMessage({
