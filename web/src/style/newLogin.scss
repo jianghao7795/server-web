@@ -38,9 +38,10 @@
       .login_panle_form_title {
         display: flex;
         align-items: center;
+        justify-content: center;
         margin: 30px 0;
         .login_panle_form_title_logo {
-          width: 90px;
+          // width: 90px;
           height: 72px;
         }
         .login_panle_form_title_p {

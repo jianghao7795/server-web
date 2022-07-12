@@ -2,7 +2,7 @@
   <div id="userLayout">
     <div class="login_panle">
       <div class="login_panle_form">
-        <div class="login_panle_form_title">
+        <div class="login_panle_form_title" style="text-align: center">
           <img class="login_panle_form_title_logo" :src="$GIN_VUE_ADMIN.appLogo" alt />
           <p class="login_panle_form_title_p">{{ $GIN_VUE_ADMIN.appName }}</p>
         </div>

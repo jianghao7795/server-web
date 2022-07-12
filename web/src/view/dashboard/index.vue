@@ -147,6 +147,7 @@ const toolCards = ref([
 const router = useRouter();
 
 const toTarget = (name) => {
+  console.log(router);
   router.push({ name });
 };
 </script>
