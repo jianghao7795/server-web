@@ -182,9 +182,9 @@ initPage();
 const loadingFlag = ref(false);
 onMounted(() => {
   // 挂载一些通用的事件
-  emitter.emit("collapse", isCollapse.value);
+  emitter.emit("collapse", isCollapse.value); // emit 是值 fire an event
   emitter.emit("mobile", isMobile.value);
-  emitter.on("reload", reload);
+  emitter.on("reload", reload); // on 倾听所有事件 // emitter.all.clear() clearing all events
   emitter.on("showLoading", () => {
     loadingFlag.value = true;
   });
@@ -192,6 +192,7 @@ onMounted(() => {
     loadingFlag.value = false;
   });
   window.onresize = () => {
+    // onresize 是调整浏览器尺寸时触发
     return (() => {
       initPage();
       emitter.emit("collapse", isCollapse.value);

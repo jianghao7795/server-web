@@ -15,18 +15,18 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button size="small" type="primary" icon="search" @click="onSubmit"
-            >查询</el-button
-          >
+          <el-button size="small" type="primary" icon="search" @click="onSubmit">
+            查询
+          </el-button>
           <el-button size="small" icon="refresh" @click="onReset">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="gva-table-box">
       <div class="gva-btn-list">
-        <el-button size="small" type="primary" icon="plus" @click="openDialog"
-          >新增字典项</el-button
-        >
+        <el-button size="small" type="primary" icon="plus" @click="openDialog">
+          新增字典项
+        </el-button>
       </div>
       <el-table
         ref="multipleTable"
@@ -60,8 +60,15 @@
             >
               变更
             </el-button>
-            <el-popover v-model:visible="scope.row.visible" placement="top" width="160">
-              <p>确定要删除吗？</p>
+            <el-popconfirm
+              placement="top"
+              width="160"
+              title="确定要删除吗?"
+              confirm-button-text="确定"
+              cancel-button-text="取消"
+              @confirm="deleteSysDictionaryDetailFunc(scope.row)"
+            >
+              <!-- <p>确定要删除吗？</p>
               <div style="text-align: right; margin-top: 8px">
                 <el-button size="small" type="text" @click="scope.row.visible = false">
                   取消
@@ -73,7 +80,7 @@
                 >
                   确定
                 </el-button>
-              </div>
+              </div> -->
               <template #reference>
                 <el-button
                   type="text"
@@ -84,7 +91,7 @@
                   删除
                 </el-button>
               </template>
-            </el-popover>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -107,7 +114,7 @@
         ref="dialogForm"
         :model="formData"
         :rules="rules"
-        size="medium"
+        size="default"
         label-width="110px"
       >
         <el-form-item label="展示值" prop="label">
@@ -232,6 +239,7 @@ const getTableData = async () => {
     pageSize: pageSize.value,
     ...searchInfo.value,
   });
+  console.log(table);
   if (table.code === 0) {
     tableData.value = table.data.list;
     total.value = table.data.total;

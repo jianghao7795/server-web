@@ -93,7 +93,8 @@ const changeMode = (e) => {
   color: #fff;
   border-radius: 4px 0 0 4px;
   cursor: pointer;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 10%);
+  // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 10%);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 10%);
 }
 .setting_body {
   padding: 20px;

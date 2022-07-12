@@ -58,39 +58,37 @@
               icon="document"
               type="text"
               @click="toDetile(scope.row)"
-              >详情</el-button
             >
+              详情
+            </el-button>
             <el-button
               size="small"
               icon="edit"
               type="text"
               @click="updateSysDictionaryFunc(scope.row)"
-              >变更</el-button
             >
-            <el-popover v-model:visible="scope.row.visible" placement="top" width="160">
-              <p>确定要删除吗？</p>
-              <div style="text-align: right; margin-top: 8px">
-                <el-button size="small" type="text" @click="scope.row.visible = false"
-                  >取消</el-button
-                >
-                <el-button
-                  type="primary"
-                  size="small"
-                  @click="deleteSysDictionaryFunc(scope.row)"
-                  >确定</el-button
-                >
-              </div>
+              变更
+            </el-button>
+            <!-- v-model:visible="scope.row.visible" -->
+            <el-popconfirm
+              placement="top"
+              width="160"
+              confirm-button-text="确定"
+              cancel-button-text="取消"
+              title="确定要删除吗?"
+              @confirm="deleteSysDictionaryFunc(scope.row)"
+            >
               <template #reference>
                 <el-button
                   type="text"
                   icon="delete"
                   size="small"
                   style="margin-left: 10px"
-                  @click="scope.row.visible = true"
-                  >删除</el-button
                 >
+                  删除
+                </el-button>
               </template>
-            </el-popover>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
