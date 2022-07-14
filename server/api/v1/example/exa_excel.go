@@ -27,6 +27,7 @@ type ExcelApi struct{}
 // @Success 200
 // @Router /excel/exportExcel [post]
 func (e *ExcelApi) ExportExcel(c *gin.Context) {
+	// time.Sleep(3 * time.Second)
 	var excelInfo example.ExcelInfo
 	_ = c.ShouldBindJSON(&excelInfo)
 	if strings.Contains(excelInfo.FileName, "..") {

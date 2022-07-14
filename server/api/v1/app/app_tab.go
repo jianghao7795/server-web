@@ -1,6 +1,7 @@
 package app
 
 import (
+	"log"
 	"server/global"
 	"server/model/app"
 	appReq "server/model/app/request"
@@ -89,6 +90,7 @@ func (appTabApi *AppTabApi) DeleteAppTabByIds(c *gin.Context) {
 func (appTabApi *AppTabApi) UpdateAppTab(c *gin.Context) {
 	var appTab app.AppTab
 	_ = c.ShouldBindJSON(&appTab)
+	log.Println(appTab)
 	if err := appTabService.UpdateAppTab(appTab); err != nil {
 		global.GVA_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败", c)

@@ -369,7 +369,7 @@ const changeAuthority = async (row, flag) => {
     return;
   }
 
-  await nextTick();
+  // await nextTick();
   const res = await setUserAuthorities({
     ID: row.ID,
     authorityIds: row.authorityIds,

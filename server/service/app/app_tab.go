@@ -34,6 +34,10 @@ func (appTabService *AppTabService) DeleteAppTabByIds(ids request.IdsReq) (err e
 // UpdateAppTab 更新AppTab记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (appTabService *AppTabService) UpdateAppTab(appTab app.AppTab) (err error) {
+	err = global.GVA_DB.Where("id = ?", appTab.ID).First(&appTab).Error
+	if err != nil {
+		return err
+	}
 	err = global.GVA_DB.Save(&appTab).Error
 	return err
 }

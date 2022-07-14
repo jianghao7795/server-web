@@ -56,11 +56,15 @@
           <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
         </el-table-column>
         <el-table-column align="left" label="标签名称" prop="name" width="120" />
-        <el-table-column align="left" label="状态" prop="status" width="120">
+        <el-table-column align="left" label="状态" prop="status" width="150">
           <template #default="scope">
-            <el-tag class="ml-2" :type="scope.row.status ? 'success' : 'danger'">{{
-              scope.row.status ? "显示" : "隐藏"
-            }}</el-tag>
+            <el-switch
+              v-model="scope.row.status"
+              :loading="loading[scope.row.id]"
+              :before-change="() => changeHide(scope.row)"
+              active-text="显示"
+              inactive-text="隐藏"
+            />
           </template>
         </el-table-column>
         <el-table-column align="left" label="操作">
@@ -146,6 +150,29 @@ const formData = ref({
   status: 1,
 });
 
+const loading = ref({});
+
+const changeHide = (e) => {
+  // console.log(e);
+  const primitive = { ...loading.value };
+  primitive[e.ID] = true;
+  loading.value = primitive;
+
+  return new Promise((resolve, reject) => {
+    updateAppTab({ ...e, status: e.status ? 0 : 1 }).then((resp) => {
+      // console.log(e.ID);
+      const primitive = { ...loading.value };
+      primitive[e.ID] = false;
+      loading.value = primitive;
+      // console.log(primitive);
+      if (resp.code === 0) {
+        return resolve(true);
+      } else {
+        return reject(new Error(resp.msg));
+      }
+    });
+  });
+};
 // =========== 表格控制部分 ===========
 const page = ref(1);
 const total = ref(0);
@@ -153,10 +180,10 @@ const pageSize = ref(10);
 const tableData = ref([]);
 const searchInfo = ref({});
 
-const options = ref([
-  { label: "显示", value: 1 },
-  { label: "隐藏", value: 0 },
-]);
+// const options = ref([
+//   { label: "显示", value: 1 },
+//   { label: "隐藏", value: 0 },
+// ]);
 
 // 重置
 const onReset = () => {
@@ -187,14 +214,14 @@ const handleCurrentChange = (val) => {
 
 // 查询
 const getTableData = async () => {
-  console.log(searchInfo.value);
+  // console.log(searchInfo.value);
   const table = await getAppTabList({
     page: page.value,
     pageSize: pageSize.value,
     ...searchInfo.value,
   });
   if (table.code === 0) {
-    tableData.value = table.data.list;
+    tableData.value = table.data.list.map((i) => ({ ...i, status: !!i.status }));
     total.value = table.data.total;
     page.value = table.data.page;
     pageSize.value = table.data.pageSize;
