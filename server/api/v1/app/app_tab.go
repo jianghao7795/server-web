@@ -111,7 +111,7 @@ func (appTabApi *AppTabApi) UpdateAppTab(c *gin.Context) {
 func (appTabApi *AppTabApi) FindAppTab(c *gin.Context) {
 	var appTab app.AppTab
 	_ = c.ShouldBindQuery(&appTab)
-	if err, reappTab := appTabService.GetAppTab(appTab.ID); err != nil {
+	if reappTab, err := appTabService.GetAppTab(appTab.ID); err != nil {
 		global.GVA_LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
 	} else {
@@ -132,7 +132,7 @@ func (appTabApi *AppTabApi) GetAppTabList(c *gin.Context) {
 	var pageInfo appReq.AppTabSearch
 	_ = c.ShouldBindQuery(&pageInfo)
 	// log.Println(pageInfo.Name)
-	if err, list, total := appTabService.GetAppTabInfoList(pageInfo); err != nil {
+	if list, total, err := appTabService.GetAppTabInfoList(pageInfo); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {

@@ -34,8 +34,11 @@ func (appTabService *AppTabService) DeleteAppTabByIds(ids request.IdsReq) (err e
 // UpdateAppTab 更新AppTab记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (appTabService *AppTabService) UpdateAppTab(appTab app.AppTab) (err error) {
-	err = global.GVA_DB.Where("id = ?", appTab.ID).First(&appTab).Error
+	var appTabNew app.AppTab
+	// var count int64
+	err = global.GVA_DB.Where("id = ?", appTab.ID).First(&appTabNew).Error
 	if err != nil {
+		// log.Println(err)
 		return err
 	}
 	err = global.GVA_DB.Save(&appTab).Error
@@ -44,14 +47,14 @@ func (appTabService *AppTabService) UpdateAppTab(appTab app.AppTab) (err error) 
 
 // GetAppTab 根据id获取AppTab记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (appTabService *AppTabService) GetAppTab(id uint) (err error, appTab app.AppTab) {
+func (appTabService *AppTabService) GetAppTab(id uint) (appTab app.AppTab, err error) {
 	err = global.GVA_DB.Where("id = ?", id).First(&appTab).Error
 	return
 }
 
 // GetAppTabInfoList 分页获取AppTab记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (appTabService *AppTabService) GetAppTabInfoList(info appReq.AppTabSearch) (err error, list interface{}, total int64) {
+func (appTabService *AppTabService) GetAppTabInfoList(info appReq.AppTabSearch) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
@@ -66,5 +69,5 @@ func (appTabService *AppTabService) GetAppTabInfoList(info appReq.AppTabSearch) 
 		return
 	}
 	err = db.Limit(limit).Offset(offset).Order("id desc").Find(&appTabs).Error
-	return err, appTabs, total
+	return appTabs, total, err
 }
