@@ -9,12 +9,22 @@
           <div>
             <el-row>
               <el-col>{{ x }} {{ y }}</el-col>
+              <el-col>{{ isDark }}</el-col>
+              <el-col>{{ store.name }}</el-col>
               <el-col>
                 <!-- <useMouse v-slot="{ x, y }"> x: {{ x }} y: {{ y }} </useMouse> -->
+                <Button :lists="lists">
+                  <template v-slot:two="{ item }">
+                    <div>{{ item.name }}</div>
+                  </template>
+                  <template v-slot:active>
+                    <div>123123123</div>
+                  </template>
+                </Button>
               </el-col>
-              <el-col :span="8" :offset="0">
+              <!-- <el-col :span="8" :offset="0">
                 <ButtonSlot :action="['default']">bilibili</ButtonSlot>
-              </el-col>
+              </el-col> -->
               <el-col>
                 <draggable-vue />
               </el-col>
@@ -33,11 +43,25 @@ export default {
 </script>
 
 <script setup>
-import ButtonSlot from "./slot";
+// import ButtonSlot from "./slot";
+import { version } from "vue";
 import draggableVue from "./draggable.vue";
-import { useMouse } from "@vueuse/core";
+import { useMouse, usePreferredDark, useLocalStorage } from "@vueuse/core";
+import Button from "./Tabs/Button.vue";
 
+console.log(version);
 const { x, y } = useMouse();
+const isDark = usePreferredDark();
+const store = useLocalStorage("appColor", {
+  name: "Apple",
+  color: "red",
+});
+
+const lists = [
+  { name: "aaa", age: 12 },
+  { name: "bbb", age: 78 },
+  { name: "ccc", age: 45 },
+];
 </script>
 
 <style scoped>
