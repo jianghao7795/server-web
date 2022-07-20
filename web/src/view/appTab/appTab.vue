@@ -166,8 +166,10 @@ const changeHide = (e) => {
       loading.value = primitive;
       // console.log(primitive);
       if (resp.code === 0) {
+        ElMessage.success(e.status ? "隐藏成功" : "显示成功");
         return resolve(true);
       } else {
+        ElMessage.error(!e.status ? "隐藏成功" : "显示成功");
         return reject(new Error(resp.msg));
       }
     });

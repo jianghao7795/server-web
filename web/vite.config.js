@@ -97,7 +97,7 @@ export default ({ command, mode }) => {
           'Edge >= 15',
         ],
       }),
-      vuePlugin(),
+      vuePlugin({}),
       vueJsx(),
       [Banner(`\n Build based on gin-vue-admin \n Time : ${timestamp}`)],
     ],

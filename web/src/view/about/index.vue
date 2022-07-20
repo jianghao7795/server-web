@@ -1,10 +1,12 @@
 <template>
   <div>
+    <el-input @change="changeInput"></el-input>
+    <el-button type="primary" @click="searchValue">+</el-button>
     <el-row :gutter="10">
       <el-col :span="24">
         <el-card>
           <template #header>
-            <el-divider>About Me</el-divider>
+            <el-divider content-position="left">About Me</el-divider>
           </template>
           <div>
             <el-row>
@@ -22,6 +24,8 @@
                   </template>
                 </Button>
               </el-col>
+              <el-col>{{ timeDelay.y }}</el-col>
+              <p>{{ data.x }}</p>
               <!-- <el-col :span="8" :offset="0">
                 <ButtonSlot :action="['default']">bilibili</ButtonSlot>
               </el-col> -->
@@ -44,12 +48,17 @@ export default {
 
 <script setup>
 // import ButtonSlot from "./slot";
-import { version } from "vue";
+import { reactive, ref } from "vue";
 import draggableVue from "./draggable.vue";
-import { useMouse, usePreferredDark, useLocalStorage } from "@vueuse/core";
+import {
+  useMouse,
+  usePreferredDark,
+  useLocalStorage,
+  debounceFilter,
+  useDebounceFn,
+} from "@vueuse/core";
 import Button from "./Tabs/Button.vue";
 
-console.log(version);
 const { x, y } = useMouse();
 const isDark = usePreferredDark();
 const store = useLocalStorage("appColor", {
@@ -57,11 +66,28 @@ const store = useLocalStorage("appColor", {
   color: "red",
 });
 
+const data = reactive(useMouse());
+
+const timeDelay = useMouse({ eventFilter: debounceFilter(110) });
+const search = () => {
+  console.log("search");
+};
+
+const searchValue = useDebounceFn(search, 500, { maxWait: 1000 });
+
 const lists = [
   { name: "aaa", age: 12 },
   { name: "bbb", age: 78 },
   { name: "ccc", age: 45 },
 ];
+
+const inputValue = ref("");
+
+const changeInput = (e) => {
+  console.log(e);
+
+  inputValue.value = e;
+};
 </script>
 
 <style scoped>
