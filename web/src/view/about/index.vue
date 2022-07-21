@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-input @change="changeInput"></el-input>
+    <el-input @change="changeInput" v-model="inputValue"></el-input>
     <el-button type="primary" @click="searchValue">+</el-button>
     <el-row :gutter="10">
       <el-col :span="24">
@@ -56,10 +56,28 @@ import {
   useLocalStorage,
   debounceFilter,
   useDebounceFn,
+  throttleFilter,
+  pausableFilter,
+  useDeviceMotion,
 } from "@vueuse/core";
 import Button from "./Tabs/Button.vue";
 
-const { x, y } = useMouse();
+const values = ref("");
+
+const motionControl = pausableFilter();
+const motion = useDeviceMotion({ eventFilter: motionControl.eventFilter });
+motionControl.pause();
+motionControl.resume();
+
+const storage = useLocalStorage(
+  "keys",
+  { foo: "bar" },
+  { eventFilter: throttleFilter(100) }
+);
+console.log(storage);
+const { x, y } = useMouse({ eventFilter: debounceFilter(100) });
+
+// const { x, y } = useMouse();
 const isDark = usePreferredDark();
 const store = useLocalStorage("appColor", {
   name: "Apple",
@@ -71,6 +89,7 @@ const data = reactive(useMouse());
 const timeDelay = useMouse({ eventFilter: debounceFilter(110) });
 const search = () => {
   console.log("search");
+  inputValue.value = "mimi";
 };
 
 const searchValue = useDebounceFn(search, 500, { maxWait: 1000 });
