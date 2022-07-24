@@ -150,6 +150,8 @@ const formData = ref({
   status: 1,
 });
 
+console.log("change");
+
 const loading = ref({});
 
 const changeHide = (e) => {

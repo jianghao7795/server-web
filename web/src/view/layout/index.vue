@@ -148,7 +148,7 @@ import CustomPic from "@/components/customPic/index.vue";
 import Setting from "./setting/index.vue";
 import { setUserAuthority } from "@/api/user";
 import { emitter } from "@/utils/bus.js";
-import { computed, ref, onMounted, nextTick } from "vue";
+import { computed, ref, onMounted, nextTick, watch, watchEffect } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
 import { useRouterStore } from "@/pinia/modules/router";
@@ -239,6 +239,10 @@ const changeUserAuth = async (id) => {
 };
 
 const reloadFlag = ref(true);
+
+watchEffect((newValue, oldValue) => {
+  console.log(reloadFlag.value);
+});
 const reload = async () => {
   if (route.meta.keepAlive) {
     reloadFlag.value = false;

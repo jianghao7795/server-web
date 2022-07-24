@@ -8,13 +8,13 @@
           <template #header>
             <el-divider content-position="left">About Me</el-divider>
           </template>
-          <div>
+          <!-- <div>
             <el-row>
               <el-col>{{ x }} {{ y }}</el-col>
               <el-col>{{ isDark }}</el-col>
               <el-col>{{ store.name }}</el-col>
               <el-col>
-                <!-- <useMouse v-slot="{ x, y }"> x: {{ x }} y: {{ y }} </useMouse> -->
+               <useMouse v-slot="{ x, y }"> x: {{ x }} y: {{ y }} </useMouse> 
                 <Button :lists="lists">
                   <template v-slot:two="{ item }">
                     <div>{{ item.name }}</div>
@@ -26,14 +26,14 @@
               </el-col>
               <el-col>{{ timeDelay.y }}</el-col>
               <p>{{ data.x }}</p>
-              <!-- <el-col :span="8" :offset="0">
+              <el-col :span="8" :offset="0">
                 <ButtonSlot :action="['default']">bilibili</ButtonSlot>
-              </el-col> -->
+              </el-col>
               <el-col>
                 <draggable-vue />
               </el-col>
             </el-row>
-          </div>
+          </div> -->
         </el-card>
       </el-col>
     </el-row>
@@ -48,65 +48,65 @@ export default {
 
 <script setup>
 // import ButtonSlot from "./slot";
-import { reactive, ref } from "vue";
-import draggableVue from "./draggable.vue";
-import {
-  useMouse,
-  usePreferredDark,
-  useLocalStorage,
-  debounceFilter,
-  useDebounceFn,
-  throttleFilter,
-  pausableFilter,
-  useDeviceMotion,
-} from "@vueuse/core";
-import Button from "./Tabs/Button.vue";
+// import { reactive, ref } from "vue";
+// import draggableVue from "./draggable.vue";
+// import {
+//   useMouse,
+//   usePreferredDark,
+//   useLocalStorage,
+//   debounceFilter,
+//   useDebounceFn,
+//   throttleFilter,
+//   pausableFilter,
+//   useDeviceMotion,
+// } from "@vueuse/core";
+// import Button from "./Tabs/Button.vue";
 
-const values = ref("");
+// const values = ref("");
 
-const motionControl = pausableFilter();
-const motion = useDeviceMotion({ eventFilter: motionControl.eventFilter });
-motionControl.pause();
-motionControl.resume();
+// const motionControl = pausableFilter();
+// const motion = useDeviceMotion({ eventFilter: motionControl.eventFilter });
+// motionControl.pause();
+// motionControl.resume();
 
-const storage = useLocalStorage(
-  "keys",
-  { foo: "bar" },
-  { eventFilter: throttleFilter(100) }
-);
-console.log(storage);
-const { x, y } = useMouse({ eventFilter: debounceFilter(100) });
+// const storage = useLocalStorage(
+//   "keys",
+//   { foo: "bar" },
+//   { eventFilter: throttleFilter(100) }
+// );
+// console.log(storage);
+// const { x, y } = useMouse({ eventFilter: debounceFilter(100) });
 
-// const { x, y } = useMouse();
-const isDark = usePreferredDark();
-const store = useLocalStorage("appColor", {
-  name: "Apple",
-  color: "red",
-});
+// // const { x, y } = useMouse();
+// const isDark = usePreferredDark();
+// const store = useLocalStorage("appColor", {
+//   name: "Apple",
+//   color: "red",
+// });
 
-const data = reactive(useMouse());
+// const data = reactive(useMouse());
 
-const timeDelay = useMouse({ eventFilter: debounceFilter(110) });
-const search = () => {
-  console.log("search");
-  inputValue.value = "mimi";
-};
+// const timeDelay = useMouse({ eventFilter: debounceFilter(110) });
+// const search = () => {
+//   console.log("search");
+//   inputValue.value = "mimi";
+// };
 
-const searchValue = useDebounceFn(search, 500, { maxWait: 1000 });
+// const searchValue = useDebounceFn(search, 500, { maxWait: 1000 });
 
-const lists = [
-  { name: "aaa", age: 12 },
-  { name: "bbb", age: 78 },
-  { name: "ccc", age: 45 },
-];
+// const lists = [
+//   { name: "aaa", age: 12 },
+//   { name: "bbb", age: 78 },
+//   { name: "ccc", age: 45 },
+// ];
 
-const inputValue = ref("");
+// const inputValue = ref("");
 
-const changeInput = (e) => {
-  console.log(e);
+// const changeInput = (e) => {
+//   console.log(e);
 
-  inputValue.value = e;
-};
+//   inputValue.value = e;
+// };
 </script>
 
 <style scoped>
