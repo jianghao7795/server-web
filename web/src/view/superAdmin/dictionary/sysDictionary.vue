@@ -21,9 +21,9 @@
           <el-input v-model="searchInfo.desc" placeholder="搜索条件" />
         </el-form-item>
         <el-form-item>
-          <el-button size="small" type="primary" icon="search" @click="onSubmit"
-            >查询</el-button
-          >
+          <el-button size="small" type="primary" icon="search" @click="onSubmit">
+            查询
+          </el-button>
           <el-button size="small" icon="refresh" @click="onReset">重置</el-button>
         </el-form-item>
       </el-form>
@@ -56,7 +56,8 @@
             <el-button
               size="small"
               icon="document"
-              type="text"
+              link
+              type="primary"
               @click="toDetile(scope.row)"
             >
               详情
@@ -64,7 +65,8 @@
             <el-button
               size="small"
               icon="edit"
-              type="text"
+              link
+              type="primary"
               @click="updateSysDictionaryFunc(scope.row)"
             >
               变更
@@ -80,7 +82,8 @@
             >
               <template #reference>
                 <el-button
-                  type="text"
+                  link
+                  type="primary"
                   icon="delete"
                   size="small"
                   style="margin-left: 10px"

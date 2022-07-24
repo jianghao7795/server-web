@@ -24,7 +24,7 @@
         <el-popover v-model:visible="deleteVisible" placement="top" width="160">
           <p>确定要删除吗？</p>
           <div style="text-align: right; margin-top: 8px">
-            <el-button size="small" type="text" @click="deleteVisible = false"
+            <el-button size="small" link type="primary" @click="deleteVisible = false"
               >取消</el-button
             >
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
@@ -115,7 +115,12 @@
             <el-popover v-model:visible="scope.row.visible" placement="top" width="160">
               <p>确定要删除吗？</p>
               <div style="text-align: right; margin-top: 8px">
-                <el-button size="small" type="text" @click="scope.row.visible = false">
+                <el-button
+                  size="small"
+                  link
+                  type="primary"
+                  @click="scope.row.visible = false"
+                >
                   取消
                 </el-button>
                 <el-button
@@ -130,7 +135,8 @@
                 <el-button
                   icon="delete"
                   size="small"
-                  type="text"
+                  link
+                  type="primary"
                   @click="scope.row.visible = true"
                 >
                   删除

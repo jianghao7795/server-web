@@ -1,7 +1,5 @@
 <template>
   <div>
-    <el-input @change="changeInput" v-model="inputValue"></el-input>
-    <el-button type="primary" @click="searchValue">+</el-button>
     <el-row :gutter="10">
       <el-col :span="24">
         <el-card>

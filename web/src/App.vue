@@ -28,4 +28,14 @@ export default {
 .el-button {
   font-weight: 400 !important;
 }
+
+a {
+  color: #1890ff;
+  text-decoration: none;
+  background-color: #0000;
+  outline: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  -webkit-text-decoration-skip: objects;
+}
 </style>

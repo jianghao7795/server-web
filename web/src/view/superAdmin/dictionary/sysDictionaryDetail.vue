@@ -54,7 +54,7 @@
           <template #default="scope">
             <el-button
               size="small"
-              type="text"
+              link type="primary"
               icon="edit"
               @click="updateSysDictionaryDetailFunc(scope.row)"
             >
@@ -70,7 +70,7 @@
             >
               <!-- <p>确定要删除吗？</p>
               <div style="text-align: right; margin-top: 8px">
-                <el-button size="small" type="text" @click="scope.row.visible = false">
+                <el-button size="small" link type="primary" @click="scope.row.visible = false">
                   取消
                 </el-button>
                 <el-button
@@ -83,7 +83,7 @@
               </div> -->
               <template #reference>
                 <el-button
-                  type="text"
+                  link type="primary"
                   icon="delete"
                   size="small"
                   @click="scope.row.visible = true"

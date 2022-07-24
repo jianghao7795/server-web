@@ -60,7 +60,7 @@
             >
               <!-- <p>确定要删除此用户吗</p>
               <div style="text-align: right; margin-top: 8px">
-                <el-button size="small" type="text" @click="scope.row.visible = false"
+                <el-button size="small" link type="primary" @click="scope.row.visible = false"
                   >取消</el-button
                 >
                 <el-button type="primary" size="small" @click="deleteUserFunc(scope.row)"
@@ -68,19 +68,27 @@
                 >
               </div> -->
               <template #reference>
-                <el-button type="text" icon="delete" size="small">删除</el-button>
+                <el-button link type="primary" icon="delete" size="small">删除</el-button>
               </template>
             </el-popconfirm>
-            <el-button type="text" icon="edit" size="small" @click="openEdit(scope.row)"
-              >编辑</el-button
-            >
             <el-button
-              type="text"
+              link
+              type="primary"
+              icon="edit"
+              size="small"
+              @click="openEdit(scope.row)"
+            >
+              编辑
+            </el-button>
+            <el-button
+              link
+              type="primary"
               icon="magic-stick"
               size="small"
               @click="resetPasswordFunc(scope.row)"
-              >重置密码</el-button
             >
+              重置密码
+            </el-button>
           </template>
         </el-table-column>
       </el-table>

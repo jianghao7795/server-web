@@ -12,10 +12,10 @@
 
 <script>
 export default {
-  name: 'System'
-}
+  name: "System",
+};
 </script>
 <script setup>
-import { useRouterStore } from '@/pinia/modules/router'
-const routerStore = useRouterStore()
+import { useRouterStore } from "@/pinia/modules/router";
+const routerStore = useRouterStore();
 </script>

@@ -56,19 +56,26 @@
         </el-table-column>
         <el-table-column align="left" fixed="right" label="操作" width="300">
           <template #default="scope">
-            <el-button size="small" type="text" icon="plus" @click="addMenu(scope.row.ID)"
+            <el-button
+              size="small"
+              icon="plus"
+              link
+              type="primary"
+              @click="addMenu(scope.row.ID)"
               >添加子菜单</el-button
             >
             <el-button
               size="small"
-              type="text"
+              link
+              type="primary"
               icon="edit"
               @click="editMenu(scope.row.ID)"
               >编辑</el-button
             >
             <el-button
               size="small"
-              type="text"
+              link
+              type="primary"
               icon="delete"
               @click="deleteMenu(scope.row.ID)"
               >删除</el-button

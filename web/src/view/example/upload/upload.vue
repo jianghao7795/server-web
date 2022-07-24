@@ -66,7 +66,7 @@
             <el-button
               size="small"
               icon="download"
-              type="text"
+              link type="primary"
               @click="downloadFile(scope.row)"
             >
               下载
@@ -74,7 +74,7 @@
             <el-button
               size="small"
               icon="delete"
-              type="text"
+              link type="primary"
               @click="deleteFileFunc(scope.row)"
             >
               删除
