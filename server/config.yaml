@@ -82,9 +82,9 @@ hua-wei-obs:
   secret-key: you-secret-key
 jwt:
   signing-key: 519fb1f4-4321-446a-bb7b-bfb13b68b960
-  expires-time: 604800
-  buffer-time: 86400
-  issuer: qmPlus
+  expires-time: 86400
+  buffer-time: 3600
+  issuer: web
 local:
   path: uploads/file
 mysql:
@@ -125,7 +125,7 @@ system:
   env: public
   addr: 3100
   db-type: mysql
-  oss-type: local # 上传文件使用的服务器
+  oss-type: local
   use-multipoint: false
   use-redis: true
   iplimit-count: 15000
