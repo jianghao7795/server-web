@@ -70,7 +70,7 @@
         <el-table-column align="left" label="操作">
           <template #default="scope">
             <el-button
-              :text="true"
+              link
               type="primary"
               icon="edit"
               size="small"
@@ -81,7 +81,7 @@
             </el-button>
             <el-button
               type="primary"
-              :text="true"
+              link
               icon="delete"
               size="small"
               @click="deleteRow(scope.row)"
