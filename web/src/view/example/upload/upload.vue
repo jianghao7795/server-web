@@ -66,7 +66,8 @@
             <el-button
               size="small"
               icon="download"
-              link type="primary"
+              link
+              type="primary"
               @click="downloadFile(scope.row)"
             >
               下载
@@ -74,7 +75,8 @@
             <el-button
               size="small"
               icon="delete"
-              link type="primary"
+              link
+              type="primary"
               @click="deleteFileFunc(scope.row)"
             >
               删除
@@ -82,7 +84,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="gva-pagination">
+      <div class="pagination">
         <el-pagination
           :current-page="page"
           :page-size="pageSize"
