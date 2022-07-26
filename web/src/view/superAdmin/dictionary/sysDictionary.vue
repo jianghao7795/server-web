@@ -96,7 +96,7 @@
         </el-table-column>
       </el-table>
 
-      <div class="gva-pagination">
+      <div class="pagination">
         <el-pagination
           :current-page="page"
           :page-size="pageSize"
