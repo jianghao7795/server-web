@@ -93,7 +93,7 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination
+        <el-pagination background
           :current-page="page"
           :page-size="pageSize"
           :page-sizes="[10, 30, 50, 100]"

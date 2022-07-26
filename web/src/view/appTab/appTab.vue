@@ -91,7 +91,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div>
+      <div class="pagination">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"

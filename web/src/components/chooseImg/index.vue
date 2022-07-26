@@ -53,7 +53,7 @@
         </div>
       </div>
     </div>
-    <el-pagination
+    <el-pagination background
       :current-page="page"
       :page-size="pageSize"
       :total="total"
