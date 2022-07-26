@@ -207,5 +207,10 @@
 }
 
 .el-select .el-input .el-select__caret.el-icon {
-  height: 38px;
+  height: 32px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
 }

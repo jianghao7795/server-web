@@ -91,8 +91,9 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="gva-pagination">
+      <div>
         <el-pagination
+          background
           layout="total, sizes, prev, pager, next, jumper"
           :current-page="page"
           :page-size="pageSize"
