@@ -213,4 +213,10 @@
 .pagination {
   display: flex;
   justify-content: flex-end;
+  .el-pagination .el-select .el-input {
+    width: 98px;
+  }
+  .admin-box .el-input .el-input__suffix {
+    margin-top: 0;
+  }
 }
