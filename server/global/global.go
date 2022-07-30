@@ -18,11 +18,11 @@ var (
 	GVA_DBList map[string]*gorm.DB
 	GVA_REDIS  *redis.Client
 	GVA_CONFIG config.Server
-	GVA_VP     *viper.Viper
+	GVA_VP     *viper.Viper // 读取配置文件
 	// GVA_LOG    *oplogging.Logger
-	GVA_LOG                 *zap.Logger
-	GVA_Timer               timer.Timer = timer.NewTimerTask()
-	GVA_Concurrency_Control             = &singleflight.Group{}
+	GVA_LOG                 *zap.Logger         // 日志
+	GVA_Timer               timer.Timer         = timer.NewTimerTask()
+	GVA_Concurrency_Control *singleflight.Group = &singleflight.Group{}
 
 	BlackCache local_cache.Cache
 	lock       sync.RWMutex

@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "System",
+  name: "Article",
 };
 </script>
 <script setup>

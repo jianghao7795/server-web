@@ -62,6 +62,7 @@ func (operationRecordService *OperationRecordService) GetSysOperationRecord(id u
 //@return: err error, list interface{}, total int64
 
 func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoList(info systemReq.SysOperationRecordSearch) (err error, list interface{}, total int64) {
+	// time.Sleep(3 * time.Second)
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db

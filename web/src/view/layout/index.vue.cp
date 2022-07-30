@@ -2,12 +2,12 @@
   <el-container class="layout-cont">
     <el-container :class="[isSider ? 'openside' : 'hideside', isMobile ? 'mobile' : '']">
       <el-row :class="[isShadowBg ? 'shadowBg' : '']" @click="changeShadow()" />
-      <el-aside class="main-cont main-left">
+      <el-aside class="main-cont main-left gva-aside">
         <div class="tilte" :style="{ background: backgroundColor }">
           <img alt class="logoimg" :src="$GIN_VUE_ADMIN.appLogo" />
-          <h2 v-if="isSider" class="tit-text" :style="{ color: textColor }">
+          <div v-if="isSider" class="tit-text" :style="{ color: textColor }">
             {{ $GIN_VUE_ADMIN.appName }}
-          </h2>
+          </div>
         </div>
         <Aside class="aside" />
       </el-aside>
@@ -18,27 +18,23 @@
           mode="out-in"
           name="el-fade-in-linear"
         >
-          <!-- :style="{
+          <div
+            :style="{
               width: `calc(100% - ${isMobile ? '0px' : isCollapse ? '54px' : '220px'})`,
-            }" -->
-          <div class="topfix">
+            }"
+            class="topfix"
+          >
             <el-row>
               <el-col>
                 <el-header class="header-cont">
                   <el-row class="pd-0">
                     <el-col :xs="2" :lg="1" :md="1" :sm="1" :xl="1" style="z-index: 100">
                       <div class="menu-total" @click="totalCollapse">
-                        <!-- <div
+                        <div
                           v-if="isCollapse"
                           class="gvaIcon gvaIcon-arrow-double-right"
                         />
-                        <div v-else class="gvaIcon gvaIcon-arrow-double-left" /> -->
-                        <el-icon v-if="isCollapse">
-                          <Expand />
-                        </el-icon>
-                        <el-icon v-else>
-                          <Fold />
-                        </el-icon>
+                        <div v-else class="gvaIcon gvaIcon-arrow-double-left" />
                       </div>
                     </el-col>
                     <el-col :xs="10" :lg="14" :md="14" :sm="9" :xl="14" :pull="1">
@@ -46,9 +42,8 @@
                         <el-breadcrumb-item
                           v-for="item in matched.slice(1, matched.length)"
                           :key="item.path"
+                          >{{ route.params.title || item.meta.title }}</el-breadcrumb-item
                         >
-                          {{ fmtTitle(item.meta.title, route) }}
-                        </el-breadcrumb-item>
                       </el-breadcrumb>
                     </el-col>
                     <el-col :xs="12" :lg="9" :md="9" :sm="14" :xl="9">
@@ -60,9 +55,9 @@
                           >
                             <span class="header-avatar" style="cursor: pointer">
                               <CustomPic />
-                              <span style="margin-left: 5px">
-                                {{ userStore.userInfo.nickName }}
-                              </span>
+                              <span style="margin-left: 5px">{{
+                                userStore.userInfo.nickName
+                              }}</span>
                               <el-icon>
                                 <arrow-down />
                               </el-icon>
@@ -86,18 +81,17 @@
                                   :key="item.authorityId"
                                   @click="changeUserAuth(item.authorityId)"
                                 >
-                                  <span>切换为：{{ item.authorityName }}</span>
+                                  <span> 切换为：{{ item.authorityName }} </span>
                                 </el-dropdown-item>
                               </template>
-                              <el-dropdown-item icon="avatar" @click="toPerson">
-                                个人信息
-                              </el-dropdown-item>
+                              <el-dropdown-item icon="avatar" @click="toPerson"
+                                >个人信息</el-dropdown-item
+                              >
                               <el-dropdown-item
                                 icon="reading-lamp"
                                 @click="userStore.LoginOut"
+                                >登 出</el-dropdown-item
                               >
-                                登 出
-                              </el-dropdown-item>
                             </el-dropdown-menu>
                           </template>
                         </el-dropdown>
@@ -154,8 +148,7 @@ import { computed, ref, onMounted, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
 import { useRouterStore } from "@/pinia/modules/router";
-import { fmtTitle } from "@/utils/fmtRouterTitle";
-
+// import { fmtTitle } from "@/utils/fmtRouterTitle";
 const router = useRouter();
 const route = useRoute();
 const routerStore = useRouterStore();
@@ -179,15 +172,13 @@ const initPage = () => {
     isCollapse.value = false;
   }
 };
-
 initPage();
-
 const loadingFlag = ref(false);
 onMounted(() => {
   // 挂载一些通用的事件
-  emitter.emit("collapse", isCollapse.value); // emit 是值 fire an event
+  emitter.emit("collapse", isCollapse.value);
   emitter.emit("mobile", isMobile.value);
-  emitter.on("reload", reload); // on 倾听所有事件 // emitter.all.clear() clearing all events
+  emitter.on("reload", reload);
   emitter.on("showLoading", () => {
     loadingFlag.value = true;
   });
@@ -195,7 +186,6 @@ onMounted(() => {
     loadingFlag.value = false;
   });
   window.onresize = () => {
-    // onresize 是调整浏览器尺寸时触发
     return (() => {
       initPage();
       emitter.emit("collapse", isCollapse.value);
@@ -216,7 +206,6 @@ const textColor = computed(() => {
     return userStore.baseColor;
   }
 });
-
 const backgroundColor = computed(() => {
   if (userStore.sideMode === "dark") {
     return "#191a23";
@@ -226,9 +215,7 @@ const backgroundColor = computed(() => {
     return userStore.sideMode;
   }
 });
-
 const matched = computed(() => route.meta.matched);
-
 const changeUserAuth = async (id) => {
   const res = await setUserAuthority({
     authorityId: id,
@@ -237,15 +224,11 @@ const changeUserAuth = async (id) => {
     emitter.emit("closeAllPage");
     setTimeout(() => {
       window.location.reload();
-    }, 1);
+    }, 50);
   }
 };
-
 const reloadFlag = ref(true);
-
-// watchEffect((newValue, oldValue) => {
-//   console.log(reloadFlag.value);
-// });
+let reloadTimer = null;
 const reload = async () => {
   if (reloadTimer) {
     window.clearTimeout(reloadTimer);
@@ -260,16 +243,7 @@ const reload = async () => {
       router.push({ name: "Reload", params: { title } });
     }
   }, 400);
-  // if (route.meta.keepAlive) {
-  //   reloadFlag.value = false;
-  //   await nextTick();
-  //   reloadFlag.value = true;
-  // } else {
-  //   const title = route.meta.title;
-  //   router.push({ name: "Reload", params: { title } });
-  // }
 };
-
 const isShadowBg = ref(false);
 const totalCollapse = () => {
   isCollapse.value = !isCollapse.value;
@@ -277,7 +251,6 @@ const totalCollapse = () => {
   isShadowBg.value = !isCollapse.value;
   emitter.emit("collapse", isCollapse.value);
 };
-
 const toPerson = () => {
   router.push({ name: "person" });
 };
@@ -290,7 +263,6 @@ const changeShadow = () => {
 
 <style lang="scss">
 @import "@/style/mobile.scss";
-
 .dark {
   background-color: #191a23 !important;
   color: #fff !important;

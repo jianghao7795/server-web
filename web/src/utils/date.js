@@ -40,3 +40,14 @@ export function formatTimeToStr(times, pattern) {
   }
   return d.toLocaleString();
 }
+
+export function setLocalStorage(item, value) {
+  localStorage.setItem(item, JSON.stringify(value));
+}
+
+export function getLocalStorage(item) {
+  const params = localStorage.getItem(item);
+  if (params.indexOf('{') === 0) {
+    return JSON.parse(params);
+  }
+}

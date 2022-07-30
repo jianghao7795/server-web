@@ -26,10 +26,10 @@
         <el-popover v-model:visible="deleteVisible" placement="top" width="160">
           <p>确定要删除吗？</p>
           <div style="text-align: right; margin-top: 8px">
-            <el-button size="small" type="text" @click="deleteVisible = false">
-              取消
-            </el-button>
-            <el-button size="small" type="primary" @click="onDelete">确定</el-button>
+            <el-button size="small" @click="deleteVisible = false"> 取消 </el-button>
+            <el-button size="small" :text="true" type="primary" @click="onDelete"
+              >确定</el-button
+            >
           </div>
           <template #reference>
             <el-button
@@ -56,15 +56,22 @@
           <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
         </el-table-column>
         <el-table-column align="left" label="标签名称" prop="name" width="120" />
-        <el-table-column align="left" label="状态" prop="status" width="120">
-          <template #default="scope">{{
-            { 1: "显示", 0: "隐藏" }[scope.row.status]
-          }}</template>
+        <el-table-column align="left" label="状态" prop="status" width="150">
+          <template #default="scope">
+            <el-switch
+              v-model="scope.row.status"
+              :loading="loading[scope.row.id]"
+              :before-change="() => changeHide(scope.row)"
+              active-text="显示"
+              inactive-text="隐藏"
+            />
+          </template>
         </el-table-column>
         <el-table-column align="left" label="操作">
           <template #default="scope">
             <el-button
-              type="text"
+              link
+              type="primary"
               icon="edit"
               size="small"
               class="table-button"
@@ -73,7 +80,8 @@
               编辑
             </el-button>
             <el-button
-              type="text"
+              type="primary"
+              link
               icon="delete"
               size="small"
               @click="deleteRow(scope.row)"
@@ -83,8 +91,9 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="gva-pagination">
+      <div class="pagination">
         <el-pagination
+          background
           layout="total, sizes, prev, pager, next, jumper"
           :current-page="page"
           :page-size="pageSize"
@@ -101,14 +110,10 @@
           <el-input v-model="formData.name" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="状态:">
-          <el-select v-model="formData.status" placeholder="请选择" size="small">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
+          <el-radio-group v-model="formData.status">
+            <el-radio-button :label="1">显示</el-radio-button>
+            <el-radio-button :label="0">隐藏</el-radio-button>
+          </el-radio-group>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -148,6 +153,33 @@ const formData = ref({
   status: 1,
 });
 
+console.log("change");
+
+const loading = ref({});
+
+const changeHide = (e) => {
+  // console.log(e);
+  const primitive = { ...loading.value };
+  primitive[e.ID] = true;
+  loading.value = primitive;
+
+  return new Promise((resolve, reject) => {
+    updateAppTab({ ...e, status: e.status ? 0 : 1 }).then((resp) => {
+      // console.log(e.ID);
+      const primitive = { ...loading.value };
+      primitive[e.ID] = false;
+      loading.value = primitive;
+      // console.log(primitive);
+      if (resp.code === 0) {
+        ElMessage.success(e.status ? "隐藏成功" : "显示成功");
+        return resolve(true);
+      } else {
+        ElMessage.error(!e.status ? "隐藏成功" : "显示成功");
+        return reject(new Error(resp.msg));
+      }
+    });
+  });
+};
 // =========== 表格控制部分 ===========
 const page = ref(1);
 const total = ref(0);
@@ -155,10 +187,10 @@ const pageSize = ref(10);
 const tableData = ref([]);
 const searchInfo = ref({});
 
-const options = ref([
-  { label: "显示", value: 1 },
-  { label: "隐藏", value: 0 },
-]);
+// const options = ref([
+//   { label: "显示", value: 1 },
+//   { label: "隐藏", value: 0 },
+// ]);
 
 // 重置
 const onReset = () => {
@@ -189,14 +221,14 @@ const handleCurrentChange = (val) => {
 
 // 查询
 const getTableData = async () => {
-  console.log(searchInfo.value);
+  // console.log(searchInfo.value);
   const table = await getAppTabList({
     page: page.value,
     pageSize: pageSize.value,
     ...searchInfo.value,
   });
   if (table.code === 0) {
-    tableData.value = table.data.list;
+    tableData.value = table.data.list.map((i) => ({ ...i, status: !!i.status }));
     total.value = table.data.total;
     page.value = table.data.page;
     pageSize.value = table.data.pageSize;

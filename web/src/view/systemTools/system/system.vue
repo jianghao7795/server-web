@@ -283,7 +283,7 @@
             <el-input v-model="config.autocode.root" disabled />
           </el-form-item>
           <el-form-item label="Server(后端代码地址)">
-            <el-input v-model="config.autocode['transfer-restart']" />
+            <el-input v-model="config.autocode['server']" />
           </el-form-item>
           <el-form-item label="SApi(后端api文件夹地址)">
             <el-input v-model="config.autocode['server-api']" />
@@ -336,9 +336,9 @@
     </el-form>
     <div class="gva-btn-list">
       <el-button type="primary" size="small" @click="update">立即更新</el-button>
-      <el-button type="primary" size="small" @click="reload"
+      <!-- <el-button type="primary" size="small" @click="reload"
         >重启服务（开发中）</el-button
-      >
+      > -->
     </div>
   </div>
 </template>

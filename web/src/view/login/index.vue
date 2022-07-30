@@ -2,7 +2,7 @@
   <div id="userLayout">
     <div class="login_panle">
       <div class="login_panle_form">
-        <div class="login_panle_form_title">
+        <div class="login_panle_form_title" style="text-align: center">
           <img class="login_panle_form_title_logo" :src="$GIN_VUE_ADMIN.appLogo" alt />
           <p class="login_panle_form_title_p">{{ $GIN_VUE_ADMIN.appName }}</p>
         </div>
@@ -100,6 +100,9 @@ import { reactive, ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
+import dayjs from "dayjs";
+import { setLocalStorage } from "@/utils/date";
+
 const router = useRouter();
 
 // 是否需要初始化
@@ -174,6 +177,11 @@ const submitForm = () => {
       const flag = await login();
       if (!flag) {
         loginVerify();
+      } else {
+        // console.log();
+        setLocalStorage("workTime", {
+          workStartTime: dayjs().unix().valueOf(),
+        });
       }
     } else {
       ElMessage({

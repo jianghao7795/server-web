@@ -1,4 +1,4 @@
-export const downloadImage = (imgsrc, name) => {
+export const downloadImage = (imgsrc = '', name = '') => {
   // 下载图片地址和图片名
   var image = new Image();
   image.setAttribute('crossOrigin', 'anonymous');

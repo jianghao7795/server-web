@@ -12,9 +12,9 @@
           <el-input v-model="searchInfo.status" placeholder="搜索条件" />
         </el-form-item>
         <el-form-item>
-          <el-button size="small" type="primary" icon="search" @click="onSubmit"
-            >查询</el-button
-          >
+          <el-button size="small" type="primary" icon="search" @click="onSubmit">
+            查询
+          </el-button>
           <el-button size="small" icon="refresh" @click="onReset">重置</el-button>
         </el-form-item>
       </el-form>
@@ -24,7 +24,7 @@
         <el-popover v-model:visible="deleteVisible" placement="top" width="160">
           <p>确定要删除吗？</p>
           <div style="text-align: right; margin-top: 8px">
-            <el-button size="small" type="text" @click="deleteVisible = false"
+            <el-button size="small" link type="primary" @click="deleteVisible = false"
               >取消</el-button
             >
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
@@ -48,6 +48,7 @@
         tooltip-effect="dark"
         row-key="ID"
         @selection-change="handleSelectionChange"
+        v-loading="loading"
       >
         <el-table-column align="left" type="selection" width="55" />
         <el-table-column align="left" label="操作人" width="160">
@@ -71,12 +72,17 @@
         <el-table-column align="left" label="请求" prop="path" width="80">
           <template #default="scope">
             <div>
-              <el-popover v-if="scope.row.body" placement="left-start" trigger="click">
+              <el-popover
+                v-if="scope.row.body"
+                placement="left-start"
+                trigger="click"
+                :width="420"
+              >
                 <div class="popover-box">
                   <pre>{{ fmtBody(scope.row.body) }}</pre>
                 </div>
                 <template #reference>
-                  <el-icon style="cursor: pointer"><warning /></el-icon>
+                  <el-icon style="cursor: pointer"><warning color="green" /></el-icon>
                 </template>
               </el-popover>
 
@@ -87,12 +93,17 @@
         <el-table-column align="left" label="响应" prop="path" width="80">
           <template #default="scope">
             <div>
-              <el-popover v-if="scope.row.resp" placement="left-start" trigger="click">
+              <el-popover
+                v-if="scope.row.resp"
+                placement="left-start"
+                trigger="click"
+                :width="420"
+              >
                 <div class="popover-box">
                   <pre>{{ fmtBody(scope.row.resp) }}</pre>
                 </div>
                 <template #reference>
-                  <el-icon style="cursor: pointer"><warning /></el-icon>
+                  <el-icon style="cursor: pointer"><warning color="#f00" /></el-icon>
                 </template>
               </el-popover>
               <span v-else>无</span>
@@ -104,31 +115,39 @@
             <el-popover v-model:visible="scope.row.visible" placement="top" width="160">
               <p>确定要删除吗？</p>
               <div style="text-align: right; margin-top: 8px">
-                <el-button size="small" type="text" @click="scope.row.visible = false"
-                  >取消</el-button
+                <el-button
+                  size="small"
+                  link
+                  type="primary"
+                  @click="scope.row.visible = false"
                 >
+                  取消
+                </el-button>
                 <el-button
                   size="small"
                   type="primary"
                   @click="deleteSysOperationRecordFunc(scope.row)"
-                  >确定</el-button
                 >
+                  确定
+                </el-button>
               </div>
               <template #reference>
                 <el-button
                   icon="delete"
                   size="small"
-                  type="text"
+                  link
+                  type="primary"
                   @click="scope.row.visible = true"
-                  >删除</el-button
                 >
+                  删除
+                </el-button>
               </template>
             </el-popover>
           </template>
         </el-table-column>
       </el-table>
-      <div class="gva-pagination">
-        <el-pagination
+      <div class="pagination">
+        <el-pagination background
           :current-page="page"
           :page-size="pageSize"
           :page-sizes="[10, 30, 50, 100]"
@@ -149,7 +168,7 @@ import {
   deleteSysOperationRecordByIds,
 } from "@/api/sysOperationRecord"; // 此处请自行替换地址
 import { formatDate } from "@/utils/format";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 
 const page = ref(1);
@@ -157,6 +176,7 @@ const total = ref(0);
 const pageSize = ref(10);
 const tableData = ref([]);
 const searchInfo = ref({});
+const loading = ref(false);
 const onReset = () => {
   searchInfo.value = {};
 };
@@ -183,11 +203,13 @@ const handleCurrentChange = (val) => {
 
 // 查询
 const getTableData = async () => {
+  loading.value = true;
   const table = await getSysOperationRecordList({
     page: page.value,
     pageSize: pageSize.value,
     ...searchInfo.value,
   });
+  loading.value = false;
   if (table.code === 0) {
     tableData.value = table.data.list;
     total.value = table.data.total;
@@ -196,7 +218,9 @@ const getTableData = async () => {
   }
 };
 
-getTableData();
+onMounted(() => {
+  getTableData();
+});
 
 const deleteVisible = ref(false);
 const multipleSelection = ref([]);

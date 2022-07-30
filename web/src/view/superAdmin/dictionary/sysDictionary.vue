@@ -21,9 +21,9 @@
           <el-input v-model="searchInfo.desc" placeholder="搜索条件" />
         </el-form-item>
         <el-form-item>
-          <el-button size="small" type="primary" icon="search" @click="onSubmit"
-            >查询</el-button
-          >
+          <el-button size="small" type="primary" icon="search" @click="onSubmit">
+            查询
+          </el-button>
           <el-button size="small" icon="refresh" @click="onReset">重置</el-button>
         </el-form-item>
       </el-form>
@@ -56,47 +56,48 @@
             <el-button
               size="small"
               icon="document"
-              type="text"
+              link
+              type="primary"
               @click="toDetile(scope.row)"
-              >详情</el-button
             >
+              详情
+            </el-button>
             <el-button
               size="small"
               icon="edit"
-              type="text"
+              link
+              type="primary"
               @click="updateSysDictionaryFunc(scope.row)"
-              >变更</el-button
             >
-            <el-popover v-model:visible="scope.row.visible" placement="top" width="160">
-              <p>确定要删除吗？</p>
-              <div style="text-align: right; margin-top: 8px">
-                <el-button size="small" type="text" @click="scope.row.visible = false"
-                  >取消</el-button
-                >
-                <el-button
-                  type="primary"
-                  size="small"
-                  @click="deleteSysDictionaryFunc(scope.row)"
-                  >确定</el-button
-                >
-              </div>
+              变更
+            </el-button>
+            <!-- v-model:visible="scope.row.visible" -->
+            <el-popconfirm
+              placement="top"
+              width="160"
+              confirm-button-text="确定"
+              cancel-button-text="取消"
+              title="确定要删除吗?"
+              @confirm="deleteSysDictionaryFunc(scope.row)"
+            >
               <template #reference>
                 <el-button
-                  type="text"
+                  link
+                  type="primary"
                   icon="delete"
                   size="small"
                   style="margin-left: 10px"
-                  @click="scope.row.visible = true"
-                  >删除</el-button
                 >
+                  删除
+                </el-button>
               </template>
-            </el-popover>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
 
-      <div class="gva-pagination">
-        <el-pagination
+      <div class="pagination">
+        <el-pagination background
           :current-page="page"
           :page-size="pageSize"
           :page-sizes="[10, 30, 50, 100]"

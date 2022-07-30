@@ -3,8 +3,8 @@
  */
 
 const config = {
-  appName: 'Admin',
-  appLogo: 'https://www.gin-vue-admin.com/img/logo.png',
+  appName: '后台管理',
+  appLogo: '/Thesquid.ink-Free-Flat-Sample-Space-rocket.ico',
   showViteLogo: true,
 };
 

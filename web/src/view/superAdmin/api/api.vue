@@ -37,7 +37,7 @@
         <el-popover v-model:visible="deleteVisible" placement="top" width="160">
           <p>确定要删除吗？</p>
           <div style="text-align: right; margin-top: 8px">
-            <el-button size="small" type="text" @click="deleteVisible = false">
+            <el-button size="small" link type="primary" @click="deleteVisible = false">
               取消
             </el-button>
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
@@ -108,22 +108,24 @@
             <el-button
               icon="edit"
               size="small"
-              type="text"
+              link
+              type="primary"
               @click="editApiFunc(scope.row)"
               >编辑</el-button
             >
             <el-button
               icon="delete"
               size="small"
-              type="text"
+              link
+              type="primary"
               @click="deleteApiFunc(scope.row)"
               >删除</el-button
             >
           </template>
         </el-table-column>
       </el-table>
-      <div class="gva-pagination">
-        <el-pagination
+      <div class="pagination">
+        <el-pagination background
           :current-page="page"
           :page-size="pageSize"
           :page-sizes="[10, 30, 50, 100]"

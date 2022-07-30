@@ -58,7 +58,7 @@
           <template #default="scope">
             <el-button
               size="small"
-              type="text"
+              link type="primary"
               icon="edit"
               @click="updateCustomer(scope.row)"
             >
@@ -73,14 +73,14 @@
             >
               <!-- @click="deleteCustomer(scope.row)" -->
               <template #reference>
-                <el-button type="text" icon="delete" size="small"> 删除 </el-button>
+                <el-button type="link" icon="delete" size="small"> 删除 </el-button>
               </template>
             </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
-      <div class="gva-pagination">
-        <el-pagination
+      <div class="pagination">
+        <el-pagination background
           :current-page="page"
           :page-size="pageSize"
           :page-sizes="[10, 30, 50, 100]"

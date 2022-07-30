@@ -1,4 +1,5 @@
 import legacyPlugin from '@vitejs/plugin-legacy';
+import { defineConfig } from 'vite';
 // import usePluginImport from 'vite-plugin-importer';
 // import { viteLogo } from './src/core/config';
 import Banner from 'vite-plugin-banner';
@@ -6,9 +7,10 @@ import * as path from 'path';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import vuePlugin from '@vitejs/plugin-vue';
-import vueJsx from '@vitejs/plugin-vue-jsx';
+// import vueJsx from '@vitejs/plugin-vue-jsx';
+// import { isAsyncFunction } from 'util/types';
 // @see https://cn.vitejs.dev/config/
-export default ({ command, mode }) => {
+export default defineConfig(({ command, mode }) => {
   // mode development and production
   // console.log(command, mode);
   if (command === 'serve') {
@@ -21,6 +23,8 @@ export default ({ command, mode }) => {
     //   // build 独有配置
     // }
   }
+
+  // const data = await isAsyncFunction();
   const NODE_ENV = process.env.NODE_ENV || 'development';
   const envFiles = [`.env.${NODE_ENV}`];
   for (const file of envFiles) {
@@ -78,7 +82,7 @@ export default ({ command, mode }) => {
     },
     build: {
       target: 'es2015',
-      minify: 'esbuild', // 是否进行压缩,boolean | 'terser' | 'esbuild',默认使用terser
+      minify: 'terser', // 是否进行压缩,boolean | 'terser' | 'esbuild',默认使用terser
       manifest: false, // 是否产出maifest.json
       sourcemap: false, // 是否产出soucemap.json
       outDir: 'dist', // 产出目录
@@ -97,8 +101,8 @@ export default ({ command, mode }) => {
           'Edge >= 15',
         ],
       }),
-      vuePlugin(),
-      vueJsx(),
+      vuePlugin({}),
+      // vueJsx(),
       [Banner(`\n Build based on gin-vue-admin \n Time : ${timestamp}`)],
     ],
     css: {
@@ -110,4 +114,4 @@ export default ({ command, mode }) => {
       },
     },
   };
-};
+});

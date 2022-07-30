@@ -6,9 +6,7 @@
           <div class="gva-top-card-left-title">
             早安，{{ userStore.userInfo.nickName }}，请开始一天的工作吧
           </div>
-          <!-- <div class="gva-top-card-left-dot">
-            今日晴，0℃ - 10℃，天气寒冷，注意添加衣物。
-          </div> -->
+          <div class="gva-top-card-left-dot">您今天已工作了{{ nowTime }}</div>
           <!-- <div class="gva-top-card-left-rows">
             <el-row v-auth="888">
               <el-col :span="8" :xs="24" :sm="8">
@@ -93,10 +91,13 @@
 <script setup>
 // import echartsLine from "@/view/dashboard/dashboardCharts/echartsLine.vue";
 // import dashboardTable from "@/view/dashboard/dashboardTable/dashboardTable.vue";
-import { ref } from "vue";
+import { ref, onUnmounted, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
+import { getLocalStorage } from "@/utils/date";
+import dayjs from "dayjs";
 
+let workTimer;
 const userStore = useUserStore();
 
 const toolCards = ref([
@@ -145,8 +146,70 @@ const toolCards = ref([
 ]);
 
 const router = useRouter();
+const oldTime = getLocalStorage("workTime");
+onUnmounted(() => {
+  clearInterval(workTimer);
+});
+// console.log(oldTime);
+
+const formatSeconds = (seconds) => {
+  let secondTime = 0; // 秒
+  let minuteTime = 0; // 分
+  let hourTime = 0; // 小时
+  let dayTime = 0; // 天
+  let result = "";
+
+  if (seconds < 60) {
+    secondTime = seconds;
+  } else {
+    // 获取分钟，除以60取整数，得到整数分钟
+    minuteTime = Math.floor(seconds / 60);
+    // 获取秒数，秒数取佘，得到整数秒数
+    secondTime = Math.floor(seconds % 60);
+    // 如果分钟大于60，将分钟转换成小时
+    if (minuteTime >= 60) {
+      // 获取小时，获取分钟除以60，得到整数小时
+      hourTime = Math.floor(minuteTime / 60);
+      // 获取小时后取佘的分，获取分钟除以60取佘的分
+      minuteTime = Math.floor(minuteTime % 60);
+      if (hourTime >= 24) {
+        // 获取天数， 获取小时除以24，得到整数天
+        dayTime = Math.floor(hourTime / 24);
+        // 获取小时后取余小时，获取分钟除以24取余的分；
+        hourTime = Math.floor(hourTime % 24);
+      }
+    }
+  }
+
+  result =
+    hourTime +
+    "时" +
+    ((minuteTime >= 10 ? minuteTime : "0" + minuteTime) + "分") +
+    ((secondTime >= 10 ? secondTime : "0" + secondTime) + "秒");
+  if (dayTime > 0) {
+    result = dayTime + "天" + result;
+  }
+  return result;
+};
+
+const nowTime = ref("00时00分00秒");
+// const closeTime = ref(null);
+
+const startWork = () => {
+  let workingSeconds = dayjs().unix().valueOf() - oldTime.workStartTime;
+  // console.log(workingSeconds);
+  workTimer = setInterval(() => {
+    workingSeconds++;
+    nowTime.value = formatSeconds(workingSeconds);
+  }, 1000);
+};
+
+onMounted(() => {
+  startWork();
+});
 
 const toTarget = (name) => {
+  // console.log(router);
   router.push({ name });
 };
 </script>

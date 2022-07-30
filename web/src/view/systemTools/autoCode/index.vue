@@ -50,9 +50,9 @@
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button size="small" type="primary" @click="getColumnFunc"
-                >使用此表创建</el-button
-              >
+              <el-button size="small" type="primary" @click="getColumnFunc">
+                使用此表创建
+              </el-button>
             </el-form-item>
           </el-form>
         </el-collapse-item>
@@ -130,9 +130,9 @@
     <!-- 组件列表 -->
     <div class="gva-table-box">
       <div class="gva-btn-list">
-        <el-button size="small" type="primary" @click="editAndAddField()"
-          >新增Field</el-button
-        >
+        <el-button size="small" type="primary" @click="editAndAddField()">
+          新增Field
+        </el-button>
       </div>
       <el-table :data="form.fields">
         <el-table-column align="left" type="index" label="序列" width="100" />
@@ -164,29 +164,39 @@
           <template #default="scope">
             <el-button
               size="small"
-              type="text"
+              link
+              type="primary"
               icon="edit"
               @click="editAndAddField(scope.row)"
               >编辑</el-button
             >
             <el-button
               size="small"
-              type="text"
+              link
+              type="primary"
               :disabled="scope.$index === 0"
               @click="moveUpField(scope.$index)"
-              >上移</el-button
             >
+              上移
+            </el-button>
             <el-button
               size="small"
-              type="text"
+              link
+              type="primary"
               :disabled="scope.$index + 1 === form.fields.length"
               @click="moveDownField(scope.$index)"
-              >下移</el-button
             >
+              下移
+            </el-button>
             <el-popover v-model:visible="scope.row.visible" placement="top">
               <p>确定删除吗？</p>
               <div style="text-align: right; margin-top: 8px">
-                <el-button size="small" type="text" @click="scope.row.visible = false">
+                <el-button
+                  size="small"
+                  link
+                  type="primary"
+                  @click="scope.row.visible = false"
+                >
                   取消
                 </el-button>
                 <el-button type="primary" size="small" @click="deleteField(scope.$index)">
@@ -196,7 +206,8 @@
               <template #reference>
                 <el-button
                   size="small"
-                  type="text"
+                  link
+                  type="primary"
                   icon="delete"
                   @click="scope.row.visible = true"
                   >删除</el-button
@@ -208,21 +219,24 @@
       </el-table>
       <!-- 组件列表 -->
       <div class="gva-btn-list justify-content-flex-end auto-btn-list">
-        <el-button size="small" type="primary" @click="enterForm(true)"
-          >预览代码</el-button
-        >
-        <el-button size="small" type="primary" @click="enterForm(false)"
-          >生成代码</el-button
-        >
+        <el-button size="small" type="primary" @click="enterForm(true)">
+          预览代码
+        </el-button>
+        <el-button size="small" type="primary" @click="enterForm(false)">
+          生成代码
+        </el-button>
       </div>
     </div>
     <!-- 组件弹窗 -->
-    <el-dialog v-model="dialogFlag" title="组件内容">
+    <el-dialog v-model="dialogFlag">
       <FieldDialog
         v-if="dialogFlag"
         ref="fieldDialogNode"
         :dialog-middle="dialogMiddle"
       />
+      <template #header>
+        <span>组件内容</span>
+      </template>
       <template #footer>
         <div class="dialog-footer">
           <el-button size="small" @click="closeDialog">取 消</el-button>
@@ -232,7 +246,7 @@
     </el-dialog>
 
     <el-dialog v-model="previewFlag">
-      <template #title>
+      <template #header>
         <div class="previewCodeTool">
           <p>操作栏：</p>
           <el-button size="small" type="primary" @click="selectText">全选</el-button>
@@ -246,9 +260,9 @@
       />
       <template #footer>
         <div class="dialog-footer" style="padding-top: 14px; padding-right: 14px">
-          <el-button size="small" type="primary" @click="previewFlag = false"
-            >确 定</el-button
-          >
+          <el-button size="small" type="primary" @click="previewFlag = false">
+            确 定
+          </el-button>
         </div>
       </template>
     </el-dialog>
