@@ -69,11 +69,11 @@ func (*ArticleApi) UpdateArticle(c *gin.Context) {
 func (*ArticleApi) FindArticle(c *gin.Context) {
 	var article app.Article
 	_ = c.ShouldBindQuery(&article)
-	if reappTab, err := articleService.GetArticle(article.ID); err != nil {
+	if rearticle, err := articleService.GetArticle(article.ID); err != nil {
 		global.GVA_LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
 	} else {
-		response.OkWithData(gin.H{"reappTab": reappTab}, c)
+		response.OkWithData(gin.H{"rearticle": rearticle}, c)
 	}
 }
 
