@@ -41,7 +41,7 @@ func (articleSearch *ArticleService) UpdateArticle(article app.Article) (err err
 
 // getDetail by id
 func (articleSearch *ArticleService) GetArticle(id uint) (article app.Article, err error) {
-	err = global.GVA_DB.Where("id = ?", id).First(&article).Error
+	err = global.GVA_DB.Preload("Tag").Where("id = ?", id).First(&article).Error
 	return
 }
 

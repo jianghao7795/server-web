@@ -10,6 +10,7 @@ import (
 )
 
 func Redis() {
+	// 初始化时可以指定连接redis的读写超时时间，默认都是3s
 	redisCfg := global.GVA_CONFIG.Redis
 	client := redis.NewClient(&redis.Options{
 		Addr:     redisCfg.Addr,

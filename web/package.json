@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^0.2.7",
+    "@vueuse/core": "^9.1.0",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "dayjs": "^1.11.4",
@@ -23,6 +24,7 @@
     "element-plus": "2.2.9",
     "highlight.js": "^10.6.0",
     "marked": "^2.0.0",
+    "md-editor-v3": "^2.2.1",
     "mitt": "^3.0.0",
     "path": "^0.12.7",
     "pinia": "^2.0.9",

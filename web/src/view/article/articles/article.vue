@@ -108,13 +108,39 @@
       v-model="dialogFormVisible"
       :before-close="closeDialog"
       :title="type === 'update' ? '更新文章' : '新建文章'"
+      draggable
+      :width="1100"
     >
       <el-form :model="formData" label-position="right" label-width="80px">
-        <el-form-item label="标签名称:">
-          <el-input v-model="formData.name" clearable placeholder="请输入" />
+        <el-form-item label="标签:">
+          <el-select
+            v-model="formData.tag_id"
+            placeholder="请选择"
+            filterable
+            remote
+            reserve-keyword
+            :remote-method="searchTag"
+            :loading="loading"
+          >
+            <el-option
+              v-for="item in tags"
+              :key="item.ID"
+              :label="item.name"
+              :value="item.ID"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="标题">
+          <el-input v-model="formData.title" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item label="简化内容">
+          <el-input v-model="formData.desc" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item label="内容">
+          <MdEditor style="width: 1000px" v-model="formData.content"></MdEditor>
         </el-form-item>
         <el-form-item label="状态:">
-          <el-radio-group v-model="formData.status">
+          <el-radio-group v-model="formData.state">
             <el-radio-button :label="1">显示</el-radio-button>
             <el-radio-button :label="0">隐藏</el-radio-button>
           </el-radio-group>
@@ -139,17 +165,31 @@ export default { name: 'Article' };
 <script setup>
 import { formatDate } from '@/utils/format';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { getArticleList, deleteArticle, findArticle } from '@/api/article';
+import {
+  getArticleList,
+  deleteArticle,
+  findArticle,
+  createArticle,
+  updateArticle,
+} from '@/api/article';
+import { getAppTabList } from '@/api/appTab';
 import { ref, onMounted } from 'vue';
+import { useDebounceFn } from '@vueuse/core';
+import MdEditor from 'md-editor-v3';
+import 'md-editor-v3/lib/style.css';
 
 const formData = ref({
   title: '',
-  tag_id: '',
+  tag_id: undefined,
   desc: '',
   content: '',
   state: 1,
-  tag: {},
 });
+
+// search loading
+const loading = ref(false);
+
+const tags = ref([]);
 
 const page = ref(1);
 const total = ref(0);
@@ -243,14 +283,65 @@ const openDialog = () => {
   dialogFormVisible.value = true;
 };
 
+const closeDialog = () => {
+  dialogFormVisible.value = false;
+  formData.value = {
+    title: '',
+    tag_id: undefined,
+    desc: '',
+    content: '',
+    state: 1,
+  };
+};
+
 const updateArticleFunc = async (row) => {
   const res = await findArticle({ ID: row.ID });
   type.value = 'update';
   if (res.code === 0) {
+    tags.value = [res.data.rearticle.tag];
     formData.value = res.data.rearticle;
+    formData.value.tag = undefined;
     dialogFormVisible.value = true;
   }
 };
+
+const enterDialog = async () => {
+  let res;
+  switch (type.value) {
+    case 'create':
+      res = await createArticle(formData.value);
+      break;
+    case 'update':
+      res = await updateArticle(formData.value);
+      break;
+    default:
+      res = await createArticle(formData.value);
+      break;
+  }
+  console.log(formData.value);
+  if (res.code === 0) {
+    ElMessage({
+      type: 'success',
+      message: '创建/更改成功',
+    });
+    closeDialog();
+    getTableData();
+  }
+};
+
+const search = (val) => {
+  if (!!val) {
+    loading.value = true;
+    getAppTabList({ name: val }).then((resp) => {
+      loading.value = false;
+      if (resp.code === 0) {
+        tags.value = resp.data.list;
+      }
+    });
+  }
+};
+
+const searchTag = useDebounceFn(search, 500, { maxWait: 5000 });
 </script>
 
 <style></style>

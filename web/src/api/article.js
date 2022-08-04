@@ -2,7 +2,7 @@ import service from '@/utils/request';
 
 export const createArticle = (data) => {
   return service({
-    url: '/aritcle/createAritcle',
+    url: '/article/createArticle',
     method: 'post',
     data,
   });

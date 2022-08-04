@@ -5,6 +5,7 @@ import (
 	"server/model/app"
 	appReq "server/model/app/request"
 	"server/model/common/request"
+	"strings"
 )
 
 type AppTabService struct {
@@ -61,7 +62,7 @@ func (appTabService *AppTabService) GetAppTabInfoList(info appReq.AppTabSearch) 
 	db := global.GVA_DB.Model(&app.AppTab{})
 	var appTabs []app.AppTab
 	if info.Name != "" {
-		db = db.Where("name = ?", info.Name)
+		db = db.Where("name like ?", strings.Join([]string{"%", info.Name, "%"}, ""))
 	}
 	// 如果有条件搜索 下方会自动创建搜索语句
 	err = db.Count(&total).Error
