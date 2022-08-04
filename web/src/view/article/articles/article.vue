@@ -137,7 +137,7 @@
           <el-input v-model="formData.desc" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="内容">
-          <MdEditor style="width: 1000px" v-model="formData.content"></MdEditor>
+          <MdEditor style="width: 1000px" v-model="text"></MdEditor>
         </el-form-item>
         <el-form-item label="状态:">
           <el-radio-group v-model="formData.state">
@@ -188,6 +188,7 @@ const formData = ref({
 
 // search loading
 const loading = ref(false);
+const text = ref('');
 
 const tags = ref([]);
 
@@ -301,12 +302,14 @@ const updateArticleFunc = async (row) => {
     tags.value = [res.data.rearticle.tag];
     formData.value = res.data.rearticle;
     formData.value.tag = undefined;
+    text.value = formData.value.content;
     dialogFormVisible.value = true;
   }
 };
 
 const enterDialog = async () => {
   let res;
+  formData.value.content = text.value;
   switch (type.value) {
     case 'create':
       res = await createArticle(formData.value);
