@@ -5,13 +5,12 @@
       :closable="!(historys.length === 1 && $route.name === defaultRouter)"
       type="card"
       @contextmenu.prevent="openContextMenu($event)"
-      @tab-change="changeTab"
+      @tab-click="changeTab"
       @tab-remove="removeTab"
     >
       <el-tab-pane v-for="item in historys" :key="name(item)" :label="item.meta.title" :name="name(item)" :tab="item" class="gva-tab">
         <template #label>
           <span
-            :tab="item"
             :style="{
               color: activeValue === name(item) ? userStore.activeColor : '#333',
             }"
@@ -22,7 +21,7 @@
                 backgroundColor: activeValue === name(item) ? userStore.activeColor : '#ddd',
               }"
             />
-            {{ fmtTitle(item.meta.title, item) }}
+            {{ item.meta.title }}
           </span>
         </template>
       </el-tab-pane>
@@ -49,19 +48,24 @@ import { emitter } from '@/utils/bus.js';
 import { computed, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/pinia/modules/user';
-import { fmtTitle } from '@/utils/fmtRouterTitle';
+
 const route = useRoute();
 const router = useRouter();
+
 const getFmtString = (item) => {
   return item.name + JSON.stringify(item.query) + JSON.stringify(item.params);
 };
+
 const historys = ref([]);
 const activeValue = ref('');
 const contextMenuVisible = ref(false);
+
 const userStore = useUserStore();
+
 const name = (item) => {
   return item.name + JSON.stringify(item.query) + JSON.stringify(item.params);
 };
+
 const left = ref(0);
 const top = ref(0);
 const isCollapse = ref(false);
@@ -91,7 +95,7 @@ const openContextMenu = (e) => {
     }
     left.value = e.clientX - width;
     top.value = e.clientY + 10;
-    rightActive.value = id.substring(4);
+    rightActive.value = id.split('-')[1];
   }
 };
 const closeAll = () => {
@@ -180,23 +184,14 @@ const setTab = (route) => {
     delete obj.meta.matched;
     obj.query = route.query;
     obj.params = route.params;
+    // console.log(obj);
     historys.value.push(obj);
   }
   window.sessionStorage.setItem('activeValue', getFmtString(route));
 };
-const historyMap = ref({});
-watch(
-  () => historys.value,
-  () => {
-    historyMap.value = {};
-    historys.value.forEach((item) => {
-      historyMap.value[getFmtString(item)] = item;
-    });
-  },
-);
-const changeTab = (name) => {
-  console.log(historyMap.value);
-  const tab = historyMap.value[name];
+const changeTab = (component) => {
+  console.log(component);
+  const tab = component.instance.attrs.tab;
   router.push({
     name: tab.name,
     query: tab.query,
@@ -226,42 +221,29 @@ const removeTab = (tab) => {
   }
   historys.value.splice(index, 1);
 };
-watch(
-  () => contextMenuVisible.value,
-  () => {
-    if (contextMenuVisible.value) {
-      document.body.addEventListener('click', () => {
-        contextMenuVisible.value = false;
-      });
-    } else {
-      document.body.removeEventListener('click', () => {
-        contextMenuVisible.value = false;
-      });
-    }
-  },
-);
-watch(
-  () => route,
-  (to, now) => {
-    if (to.name === 'Login' || to.name === 'Reload') {
-      return;
-    }
-    historys.value = historys.value.filter((item) => !item.meta.closeTab);
-    setTab(to);
-    sessionStorage.setItem('historys', JSON.stringify(historys.value));
-    activeValue.value = window.sessionStorage.getItem('activeValue');
-  },
-  { deep: true },
-);
-watch(
-  () => historys.value,
-  () => {
-    sessionStorage.setItem('historys', JSON.stringify(historys.value));
-  },
-  {
-    deep: true,
-  },
-);
+
+watch(contextMenuVisible, () => {
+  if (contextMenuVisible.value) {
+    document.body.addEventListener('click', () => {
+      contextMenuVisible.value = false;
+    });
+  } else {
+    document.body.removeEventListener('click', () => {
+      contextMenuVisible.value = false;
+    });
+  }
+});
+
+watch(route, (to, now) => {
+  if (to.name === 'Login' || to.name === 'Reload') {
+    return;
+  }
+  historys.value = historys.value.filter((item) => !item.meta.closeTab);
+  setTab(to);
+  sessionStorage.setItem('historys', JSON.stringify(historys.value));
+  activeValue.value = window.sessionStorage.getItem('activeValue');
+});
+
 const initPage = () => {
   // 全局监听 关闭当前页面函数
   emitter.on('closeThisPage', () => {
@@ -296,6 +278,7 @@ const initPage = () => {
   setTab(route);
 };
 initPage();
+
 onUnmounted(() => {
   emitter.off('collapse');
   emitter.off('mobile');
@@ -329,6 +312,7 @@ onUnmounted(() => {
   border-radius: 50%;
   transition: background-color 0.2s;
 }
+
 .contextmenu li {
   margin: 0;
   padding: 7px 16px;

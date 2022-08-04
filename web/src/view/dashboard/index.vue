@@ -6,7 +6,7 @@
           <div class="gva-top-card-left-title">
             早安，{{ userStore.userInfo.nickName }}，请开始一天的工作吧
           </div>
-          <div class="gva-top-card-left-dot">您今天已工作了{{ nowTime }}</div>
+          <div class="gva-top-card-left-dot">当前时间：{{ formatted }}</div>
           <!-- <div class="gva-top-card-left-rows">
             <el-row v-auth="888">
               <el-col :span="8" :xs="24" :sm="8">
@@ -56,7 +56,10 @@
             @click="toTarget(card.name)"
           >
             <div class="quick-entrance-item">
-              <div class="quick-entrance-item-icon" :style="{ backgroundColor: card.bg }">
+              <div
+                class="quick-entrance-item-icon"
+                :style="{ backgroundColor: card.bg }"
+              >
                 <el-icon>
                   <component :is="card.icon" :style="{ color: card.color }" />
                 </el-icon>
@@ -91,122 +94,60 @@
 <script setup>
 // import echartsLine from "@/view/dashboard/dashboardCharts/echartsLine.vue";
 // import dashboardTable from "@/view/dashboard/dashboardTable/dashboardTable.vue";
-import { ref, onUnmounted, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { useUserStore } from "@/pinia/modules/user";
-import { getLocalStorage } from "@/utils/date";
-import dayjs from "dayjs";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/pinia/modules/user';
+import { useNow, useDateFormat } from '@vueuse/core';
 
-let workTimer;
 const userStore = useUserStore();
+const formatted = useDateFormat(useNow(), 'YYYY-MM-DD HH:mm:ss');
 
 const toolCards = ref([
   {
-    label: "用户管理",
-    icon: "monitor",
-    name: "user",
-    color: "#ff9c6e",
-    bg: "rgba(255, 156, 110,.3)",
+    label: '用户管理',
+    icon: 'monitor',
+    name: 'user',
+    color: '#ff9c6e',
+    bg: 'rgba(255, 156, 110,.3)',
   },
   {
-    label: "角色管理",
-    icon: "setting",
-    name: "authority",
-    color: "#69c0ff",
-    bg: "rgba(105, 192, 255,.3)",
+    label: '角色管理',
+    icon: 'setting',
+    name: 'authority',
+    color: '#69c0ff',
+    bg: 'rgba(105, 192, 255,.3)',
   },
   {
-    label: "菜单管理",
-    icon: "menu",
-    name: "menu",
-    color: "#b37feb",
-    bg: "rgba(179, 127, 235,.3)",
+    label: '菜单管理',
+    icon: 'menu',
+    name: 'menu',
+    color: '#b37feb',
+    bg: 'rgba(179, 127, 235,.3)',
   },
   {
-    label: "代码生成器",
-    icon: "cpu",
-    name: "autoCode",
-    color: "#ffd666",
-    bg: "rgba(255, 214, 102,.3)",
+    label: '代码生成器',
+    icon: 'cpu',
+    name: 'autoCode',
+    color: '#ffd666',
+    bg: 'rgba(255, 214, 102,.3)',
   },
   {
-    label: "表单生成器",
-    icon: "document-checked",
-    name: "formCreate",
-    color: "#ff85c0",
-    bg: "rgba(255, 133, 192,.3)",
+    label: '表单生成器',
+    icon: 'document-checked',
+    name: 'formCreate',
+    color: '#ff85c0',
+    bg: 'rgba(255, 133, 192,.3)',
   },
   {
-    label: "关于我们",
-    icon: "user",
-    name: "about",
-    color: "#5cdbd3",
-    bg: "rgba(92, 219, 211,.3)",
+    label: '关于我们',
+    icon: 'user',
+    name: 'about',
+    color: '#5cdbd3',
+    bg: 'rgba(92, 219, 211,.3)',
   },
 ]);
 
 const router = useRouter();
-const oldTime = getLocalStorage("workTime");
-onUnmounted(() => {
-  clearInterval(workTimer);
-});
-// console.log(oldTime);
-
-const formatSeconds = (seconds) => {
-  let secondTime = 0; // 秒
-  let minuteTime = 0; // 分
-  let hourTime = 0; // 小时
-  let dayTime = 0; // 天
-  let result = "";
-
-  if (seconds < 60) {
-    secondTime = seconds;
-  } else {
-    // 获取分钟，除以60取整数，得到整数分钟
-    minuteTime = Math.floor(seconds / 60);
-    // 获取秒数，秒数取佘，得到整数秒数
-    secondTime = Math.floor(seconds % 60);
-    // 如果分钟大于60，将分钟转换成小时
-    if (minuteTime >= 60) {
-      // 获取小时，获取分钟除以60，得到整数小时
-      hourTime = Math.floor(minuteTime / 60);
-      // 获取小时后取佘的分，获取分钟除以60取佘的分
-      minuteTime = Math.floor(minuteTime % 60);
-      if (hourTime >= 24) {
-        // 获取天数， 获取小时除以24，得到整数天
-        dayTime = Math.floor(hourTime / 24);
-        // 获取小时后取余小时，获取分钟除以24取余的分；
-        hourTime = Math.floor(hourTime % 24);
-      }
-    }
-  }
-
-  result =
-    hourTime +
-    "时" +
-    ((minuteTime >= 10 ? minuteTime : "0" + minuteTime) + "分") +
-    ((secondTime >= 10 ? secondTime : "0" + secondTime) + "秒");
-  if (dayTime > 0) {
-    result = dayTime + "天" + result;
-  }
-  return result;
-};
-
-const nowTime = ref("00时00分00秒");
-// const closeTime = ref(null);
-
-const startWork = () => {
-  let workingSeconds = dayjs().unix().valueOf() - oldTime.workStartTime;
-  // console.log(workingSeconds);
-  workTimer = setInterval(() => {
-    workingSeconds++;
-    nowTime.value = formatSeconds(workingSeconds);
-  }, 1000);
-};
-
-onMounted(() => {
-  startWork();
-});
 
 const toTarget = (name) => {
   // console.log(router);
@@ -215,7 +156,7 @@ const toTarget = (name) => {
 </script>
 <script>
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
 };
 </script>
 
