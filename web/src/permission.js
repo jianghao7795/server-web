@@ -2,10 +2,14 @@ import { useUserStore } from '@/pinia/modules/user';
 import { useRouterStore } from '@/pinia/modules/router';
 import getPageTitle from '@/utils/page';
 import router from '@/router';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 let asyncRouterFlag = 0;
 
 const whiteList = ['Login', 'Init'];
+
+NProgress.configure({ showSpinner: false });
 
 const getRouter = async (userStore) => {
   const routerStore = useRouterStore();
@@ -35,6 +39,7 @@ async function handleKeepAlive(to) {
 }
 
 router.beforeEach(async (to, from, next) => {
+  NProgress.start();
   const userStore = useUserStore();
   to.meta.matched = [...to.matched];
   await handleKeepAlive(to);
@@ -77,4 +82,8 @@ router.beforeEach(async (to, from, next) => {
       });
     }
   }
+});
+
+router.afterEach(() => {
+  NProgress.done();
 });

@@ -26,6 +26,7 @@ specifiers:
   marked: ^2.0.0
   md-editor-v3: ^2.2.1
   mitt: ^3.0.0
+  nprogress: ^0.2.0
   path: ^0.12.7
   pinia: ^2.0.9
   qs: ^6.8.0
@@ -52,6 +53,7 @@ dependencies:
   marked: 2.1.3
   md-editor-v3: 2.2.1
   mitt: 3.0.0
+  nprogress: 0.2.0
   path: 0.12.7
   pinia: 2.0.16_vue@3.2.37
   qs: 6.11.0
@@ -7212,6 +7214,10 @@ packages:
     dependencies:
       path-key: 3.1.1
     dev: true
+
+  /nprogress/0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
+    dev: false
 
   /nth-check/1.0.2:
     resolution: {integrity: sha512-WeBOdju8SnzPN5vTUJYxYUxLeXpCaVP5i5e0LF8fg7WORF2Wd7wFX/pk0tYZk7s8T+J7VLy0Da6J1+wCT0AtHg==}

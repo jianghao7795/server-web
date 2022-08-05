@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "App",
+  name: 'App',
   data() {
     // console.log(this.$router);
     return {};
@@ -16,9 +16,9 @@ export default {
 
 <style lang="scss">
 // 引入初始化样式
-@import "@/style/main.scss";
-@import "@/style/base.scss";
-@import "@/style/mobile.scss";
+@import '@/style/main.scss';
+@import '@/style/base.scss';
+@import '@/style/mobile.scss';
 #app {
   background: #eee;
   height: 100vh;
@@ -37,5 +37,10 @@ a {
   cursor: pointer;
   transition: color 0.3s;
   -webkit-text-decoration-skip: objects;
+}
+// 加载条的 css
+#nprogress .bar {
+  background-color: darkorange;
+  height: 4px;
 }
 </style>

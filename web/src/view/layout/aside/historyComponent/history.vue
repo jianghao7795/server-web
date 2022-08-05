@@ -1,5 +1,5 @@
 <template>
-  <div class="router-history">
+  <div class="router-history" id="history">
     <el-tabs
       v-model="activeValue"
       :closable="!(historys.length === 1 && $route.name === defaultRouter)"
@@ -195,7 +195,7 @@ watch(
   },
 );
 const changeTab = (name) => {
-  console.log(historyMap.value);
+  // console.log(historyMap.value);
   const tab = historyMap.value[name];
   router.push({
     name: tab.name,

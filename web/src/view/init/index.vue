@@ -1,12 +1,7 @@
 <template>
   <div class="init_page">
     <div class="init_page_panle">
-      <div
-        v-if="hello < 2"
-        id="hello"
-        :class="[hello < 1 ? 'slide-in-fwd-top' : 'slide-out-right']"
-        class="hello"
-      >
+      <div v-if="hello < 2" id="hello" :class="[hello < 1 ? 'slide-in-fwd-top' : 'slide-out-right']" class="hello">
         <div>
           <div class="hello_title">GIN-VUE-ADMIN</div>
           <p class="in-two a-fadeinT">初始化须知</p>
@@ -20,11 +15,7 @@
           </p>
         </div>
       </div>
-      <div
-        v-if="hello > 0"
-        :class="[hello > 0 && !out ? 'slide-in-left' : '', out ? 'slide-out-right' : '']"
-        class="form"
-      >
+      <div v-if="hello > 0" :class="[hello > 0 && !out ? 'slide-in-left' : '', out ? 'slide-out-right' : '']" class="form">
         <el-form ref="formRef" :model="form" label-width="100px">
           <el-form-item label="数据库类型">
             <el-select v-model="form.dbType" placeholder="请选择" @change="changeDB">
@@ -42,10 +33,7 @@
             <el-input v-model="form.userName" placeholder="请输入数据库用户名" />
           </el-form-item>
           <el-form-item label="password">
-            <el-input
-              v-model="form.password"
-              placeholder="请输入数据库密码（没有则为空）"
-            />
+            <el-input v-model="form.password" placeholder="请输入数据库密码（没有则为空）" />
           </el-form-item>
           <el-form-item label="dbName">
             <el-input v-model="form.dbName" placeholder="请输入数据库名称" />
@@ -63,15 +51,15 @@
 
 <script>
 export default {
-  name: "Init",
+  name: 'Init',
 };
 </script>
 
 <script setup>
-import { initDB } from "@/api/initdb";
-import { reactive, ref } from "vue";
-import { ElLoading, ElMessage } from "element-plus";
-import { useRouter } from "vue-router";
+import { initDB } from '@/api/initdb';
+import { reactive, ref } from 'vue';
+import { ElLoading, ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
@@ -81,68 +69,68 @@ const showNext = () => {
 };
 
 const goDoc = () => {
-  window.open("https://www.gin-vue-admin.com/docs/first_master#3-init");
+  window.open('https://www.gin-vue-admin.com/docs/first_master#3-init');
 };
 
 const out = ref(false);
 
 const form = reactive({
-  dbType: "mysql",
-  host: "127.0.0.1",
-  port: "3306",
-  userName: "root",
-  password: "",
-  dbName: "gva",
+  dbType: 'mysql',
+  host: '127.0.0.1',
+  port: '3306',
+  userName: 'root',
+  password: '',
+  dbName: 'gva',
 });
 const changeDB = (val) => {
   switch (val) {
-    case "mysql":
+    case 'mysql':
       Object.assign(form, {
-        dbType: "mysql",
-        host: "127.0.0.1",
-        port: "3306",
-        userName: "root",
-        password: "",
-        dbName: "gva",
+        dbType: 'mysql',
+        host: '127.0.0.1',
+        port: '3306',
+        userName: 'root',
+        password: '',
+        dbName: 'gva',
       });
       break;
-    case "pgsql":
+    case 'pgsql':
       Object.assign(form, {
-        dbType: "pgsql",
-        host: "127.0.0.1",
-        port: "5432",
-        userName: "postgres",
-        password: "",
-        dbName: "gva",
+        dbType: 'pgsql',
+        host: '127.0.0.1',
+        port: '5432',
+        userName: 'postgres',
+        password: '',
+        dbName: 'gva',
       });
       break;
     default:
       Object.assign(form, {
-        dbType: "mysql",
-        host: "127.0.0.1",
-        port: "3306",
-        userName: "root",
-        password: "",
-        dbName: "gva",
+        dbType: 'mysql',
+        host: '127.0.0.1',
+        port: '3306',
+        userName: 'root',
+        password: '',
+        dbName: 'gva',
       });
   }
 };
 const onSubmit = async () => {
   const loading = ElLoading.service({
     lock: true,
-    text: "正在初始化数据库，请稍候",
-    spinner: "loading",
-    background: "rgba(0, 0, 0, 0.7)",
+    text: '正在初始化数据库，请稍候',
+    spinner: 'loading',
+    background: 'rgba(0, 0, 0, 0.7)',
   });
   try {
     const res = await initDB(form);
     if (res.code === 0) {
       out.value = true;
       ElMessage({
-        type: "success",
+        type: 'success',
         message: res.msg,
       });
-      router.push({ name: "Login" });
+      router.push({ name: 'Login' });
     }
     loading.close();
   } catch (err) {
@@ -155,7 +143,7 @@ const onSubmit = async () => {
 .init_page {
   margin: 0;
   padding: 0;
-  background-image: url("@/assets/login_background.jpg");
+  background-image: url('@/assets/login_background.jpg');
   background-size: cover;
   width: 100%;
   height: 100%;
