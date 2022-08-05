@@ -1,47 +1,22 @@
 <template>
   <div>
     <div class="gva-search-box">
-      <el-form
-        ref="searForm"
-        :model="searchInfo"
-        class="demo-form-inline"
-        :inline="true"
-      >
+      <el-form ref="searForm" :model="searchInfo" class="demo-form-inline" :inline="true">
         <el-form-item label="名称:">
           <el-input v-model="searchInfo.title"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button
-            size="small"
-            type="primary"
-            icon="search"
-            @click="onSubmit"
-          >
-            查询
-          </el-button>
-          <el-button size="small" icon="refresh">重置</el-button>
+          <el-button size="small" type="primary" icon="search" @click="onSubmit">查询</el-button>
+          <el-button size="small" icon="refresh" @click="reset">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="gva-table-box">
       <div class="gva-btn-list">
-        <el-button type="primary" size="small" icon="plus" @click="openDialog">
-          新增
-        </el-button>
-        <el-popconfirm
-          title="确定要删除吗?"
-          @confirm="onDelete"
-          placement="top"
-        >
+        <el-button type="primary" size="small" icon="plus" @click="openDialog">新增</el-button>
+        <el-popconfirm title="确定要删除吗?" @confirm="onDelete" placement="top">
           <template #reference>
-            <el-button
-              icon="delete"
-              size="small"
-              style="margin-left: 10px"
-              :disabled="!multipleSelection.length"
-            >
-              删除
-            </el-button>
+            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length">删除</el-button>
           </template>
         </el-popconfirm>
       </div>
@@ -69,25 +44,10 @@
         </el-table-column>
         <el-table-column align="left" label="操作">
           <template #default="scope">
-            <el-button
-              link
-              type="primary"
-              icon="edit"
-              size="small"
-              class="table-button"
-              @click="updateArticleFunc(scope.row)"
-            >
-              编辑
-            </el-button>
-            <el-button
-              type="primary"
-              link
-              icon="delete"
-              size="small"
-              @click="deleteRow(scope.row)"
-            >
-              删除
-            </el-button>
+            <el-button link type="primary" icon="edit" size="small" class="table-button" @click="updateArticleFunc(scope.row)">编辑</el-button>
+            <el-popconfirm title="确认删除？" placement="top" v-on:confirm="deleteRow(scope.row)">
+              <template #reference><el-button type="primary" link icon="delete" size="small">删除</el-button></template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -104,30 +64,11 @@
         />
       </div>
     </div>
-    <el-dialog
-      v-model="dialogFormVisible"
-      :before-close="closeDialog"
-      :title="type === 'update' ? '更新文章' : '新建文章'"
-      draggable
-      :width="1100"
-    >
+    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" :title="type === 'update' ? '更新文章' : '新建文章'" draggable :width="1100">
       <el-form :model="formData" label-position="right" label-width="80px">
         <el-form-item label="标签:">
-          <el-select
-            v-model="formData.tag_id"
-            placeholder="请选择"
-            filterable
-            remote
-            reserve-keyword
-            :remote-method="searchTag"
-            :loading="loading"
-          >
-            <el-option
-              v-for="item in tags"
-              :key="item.ID"
-              :label="item.name"
-              :value="item.ID"
-            ></el-option>
+          <el-select v-model="formData.tag_id" placeholder="请选择" filterable remote reserve-keyword :remote-method="searchTag" :loading="loading">
+            <el-option v-for="item in tags" :key="item.ID" :label="item.name" :value="item.ID"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="标题">
@@ -149,9 +90,7 @@
       <template #footer>
         <div class="dialog-footer">
           <el-button size="small" @click="closeDialog">取 消</el-button>
-          <el-button size="small" type="primary" @click="enterDialog">
-            确 定
-          </el-button>
+          <el-button size="small" type="primary" @click="enterDialog">确 定</el-button>
         </div>
       </template>
     </el-dialog>
@@ -164,14 +103,8 @@ export default { name: 'Article' };
 
 <script setup>
 import { formatDate } from '@/utils/format';
-import { ElMessage, ElMessageBox } from 'element-plus';
-import {
-  getArticleList,
-  deleteArticle,
-  findArticle,
-  createArticle,
-  updateArticle,
-} from '@/api/article';
+import { ElMessage } from 'element-plus';
+import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle } from '@/api/article';
 import { getAppTabList } from '@/api/appTab';
 import { ref, onMounted } from 'vue';
 import { useDebounceFn } from '@vueuse/core';
@@ -223,6 +156,13 @@ const onSubmit = () => {
   getTableData();
 };
 
+const reset = () => {
+  page.value = 1;
+  pageSize.value = 10;
+  searchInfo.value = {};
+  getTableData();
+};
+
 // 多选数据
 const multipleSelection = ref([]);
 // 多选
@@ -270,13 +210,7 @@ const type = ref('');
 const dialogFormVisible = ref(false);
 // 删除行
 const deleteRow = (row) => {
-  ElMessageBox.confirm('确定要删除吗?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning',
-  }).then(() => {
-    deleteArticle(row);
-  });
+  deleteArticle(row);
 };
 
 const openDialog = () => {

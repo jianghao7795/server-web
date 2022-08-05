@@ -12,13 +12,17 @@
 // 此文件内容为版权信息，如需改动，请联系wx:shouzi_1994购买授权 未授权状态只需保留此代码 不影响任何正常使用
 // 项目为apatch协议 请遵守版权协议内容
 export default {
-  name: "BottomInfo",
+  name: 'BottomInfo',
 };
 </script>
 
 <style lang="scss">
 .bottom-info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   color: #888;
+  flex: 0 0 auto;
   height: 30px;
   line-height: 12px;
   a {

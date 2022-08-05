@@ -40,7 +40,7 @@ a {
 }
 // 加载条的 css
 #nprogress .bar {
-  background-color: darkorange;
+  background-color: '#409eff';
   height: 4px;
 }
 </style>

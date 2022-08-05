@@ -15,12 +15,6 @@ import App from './App.vue';
 const app = createApp(App);
 app.config.productionTip = false;
 
-app
-  .use(run)
-  .use(store)
-  .use(auth)
-  .use(ElementPlus, { locale: zhCn })
-  .use(router)
-  .mount('#app');
+app.use(run).use(store).use(auth).use(ElementPlus, { locale: zhCn }).use(router).mount('#app');
 
 export default app;

@@ -1,32 +1,39 @@
 <template>
   <div class="router-history" id="history">
-    <el-tabs
-      v-model="activeValue"
-      :closable="!(historys.length === 1 && $route.name === defaultRouter)"
-      type="card"
-      @contextmenu.prevent="openContextMenu($event)"
-      @tab-change="changeTab"
-      @tab-remove="removeTab"
-    >
-      <el-tab-pane v-for="item in historys" :key="name(item)" :label="item.meta.title" :name="name(item)" :tab="item" class="gva-tab">
-        <template #label>
-          <span
-            :tab="item"
-            :style="{
-              color: activeValue === name(item) ? userStore.activeColor : '#333',
-            }"
-          >
-            <i
-              class="dot"
+    <div class="addRefresh">
+      <el-tabs
+        v-model="activeValue"
+        :closable="!(historys.length === 1 && $route.name === defaultRouter)"
+        type="card"
+        @contextmenu.prevent="openContextMenu($event)"
+        @tab-change="changeTab"
+        @tab-remove="removeTab"
+      >
+        <el-tab-pane v-for="item in historys" :key="name(item)" :label="item.meta.title" :name="name(item)" :tab="item" class="gva-tab">
+          <template #label>
+            <span
+              :tab="item"
               :style="{
-                backgroundColor: activeValue === name(item) ? userStore.activeColor : '#ddd',
+                color: activeValue === name(item) ? userStore.activeColor : '#333',
               }"
-            />
-            {{ fmtTitle(item.meta.title, item) }}
-          </span>
-        </template>
-      </el-tab-pane>
-    </el-tabs>
+            >
+              <i
+                class="dot"
+                :style="{
+                  backgroundColor: activeValue === name(item) ? userStore.activeColor : '#ddd',
+                }"
+              />
+              {{ fmtTitle(item.meta.title, item) }}
+            </span>
+          </template>
+        </el-tab-pane>
+      </el-tabs>
+      <div class="refreshView" @click="refresh()">
+        <el-tooltip effect="dark" placement="top-end" content="重新加载">
+          <el-icon><Refresh /></el-icon>
+        </el-tooltip>
+      </div>
+    </div>
 
     <!--自定义右键菜单html代码-->
     <ul v-show="contextMenuVisible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
@@ -50,10 +57,23 @@ import { computed, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/pinia/modules/user';
 import { fmtTitle } from '@/utils/fmtRouterTitle';
+import { useRefreshStore } from '@/pinia/modules/refresh';
+import { ElLoading } from 'element-plus';
+
 const route = useRoute();
 const router = useRouter();
 const getFmtString = (item) => {
   return item.name + JSON.stringify(item.query) + JSON.stringify(item.params);
+};
+const refreshStore = useRefreshStore();
+
+const refresh = () => {
+  refreshStore.changIsRefresh(false);
+  const loadingInstance = ElLoading.service({ fullscreen: false, target: '#refreshView' });
+  setTimeout(() => {
+    refreshStore.changIsRefresh(true);
+    loadingInstance.close();
+  }, 1000);
 };
 const historys = ref([]);
 const activeValue = ref('');
@@ -301,6 +321,21 @@ onUnmounted(() => {
   emitter.off('mobile');
 });
 </script>
+
+<style lang="scss" scoped>
+.addRefresh {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.refreshView {
+  height: 39px;
+  line-height: 39px;
+  width: 39px;
+  border: 1px solid #ecf5ff;
+  text-align: center;
+}
+</style>
 
 <style lang="scss">
 .contextmenu {
