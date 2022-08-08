@@ -94,7 +94,8 @@
           <div id="refreshView">
             <transition mode="out-in" name="el-fade-in-linear">
               <keep-alive :include="routerStore.keepAliveRouters">
-                <component :is="Component" />
+                <component :is="Component" v-if="refreshStore.isRefresh" />
+                <div style="height: 800px; padding: 12px 16px; margin: 10px 2px 20px" v-else></div>
               </keep-alive>
             </transition>
           </div>
@@ -121,7 +122,7 @@ import CustomPic from '@/components/customPic/index.vue';
 import Setting from './setting/index.vue';
 import { setUserAuthority } from '@/api/user';
 import { emitter } from '@/utils/bus.js';
-import { computed, ref, onMounted, nextTick, watchEffect } from 'vue';
+import { computed, ref, onMounted, nextTick } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/pinia/modules/user';
 import { useRouterStore } from '@/pinia/modules/router';

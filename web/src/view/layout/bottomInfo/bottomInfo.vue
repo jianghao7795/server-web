@@ -1,11 +1,13 @@
 <template>
-  <div class="bottom-info">
-    <div>
-      <span>Powered by Ours</span>
-      <el-divider direction="vertical" />
-      <span>Copyright Ours</span>
+  <footer class="footerend">
+    <div class="bottom-info">
+      <div>
+        <span>Powered by Ours</span>
+        <el-divider direction="vertical" />
+        <span>Copyright Ours</span>
+      </div>
     </div>
-  </div>
+  </footer>
 </template>
 
 <script>
@@ -17,12 +19,14 @@ export default {
 </script>
 
 <style lang="scss">
+.footerend {
+  flex: auto;
+  min-height: 0;
+}
 .bottom-info {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
   color: #888;
-  flex: 0 0 auto;
+  flex: auto;
+  min-height: 0;
   height: 30px;
   line-height: 12px;
   a {
