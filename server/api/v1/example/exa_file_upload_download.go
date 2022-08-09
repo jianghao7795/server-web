@@ -30,7 +30,7 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *gin.Context) {
 		response.FailWithMessage("接收文件失败", c)
 		return
 	}
-	err, file = fileUploadAndDownloadService.UploadFile(header, noSave) // 文件上传后拿到文件路径
+	file, err = fileUploadAndDownloadService.UploadFile(header, noSave) // 文件上传后拿到文件路径
 	if err != nil {
 		global.GVA_LOG.Error("修改数据库链接失败!", zap.Error(err))
 		response.FailWithMessage("修改数据库链接失败", c)
@@ -80,7 +80,7 @@ func (u *FileUploadAndDownloadApi) DeleteFile(c *gin.Context) {
 func (u *FileUploadAndDownloadApi) GetFileList(c *gin.Context) {
 	var pageInfo request.PageInfo
 	_ = c.ShouldBindJSON(&pageInfo)
-	err, list, total := fileUploadAndDownloadService.GetFileRecordInfoList(pageInfo)
+	list, total, err := fileUploadAndDownloadService.GetFileRecordInfoList(pageInfo)
 	if err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)

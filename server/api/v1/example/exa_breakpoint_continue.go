@@ -55,7 +55,7 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *gin.Context) {
 		response.FailWithMessage("检查md5失败", c)
 		return
 	}
-	err, file := fileUploadAndDownloadService.FindOrCreateFile(fileMd5, fileName, chunkTotal)
+	file, err := fileUploadAndDownloadService.FindOrCreateFile(fileMd5, fileName, chunkTotal)
 	if err != nil {
 		global.GVA_LOG.Error("查找或创建记录失败!", zap.Error(err))
 		response.FailWithMessage("查找或创建记录失败", c)
@@ -88,7 +88,7 @@ func (u *FileUploadAndDownloadApi) FindFile(c *gin.Context) {
 	fileMd5 := c.Query("fileMd5")
 	fileName := c.Query("fileName")
 	chunkTotal, _ := strconv.Atoi(c.Query("chunkTotal"))
-	err, file := fileUploadAndDownloadService.FindOrCreateFile(fileMd5, fileName, chunkTotal)
+	file, err := fileUploadAndDownloadService.FindOrCreateFile(fileMd5, fileName, chunkTotal)
 	if err != nil {
 		global.GVA_LOG.Error("查找失败!", zap.Error(err))
 		response.FailWithMessage("查找失败", c)

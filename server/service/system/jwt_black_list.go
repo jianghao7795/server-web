@@ -47,9 +47,9 @@ func (jwtService *JwtService) IsBlacklist(jwt string) bool {
 //@param: userName string
 //@return: err error, redisJWT string
 
-func (jwtService *JwtService) GetRedisJWT(userName string) (err error, redisJWT string) {
+func (jwtService *JwtService) GetRedisJWT(userName string) (redisJWT string, err error) {
 	redisJWT, err = global.GVA_REDIS.Get(context.Background(), userName).Result()
-	return err, redisJWT
+	return redisJWT, err
 }
 
 //@author: [piexlmax](https://github.com/piexlmax)

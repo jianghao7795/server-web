@@ -144,7 +144,7 @@ func (s *SystemApiApi) GetApiById(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err, api := apiService.GetApiById(idInfo.ID)
+	api, err := apiService.GetApiById(idInfo.ID)
 	if err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)

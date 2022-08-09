@@ -86,7 +86,7 @@ func (s *OperationRecordApi) FindSysOperationRecord(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	if err, resysOperationRecord := operationRecordService.GetSysOperationRecord(sysOperationRecord.ID); err != nil {
+	if resysOperationRecord, err := operationRecordService.GetSysOperationRecord(sysOperationRecord.ID); err != nil {
 		global.GVA_LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
 	} else {
@@ -105,7 +105,7 @@ func (s *OperationRecordApi) FindSysOperationRecord(c *gin.Context) {
 func (s *OperationRecordApi) GetSysOperationRecordList(c *gin.Context) {
 	var pageInfo systemReq.SysOperationRecordSearch
 	_ = c.ShouldBindQuery(&pageInfo)
-	if err, list, total := operationRecordService.GetSysOperationRecordInfoList(pageInfo); err != nil {
+	if list, total, err := operationRecordService.GetSysOperationRecordInfoList(pageInfo); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {

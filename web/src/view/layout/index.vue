@@ -94,10 +94,10 @@
           <div id="refreshView">
             <transition mode="out-in" name="el-fade-in-linear">
               <keep-alive :include="routerStore.keepAliveRouters">
-                <component :is="Component" v-if="refreshStore.isRefresh" />
-                <div style="height: 800px; padding: 12px 16px; margin: 10px 2px 20px" v-else></div>
+                <component :is="Component" v-if="refreshStore.isRefresh" :key="Component" />
               </keep-alive>
             </transition>
+            <div style="height: 800px; padding: 12px 16px; margin: 10px 2px 20px" v-if="!refreshStore.isRefresh"></div>
           </div>
         </router-view>
         <BottomInfo />

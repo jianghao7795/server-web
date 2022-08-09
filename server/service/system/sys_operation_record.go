@@ -49,7 +49,7 @@ func (operationRecordService *OperationRecordService) DeleteSysOperationRecord(s
 //@param: id uint
 //@return: err error, sysOperationRecord model.SysOperationRecord
 
-func (operationRecordService *OperationRecordService) GetSysOperationRecord(id uint) (err error, sysOperationRecord system.SysOperationRecord) {
+func (operationRecordService *OperationRecordService) GetSysOperationRecord(id uint) (sysOperationRecord system.SysOperationRecord, err error) {
 	err = global.GVA_DB.Where("id = ?", id).First(&sysOperationRecord).Error
 	return
 }
@@ -61,7 +61,7 @@ func (operationRecordService *OperationRecordService) GetSysOperationRecord(id u
 //@param: info systemReq.SysOperationRecordSearch
 //@return: err error, list interface{}, total int64
 
-func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoList(info systemReq.SysOperationRecordSearch) (err error, list interface{}, total int64) {
+func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoList(info systemReq.SysOperationRecordSearch) (list interface{}, total int64, err error) {
 	// time.Sleep(3 * time.Second)
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
@@ -83,5 +83,5 @@ func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoL
 		return
 	}
 	err = db.Order("id desc").Limit(limit).Offset(offset).Preload("User").Find(&sysOperationRecords).Error
-	return err, sysOperationRecords, total
+	return sysOperationRecords, total, err
 }

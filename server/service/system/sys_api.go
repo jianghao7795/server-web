@@ -121,7 +121,7 @@ func (apiService *ApiService) GetAllApis() (apis []system.SysApi, err error) {
 //@param: id float64
 //@return: err error, api model.SysApi
 
-func (apiService *ApiService) GetApiById(id int) (err error, api system.SysApi) {
+func (apiService *ApiService) GetApiById(id int) (api system.SysApi, err error) {
 	err = global.GVA_DB.Where("id = ?", id).First(&api).Error
 	return
 }

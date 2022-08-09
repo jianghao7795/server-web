@@ -16,8 +16,8 @@ import (
 
 type SystemConfigService struct{}
 
-func (systemConfigService *SystemConfigService) GetSystemConfig() (err error, conf config.Server) {
-	return nil, global.GVA_CONFIG
+func (systemConfigService *SystemConfigService) GetSystemConfig() (conf config.Server, err error) {
+	return global.GVA_CONFIG, nil
 }
 
 // @description   set system config,

@@ -125,7 +125,7 @@ func (baseMenuService *BaseMenuService) UpdateBaseMenu(menu system.SysBaseMenu) 
 //@param: id float64
 //@return: err error, menu model.SysBaseMenu
 
-func (baseMenuService *BaseMenuService) GetBaseMenuById(id int) (err error, menu system.SysBaseMenu) {
+func (baseMenuService *BaseMenuService) GetBaseMenuById(id int) (menu system.SysBaseMenu, err error) {
 	err = global.GVA_DB.Preload("MenuBtn").Preload("Parameters").Where("id = ?", id).First(&menu).Error
-	return err, menu
+	return menu, err
 }

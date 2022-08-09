@@ -50,7 +50,7 @@ func (exa *CustomerService) UpdateExaCustomer(e *example.ExaCustomer) (err error
 //@param: id uint
 //@return: err error, customer model.ExaCustomer
 
-func (exa *CustomerService) GetExaCustomer(id uint) (err error, customer example.ExaCustomer) {
+func (exa *CustomerService) GetExaCustomer(id uint) (customer example.ExaCustomer, err error) {
 	err = global.GVA_DB.Where("id = ?", id).First(&customer).Error
 	return
 }
@@ -61,13 +61,13 @@ func (exa *CustomerService) GetExaCustomer(id uint) (err error, customer example
 //@param: sysUserAuthorityID string, info request.PageInfo
 //@return: err error, list interface{}, total int64
 
-func (exa *CustomerService) GetCustomerInfoList(sysUserAuthorityID string, info request.SearchCustomerParams) (err error, list interface{}, total int64) {
+func (exa *CustomerService) GetCustomerInfoList(sysUserAuthorityID string, info request.SearchCustomerParams) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.GVA_DB.Model(&example.ExaCustomer{})
 	var a system.SysAuthority
 	a.AuthorityId = sysUserAuthorityID
-	err, auth := systemService.AuthorityServiceApp.GetAuthorityInfo(a)
+	auth, err := systemService.AuthorityServiceApp.GetAuthorityInfo(a)
 	if err != nil {
 		return
 	}
@@ -89,9 +89,9 @@ func (exa *CustomerService) GetCustomerInfoList(sysUserAuthorityID string, info 
 	}
 	err = db.Where("sys_user_authority_id in ?", dataId).Count(&total).Error
 	if err != nil {
-		return err, CustomerList, total
+		return CustomerList, total, err
 	} else {
-		err = db.Limit(limit).Offset(offset).Preload("SysUser").Where("sys_user_authority_id in ?", dataId).Find(&CustomerList).Error
+		err = db.Order("id desc").Limit(limit).Offset(offset).Preload("SysUser").Where("sys_user_authority_id in ?", dataId).Find(&CustomerList).Error
 	}
-	return err, CustomerList, total
+	return CustomerList, total, err
 }

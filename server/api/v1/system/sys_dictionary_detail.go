@@ -85,7 +85,7 @@ func (s *DictionaryDetailApi) FindSysDictionaryDetail(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	if err, resysDictionaryDetail := dictionaryDetailService.GetSysDictionaryDetail(detail.ID); err != nil {
+	if resysDictionaryDetail, err := dictionaryDetailService.GetSysDictionaryDetail(detail.ID); err != nil {
 		global.GVA_LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
 	} else {
@@ -104,7 +104,7 @@ func (s *DictionaryDetailApi) FindSysDictionaryDetail(c *gin.Context) {
 func (s *DictionaryDetailApi) GetSysDictionaryDetailList(c *gin.Context) {
 	var pageInfo request.SysDictionaryDetailSearch
 	_ = c.ShouldBindQuery(&pageInfo)
-	if err, list, total := dictionaryDetailService.GetSysDictionaryDetailInfoList(pageInfo); err != nil {
+	if list, total, err := dictionaryDetailService.GetSysDictionaryDetailInfoList(pageInfo); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
