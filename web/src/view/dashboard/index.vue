@@ -3,9 +3,7 @@
     <div class="gva-card-box">
       <div class="gva-card gva-top-card">
         <div class="gva-top-card-left">
-          <div class="gva-top-card-left-title">
-            早安，{{ userStore.userInfo.nickName }}，请开始一天的工作吧
-          </div>
+          <div class="gva-top-card-left-title">{{ period }}，{{ userStore.userInfo.nickName }}，请开始一天的工作吧</div>
           <div class="gva-top-card-left-dot">当前时间：{{ formatted }}</div>
           <!-- <div class="gva-top-card-left-rows">
             <el-row v-auth="888">
@@ -47,19 +45,9 @@
           </div>
         </template>
         <el-row :gutter="20">
-          <el-col
-            v-for="(card, key) in toolCards"
-            :key="key"
-            :span="4"
-            :xs="8"
-            class="quick-entrance-items"
-            @click="toTarget(card.name)"
-          >
+          <el-col v-for="(card, key) in toolCards" :key="key" :span="4" :xs="8" class="quick-entrance-items" @click="toTarget(card.name)">
             <div class="quick-entrance-item">
-              <div
-                class="quick-entrance-item-icon"
-                :style="{ backgroundColor: card.bg }"
-              >
+              <div class="quick-entrance-item-icon" :style="{ backgroundColor: card.bg }">
                 <el-icon>
                   <component :is="card.icon" :style="{ color: card.color }" />
                 </el-icon>
@@ -94,13 +82,22 @@
 <script setup>
 // import echartsLine from "@/view/dashboard/dashboardCharts/echartsLine.vue";
 // import dashboardTable from "@/view/dashboard/dashboardTable/dashboardTable.vue";
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/pinia/modules/user';
 import { useNow, useDateFormat } from '@vueuse/core';
 
 const userStore = useUserStore();
 const formatted = useDateFormat(useNow(), 'YYYY-MM-DD HH:mm:ss');
+const period = ref('');
+onMounted(() => {
+  const nowHours = useNow().value.getHours();
+  if (nowHours <= 12) {
+    period.value = '早上好';
+  } else {
+    period.value = '下午好';
+  }
+});
 
 const toolCards = ref([
   {

@@ -97,7 +97,6 @@
                 <component :is="Component" v-if="refreshStore.isRefresh" :key="Component" />
               </keep-alive>
             </transition>
-            <div style="height: 800px; padding: 12px 16px; margin: 10px 2px 20px" v-if="!refreshStore.isRefresh"></div>
           </div>
         </router-view>
         <BottomInfo />

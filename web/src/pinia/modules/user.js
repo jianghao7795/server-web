@@ -117,10 +117,7 @@ export const useUserStore = defineStore('user', () => {
     }
   });
   const activeColor = computed(() => {
-    if (
-      userInfo.value.sideMode === 'dark' ||
-      userInfo.value.sideMode === 'light'
-    ) {
+    if (userInfo.value.sideMode === 'dark' || userInfo.value.sideMode === 'light') {
       return '#4D70FF';
     }
     return userInfo.activeColor;

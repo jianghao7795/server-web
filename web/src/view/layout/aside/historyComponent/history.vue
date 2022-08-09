@@ -68,11 +68,15 @@ const getFmtString = (item) => {
 const refreshStore = useRefreshStore();
 
 const refresh = () => {
-  refreshStore.changIsRefresh(false);
   const loadingInstance = ElLoading.service({ fullscreen: false, target: '#refreshView' });
   setTimeout(() => {
-    refreshStore.changIsRefresh(true);
-    loadingInstance.close();
+    refreshStore.changIsRefresh(false);
+    setTimeout(() => {
+      refreshStore.changIsRefresh(true);
+    });
+    setTimeout(() => {
+      loadingInstance.close();
+    }, 100);
   }, 1000);
 };
 const historys = ref([]);

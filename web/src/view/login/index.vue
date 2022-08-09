@@ -6,12 +6,7 @@
           <img class="login_panle_form_title_logo" :src="$GIN_VUE_ADMIN.appLogo" alt />
           <p class="login_panle_form_title_p">{{ $GIN_VUE_ADMIN.appName }}</p>
         </div>
-        <el-form
-          ref="loginForm"
-          :model="loginFormData"
-          :rules="rules"
-          @keyup.enter="submitForm"
-        >
+        <el-form ref="loginForm" :model="loginFormData" :rules="rules" @keyup.enter="submitForm">
           <el-form-item prop="username">
             <el-input v-model="loginFormData.username" placeholder="请输入用户名">
               <template #suffix>
@@ -24,11 +19,7 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input
-              v-model="loginFormData.password"
-              :type="lock === 'lock' ? 'password' : 'text'"
-              placeholder="请输入密码"
-            >
+            <el-input v-model="loginFormData.password" :type="lock === 'lock' ? 'password' : 'text'" placeholder="请输入密码">
               <template #suffix>
                 <span class="input-icon">
                   <el-icon>
@@ -40,37 +31,15 @@
           </el-form-item>
           <el-form-item prop="captcha">
             <div class="vPicBox">
-              <el-input
-                v-model="loginFormData.captcha"
-                placeholder="请输入验证码"
-                style="width: 60%"
-              />
+              <el-input v-model="loginFormData.captcha" placeholder="请输入验证码" style="width: 60%" />
               <div class="vPic">
-                <img
-                  v-if="picPath"
-                  :src="picPath"
-                  alt="请输入验证码"
-                  @click="loginVerify()"
-                />
+                <img v-if="picPath" :src="picPath" alt="请输入验证码" @click="loginVerify()" />
               </div>
             </div>
           </el-form-item>
           <el-form-item>
-            <el-button
-              type="primary"
-              style="width: 46%"
-              size="large"
-              v-if="isInit"
-              @click="checkInit"
-            >
-              前往初始化
-            </el-button>
-            <el-button
-              type="primary"
-              size="large"
-              :style="isInit ? { width: '46%', marginLeft: '8%' } : { width: '100%' }"
-              @click="submitForm"
-            >
+            <el-button type="primary" style="width: 46%" size="large" v-if="isInit" @click="checkInit">前往初始化</el-button>
+            <el-button type="primary" size="large" :style="isInit ? { width: '46%', marginLeft: '8%' } : { width: '100%' }" @click="submitForm">
               登 录
             </el-button>
           </el-form-item>
@@ -88,20 +57,20 @@
 
 <script>
 export default {
-  name: "Login",
+  name: 'Login',
 };
 </script>
 
 <script setup>
-import { captcha } from "@/api/user";
-import { checkDB } from "@/api/initdb";
-import bootomInfo from "@/view/layout/bottomInfo/bottomInfo.vue";
-import { reactive, ref, onMounted } from "vue";
-import { ElMessage } from "element-plus";
-import { useRouter } from "vue-router";
-import { useUserStore } from "@/pinia/modules/user";
-import dayjs from "dayjs";
-import { setLocalStorage } from "@/utils/date";
+import { captcha } from '@/api/user';
+import { checkDB } from '@/api/initdb';
+import bootomInfo from '@/view/layout/bottomInfo/bottomInfo.vue';
+import { reactive, ref, onMounted } from 'vue';
+import { ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/pinia/modules/user';
+import dayjs from 'dayjs';
+import { setLocalStorage } from '@/utils/date';
 
 const router = useRouter();
 
@@ -117,14 +86,14 @@ onMounted(async () => {
 // 验证函数
 const checkUsername = (rule, value, callback) => {
   if (value.length < 5) {
-    return callback(new Error("请输入正确的用户名"));
+    return callback(new Error('请输入正确的用户名'));
   } else {
     callback();
   }
 };
 const checkPassword = (rule, value, callback) => {
   if (value.length < 6) {
-    return callback(new Error("请输入正确的密码"));
+    return callback(new Error('请输入正确的密码'));
   } else {
     callback();
   }
@@ -139,30 +108,32 @@ const loginVerify = () => {
     loginFormData.captchaId = ele.data.captchaId;
   });
 };
-loginVerify();
+onMounted(() => {
+  loginVerify();
+});
 
 // 登录相关操作
-const lock = ref("lock");
+const lock = ref('lock');
 const changeLock = () => {
-  lock.value = lock.value === "lock" ? "unlock" : "lock";
+  lock.value = lock.value === 'lock' ? 'unlock' : 'lock';
 };
 
 const loginForm = ref(null);
-const picPath = ref("");
+const picPath = ref('');
 const loginFormData = reactive({
-  username: "admin",
-  password: "123456",
-  captcha: "",
-  captchaId: "",
+  username: 'admin',
+  password: '123456',
+  captcha: '',
+  captchaId: '',
 });
 const rules = reactive({
-  username: [{ validator: checkUsername, trigger: "blur" }],
-  password: [{ validator: checkPassword, trigger: "blur" }],
+  username: [{ validator: checkUsername, trigger: 'blur' }],
+  password: [{ validator: checkPassword, trigger: 'blur' }],
   captcha: [
-    { required: true, message: "请输入验证码", trigger: "blur" },
+    { required: true, message: '请输入验证码', trigger: 'blur' },
     {
-      message: "验证码格式不正确",
-      trigger: "blur",
+      message: '验证码格式不正确',
+      trigger: 'blur',
     },
   ],
 });
@@ -175,18 +146,20 @@ const submitForm = () => {
   loginForm.value.validate(async (v) => {
     if (v) {
       const flag = await login();
+      // console.log(flag);
       if (!flag) {
         loginVerify();
+        loginFormData.captcha = '';
       } else {
         // console.log();
-        setLocalStorage("workTime", {
+        setLocalStorage('workTime', {
           workStartTime: dayjs().unix().valueOf(),
         });
       }
     } else {
       ElMessage({
-        type: "error",
-        message: "请正确填写登录信息",
+        type: 'error',
+        message: '请正确填写登录信息',
         showClose: true,
       });
       loginVerify();
@@ -199,7 +172,7 @@ const submitForm = () => {
 const checkInit = async () => {
   if (isInit) {
     userStore.NeedInit();
-    router.push({ name: "Init" });
+    router.push({ name: 'Init' });
   }
   // const res = await checkDB();
   // if (res.code === 0) {
@@ -217,5 +190,5 @@ const checkInit = async () => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/style/newLogin.scss";
+@import '@/style/newLogin.scss';
 </style>
