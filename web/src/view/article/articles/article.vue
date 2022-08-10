@@ -27,6 +27,7 @@
         tooltip-effect="dark"
         ref="multipleTable"
         @selection-change="handleSelectionChange"
+        v-loading="loadingInit"
       >
         <el-table-column type="selection" width="55" />
         <el-table-column props="ID" width="55" />
@@ -119,8 +120,9 @@ const formData = ref({
   state: 1,
 });
 
-// search loading
+// search tag loading
 const loading = ref(false);
+const loadingInit = ref(false);
 const text = ref('');
 
 const tags = ref([]);
@@ -132,12 +134,13 @@ const tableData = ref([]);
 const searchInfo = ref({});
 
 const getTableData = async () => {
-  // console.log(searchInfo.value);
+  loadingInit.value = true;
   const table = await getArticleList({
     page: page.value,
     pageSize: pageSize.value,
     ...searchInfo.value,
   });
+  loadingInit.value = false;
   if (table.code === 0) {
     tableData.value = table.data.list;
     total.value = table.data.total;

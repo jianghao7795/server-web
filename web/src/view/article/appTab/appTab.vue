@@ -1,58 +1,27 @@
 <template>
   <div>
     <div class="gva-search-box">
-      <el-form
-        :inline="true"
-        :model="searchInfo"
-        ref="searchForm"
-        class="demo-form-inline"
-      >
+      <el-form :inline="true" :model="searchInfo" ref="searchForm" class="demo-form-inline">
         <el-form-item label="名称">
           <el-input v-model="searchInfo.name"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button
-            size="small"
-            type="primary"
-            icon="search"
-            @click="onSubmit"
-          >
-            查询
-          </el-button>
-          <el-button size="small" icon="refresh" @click="onReset">
-            重置
-          </el-button>
+          <el-button size="small" type="primary" icon="search" @click="onSubmit">查询</el-button>
+          <el-button size="small" icon="refresh" @click="onReset">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="gva-table-box">
       <div class="gva-btn-list">
-        <el-button size="small" type="primary" icon="plus" @click="openDialog">
-          新增
-        </el-button>
+        <el-button size="small" type="primary" icon="plus" @click="openDialog">新增</el-button>
         <el-popover v-model:visible="deleteVisible" placement="top" width="160">
           <p>确定要删除吗？</p>
           <div style="text-align: right; margin-top: 8px">
-            <el-button size="small" @click="deleteVisible = false">
-              取消
-            </el-button>
-            <el-button
-              size="small"
-              :text="true"
-              type="primary"
-              @click="onDelete"
-            >
-              确定
-            </el-button>
+            <el-button size="small" @click="deleteVisible = false">取消</el-button>
+            <el-button size="small" :text="true" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
-            <el-button
-              icon="delete"
-              size="small"
-              style="margin-left: 10px"
-              :disabled="!multipleSelection.length"
-              @click="deleteVisible = true"
-            >
+            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length" @click="deleteVisible = true">
               删除
             </el-button>
           </template>
@@ -72,12 +41,7 @@
             {{ formatDate(scope.row.CreatedAt) }}
           </template>
         </el-table-column>
-        <el-table-column
-          align="left"
-          label="标签名称"
-          prop="name"
-          width="120"
-        />
+        <el-table-column align="left" label="标签名称" prop="name" width="120" />
         <el-table-column align="left" label="状态" prop="status" width="150">
           <template #default="scope">
             <el-switch
@@ -91,25 +55,8 @@
         </el-table-column>
         <el-table-column align="left" label="操作">
           <template #default="scope">
-            <el-button
-              link
-              type="primary"
-              icon="edit"
-              size="small"
-              class="table-button"
-              @click="updateAppTabFunc(scope.row)"
-            >
-              编辑
-            </el-button>
-            <el-button
-              type="primary"
-              link
-              icon="delete"
-              size="small"
-              @click="deleteRow(scope.row)"
-            >
-              删除
-            </el-button>
+            <el-button link type="primary" icon="edit" size="small" class="table-button" @click="updateAppTabFunc(scope.row)">编辑</el-button>
+            <el-button type="primary" link icon="delete" size="small" @click="deleteRow(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -126,11 +73,7 @@
         />
       </div>
     </div>
-    <el-dialog
-      v-model="dialogFormVisible"
-      :before-close="closeDialog"
-      title="标签"
-    >
+    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="标签">
       <el-form :model="formData" label-position="right" label-width="80px">
         <el-form-item label="标签名称:">
           <el-input v-model="formData.name" clearable placeholder="请输入" />
@@ -145,9 +88,7 @@
       <template #footer>
         <div class="dialog-footer">
           <el-button size="small" @click="closeDialog">取 消</el-button>
-          <el-button size="small" type="primary" @click="enterDialog">
-            确 定
-          </el-button>
+          <el-button size="small" type="primary" @click="enterDialog">确 定</el-button>
         </div>
       </template>
     </el-dialog>
@@ -161,19 +102,12 @@ export default {
 </script>
 
 <script setup>
-import {
-  createAppTab,
-  deleteAppTab,
-  deleteAppTabByIds,
-  updateAppTab,
-  findAppTab,
-  getAppTabList,
-} from '@/api/appTab';
+import { createAppTab, deleteAppTab, deleteAppTabByIds, updateAppTab, findAppTab, getAppTabList } from '@/api/appTab';
 
 // 全量引入格式化工具 请按需保留
 import { formatDate } from '@/utils/format';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 // 自动化生成的字典（可能为空）以及字段
 const formData = ref({
@@ -184,6 +118,7 @@ const formData = ref({
 // console.log("change");
 
 const loading = ref({});
+const loadingInit = ref(false);
 
 const changeHide = (e) => {
   // console.log(e);
@@ -250,11 +185,13 @@ const handleCurrentChange = (val) => {
 // 查询
 const getTableData = async () => {
   // console.log(searchInfo.value);
+  loadingInit.value = true;
   const table = await getAppTabList({
     page: page.value,
     pageSize: pageSize.value,
     ...searchInfo.value,
   });
+  loadingInit.value = false;
   if (table.code === 0) {
     tableData.value = table.data.list.map((i) => ({
       ...i,
@@ -266,7 +203,9 @@ const getTableData = async () => {
   }
 };
 
-getTableData();
+onMounted(() => {
+  getTableData();
+});
 
 // ============== 表格控制部分结束 ===============
 

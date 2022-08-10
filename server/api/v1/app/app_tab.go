@@ -1,14 +1,12 @@
 package app
 
 import (
-	"log"
 	"server/global"
 	"server/model/app"
 	appReq "server/model/app/request"
 	"server/model/common/request"
 	"server/model/common/response"
 	"server/service"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -130,8 +128,6 @@ func (appTabApi *AppTabApi) FindAppTab(c *gin.Context) {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /appTab/getAppTabList [get]
 func (appTabApi *AppTabApi) GetAppTabList(c *gin.Context) {
-	time.Sleep(8 * time.Second)
-	log.Println(11111111111111)
 	var pageInfo appReq.AppTabSearch
 	_ = c.ShouldBindQuery(&pageInfo)
 	// log.Println(pageInfo.Name)
@@ -139,7 +135,6 @@ func (appTabApi *AppTabApi) GetAppTabList(c *gin.Context) {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
-		time.Sleep(time.Second * 5)
 		response.OkWithDetailed(response.PageResult{
 			List:     list,
 			Total:    total,
