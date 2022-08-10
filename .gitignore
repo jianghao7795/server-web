@@ -1,6 +1,8 @@
 .idea/
 /web/node_modules
 /web/dist
+/frontend/node_modules
+/frontend/dist
 
 .DS_Store
 

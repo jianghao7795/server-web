@@ -121,7 +121,7 @@ const changeLock = () => {
 const loginForm = ref(null);
 const picPath = ref('');
 const loginFormData = reactive({
-  username: 'admin',
+  username: 'wuhao',
   password: '123456',
   captcha: '',
   captchaId: '',
