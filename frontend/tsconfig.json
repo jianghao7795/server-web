@@ -6,7 +6,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["naive-ui/volar"]
+    "types": ["naive-ui/volar", "vite/client"],
+    "lib": ["esnext", "dom"]
   },
 
   "references": [
