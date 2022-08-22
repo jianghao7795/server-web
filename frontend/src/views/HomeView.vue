@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import TheWelcome from '@/components/TheWelcome.vue';
-import { NInputNumber, NButton, NIcon } from 'naive-ui';
-import type { Ref } from 'vue';
-import { AddFilled } from '@vicons/material';
-import { useCounterStore } from '@/stores/counter';
-import { useLoading } from '@/hooks';
+import TheWelcome from "@/components/TheWelcome.vue";
+import { NInputNumber, NButton, NIcon } from "naive-ui";
+// import type { Ref } from "vue";
+import { AddFilled } from "@vicons/material";
+import { useCounterStore } from "@/stores/counter";
+import { useLoading } from "@/hooks";
 
 const counterStore = useCounterStore();
 // const loadingRef = ref<Boolean>(false);
@@ -29,11 +29,9 @@ const handleMouseOut = (e: MouseEvent) => {
   <main>
     <TheWelcome />
     <div>
-      <a v-on:mouseover="handleMouseOver" v-on:mouseout="handleMouseOut">
-        123123123
-      </a>
+      <a v-on:mouseover="handleMouseOver" v-on:mouseout="handleMouseOut">123123123</a>
     </div>
-    <n-input-number placeholder="请输入" v-model:value="counterStore.counter" />
+    <n-input-number placeholder="请输入" step="2" v-model:value="counterStore.counter" />
     <p>{{ counterStore.counter }}</p>
     <p>{{ counterStore.doubleCount }}</p>
     <n-button :loading="loading" type="primary" v-on:click="handlAdd">
@@ -42,7 +40,7 @@ const handleMouseOut = (e: MouseEvent) => {
           <AddFilled />
         </n-icon>
       </template>
-      加
+      Add
     </n-button>
   </main>
 </template>
