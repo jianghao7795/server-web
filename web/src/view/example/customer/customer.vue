@@ -9,33 +9,19 @@
           <el-input placeholder="请输入" v-model="searchInfo.customerName"></el-input>
         </el-form-item>
         <el-form-item label="电话">
-          <el-input
-            placeholder="请输入"
-            v-model="searchInfo.customerPhoneData"
-          ></el-input>
+          <el-input placeholder="请输入" v-model="searchInfo.customerPhoneData"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button size="small" type="primary" icon="search" @click="onSubmit">
-            查询
-          </el-button>
+          <el-button size="small" type="primary" icon="search" @click="onSubmit">查询</el-button>
           <el-button size="small" icon="refresh" @click="onReset">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="gva-table-box">
       <div class="gva-btn-list">
-        <el-button size="small" type="primary" icon="plus" @click="openDialog">
-          新增
-        </el-button>
+        <el-button size="small" type="primary" icon="plus" @click="openDialog">新增</el-button>
       </div>
-      <el-table
-        ref="multipleTable"
-        :data="tableData"
-        style="width: 100%"
-        tooltip-effect="dark"
-        row-key="ID"
-        v-loading="loading"
-      >
+      <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID" v-loading="loading">
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="ID" prop="ID" width="80"></el-table-column>
         <el-table-column align="left" label="接入日期" width="180">
@@ -47,23 +33,12 @@
         <el-table-column align="left" label="电话" prop="customerPhoneData" width="120" />
         <el-table-column align="left" label="创建人" prop="sysUserId" width="120">
           <template #default="{ row }">
-            <el-tag
-              class="ml-2"
-              :type="row.sysUser.name === admin ? 'success' : 'info'"
-              >{{ row.sysUser.userName }}</el-tag
-            >
+            <el-tag class="ml-2" :type="row.sysUser.name === admin ? 'success' : 'info'">{{ row.sysUser.userName }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column align="left" label="操作" min-width="160">
           <template #default="scope">
-            <el-button
-              size="small"
-              link type="primary"
-              icon="edit"
-              @click="updateCustomer(scope.row)"
-            >
-              编辑
-            </el-button>
+            <el-button size="small" link type="primary" icon="edit" @click="updateCustomer(scope.row)">编辑</el-button>
             <el-popconfirm
               confirm-button-text="确定"
               cancel-button-text="取消"
@@ -73,14 +48,15 @@
             >
               <!-- @click="deleteCustomer(scope.row)" -->
               <template #reference>
-                <el-button type="link" icon="delete" size="small"> 删除 </el-button>
+                <el-button type="link" icon="delete" size="small">删除</el-button>
               </template>
             </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination background
+        <el-pagination
+          background
           :current-page="page"
           :page-size="pageSize"
           :page-sizes="[10, 30, 50, 100]"
@@ -103,7 +79,7 @@
       <template #footer>
         <div class="dialog-footer">
           <el-button size="small" @click="closeDialog">取 消</el-button>
-          <el-button size="small" type="primary" @click="enterDialog"> 确 定 </el-button>
+          <el-button size="small" type="primary" @click="enterDialog">确 定</el-button>
         </div>
       </template>
     </el-dialog>
@@ -111,15 +87,9 @@
 </template>
 
 <script setup>
-import {
-  createExaCustomer,
-  updateExaCustomer,
-  deleteExaCustomer,
-  getExaCustomer,
-  getExaCustomerList,
-} from "@/api/customer";
+import { createExaCustomer, updateExaCustomer, deleteExaCustomer, getExaCustomer, getExaCustomerList } from "@/api/customer";
 // import warningBar from "@/components/warningBar/warningBar.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { formatDate } from "@/utils/format";
 
@@ -174,7 +144,9 @@ const onReset = () => {
   searchInfo.value = {};
   getTableData();
 };
-getTableData();
+onMounted(() => {
+  getTableData();
+});
 
 const dialogFormVisible = ref(false);
 const type = ref("");

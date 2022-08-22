@@ -51,15 +51,15 @@
 
 <script>
 export default {
-  name: 'Init',
+  name: "Init",
 };
 </script>
 
 <script setup>
-import { initDB } from '@/api/initdb';
-import { reactive, ref } from 'vue';
-import { ElLoading, ElMessage } from 'element-plus';
-import { useRouter } from 'vue-router';
+import { initDB } from "@/api/initdb";
+import { reactive, ref } from "vue";
+import { ElLoading, ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 
@@ -69,68 +69,68 @@ const showNext = () => {
 };
 
 const goDoc = () => {
-  window.open('https://www.gin-vue-admin.com/docs/first_master#3-init');
+  window.open("https://www.gin-vue-admin.com/docs/first_master#3-init");
 };
 
 const out = ref(false);
 
 const form = reactive({
-  dbType: 'mysql',
-  host: '127.0.0.1',
-  port: '3306',
-  userName: 'root',
-  password: '',
-  dbName: 'gva',
+  dbType: "mysql",
+  host: "127.0.0.1",
+  port: "3306",
+  userName: "root",
+  password: "",
+  dbName: "gva",
 });
 const changeDB = (val) => {
   switch (val) {
-    case 'mysql':
+    case "mysql":
       Object.assign(form, {
-        dbType: 'mysql',
-        host: '127.0.0.1',
-        port: '3306',
-        userName: 'root',
-        password: '',
-        dbName: 'gva',
+        dbType: "mysql",
+        host: "127.0.0.1",
+        port: "3306",
+        userName: "root",
+        password: "",
+        dbName: "gva",
       });
       break;
-    case 'pgsql':
+    case "pgsql":
       Object.assign(form, {
-        dbType: 'pgsql',
-        host: '127.0.0.1',
-        port: '5432',
-        userName: 'postgres',
-        password: '',
-        dbName: 'gva',
+        dbType: "pgsql",
+        host: "127.0.0.1",
+        port: "5432",
+        userName: "postgres",
+        password: "",
+        dbName: "gva",
       });
       break;
     default:
       Object.assign(form, {
-        dbType: 'mysql',
-        host: '127.0.0.1',
-        port: '3306',
-        userName: 'root',
-        password: '',
-        dbName: 'gva',
+        dbType: "mysql",
+        host: "127.0.0.1",
+        port: "3306",
+        userName: "root",
+        password: "",
+        dbName: "gva",
       });
   }
 };
 const onSubmit = async () => {
   const loading = ElLoading.service({
     lock: true,
-    text: '正在初始化数据库，请稍候',
-    spinner: 'loading',
-    background: 'rgba(0, 0, 0, 0.7)',
+    text: "正在初始化数据库，请稍候",
+    spinner: "loading",
+    background: "rgba(0, 0, 0, 0.7)",
   });
   try {
     const res = await initDB(form);
     if (res.code === 0) {
       out.value = true;
       ElMessage({
-        type: 'success',
+        type: "success",
         message: res.msg,
       });
-      router.push({ name: 'Login' });
+      router.push({ name: "Login" });
     }
     loading.close();
   } catch (err) {
@@ -143,7 +143,7 @@ const onSubmit = async () => {
 .init_page {
   margin: 0;
   padding: 0;
-  background-image: url('@/assets/login_background.jpg');
+  background-image: url("@/assets/login_background.jpg");
   background-size: cover;
   width: 100%;
   height: 100%;

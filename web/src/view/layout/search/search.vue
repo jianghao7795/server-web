@@ -2,29 +2,13 @@
   <div class="search-component">
     <transition name="el-fade-in-linear">
       <div v-show="show" class="transition-box" style="display: inline-block">
-        <el-select
-          ref="searchInput"
-          v-model="value"
-          filterable
-          placeholder="请选择"
-          @blur="hiddenSearch"
-          @change="changeRouter"
-        >
-          <el-option
-            v-for="item in routerStore.routerList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+        <el-select ref="searchInput" v-model="value" filterable placeholder="请选择" @blur="hiddenSearch" @change="changeRouter">
+          <el-option v-for="item in routerStore.routerList" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </div>
     </transition>
     <div v-if="btnShow" class="user-box">
-      <div
-        class="gvaIcon gvaIcon-refresh"
-        :class="[reload ? 'reloading' : '']"
-        @click="handleReload"
-      ></div>
+      <div class="gvaIcon gvaIcon-refresh" :class="[reload ? 'reloading' : '']" @click="handleReload"></div>
     </div>
     <div v-if="btnShow" class="user-box">
       <div class="gvaIcon gvaIcon-search" @click="showSearch"></div>

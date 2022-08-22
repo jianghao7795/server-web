@@ -11,41 +11,13 @@
         >
           <el-button size="small" type="primary" icon="upload">导入</el-button>
         </el-upload>
-        <el-button
-          class="excel-btn"
-          size="small"
-          type="primary"
-          icon="download"
-          @click="handleExcelExport('ExcelExport.xlsx')"
-        >
-          导出
-        </el-button>
-        <el-button
-          class="excel-btn"
-          size="small"
-          type="success"
-          icon="download"
-          @click="downloadExcelTemplate()"
-        >
-          下载模板
-        </el-button>
+        <el-button class="excel-btn" size="small" type="primary" icon="download" @click="handleExcelExport('ExcelExport.xlsx')">导出</el-button>
+        <el-button class="excel-btn" size="small" type="success" icon="download" @click="downloadExcelTemplate()">下载模板</el-button>
       </div>
       <el-table :data="tableData" row-key="ID">
         <el-table-column align="left" label="ID" min-width="100" prop="ID" />
-        <el-table-column
-          align="left"
-          show-overflow-tooltip
-          label="路由Name"
-          min-width="160"
-          prop="name"
-        />
-        <el-table-column
-          align="left"
-          show-overflow-tooltip
-          label="路由Path"
-          min-width="160"
-          prop="path"
-        />
+        <el-table-column align="left" show-overflow-tooltip label="路由Name" min-width="160" prop="name" />
+        <el-table-column align="left" show-overflow-tooltip label="路由Path" min-width="160" prop="path" />
         <el-table-column align="left" label="是否隐藏" min-width="100" prop="hidden">
           <template #default="scope">
             <span>{{ scope.row.hidden ? "隐藏" : "显示" }}</span>
@@ -69,7 +41,7 @@ export default {
 import { useUserStore } from "@/pinia/modules/user";
 import { exportExcel, loadExcelData, downloadTemplate } from "@/api/excel";
 import { getMenuList } from "@/api/menu";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 const path = ref(import.meta.env.VITE_BASE_API);
 
 const page = ref(1);
@@ -78,8 +50,8 @@ const pageSize = ref(999);
 const tableData = ref([]);
 
 // 查询
-const getTableData = async (f = () => {}) => {
-  const table = await f({ page: page.value, pageSize: pageSize.value });
+const getTableData = async () => {
+  const table = await getMenuList({ page: page.value, pageSize: pageSize.value });
   if (table.code === 0) {
     tableData.value = table.data.list;
     total.value = table.data.total;
@@ -87,7 +59,9 @@ const getTableData = async (f = () => {}) => {
     pageSize.value = table.data.pageSize;
   }
 };
-getTableData(getMenuList);
+onMounted(() => {
+  getTableData();
+});
 
 const userStore = useUserStore();
 
@@ -97,8 +71,9 @@ const handleExcelExport = (fileName) => {
   }
   exportExcel(tableData.value, fileName);
 };
-const loadExcel = () => {
-  getTableData(loadExcelData);
+const loadExcel = async () => {
+  await loadExcelData();
+  await getTableData();
 };
 const downloadExcelTemplate = () => {
   downloadTemplate("ExcelTemplate.xlsx");

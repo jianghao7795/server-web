@@ -5,25 +5,10 @@
       <form id="fromCont" method="post">
         <div class="fileUpload" @click="inputChange">
           选择文件
-          <input
-            v-show="false"
-            id="file"
-            ref="FileInput"
-            multiple="multiple"
-            type="file"
-            @change="choseFile"
-          />
+          <input v-show="false" id="file" ref="FileInput" multiple="multiple" type="file" @change="choseFile" />
         </div>
       </form>
-      <el-button
-        :disabled="limitFileSize"
-        type="primary"
-        size="small"
-        class="uploadBtn"
-        @click="getFile"
-      >
-        上传文件
-      </el-button>
+      <el-button :disabled="limitFileSize" type="primary" size="small" class="uploadBtn" @click="getFile">上传文件</el-button>
       <div class="el-upload__tip">请上传不超过5MB的文件</div>
       <div class="list">
         <transition name="list" tag="p">
@@ -33,12 +18,7 @@
             </el-icon>
             <span>{{ file.name }}</span>
             <span class="percentage">{{ percentage }}%</span>
-            <el-progress
-              :show-text="false"
-              :text-inside="false"
-              :stroke-width="2"
-              :percentage="percentage"
-            />
+            <el-progress :show-text="false" :text-inside="false" :stroke-width="2" :percentage="percentage" />
           </div>
         </transition>
       </div>
@@ -51,12 +31,7 @@
 
 <script setup>
 import SparkMD5 from "spark-md5";
-import {
-  findFile,
-  breakpointContinueFinish,
-  removeChunk,
-  breakpointContinue,
-} from "@/api/breakpoint";
+import { findFile, breakpointContinueFinish, removeChunk, breakpointContinue } from "@/api/breakpoint";
 import { ref, watch } from "vue";
 import { ElMessage } from "element-plus";
 
@@ -159,9 +134,7 @@ const sliceFile = () => {
 };
 
 watch(waitNum, () => {
-  percentage.value = Math.floor(
-    ((formDataList.value.length - waitNum.value) / formDataList.value.length) * 100
-  );
+  percentage.value = Math.floor(((formDataList.value.length - waitNum.value) / formDataList.value.length) * 100);
 });
 
 const upLoadFileSlice = async (item) => {

@@ -1,11 +1,7 @@
 <template>
   <div :style="{ background: userStore.sideMode }">
     <el-scrollbar style="height: calc(100vh - 60px)">
-      <transition
-        :duration="{ enter: 800, leave: 100 }"
-        mode="out-in"
-        name="el-fade-in-linear"
-      >
+      <transition :duration="{ enter: 800, leave: 100 }" mode="out-in" name="el-fade-in-linear">
         <el-menu
           :collapse="isCollapse"
           :collapse-transition="false"

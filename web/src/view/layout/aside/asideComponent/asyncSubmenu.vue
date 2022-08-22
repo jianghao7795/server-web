@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'AsyncSubmenu',
+  name: "AsyncSubmenu",
 };
 </script>
 
