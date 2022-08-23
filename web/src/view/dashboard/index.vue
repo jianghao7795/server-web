@@ -66,10 +66,10 @@
         </div>
         <div class="echart-box">
           <el-row :gutter="20">
-            <el-col :xs="24" :sm="18">
+            <!-- <el-col :xs="24" :sm="18">
               <echarts-line />
-            </el-col>
-            <el-col :xs="24" :sm="6">
+            </el-col> -->
+            <el-col :xs="24" :sm="24">
               <dashboard-table />
             </el-col>
           </el-row>
@@ -80,7 +80,7 @@
 </template>
 
 <script setup>
-import echartsLine from "@/view/dashboard/dashboardCharts/echartsLine.vue";
+// import echartsLine from "@/view/dashboard/dashboardCharts/echartsLine.vue";
 import dashboardTable from "@/view/dashboard/dashboardTable/dashboardTable.vue";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
