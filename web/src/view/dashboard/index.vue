@@ -69,7 +69,7 @@
             <!-- <el-col :xs="24" :sm="18">
               <echarts-line />
             </el-col> -->
-            <el-col :xs="24" :sm="24">
+            <el-col :xs="24" :sm="8">
               <dashboard-table />
             </el-col>
           </el-row>

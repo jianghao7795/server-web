@@ -32,7 +32,7 @@ const loadCommits = () => {
     data.forEach((element, index) => {
       if (element.commit.message && index < 10) {
         dataTimeline.value.push({
-          from: formatTimeToStr(element.commit.author.date, "yyyy-MM-dd"),
+          from: formatTimeToStr(element.commit.author.date, "yyyy-MM-dd hh:mm:ss"),
           title: element.commit.author.name,
           showDayAndMonth: true,
           message: element.commit.message,
