@@ -99,31 +99,31 @@
 </template>
 
 <script>
-export default { name: 'Article' };
+export default { name: "Article" };
 </script>
 
 <script setup>
-import { formatDate } from '@/utils/format';
-import { ElMessage } from 'element-plus';
-import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle } from '@/api/article';
-import { getAppTabList } from '@/api/appTab';
-import { ref, onMounted } from 'vue';
-import { useDebounceFn } from '@vueuse/core';
-import MdEditor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
+import { formatDate } from "@/utils/format";
+import { ElMessage } from "element-plus";
+import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle } from "@/api/article";
+import { getAppTabList } from "@/api/appTab";
+import { ref, onMounted } from "vue";
+import { useDebounceFn } from "@vueuse/core";
+import MdEditor from "md-editor-v3";
+import "md-editor-v3/lib/style.css";
 
 const formData = ref({
-  title: '',
+  title: "",
   tag_id: undefined,
-  desc: '',
-  content: '',
+  desc: "",
+  content: "",
   state: 1,
 });
 
 // search tag loading
 const loading = ref(false);
 const loadingInit = ref(false);
-const text = ref('');
+const text = ref("");
 
 const tags = ref([]);
 
@@ -177,8 +177,8 @@ const onDelete = async () => {
   const ids = [];
   if (multipleSelection.value.length === 0) {
     ElMessage({
-      type: 'warning',
-      message: '请选择要删除的数据',
+      type: "warning",
+      message: "请选择要删除的数据",
     });
     return;
   }
@@ -189,8 +189,8 @@ const onDelete = async () => {
   const res = await deleteAppTabByIds({ ids });
   if (res.code === 0) {
     ElMessage({
-      type: 'success',
-      message: '删除成功',
+      type: "success",
+      message: "删除成功",
     });
     if (tableData.value.length === ids.length && page.value > 1) {
       page.value--;
@@ -209,7 +209,7 @@ const handleSizeChange = (val) => {
   getTableData();
 };
 
-const type = ref('');
+const type = ref("");
 const dialogFormVisible = ref(false);
 // 删除行
 const deleteRow = (row) => {
@@ -217,24 +217,24 @@ const deleteRow = (row) => {
 };
 
 const openDialog = () => {
-  type.value = 'create';
+  type.value = "create";
   dialogFormVisible.value = true;
 };
 
 const closeDialog = () => {
   dialogFormVisible.value = false;
   formData.value = {
-    title: '',
+    title: "",
     tag_id: undefined,
-    desc: '',
-    content: '',
+    desc: "",
+    content: "",
     state: 1,
   };
 };
 
 const updateArticleFunc = async (row) => {
   const res = await findArticle({ ID: row.ID });
-  type.value = 'update';
+  type.value = "update";
   if (res.code === 0) {
     tags.value = [res.data.rearticle.tag];
     formData.value = res.data.rearticle;
@@ -248,10 +248,10 @@ const enterDialog = async () => {
   let res;
   formData.value.content = text.value;
   switch (type.value) {
-    case 'create':
+    case "create":
       res = await createArticle(formData.value);
       break;
-    case 'update':
+    case "update":
       res = await updateArticle(formData.value);
       break;
     default:
@@ -261,8 +261,8 @@ const enterDialog = async () => {
   console.log(formData.value);
   if (res.code === 0) {
     ElMessage({
-      type: 'success',
-      message: '创建/更改成功',
+      type: "success",
+      message: "创建/更改成功",
     });
     closeDialog();
     getTableData();

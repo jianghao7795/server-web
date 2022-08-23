@@ -12,47 +12,19 @@
               </el-icon>
             </div>
           </template>
-          <el-form
-            ref="getTableForm"
-            style="margin-top: 24px"
-            :inline="true"
-            :model="dbform"
-            label-width="120px"
-          >
+          <el-form ref="getTableForm" style="margin-top: 24px" :inline="true" :model="dbform" label-width="120px">
             <el-form-item label="数据库名" prop="structName">
-              <el-select
-                v-model="dbform.dbName"
-                filterable
-                placeholder="请选择数据库"
-                @change="getTableFunc"
-              >
-                <el-option
-                  v-for="item in dbOptions"
-                  :key="item.database"
-                  :label="item.database"
-                  :value="item.database"
-                />
+              <el-select v-model="dbform.dbName" filterable placeholder="请选择数据库" @change="getTableFunc">
+                <el-option v-for="item in dbOptions" :key="item.database" :label="item.database" :value="item.database" />
               </el-select>
             </el-form-item>
             <el-form-item label="表名" prop="structName">
-              <el-select
-                v-model="dbform.tableName"
-                :disabled="!dbform.dbName"
-                filterable
-                placeholder="请选择表"
-              >
-                <el-option
-                  v-for="item in tableOptions"
-                  :key="item.tableName"
-                  :label="item.tableName"
-                  :value="item.tableName"
-                />
+              <el-select v-model="dbform.tableName" :disabled="!dbform.dbName" filterable placeholder="请选择表">
+                <el-option v-for="item in tableOptions" :key="item.tableName" :label="item.tableName" :value="item.tableName" />
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button size="small" type="primary" @click="getColumnFunc">
-                使用此表创建
-              </el-button>
+              <el-button size="small" type="primary" @click="getColumnFunc">使用此表创建</el-button>
             </el-form-item>
           </el-form>
         </el-collapse-item>
@@ -60,13 +32,7 @@
     </div>
     <div class="gva-search-box">
       <!-- 初始版本自动化代码工具 -->
-      <el-form
-        ref="autoCodeForm"
-        :rules="rules"
-        :model="form"
-        label-width="120px"
-        :inline="true"
-      >
+      <el-form ref="autoCodeForm" :rules="rules" :model="form" label-width="120px" :inline="true">
         <el-form-item label="Struct名称" prop="structName">
           <el-input v-model="form.structName" placeholder="首字母自动转换大写" />
         </el-form-item>
@@ -74,10 +40,7 @@
           <el-input v-model="form.tableName" placeholder="指定表名（非必填）" />
         </el-form-item>
         <el-form-item label="Struct简称" prop="abbreviation">
-          <el-input
-            v-model="form.abbreviation"
-            placeholder="简称会作为入参对象名和路由group"
-          />
+          <el-input v-model="form.abbreviation" placeholder="简称会作为入参对象名和路由group" />
         </el-form-item>
         <el-form-item label="Struct中文名称" prop="description">
           <el-input v-model="form.description" placeholder="中文描述作为自动api描述" />
@@ -91,23 +54,14 @@
         </el-form-item>
         <el-form-item label="Package（包）" prop="packageName">
           <el-select v-model="form.package" style="width: 194px">
-            <el-option
-              v-for="item in pkgs"
-              :key="item.ID"
-              :value="item.packageName"
-              :label="item.packageName"
-            />
+            <el-option v-for="item in pkgs" :key="item.ID" :value="item.packageName" :label="item.packageName" />
           </el-select>
           <el-icon class="auto-icon" @click="getPkgs"><refresh /></el-icon>
           <el-icon class="auto-icon" @click="goPkgs"><document-add /></el-icon>
         </el-form-item>
         <el-form-item>
           <template #label>
-            <el-tooltip
-              content="注：把自动生成的API注册进数据库"
-              placement="bottom"
-              effect="light"
-            >
+            <el-tooltip content="注：把自动生成的API注册进数据库" placement="bottom" effect="light">
               <div>自动创建API</div>
             </el-tooltip>
           </template>
@@ -115,11 +69,7 @@
         </el-form-item>
         <el-form-item>
           <template #label>
-            <el-tooltip
-              content="注：自动迁移生成的文件到ymal配置的对应位置"
-              placement="bottom"
-              effect="light"
-            >
+            <el-tooltip content="注：自动迁移生成的文件到ymal配置的对应位置" placement="bottom" effect="light">
               <div>自动移动文件</div>
             </el-tooltip>
           </template>
@@ -130,88 +80,34 @@
     <!-- 组件列表 -->
     <div class="gva-table-box">
       <div class="gva-btn-list">
-        <el-button size="small" type="primary" @click="editAndAddField()">
-          新增Field
-        </el-button>
+        <el-button size="small" type="primary" @click="editAndAddField()">新增Field</el-button>
       </div>
       <el-table :data="form.fields">
         <el-table-column align="left" type="index" label="序列" width="100" />
         <el-table-column align="left" prop="fieldName" label="Field名" />
         <el-table-column align="left" prop="fieldDesc" label="中文名" />
         <el-table-column align="left" prop="fieldJson" label="FieldJson" />
-        <el-table-column
-          align="left"
-          prop="fieldType"
-          label="Field数据类型"
-          width="130"
-        />
-        <el-table-column
-          align="left"
-          prop="dataTypeLong"
-          label="数据库字段长度"
-          width="130"
-        />
+        <el-table-column align="left" prop="fieldType" label="Field数据类型" width="130" />
+        <el-table-column align="left" prop="dataTypeLong" label="数据库字段长度" width="130" />
         <el-table-column align="left" prop="columnName" label="数据库字段" width="130" />
         <el-table-column align="left" prop="comment" label="数据库字段描述" width="130" />
-        <el-table-column
-          align="left"
-          prop="fieldSearchType"
-          label="搜索条件"
-          width="130"
-        />
+        <el-table-column align="left" prop="fieldSearchType" label="搜索条件" width="130" />
         <el-table-column align="left" prop="dictType" label="字典" width="130" />
         <el-table-column align="left" label="操作" width="300">
           <template #default="scope">
-            <el-button
-              size="small"
-              link
-              type="primary"
-              icon="edit"
-              @click="editAndAddField(scope.row)"
-              >编辑</el-button
-            >
-            <el-button
-              size="small"
-              link
-              type="primary"
-              :disabled="scope.$index === 0"
-              @click="moveUpField(scope.$index)"
-            >
-              上移
-            </el-button>
-            <el-button
-              size="small"
-              link
-              type="primary"
-              :disabled="scope.$index + 1 === form.fields.length"
-              @click="moveDownField(scope.$index)"
-            >
+            <el-button size="small" link type="primary" icon="edit" @click="editAndAddField(scope.row)">编辑</el-button>
+            <el-button size="small" link type="primary" :disabled="scope.$index === 0" @click="moveUpField(scope.$index)">上移</el-button>
+            <el-button size="small" link type="primary" :disabled="scope.$index + 1 === form.fields.length" @click="moveDownField(scope.$index)">
               下移
             </el-button>
             <el-popover v-model:visible="scope.row.visible" placement="top">
               <p>确定删除吗？</p>
               <div style="text-align: right; margin-top: 8px">
-                <el-button
-                  size="small"
-                  link
-                  type="primary"
-                  @click="scope.row.visible = false"
-                >
-                  取消
-                </el-button>
-                <el-button type="primary" size="small" @click="deleteField(scope.$index)">
-                  确定
-                </el-button>
+                <el-button size="small" link type="primary" @click="scope.row.visible = false">取消</el-button>
+                <el-button type="primary" size="small" @click="deleteField(scope.$index)">确定</el-button>
               </div>
               <template #reference>
-                <el-button
-                  size="small"
-                  link
-                  type="primary"
-                  icon="delete"
-                  @click="scope.row.visible = true"
-                  >删除</el-button
-                >
+                <el-button size="small" link type="primary" icon="delete" @click="scope.row.visible = true">删除</el-button>
               </template>
             </el-popover>
           </template>
@@ -219,21 +115,13 @@
       </el-table>
       <!-- 组件列表 -->
       <div class="gva-btn-list justify-content-flex-end auto-btn-list">
-        <el-button size="small" type="primary" @click="enterForm(true)">
-          预览代码
-        </el-button>
-        <el-button size="small" type="primary" @click="enterForm(false)">
-          生成代码
-        </el-button>
+        <el-button size="small" type="primary" @click="enterForm(true)">预览代码</el-button>
+        <el-button size="small" type="primary" @click="enterForm(false)">生成代码</el-button>
       </div>
     </div>
     <!-- 组件弹窗 -->
     <el-dialog v-model="dialogFlag">
-      <FieldDialog
-        v-if="dialogFlag"
-        ref="fieldDialogNode"
-        :dialog-middle="dialogMiddle"
-      />
+      <FieldDialog v-if="dialogFlag" ref="fieldDialogNode" :dialog-middle="dialogMiddle" />
       <template #header>
         <span>组件内容</span>
       </template>
@@ -253,16 +141,10 @@
           <el-button size="small" type="primary" @click="copy">复制</el-button>
         </div>
       </template>
-      <PreviewCodeDialog
-        v-if="previewFlag"
-        ref="previewNode"
-        :preview-code="preViewCode"
-      />
+      <PreviewCodeDialog v-if="previewFlag" ref="previewNode" :preview-code="preViewCode" />
       <template #footer>
         <div class="dialog-footer" style="padding-top: 14px; padding-right: 14px">
-          <el-button size="small" type="primary" @click="previewFlag = false">
-            确 定
-          </el-button>
+          <el-button size="small" type="primary" @click="previewFlag = false">确 定</el-button>
         </div>
       </template>
     </el-dialog>
@@ -273,15 +155,7 @@
 import FieldDialog from "@/view/systemTools/autoCode/component/fieldDialog.vue";
 import PreviewCodeDialog from "@/view/systemTools/autoCode/component/previewCodeDialg.vue";
 import { toUpperCase, toHump, toSQLLine, toLowerCase } from "@/utils/stringFun";
-import {
-  createTemp,
-  getDB,
-  getTable,
-  getColumn,
-  preview,
-  getMeta,
-  getPackageApi,
-} from "@/api/autoCode";
+import { createTemp, getDB, getTable, getColumn, preview, getMeta, getPackageApi } from "@/api/autoCode";
 import { getDict } from "@/utils/dictionary";
 import { ref, getCurrentInstance, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";

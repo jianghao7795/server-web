@@ -1,5 +1,6 @@
 <template>
   <footer class="footerend">
+    <el-backtop></el-backtop>
     <div class="bottom-info">
       <div>
         <span>Powered by Ours</span>

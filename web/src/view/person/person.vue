@@ -8,8 +8,7 @@
               class="user-headpic-update"
               :style="{
                 'background-image': `url(${
-                  userStore.userInfo.headerImg &&
-                  userStore.userInfo.headerImg.slice(0, 4) !== 'http'
+                  userStore.userInfo.headerImg && userStore.userInfo.headerImg.slice(0, 4) !== 'http'
                     ? path + userStore.userInfo.headerImg
                     : userStore.userInfo.headerImg
                 })`,
@@ -21,8 +20,8 @@
                 <el-icon>
                   <edit />
                 </el-icon>
-                重新上传</span
-              >
+                重新上传
+              </span>
             </div>
             <div class="user-personality">
               <p v-if="!editFlag" class="nickName">
@@ -50,12 +49,7 @@
                   </el-icon>
                   {{ userStore.userInfo.nickName }}
                 </li>
-                <el-tooltip
-                  class="item"
-                  effect="light"
-                  content="北京反转极光科技有限公司-技术部-前端事业群"
-                  placement="top"
-                >
+                <el-tooltip class="item" effect="light" content="北京反转极光科技有限公司-技术部-前端事业群" placement="top">
                   <li>
                     <el-icon>
                       <data-analysis />
@@ -69,12 +63,7 @@
                   </el-icon>
                   中国·北京市·朝阳区
                 </li>
-                <el-tooltip
-                  class="item"
-                  effect="light"
-                  content="GoLang/JavaScript/Vue/Gorm"
-                  placement="top"
-                >
+                <el-tooltip class="item" effect="light" content="GoLang/JavaScript/Vue/Gorm" placement="top">
                   <li>
                     <el-icon>
                       <medal />
@@ -96,18 +85,14 @@
                   <p class="title">密保手机</p>
                   <p class="desc">
                     已绑定手机:{{ userStore.userInfo.phone }}
-                    <a href="javascript:void(0)" @click="changePhoneFlag = true"
-                      >立即修改</a
-                    >
+                    <a href="javascript:void(0)" @click="changePhoneFlag = true">立即修改</a>
                   </p>
                 </li>
                 <li>
                   <p class="title">密保邮箱</p>
                   <p class="desc">
                     已绑定邮箱：{{ userStore.userInfo.email }}
-                    <a href="javascript:void(0)" @click="changeEmailFlag = true"
-                      >立即修改</a
-                    >
+                    <a href="javascript:void(0)" @click="changeEmailFlag = true">立即修改</a>
                   </p>
                 </li>
                 <li>
@@ -133,12 +118,7 @@
 
     <ChooseImg ref="chooseImgRef" @enter-img="enterImg" />
 
-    <el-dialog
-      v-model="showPassword"
-      title="修改密码"
-      width="360px"
-      @close="clearPassword"
-    >
+    <el-dialog v-model="showPassword" title="修改密码" width="360px" @close="clearPassword">
       <el-form ref="modifyPwdForm" :model="pwdModify" :rules="rules" label-width="80px">
         <el-form-item :minlength="6" label="原密码" prop="password">
           <el-input v-model="pwdModify.password" show-password />
@@ -161,27 +141,14 @@
     <el-dialog v-model="changePhoneFlag" title="绑定手机" width="600px">
       <el-form :model="phoneForm">
         <el-form-item label="手机号" label-width="120px">
-          <el-input
-            v-model="phoneForm.phone"
-            placeholder="请输入手机号"
-            autocomplete="off"
-          />
+          <el-input v-model="phoneForm.phone" placeholder="请输入手机号" autocomplete="off" />
         </el-form-item>
         <el-form-item label="验证码" label-width="120px">
           <div class="code-box">
-            <el-input
-              v-model="phoneForm.code"
-              autocomplete="off"
-              placeholder="请自行设计短信服务，此处为模拟随便写"
-              style="width: 300px"
-            />
-            <el-button
-              size="small"
-              type="primary"
-              :disabled="time > 0"
-              @click="getCode"
-              >{{ time > 0 ? `(${time}s)后重新获取` : "获取验证码" }}</el-button
-            >
+            <el-input v-model="phoneForm.code" autocomplete="off" placeholder="请自行设计短信服务，此处为模拟随便写" style="width: 300px" />
+            <el-button size="small" type="primary" :disabled="time > 0" @click="getCode">
+              {{ time > 0 ? `(${time}s)后重新获取` : "获取验证码" }}
+            </el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -196,27 +163,14 @@
     <el-dialog v-model="changeEmailFlag" title="绑定邮箱" width="600px">
       <el-form :model="emailForm">
         <el-form-item label="邮箱" label-width="120px">
-          <el-input
-            v-model="emailForm.email"
-            placeholder="请输入邮箱"
-            autocomplete="off"
-          />
+          <el-input v-model="emailForm.email" placeholder="请输入邮箱" autocomplete="off" />
         </el-form-item>
         <el-form-item label="验证码" label-width="120px">
           <div class="code-box">
-            <el-input
-              v-model="emailForm.code"
-              placeholder="请自行设计邮件服务，此处为模拟随便写"
-              autocomplete="off"
-              style="width: 300px"
-            />
-            <el-button
-              size="small"
-              type="primary"
-              :disabled="emailTime > 0"
-              @click="getEmailCode"
-              >{{ emailTime > 0 ? `(${emailTime}s)后重新获取` : "获取验证码" }}</el-button
-            >
+            <el-input v-model="emailForm.code" placeholder="请自行设计邮件服务，此处为模拟随便写" autocomplete="off" style="width: 300px" />
+            <el-button size="small" type="primary" :disabled="emailTime > 0" @click="getEmailCode">
+              {{ emailTime > 0 ? `(${emailTime}s)后重新获取` : "获取验证码" }}
+            </el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -529,13 +483,8 @@ const changeEmail = async () => {
   border-radius: 20px;
   &:hover {
     color: #fff;
-    background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.15) 0%,
-        rgba(0, 0, 0, 0.15) 100%
-      ),
-      radial-gradient(at top center, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 120%)
-        #989898;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%),
+      radial-gradient(at top center, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 120%) #989898;
     background-blend-mode: multiply, multiply;
     .update {
       color: #fff;

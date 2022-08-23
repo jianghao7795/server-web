@@ -15,26 +15,16 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button size="small" type="primary" icon="search" @click="onSubmit">
-            查询
-          </el-button>
+          <el-button size="small" type="primary" icon="search" @click="onSubmit">查询</el-button>
           <el-button size="small" icon="refresh" @click="onReset">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="gva-table-box">
       <div class="gva-btn-list">
-        <el-button size="small" type="primary" icon="plus" @click="openDialog">
-          新增字典项
-        </el-button>
+        <el-button size="small" type="primary" icon="plus" @click="openDialog">新增字典项</el-button>
       </div>
-      <el-table
-        ref="multipleTable"
-        :data="tableData"
-        style="width: 100%"
-        tooltip-effect="dark"
-        row-key="ID"
-      >
+      <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID">
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="日期" width="180">
           <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
@@ -52,14 +42,7 @@
 
         <el-table-column align="left" label="操作">
           <template #default="scope">
-            <el-button
-              size="small"
-              link type="primary"
-              icon="edit"
-              @click="updateSysDictionaryDetailFunc(scope.row)"
-            >
-              变更
-            </el-button>
+            <el-button size="small" link type="primary" icon="edit" @click="updateSysDictionaryDetailFunc(scope.row)">变更</el-button>
             <el-popconfirm
               placement="top"
               width="160"
@@ -82,14 +65,7 @@
                 </el-button>
               </div> -->
               <template #reference>
-                <el-button
-                  link type="primary"
-                  icon="delete"
-                  size="small"
-                  @click="scope.row.visible = true"
-                >
-                  删除
-                </el-button>
+                <el-button link type="primary" icon="delete" size="small" @click="scope.row.visible = true">删除</el-button>
               </template>
             </el-popconfirm>
           </template>
@@ -97,7 +73,8 @@
       </el-table>
 
       <div class="pagination">
-        <el-pagination background
+        <el-pagination
+          background
           :current-page="page"
           :page-size="pageSize"
           :page-sizes="[10, 30, 50, 100]"
@@ -110,30 +87,12 @@
     </div>
 
     <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="字典项">
-      <el-form
-        ref="dialogForm"
-        :model="formData"
-        :rules="rules"
-        size="default"
-        label-width="110px"
-      >
+      <el-form ref="dialogForm" :model="formData" :rules="rules" size="default" label-width="110px">
         <el-form-item label="展示值" prop="label">
-          <el-input
-            v-model="formData.label"
-            placeholder="请输入展示值"
-            clearable
-            :style="{ width: '100%' }"
-          />
+          <el-input v-model="formData.label" placeholder="请输入展示值" clearable :style="{ width: '100%' }" />
         </el-form-item>
         <el-form-item label="字典值" prop="value">
-          <el-input-number
-            v-model.number="formData.value"
-            step-strictly
-            :step="1"
-            placeholder="请输入字典值"
-            clearable
-            :style="{ width: '100%' }"
-          />
+          <el-input-number v-model.number="formData.value" step-strictly :step="1" placeholder="请输入字典值" clearable :style="{ width: '100%' }" />
         </el-form-item>
         <el-form-item label="启用状态" prop="status" required>
           <el-switch v-model="formData.status" active-text="开启" inactive-text="停用" />

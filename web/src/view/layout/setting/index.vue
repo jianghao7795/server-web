@@ -1,17 +1,7 @@
 <template>
   <div>
-    <el-button
-      type="primary"
-      class="drawer-container"
-      icon="setting"
-      @click="showSettingDrawer"
-    />
-    <el-drawer
-      v-model="drawer"
-      title="系统配置"
-      :direction="direction"
-      :before-close="handleClose"
-    >
+    <el-button type="primary" class="drawer-container" icon="setting" @click="showSettingDrawer" />
+    <el-drawer v-model="drawer" title="系统配置" :direction="direction" :before-close="handleClose">
       <div class="setting_body">
         <div class="setting_card">
           <div class="setting_content">
@@ -21,9 +11,7 @@
                   <el-icon v-if="userStore.mode === 'light'" class="check">
                     <check />
                   </el-icon>
-                  <img
-                    src="https://gw.alipayobjects.com/zos/antfincdn/NQ%24zoisaD2/jpRkZQMyYRryryPNtyIC.svg"
-                  />
+                  <img src="https://gw.alipayobjects.com/zos/antfincdn/NQ%24zoisaD2/jpRkZQMyYRryryPNtyIC.svg" />
                 </div>
                 <p>简约白</p>
               </div>
@@ -32,9 +20,7 @@
                   <el-icon v-if="userStore.mode === 'dark'" class="check">
                     <check />
                   </el-icon>
-                  <img
-                    src="https://gw.alipayobjects.com/zos/antfincdn/XwFOFbLkSM/LCkqqYNmvBEbokSDscrm.svg"
-                  />
+                  <img src="https://gw.alipayobjects.com/zos/antfincdn/XwFOFbLkSM/LCkqqYNmvBEbokSDscrm.svg" />
                 </div>
                 <p>商务黑</p>
               </div>

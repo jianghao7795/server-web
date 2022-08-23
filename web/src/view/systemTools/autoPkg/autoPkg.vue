@@ -2,9 +2,7 @@
   <div>
     <div class="gva-table-box">
       <div class="gva-btn-list">
-        <el-button size="small" type="primary" icon="plus" @click="openDialog('addApi')"
-          >新增</el-button
-        >
+        <el-button size="small" type="primary" icon="plus" @click="openDialog('addApi')">新增</el-button>
       </div>
       <el-table :data="tableData">
         <el-table-column align="left" label="id" width="60" prop="ID" />
@@ -14,24 +12,13 @@
 
         <el-table-column align="left" label="操作" width="200">
           <template #default="scope">
-            <el-button
-              icon="delete"
-              size="small"
-              link
-              type="primary"
-              @click="deleteApiFunc(scope.row)"
-              >删除</el-button
-            >
+            <el-button icon="delete" size="small" link type="primary" @click="deleteApiFunc(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
 
-    <el-dialog
-      v-model="dialogFormVisible"
-      :before-close="closeDialog"
-      title="创建Package"
-    >
+    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="创建Package">
       <warning-bar title="新增Pkg用于自动化代码使用" />
       <el-form ref="pkgForm" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="包名" prop="packageName">
@@ -128,15 +115,11 @@ const getTableData = async () => {
 };
 
 const deleteApiFunc = async (row) => {
-  ElMessageBox.confirm(
-    "此操作仅删除数据库中的pkg存储，后端相应目录结构请自行删除与数据库保持一致！",
-    "提示",
-    {
-      confirmButtonText: "确定",
-      cancelButtonText: "取消",
-      type: "warning",
-    }
-  ).then(async () => {
+  ElMessageBox.confirm("此操作仅删除数据库中的pkg存储，后端相应目录结构请自行删除与数据库保持一致！", "提示", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  }).then(async () => {
     const res = await deletePackageApi(row);
     if (res.code === 0) {
       ElMessage({

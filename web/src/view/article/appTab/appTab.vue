@@ -97,21 +97,21 @@
 
 <script>
 export default {
-  name: 'AppTab',
+  name: "AppTab",
 };
 </script>
 
 <script setup>
-import { createAppTab, deleteAppTab, deleteAppTabByIds, updateAppTab, findAppTab, getAppTabList } from '@/api/appTab';
+import { createAppTab, deleteAppTab, deleteAppTabByIds, updateAppTab, findAppTab, getAppTabList } from "@/api/appTab";
 
 // 全量引入格式化工具 请按需保留
-import { formatDate } from '@/utils/format';
-import { ElMessage, ElMessageBox } from 'element-plus';
-import { ref, onMounted } from 'vue';
+import { formatDate } from "@/utils/format";
+import { ElMessage, ElMessageBox } from "element-plus";
+import { ref, onMounted } from "vue";
 
 // 自动化生成的字典（可能为空）以及字段
 const formData = ref({
-  name: '',
+  name: "",
   status: 1,
 });
 
@@ -134,10 +134,10 @@ const changeHide = (e) => {
       loading.value = primitive;
       // console.log(primitive);
       if (resp.code === 0) {
-        ElMessage.success(e.status ? '隐藏成功' : '显示成功');
+        ElMessage.success(e.status ? "隐藏成功" : "显示成功");
         return resolve(true);
       } else {
-        ElMessage.error(!e.status ? '隐藏成功' : '显示成功');
+        ElMessage.error(!e.status ? "隐藏成功" : "显示成功");
         return reject(new Error(resp.msg));
       }
     });
@@ -164,7 +164,7 @@ const onReset = () => {
 const onSubmit = () => {
   page.value = 1;
   pageSize.value = 10;
-  if (searchInfo.value.status === '') {
+  if (searchInfo.value.status === "") {
     searchInfo.value.status = null;
   }
   getTableData();
@@ -224,10 +224,10 @@ const handleSelectionChange = (val) => {
 
 // 删除行
 const deleteRow = (row) => {
-  ElMessageBox.confirm('确定要删除吗?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning',
+  ElMessageBox.confirm("确定要删除吗?", "提示", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
   }).then(() => {
     deleteAppTabFunc(row);
   });
@@ -241,8 +241,8 @@ const onDelete = async () => {
   const ids = [];
   if (multipleSelection.value.length === 0) {
     ElMessage({
-      type: 'warning',
-      message: '请选择要删除的数据',
+      type: "warning",
+      message: "请选择要删除的数据",
     });
     return;
   }
@@ -253,8 +253,8 @@ const onDelete = async () => {
   const res = await deleteAppTabByIds({ ids });
   if (res.code === 0) {
     ElMessage({
-      type: 'success',
-      message: '删除成功',
+      type: "success",
+      message: "删除成功",
     });
     if (tableData.value.length === ids.length && page.value > 1) {
       page.value--;
@@ -265,12 +265,12 @@ const onDelete = async () => {
 };
 
 // 行为控制标记（弹窗内部需要增还是改）
-const type = ref('');
+const type = ref("");
 
 // 更新行
 const updateAppTabFunc = async (row) => {
   const res = await findAppTab({ ID: row.ID });
-  type.value = 'update';
+  type.value = "update";
   if (res.code === 0) {
     formData.value = res.data.reappTab;
     dialogFormVisible.value = true;
@@ -282,8 +282,8 @@ const deleteAppTabFunc = async (row) => {
   const res = await deleteAppTab({ ID: row.ID });
   if (res.code === 0) {
     ElMessage({
-      type: 'success',
-      message: '删除成功',
+      type: "success",
+      message: "删除成功",
     });
     if (tableData.value.length === 1 && page.value > 1) {
       page.value--;
@@ -297,7 +297,7 @@ const dialogFormVisible = ref(false);
 
 // 打开弹窗
 const openDialog = () => {
-  type.value = 'create';
+  type.value = "create";
   dialogFormVisible.value = true;
 };
 
@@ -305,7 +305,7 @@ const openDialog = () => {
 const closeDialog = () => {
   dialogFormVisible.value = false;
   formData.value = {
-    name: '',
+    name: "",
     status: 1,
   };
 };
@@ -313,10 +313,10 @@ const closeDialog = () => {
 const enterDialog = async () => {
   let res;
   switch (type.value) {
-    case 'create':
+    case "create":
       res = await createAppTab(formData.value);
       break;
-    case 'update':
+    case "update":
       res = await updateAppTab(formData.value);
       break;
     default:
@@ -325,8 +325,8 @@ const enterDialog = async () => {
   }
   if (res.code === 0) {
     ElMessage({
-      type: 'success',
-      message: '创建/更改成功',
+      type: "success",
+      message: "创建/更改成功",
     });
     closeDialog();
     getTableData();

@@ -67,21 +67,21 @@
 </template>
 
 <script setup>
-import { getFileList, deleteFile, editFileName } from '@/api/fileUploadAndDownload';
-import { downloadImage } from '@/utils/downloadImg';
+import { getFileList, deleteFile, editFileName } from "@/api/fileUploadAndDownload";
+import { downloadImage } from "@/utils/downloadImg";
 // import { useUserStore } from '@/pinia/modules/user';
-import CustomPic from '@/components/customPic/index.vue';
-import UploadImage from '@/components/upload/image.vue';
-import UploadCommon from '@/components/upload/common.vue';
-import { formatDate } from '@/utils/format';
+import CustomPic from "@/components/customPic/index.vue";
+import UploadImage from "@/components/upload/image.vue";
+import UploadCommon from "@/components/upload/common.vue";
+import { formatDate } from "@/utils/format";
 
-import { ref } from 'vue';
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { ref } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 const path = ref(import.meta.env.VITE_BASE_API);
 // const userStore = useUserStore();
-const imageUrl = ref('');
-const imageCommon = ref('');
+const imageUrl = ref("");
+const imageCommon = ref("");
 
 const page = ref(1);
 const total = ref(0);
@@ -117,17 +117,17 @@ const getTableData = async () => {
 getTableData();
 
 const deleteFileFunc = async (row) => {
-  ElMessageBox.confirm('此操作将永久文件, 是否继续?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning',
+  ElMessageBox.confirm("此操作将永久文件, 是否继续?", "提示", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
   })
     .then(async () => {
       const res = await deleteFile(row);
       if (res.code === 0) {
         ElMessage({
-          type: 'success',
-          message: '删除成功!',
+          type: "success",
+          message: "删除成功!",
         });
         if (tableData.value.length === 1 && page.value > 1) {
           page.value--;
@@ -137,14 +137,14 @@ const deleteFileFunc = async (row) => {
     })
     .catch(() => {
       ElMessage({
-        type: 'info',
-        message: '已取消删除',
+        type: "info",
+        message: "已取消删除",
       });
     });
 };
 
 const downloadFile = (row) => {
-  if (row.url.indexOf('http://') > -1 || row.url.indexOf('https://') > -1) {
+  if (row.url.indexOf("http://") > -1 || row.url.indexOf("https://") > -1) {
     downloadImage(row.url, row.name);
   } else {
     downloadImage(path.value + row.url, row.name);
@@ -158,11 +158,11 @@ const downloadFile = (row) => {
  */
 const editFileNameFunc = async (row) => {
   console.log(row);
-  ElMessageBox.prompt('请输入文件名或者备注', '编辑', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+  ElMessageBox.prompt("请输入文件名或者备注", "编辑", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
     inputPattern: /\S/,
-    inputErrorMessage: '不能为空',
+    inputErrorMessage: "不能为空",
     inputValue: row.name,
   })
     .then(async ({ value }) => {
@@ -171,16 +171,16 @@ const editFileNameFunc = async (row) => {
       const res = await editFileName(row);
       if (res.code === 0) {
         ElMessage({
-          type: 'success',
-          message: '编辑成功!',
+          type: "success",
+          message: "编辑成功!",
         });
         getTableData();
       }
     })
     .catch(() => {
       ElMessage({
-        type: 'warning',
-        message: '取消修改',
+        type: "warning",
+        message: "取消修改",
       });
     });
 };
@@ -188,7 +188,7 @@ const editFileNameFunc = async (row) => {
 
 <script>
 export default {
-  name: 'Upload',
+  name: "Upload",
 };
 </script>
 <style scoped>

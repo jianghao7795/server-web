@@ -12,7 +12,7 @@
         <el-table-column align="left" label="路由Path" show-overflow-tooltip min-width="160" prop="path" />
         <el-table-column align="left" label="是否隐藏" min-width="100" prop="hidden">
           <template #default="scope">
-            <span>{{ scope.row.hidden ? '隐藏' : '显示' }}</span>
+            <span>{{ scope.row.hidden ? "隐藏" : "显示" }}</span>
           </template>
         </el-table-column>
         <el-table-column align="left" label="父节点" min-width="90" prop="parentId" />
@@ -39,7 +39,7 @@
           <template #default="scope">
             <el-button size="small" icon="plus" link type="primary" @click="addMenu(scope.row.ID)">添加子菜单</el-button>
             <el-button size="small" link type="primary" icon="edit" @click="editMenu(scope.row.ID)">编辑</el-button>
-            <el-button size="small" link type="primary" icon="delete" @click="deleteMenu(scope.row.ID)">删除</el-button>
+            <el-button size="small" link type="primary" icon="delete" v-if="!scope.row.children" @click="deleteMenu(scope.row.ID)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -179,17 +179,17 @@
 </template>
 
 <script setup>
-import { updateBaseMenu, getMenuList, addBaseMenu, deleteBaseMenu, getBaseMenuById } from '@/api/menu';
-import icon from '@/view/superAdmin/menu/icon.vue';
-import warningBar from '@/components/warningBar/warningBar.vue';
-import { canRemoveAuthorityBtnApi } from '@/api/authorityBtn';
-import { reactive, ref } from 'vue';
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { updateBaseMenu, getMenuList, addBaseMenu, deleteBaseMenu, getBaseMenuById } from "@/api/menu";
+import icon from "@/view/superAdmin/menu/icon.vue";
+import warningBar from "@/components/warningBar/warningBar.vue";
+import { canRemoveAuthorityBtnApi } from "@/api/authorityBtn";
+import { reactive, ref, onMounted } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 const rules = reactive({
-  path: [{ required: true, message: '请输入菜单name', trigger: 'blur' }],
-  component: [{ required: true, message: '请输入文件路径', trigger: 'blur' }],
-  'meta.title': [{ required: true, message: '请输入菜单展示名称', trigger: 'blur' }],
+  path: [{ required: true, message: "请输入菜单name", trigger: "blur" }],
+  component: [{ required: true, message: "请输入文件路径", trigger: "blur" }],
+  "meta.title": [{ required: true, message: "请输入菜单展示名称", trigger: "blur" }],
 });
 
 const page = ref(1);
@@ -215,7 +215,9 @@ const getTableData = async () => {
   }
 };
 
-getTableData();
+onMounted(() => {
+  getTableData();
+});
 
 // 新增参数
 const addParameter = (form) => {
@@ -223,9 +225,9 @@ const addParameter = (form) => {
     form.parameters = [];
   }
   form.parameters.push({
-    type: 'query',
-    key: '',
-    value: '',
+    type: "query",
+    key: "",
+    value: "",
   });
 };
 // 删除参数
@@ -240,8 +242,8 @@ const addBtn = (form) => {
     form.menuBtn = [];
   }
   form.menuBtn.push({
-    name: '',
-    desc: '',
+    name: "",
+    desc: "",
   });
 };
 // 删除可控按钮
@@ -260,14 +262,14 @@ const deleteBtn = async (btns, index) => {
 
 const form = ref({
   ID: 0,
-  path: '',
-  name: '',
-  hidden: '',
-  parentId: '',
-  component: '',
+  path: "",
+  name: "",
+  hidden: "",
+  parentId: "",
+  component: "",
   meta: {
-    title: '',
-    icon: '',
+    title: "",
+    icon: "",
     defaultMenu: false,
     closeTab: false,
     keepAlive: false,
@@ -285,17 +287,17 @@ const handleClose = (done) => {
 };
 // 删除菜单
 const deleteMenu = (ID) => {
-  ElMessageBox.confirm('此操作将永久删除所有角色下该菜单, 是否继续?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning',
+  ElMessageBox.confirm("此操作将永久删除所有角色下该菜单, 是否继续?", "提示", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
   })
     .then(async () => {
       const res = await deleteBaseMenu({ ID });
       if (res.code === 0) {
         ElMessage({
-          type: 'success',
-          message: '删除成功!',
+          type: "success",
+          message: "删除成功!",
         });
         if (tableData.value.length === 1 && page.value > 1) {
           page.value--;
@@ -305,8 +307,8 @@ const deleteMenu = (ID) => {
     })
     .catch(() => {
       ElMessage({
-        type: 'info',
-        message: '已取消删除',
+        type: "info",
+        message: "已取消删除",
       });
     });
 };
@@ -318,16 +320,16 @@ const initForm = () => {
   menuForm.value.resetFields();
   form.value = {
     ID: 0,
-    path: '',
-    name: '',
-    hidden: '',
-    parentId: '',
-    component: '',
+    path: "",
+    name: "",
+    hidden: "",
+    parentId: "",
+    component: "",
     meta: {
-      title: '',
-      icon: '',
+      title: "",
+      icon: "",
       defaultMenu: false,
-      keepAlive: '',
+      keepAlive: "",
     },
   };
 };
@@ -350,8 +352,8 @@ const enterDialog = async () => {
       }
       if (res.code === 0) {
         ElMessage({
-          type: 'success',
-          message: isEdit.value ? '编辑成功' : '添加成功!',
+          type: "success",
+          message: isEdit.value ? "编辑成功" : "添加成功!",
         });
         getTableData();
       }
@@ -363,15 +365,15 @@ const enterDialog = async () => {
 
 const menuOption = ref([
   {
-    ID: '0',
-    title: '根菜单',
+    ID: "0",
+    title: "根菜单",
   },
 ]);
 const setOptions = () => {
   menuOption.value = [
     {
-      ID: '0',
-      title: '根目录',
+      ID: "0",
+      title: "根目录",
     },
   ];
   setMenuOptions(tableData.value, menuOption.value, false);
@@ -401,9 +403,9 @@ const setMenuOptions = (menuData, optionsData, disabled) => {
 
 // 添加菜单方法，id为 0则为添加根菜单
 const isEdit = ref(false);
-const dialogTitle = ref('新增菜单');
+const dialogTitle = ref("新增菜单");
 const addMenu = (id) => {
-  dialogTitle.value = '新增菜单';
+  dialogTitle.value = "新增菜单";
   form.value.parentId = String(id);
   isEdit.value = false;
   setOptions();
@@ -411,7 +413,7 @@ const addMenu = (id) => {
 };
 // 修改菜单方法
 const editMenu = async (id) => {
-  dialogTitle.value = '编辑菜单';
+  dialogTitle.value = "编辑菜单";
   const res = await getBaseMenuById({ id });
   form.value = res.data.menu;
   isEdit.value = true;
@@ -422,7 +424,7 @@ const editMenu = async (id) => {
 
 <script>
 export default {
-  name: 'Menus',
+  name: "Menus",
 };
 </script>
 

@@ -59,7 +59,7 @@
       </el-card>
       <!-- <div class="quick-entrance-title"></div> -->
     </div>
-    <!-- <div class="gva-card-box">
+    <div class="gva-card-box">
       <div class="gva-card">
         <div class="card-header">
           <span>数据统计</span>
@@ -75,72 +75,72 @@
           </el-row>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
 <script setup>
-// import echartsLine from "@/view/dashboard/dashboardCharts/echartsLine.vue";
-// import dashboardTable from "@/view/dashboard/dashboardTable/dashboardTable.vue";
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useUserStore } from '@/pinia/modules/user';
-import { useNow, useDateFormat } from '@vueuse/core';
+import echartsLine from "@/view/dashboard/dashboardCharts/echartsLine.vue";
+import dashboardTable from "@/view/dashboard/dashboardTable/dashboardTable.vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/pinia/modules/user";
+import { useNow, useDateFormat } from "@vueuse/core";
 
 const userStore = useUserStore();
-const formatted = useDateFormat(useNow(), 'YYYY-MM-DD HH:mm:ss');
-const period = ref('');
+const formatted = useDateFormat(useNow(), "YYYY-MM-DD HH:mm:ss");
+const period = ref("");
 onMounted(() => {
   const nowHours = useNow().value.getHours();
   if (nowHours <= 12) {
-    period.value = '早上好';
+    period.value = "早上好";
   } else {
-    period.value = '下午好';
+    period.value = "下午好";
   }
 });
 
 const toolCards = ref([
   {
-    label: '用户管理',
-    icon: 'monitor',
-    name: 'user',
-    color: '#ff9c6e',
-    bg: 'rgba(255, 156, 110,.3)',
+    label: "用户管理",
+    icon: "monitor",
+    name: "user",
+    color: "#ff9c6e",
+    bg: "rgba(255, 156, 110,.3)",
   },
   {
-    label: '角色管理',
-    icon: 'setting',
-    name: 'authority',
-    color: '#69c0ff',
-    bg: 'rgba(105, 192, 255,.3)',
+    label: "角色管理",
+    icon: "setting",
+    name: "authority",
+    color: "#69c0ff",
+    bg: "rgba(105, 192, 255,.3)",
   },
   {
-    label: '菜单管理',
-    icon: 'menu',
-    name: 'menu',
-    color: '#b37feb',
-    bg: 'rgba(179, 127, 235,.3)',
+    label: "菜单管理",
+    icon: "menu",
+    name: "menu",
+    color: "#b37feb",
+    bg: "rgba(179, 127, 235,.3)",
   },
   {
-    label: '代码生成器',
-    icon: 'cpu',
-    name: 'autoCode',
-    color: '#ffd666',
-    bg: 'rgba(255, 214, 102,.3)',
+    label: "代码生成器",
+    icon: "cpu",
+    name: "autoCode",
+    color: "#ffd666",
+    bg: "rgba(255, 214, 102,.3)",
   },
   {
-    label: '表单生成器',
-    icon: 'document-checked',
-    name: 'formCreate',
-    color: '#ff85c0',
-    bg: 'rgba(255, 133, 192,.3)',
+    label: "表单生成器",
+    icon: "document-checked",
+    name: "formCreate",
+    color: "#ff85c0",
+    bg: "rgba(255, 133, 192,.3)",
   },
   {
-    label: '关于我们',
-    icon: 'user',
-    name: 'about',
-    color: '#5cdbd3',
-    bg: 'rgba(92, 219, 211,.3)',
+    label: "关于我们",
+    icon: "user",
+    name: "about",
+    color: "#5cdbd3",
+    bg: "rgba(92, 219, 211,.3)",
   },
 ]);
 
@@ -153,7 +153,7 @@ const toTarget = (name) => {
 </script>
 <script>
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
 };
 </script>
 

@@ -10,6 +10,7 @@
           </h2>
         </div>
         <Aside class="aside" />
+        <el-backtop :right="100" :bottom="100"></el-backtop>
       </el-aside>
       <!-- 分块滑动功能 -->
       <el-main class="main-cont main-right">
@@ -108,25 +109,25 @@
 
 <script>
 export default {
-  name: 'Layout',
+  name: "Layout",
 };
 </script>
 
 <script setup>
-import Aside from '@/view/layout/aside/index.vue';
-import HistoryComponent from '@/view/layout/aside/historyComponent/history.vue';
-import Search from '@/view/layout/search/search.vue';
-import BottomInfo from '@/view/layout/bottomInfo/bottomInfo.vue';
-import CustomPic from '@/components/customPic/index.vue';
-import Setting from './setting/index.vue';
-import { setUserAuthority } from '@/api/user';
-import { emitter } from '@/utils/bus.js';
-import { computed, ref, onMounted, nextTick } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { useUserStore } from '@/pinia/modules/user';
-import { useRouterStore } from '@/pinia/modules/router';
-import { fmtTitle } from '@/utils/fmtRouterTitle';
-import { useRefreshStore } from '@/pinia/modules/refresh';
+import Aside from "@/view/layout/aside/index.vue";
+import HistoryComponent from "@/view/layout/aside/historyComponent/history.vue";
+import Search from "@/view/layout/search/search.vue";
+import BottomInfo from "@/view/layout/bottomInfo/bottomInfo.vue";
+import CustomPic from "@/components/customPic/index.vue";
+import Setting from "./setting/index.vue";
+import { setUserAuthority } from "@/api/user";
+import { emitter } from "@/utils/bus.js";
+import { computed, ref, onMounted, nextTick } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { useUserStore } from "@/pinia/modules/user";
+import { useRouterStore } from "@/pinia/modules/router";
+import { fmtTitle } from "@/utils/fmtRouterTitle";
+import { useRefreshStore } from "@/pinia/modules/refresh";
 
 const refreshStore = useRefreshStore();
 
@@ -163,21 +164,21 @@ initPage();
 const loadingFlag = ref(false);
 onMounted(() => {
   // 挂载一些通用的事件
-  emitter.emit('collapse', isCollapse.value); // emit 是值 fire an event
-  emitter.emit('mobile', isMobile.value);
-  emitter.on('reload', reload); // on 倾听所有事件 // emitter.all.clear() clearing all events
-  emitter.on('showLoading', () => {
+  emitter.emit("collapse", isCollapse.value); // emit 是值 fire an event
+  emitter.emit("mobile", isMobile.value);
+  emitter.on("reload", reload); // on 倾听所有事件 // emitter.all.clear() clearing all events
+  emitter.on("showLoading", () => {
     loadingFlag.value = true;
   });
-  emitter.on('closeLoading', () => {
+  emitter.on("closeLoading", () => {
     loadingFlag.value = false;
   });
   window.onresize = () => {
     // onresize 是调整浏览器尺寸时触发
     return (() => {
       initPage();
-      emitter.emit('collapse', isCollapse.value);
-      emitter.emit('mobile', isMobile.value);
+      emitter.emit("collapse", isCollapse.value);
+      emitter.emit("mobile", isMobile.value);
     })();
   };
   if (userStore.loadingInstance) {
@@ -186,20 +187,20 @@ onMounted(() => {
 });
 const userStore = useUserStore();
 const textColor = computed(() => {
-  if (userStore.sideMode === 'dark') {
-    return '#fff';
-  } else if (userStore.sideMode === 'light') {
-    return '#191a23';
+  if (userStore.sideMode === "dark") {
+    return "#fff";
+  } else if (userStore.sideMode === "light") {
+    return "#191a23";
   } else {
     return userStore.baseColor;
   }
 });
 
 const backgroundColor = computed(() => {
-  if (userStore.sideMode === 'dark') {
-    return '#191a23';
-  } else if (userStore.sideMode === 'light') {
-    return '#fff';
+  if (userStore.sideMode === "dark") {
+    return "#191a23";
+  } else if (userStore.sideMode === "light") {
+    return "#fff";
   } else {
     return userStore.sideMode;
   }
@@ -212,7 +213,7 @@ const changeUserAuth = async (id) => {
     authorityId: id,
   });
   if (res.code === 0) {
-    emitter.emit('closeAllPage');
+    emitter.emit("closeAllPage");
     setTimeout(() => {
       window.location.reload();
     }, 1);
@@ -235,7 +236,7 @@ const reload = async () => {
       reloadFlag.value = true;
     } else {
       const title = route.meta.title;
-      router.push({ name: 'Reload', params: { title } });
+      router.push({ name: "Reload", params: { title } });
     }
   }, 400);
   // if (route.meta.keepAlive) {
@@ -253,11 +254,11 @@ const totalCollapse = () => {
   isCollapse.value = !isCollapse.value;
   isSider.value = !isCollapse.value;
   isShadowBg.value = !isCollapse.value;
-  emitter.emit('collapse', isCollapse.value);
+  emitter.emit("collapse", isCollapse.value);
 };
 
 const toPerson = () => {
-  router.push({ name: 'person' });
+  router.push({ name: "person" });
 };
 const changeShadow = () => {
   isShadowBg.value = !isShadowBg.value;
@@ -267,7 +268,7 @@ const changeShadow = () => {
 </script>
 
 <style lang="scss">
-@import '@/style/mobile.scss';
+@import "@/style/mobile.scss";
 
 .dark {
   background-color: #191a23 !important;
