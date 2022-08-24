@@ -1,4 +1,4 @@
-mysqldump: [Warning] Using a password on the command line interface can be insecure.
+-- mysqldump: [Warning] Using a password on the command line interface can be insecure.
 -- MySQL dump 10.13  Distrib 5.7.36, for Linux (x86_64)
 --
 -- Host: localhost    Database: gva
@@ -14,7 +14,7 @@ mysqldump: [Warning] Using a password on the command line interface can be insec
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 sdfasdf */;
 
 --
 -- Table structure for table `app_tab`
