@@ -40,6 +40,7 @@ async function handleKeepAlive(to) {
 
 router.beforeEach(async (to, from, next) => {
   NProgress.start();
+  // console.log(to);
   const userStore = useUserStore();
   to.meta.matched = [...to.matched];
   await handleKeepAlive(to);
@@ -68,7 +69,7 @@ router.beforeEach(async (to, from, next) => {
         if (to.matched.length) {
           next();
         } else {
-          next({ path: '/layout/404' });
+          next({ path: "/layout/404" });
         }
       }
     }
@@ -76,7 +77,7 @@ router.beforeEach(async (to, from, next) => {
     if (!token) {
       // console.log(document.location);
       next({
-        name: 'Login',
+        name: "Login",
         query: {
           redirect: document.location.pathname,
         },
@@ -86,5 +87,7 @@ router.beforeEach(async (to, from, next) => {
 });
 
 router.afterEach(() => {
-  NProgress.done();
+  setTimeout(() => {
+    NProgress.done();
+  });
 });

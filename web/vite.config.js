@@ -56,13 +56,13 @@ export default defineConfig(({ command, mode }) => {
   const esbuild = {};
 
   return {
-    base: './', // index.html文件所在位置
-    root: './', // js导入的资源路径，src
+    base: "./", // index.html文件所在位置
+    root: "./", // js导入的资源路径，src
     resolve: {
       alias,
     },
     define: {
-      'process.env': {},
+      "process.env": {},
     },
     server: {
       // 如果使用docker-compose开发模式，设置为false
@@ -75,31 +75,23 @@ export default defineConfig(({ command, mode }) => {
           // 需要代理的路径   例如 '/api'
           target: `${process.env.VITE_BASE_PATH}:${process.env.VITE_SERVER_PORT}/`, // 代理到 目标路径
           changeOrigin: true,
-          rewrite: (path) =>
-            path.replace(new RegExp('^' + process.env.VITE_BASE_API), ''),
+          rewrite: (path) => path.replace(new RegExp("^" + process.env.VITE_BASE_API), ""),
         },
       },
     },
     build: {
-      target: 'es2015',
-      minify: 'terser', // 是否进行压缩,boolean | 'terser' | 'esbuild',默认使用terser
+      target: "es2015",
+      minify: "terser", // 是否进行压缩,boolean | 'terser' | 'esbuild',默认使用terser
       manifest: false, // 是否产出maifest.json
       sourcemap: false, // 是否产出soucemap.json
-      outDir: 'dist', // 产出目录
+      outDir: "dist", // 产出目录
       rollupOptions,
     },
     esbuild,
     optimizeDeps,
     plugins: [
       legacyPlugin({
-        targets: [
-          'Android > 39',
-          'Chrome >= 60',
-          'Safari >= 10.1',
-          'iOS >= 10.3',
-          'Firefox >= 54',
-          'Edge >= 15',
-        ],
+        targets: ["Android > 39", "Chrome >= 60", "Safari >= 10.1", "iOS >= 10.3", "Firefox >= 54", "Edge >= 15"],
       }),
       vuePlugin({}),
       // vueJsx(),
@@ -110,6 +102,9 @@ export default defineConfig(({ command, mode }) => {
         less: {
           // 支持内联 JavaScript
           javascriptEnabled: true,
+        },
+        scss: {
+          additionalData: `@use "./src/style/scss/global.scss" as *;`,
         },
       },
     },

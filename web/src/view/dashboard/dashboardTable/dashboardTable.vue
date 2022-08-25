@@ -2,13 +2,15 @@
   <div class="commit-table">
     <div class="commit-table-title">更新日志</div>
     <div class="log">
-      <div v-for="(item, key) in dataTimeline" :key="key" class="log-item">
-        <div class="flex-1 flex key-box">
-          <span class="key" :class="key < 3 && 'top'">{{ key + 1 }}</span>
+      <el-scrollbar height="400px" @scroll="scrollChange">
+        <div v-for="(item, key) in dataTimeline" :key="item.message" class="log-item">
+          <div class="flex-1 flex key-box">
+            <span class="key" :class="key < 3 && 'top'">{{ key + 1 }}</span>
+          </div>
+          <div class="flex-5 flex message">{{ item.message }}</div>
+          <div class="flex-3 flex form">{{ item.from }}</div>
         </div>
-        <div class="flex-5 flex message">{{ item.message }}</div>
-        <div class="flex-3 flex form">{{ item.from }}</div>
-      </div>
+      </el-scrollbar>
     </div>
   </div>
 </template>
@@ -21,16 +23,23 @@ export default {
 <script setup>
 import { Commits } from "@/api/github";
 import { formatTimeToStr } from "@/utils/date.js";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
-const loading = ref(true);
 const dataTimeline = ref([]);
+const page = ref(1);
+
+const scrollChange = (event) => {
+  console.log(event);
+  if (event.scrollTop === 1620) {
+    page.value = page.value + 1;
+    loadCommits();
+  }
+};
 
 const loadCommits = () => {
-  Commits(0).then(({ data }) => {
-    loading.value = false;
-    data.forEach((element, index) => {
-      if (element.commit.message && index < 10) {
+  Commits(page.value).then(({ data }) => {
+    data.forEach((element) => {
+      if (element.commit.message) {
         dataTimeline.value.push({
           from: formatTimeToStr(element.commit.author.date, "yyyy-MM-dd hh:mm:ss"),
           title: element.commit.author.name,
@@ -42,10 +51,16 @@ const loadCommits = () => {
   });
 };
 
-loadCommits();
+onMounted(() => {
+  loadCommits();
+});
 </script>
 
 <style lang="scss" scoped>
+.loadingCenter {
+  text-align: center;
+  margin-bottom: 15px;
+}
 .commit-table {
   background-color: #fff;
   height: 400px;

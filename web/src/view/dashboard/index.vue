@@ -66,10 +66,33 @@
         </div>
         <div class="echart-box">
           <el-row :gutter="20">
-            <!-- <el-col :xs="24" :sm="18">
-              <echarts-line />
-            </el-col> -->
-            <el-col :xs="24" :sm="8">
+            <el-col :xs="24" :sm="18">
+              <!-- <swiper
+                :modules="modules"
+                :speed="1200"
+                :loop="true"
+                :slides-per-view="3"
+                :space-between="10"
+                navigation
+                :pagination="{ clickable: true }"
+                :scrollbar="{ draggable: true }"
+                :autoplay="{ delay: 3000, disableOnInteraction: false }"
+                effect="fade"
+              >
+                <swiper-slide><img src="https://static.runoob.com/images/demo/demo1.jpg" alt="" /></swiper-slide>
+                <swiper-slide><img src="https://static.runoob.com/images/demo/demo2.jpg" alt="" /></swiper-slide>
+                <swiper-slide><img src="https://static.runoob.com/images/demo/demo3.jpg" alt="" /></swiper-slide>
+              </swiper> -->
+              <div v-for="item in swiperExample" :key="item.id">
+                <h3 class="py-24px text-24px font-bold">{{ item.label }}</h3>
+                <swiper v-bind="item.options">
+                  <swiper-slide v-for="i in 5" :key="i">
+                    <div class="centerFloat">Slide{{ i }}</div>
+                  </swiper-slide>
+                </swiper>
+              </div>
+            </el-col>
+            <el-col :xs="24" :sm="6">
               <dashboard-table />
             </el-col>
           </el-row>
@@ -86,18 +109,97 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
 import { useNow, useDateFormat } from "@vueuse/core";
+import SwiperCore, { Navigation, Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
+SwiperCore.use([Navigation, Pagination]);
 
 const userStore = useUserStore();
 const formatted = useDateFormat(useNow(), "YYYY-MM-DD HH:mm:ss");
 const period = ref("");
+
 onMounted(() => {
   const nowHours = useNow().value.getHours();
-  if (nowHours <= 12) {
+  if (nowHours <= 6) {
+    period.value = "凌晨好";
+  } else if (nowHours <= 12) {
     period.value = "早上好";
-  } else {
+  } else if (nowHours <= 19) {
     period.value = "下午好";
+  } else {
+    period.value = "晚上好";
   }
 });
+
+const swiperExample = ref([
+  { id: 0, label: "Default", options: {} },
+  {
+    id: 1,
+    label: "Navigation",
+    options: {
+      navigation: true,
+    },
+  },
+  {
+    id: 2,
+    label: "Pagination",
+    options: {
+      pagination: true,
+    },
+  },
+  {
+    id: 3,
+    label: "Pagination dynamic",
+    options: {
+      pagination: { dynamicBullets: true },
+    },
+  },
+  {
+    id: 4,
+    label: "Pagination progress",
+    options: {
+      navigation: true,
+      pagination: {
+        type: "progressbar",
+      },
+    },
+  },
+  {
+    id: 5,
+    label: "Pagination fraction",
+    options: {
+      navigation: true,
+      pagination: {
+        type: "fraction",
+      },
+    },
+  },
+  {
+    id: 6,
+    label: "Slides per view",
+    options: {
+      pagination: {
+        clickable: true,
+      },
+      slidesPerView: 3,
+      spaceBetween: 30,
+    },
+  },
+  {
+    id: 7,
+    label: "Infinite loop",
+    options: {
+      navigation: true,
+      pagination: {
+        clickable: true,
+      },
+      loop: true,
+    },
+  },
+]);
 
 const toolCards = ref([
   {
@@ -161,6 +263,15 @@ export default {
 @mixin flex-center {
   display: flex;
   align-items: center;
+}
+
+.centerFloat {
+  text-align: center;
+  width: 99.5%;
+  height: 256px;
+  line-height: 256px;
+  margin: 10px 0;
+  border: #eee solid 1px;
 }
 .page {
   background: #f0f2f5;
