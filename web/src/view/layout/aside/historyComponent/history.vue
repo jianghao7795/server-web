@@ -1,40 +1,38 @@
 <template>
   <div class="router-history" id="history">
-    <div class="addRefresh">
-      <el-tabs
-        v-model="activeValue"
-        :closable="!(historys.length === 1 && $route.name === defaultRouter)"
-        type="card"
-        @contextmenu.prevent="openContextMenu($event)"
-        @tab-change="changeTab"
-        @tab-remove="removeTab"
-      >
-        <el-tab-pane v-for="item in historys" :key="name(item)" :label="item.meta.title" :name="name(item)" :tab="item" class="gva-tab">
-          <template #label>
-            <span
-              :tab="item"
+    <el-tabs
+      class="addResh"
+      v-model="activeValue"
+      :closable="!(historys.length === 1 && $route.name === defaultRouter)"
+      type="card"
+      @contextmenu.prevent="openContextMenu($event)"
+      @tab-change="changeTab"
+      @tab-remove="removeTab"
+    >
+      <el-tab-pane v-for="item in historys" :key="name(item)" :label="item.meta.title" :name="name(item)" :tab="item" class="gva-tab">
+        <template #label>
+          <span
+            :tab="item"
+            :style="{
+              color: activeValue === name(item) ? userStore.activeColor : '#333',
+            }"
+          >
+            <i
+              class="dot"
               :style="{
-                color: activeValue === name(item) ? userStore.activeColor : '#333',
+                backgroundColor: activeValue === name(item) ? userStore.activeColor : '#ddd',
               }"
-            >
-              <i
-                class="dot"
-                :style="{
-                  backgroundColor: activeValue === name(item) ? userStore.activeColor : '#ddd',
-                }"
-              />
-              {{ fmtTitle(item.meta.title, item) }}
-            </span>
-          </template>
-        </el-tab-pane>
-      </el-tabs>
-      <div class="refreshView" @click="refresh()">
-        <el-tooltip effect="dark" placement="top-end" content="重新加载">
-          <el-icon><Refresh /></el-icon>
-        </el-tooltip>
-      </div>
+            />
+            {{ fmtTitle(item.meta.title, item) }}
+          </span>
+        </template>
+      </el-tab-pane>
+    </el-tabs>
+    <div class="refreshView" @click="refresh()">
+      <el-tooltip effect="dark" placement="top-end" content="重新加载">
+        <el-icon><Refresh /></el-icon>
+      </el-tooltip>
     </div>
-
     <!--自定义右键菜单html代码-->
     <ul v-show="contextMenuVisible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
       <li @click="closeAll">关闭所有</li>
@@ -43,6 +41,12 @@
       <li @click="closeOther">关闭其他</li>
     </ul>
   </div>
+
+  <!-- <div class="refreshView" @click="refresh()">
+        <el-tooltip effect="dark" placement="top-end" content="重新加载">
+          <el-icon><Refresh /></el-icon>
+        </el-tooltip>
+      </div> -->
 </template>
 
 <script>
@@ -327,12 +331,14 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.addRefresh {
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
+.addResh {
+  width: calc(100% - 48px);
 }
 .refreshView {
+  display: inline-block;
+  position: fixed;
+  top: 60px;
+  right: 0;
   height: 39px;
   line-height: 39px;
   width: 39px;

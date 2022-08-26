@@ -1,19 +1,19 @@
-import legacyPlugin from '@vitejs/plugin-legacy';
-import { defineConfig } from 'vite';
+import legacyPlugin from "@vitejs/plugin-legacy";
+import { defineConfig } from "vite";
 // import usePluginImport from 'vite-plugin-importer';
 // import { viteLogo } from './src/core/config';
-import Banner from 'vite-plugin-banner';
-import * as path from 'path';
-import * as dotenv from 'dotenv';
-import * as fs from 'fs';
-import vuePlugin from '@vitejs/plugin-vue';
+import Banner from "vite-plugin-banner";
+import * as path from "path";
+import * as dotenv from "dotenv";
+import * as fs from "fs";
+import vuePlugin from "@vitejs/plugin-vue";
 // import vueJsx from '@vitejs/plugin-vue-jsx';
 // import { isAsyncFunction } from 'util/types';
 // @see https://cn.vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
   // mode development and production
   // console.log(command, mode);
-  if (command === 'serve') {
+  if (command === "serve") {
     // return {
     //   // dev 独有配置
     // }
@@ -25,7 +25,7 @@ export default defineConfig(({ command, mode }) => {
   }
 
   // const data = await isAsyncFunction();
-  const NODE_ENV = process.env.NODE_ENV || 'development';
+  const NODE_ENV = process.env.NODE_ENV || "development";
   const envFiles = [`.env.${NODE_ENV}`];
   for (const file of envFiles) {
     const envConfig = dotenv.parse(fs.readFileSync(file));
@@ -49,8 +49,8 @@ export default defineConfig(({ command, mode }) => {
   const optimizeDeps = {};
 
   const alias = {
-    '@': path.resolve(__dirname, './src'),
-    vue$: 'vue/dist/vue.runtime.esm-bundler.js',
+    "@": path.resolve(__dirname, "./src"),
+    vue$: "vue/dist/vue.runtime.esm-bundler.js",
   };
 
   const esbuild = {};
@@ -102,9 +102,6 @@ export default defineConfig(({ command, mode }) => {
         less: {
           // 支持内联 JavaScript
           javascriptEnabled: true,
-        },
-        scss: {
-          additionalData: `@use "./src/style/scss/global.scss" as *;`,
         },
       },
     },
