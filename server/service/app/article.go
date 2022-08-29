@@ -5,6 +5,7 @@ import (
 	"server/model/app"
 	appReq "server/model/app/request"
 	"server/model/common/request"
+	"strings"
 )
 
 type ArticleService struct{}
@@ -54,7 +55,7 @@ func (articleSearch *ArticleService) GetArticleInfoList(info appReq.ArticleSearc
 	var articles []app.Article
 
 	if info.Title != "" {
-		db = db.Where("title = ?", info.Title)
+		db = db.Where("title like ?", strings.Join([]string{"%", info.Title, "%"}, ""))
 	}
 
 	err = db.Count(&total).Error
