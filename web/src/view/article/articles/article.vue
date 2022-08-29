@@ -5,6 +5,11 @@
         <el-form-item label="名称:">
           <el-input v-model="searchInfo.title"></el-input>
         </el-form-item>
+        <el-form-item label="标签:">
+          <el-select v-model="searchInfo.tag_id" placeholder="请选择" filterable remote reserve-keyword :remote-method="searchTag" :loading="loading">
+            <el-option v-for="item in tags" :key="item.ID" :label="item.name" :value="item.ID"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button size="small" type="primary" icon="search" @click="onSubmit">查询</el-button>
           <el-button size="small" icon="refresh" @click="reset">重置</el-button>

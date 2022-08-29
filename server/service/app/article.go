@@ -58,6 +58,10 @@ func (articleSearch *ArticleService) GetArticleInfoList(info appReq.ArticleSearc
 		db = db.Where("title like ?", strings.Join([]string{"%", info.Title, "%"}, ""))
 	}
 
+	if info.TagId != 0 {
+		db = db.Where("tag_id = ?", info.TagId)
+	}
+
 	err = db.Count(&total).Error
 	if err != nil {
 		return
