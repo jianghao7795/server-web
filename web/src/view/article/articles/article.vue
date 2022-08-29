@@ -107,7 +107,7 @@ import { formatDate } from "@/utils/format";
 import { ElMessage } from "element-plus";
 import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle, uploadFile } from "@/api/article";
 import { getAppTabList } from "@/api/appTab";
-import { ref, onMounted } from "vue";
+import { ref, onBeforeMount } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
@@ -171,7 +171,7 @@ const onUploadImg = async (files, callback) => {
   callback(res.map((item) => `${path.value}/${item.data.file.url}`));
 };
 
-onMounted(() => {
+onBeforeMount(() => {
   getTableData();
 });
 
