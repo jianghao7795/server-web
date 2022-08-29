@@ -30,7 +30,7 @@
     </el-tabs>
     <div class="refreshView" @click="refresh()">
       <el-tooltip effect="dark" placement="top-end" content="重新加载">
-        <el-icon><Refresh /></el-icon>
+        <el-icon><Refresh class="is-loading" /></el-icon>
       </el-tooltip>
     </div>
     <!--自定义右键菜单html代码-->
@@ -72,7 +72,7 @@ const getFmtString = (item) => {
 const refreshStore = useRefreshStore();
 
 const refresh = () => {
-  const loadingInstance = ElLoading.service({ fullscreen: false, target: "#refreshView" });
+  const loadingInstance = ElLoading.service({ fullscreen: false, target: "#refreshView", text: "加载中" });
   setTimeout(() => {
     refreshStore.changIsRefresh(false);
     setTimeout(() => {
@@ -331,19 +331,24 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.router-history {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .addResh {
-  width: calc(100% - 48px);
+  width: calc(100% - 40px);
 }
 .refreshView {
   display: inline-block;
-  position: fixed;
-  top: 60px;
-  right: 0;
   height: 39px;
-  line-height: 39px;
   width: 39px;
-  border: 1px solid #ecf5ff;
   text-align: center;
+  line-height: 39px;
+  border-bottom: 1px solid #f4f4f4;
+}
+.refreshView:hover {
+  background-color: #eee;
 }
 </style>
 

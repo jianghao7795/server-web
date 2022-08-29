@@ -79,7 +79,7 @@
           <el-input v-model="formData.desc" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="内容">
-          <MdEditor style="width: 1000px" v-model="text"></MdEditor>
+          <MdEditor style="width: 1000px" v-model="text" @on-upload-img="onUploadImg"></MdEditor>
         </el-form-item>
         <el-form-item label="状态:">
           <el-radio-group v-model="formData.state">
@@ -105,7 +105,7 @@ export default { name: "Article" };
 <script setup>
 import { formatDate } from "@/utils/format";
 import { ElMessage } from "element-plus";
-import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle } from "@/api/article";
+import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle, uploadFile } from "@/api/article";
 import { getAppTabList } from "@/api/appTab";
 import { ref, onMounted } from "vue";
 import { useDebounceFn } from "@vueuse/core";
@@ -132,6 +132,7 @@ const total = ref(0);
 const pageSize = ref(10);
 const tableData = ref([]);
 const searchInfo = ref({});
+const path = ref(import.meta.env.VITE_BASE_API);
 
 const getTableData = async () => {
   loadingInit.value = true;
@@ -147,6 +148,27 @@ const getTableData = async () => {
     page.value = table.data.page;
     pageSize.value = table.data.pageSize;
   }
+};
+
+const onUploadImg = async (files, callback) => {
+  const res = await Promise.all(
+    files.map((file) => {
+      return new Promise((rev, rej) => {
+        const form = new FormData();
+        form.append("file", file);
+        uploadFile({
+          form,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+          .then((res) => rev(res))
+          .catch((error) => rej(error));
+      });
+    }),
+  );
+  // console.log(res);
+  callback(res.map((item) => `${path.value}/${item.data.file.url}`));
 };
 
 onMounted(() => {
