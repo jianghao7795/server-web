@@ -13,7 +13,7 @@ type ServiceGroup struct {
 	ExampleServiceGroup  example.ServiceGroup
 	OrderServiceGroup    order.ServiceGroup
 	AppServiceGroup      app.ServiceGroup
-	FrontendServiceGroup frontend.FrontendTag
+	FrontendServiceGroup frontend.ServiceGroup
 }
 
 var ServiceGroupApp = new(ServiceGroup)

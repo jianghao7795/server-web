@@ -10,8 +10,12 @@ type FrontendRouter struct{}
 
 func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
 	frontend := Router.Group("frontend")
-	var frontendApi = v1.ApiGroupApp.FrontendApiGroup.FrontendApi
+	var frontendTagApi = v1.ApiGroupApp.FrontendApiGroup.FrontendTagApi
 	{
-		frontend.GET("getTagList", frontendApi.GetAppTabList)
+		frontend.GET("getTagList", frontendTagApi.GetAppTabList)
+	}
+	var frontendArticleApi = v1.ApiGroupApp.FrontendApiGroup
+	{
+		frontend.GET("getArticleList", frontendArticleApi.GetArticleList)
 	}
 }

@@ -2,20 +2,23 @@ package frontend
 
 import (
 	"server/global"
+	appReq "server/model/app/request"
 	"server/model/common/response"
-	"server/model/frontend/request"
+	"server/service"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
-type FrontendArticleApi struct{}
+type FrontendTagApi struct{}
 
-func (s *FrontendArticleApi) GetArticleList(c *gin.Context) {
-	var pageInfo request.ArticleSearch
+var frontendService = service.ServiceGroupApp.FrontendServiceGroup
+
+func (appTabApi *FrontendTagApi) GetAppTabList(c *gin.Context) {
+	var pageInfo appReq.AppTabSearch
 	_ = c.ShouldBindQuery(&pageInfo)
-
-	if list, err := frontendService.FrontendArticle.GetArticleList(pageInfo); err != nil {
+	// log.Println(pageInfo.Name)
+	if list, err := frontendService.FrontendTag.GetTagList(); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
