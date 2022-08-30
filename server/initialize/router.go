@@ -20,6 +20,7 @@ func Routers() *gin.Engine {
 	appRouter := router.RouterGroupApp.App
 	systemRouter := router.RouterGroupApp.System
 	exampleRouter := router.RouterGroupApp.Example
+	frontendRouter := router.RouterGroupApp.Frontend
 	// 如果想要不使用nginx代理前端网页，可以修改 web/.env.production 下的
 	// VUE_APP_BASE_API = /
 	// VUE_APP_BASE_PATH = http://localhost
@@ -52,6 +53,7 @@ func Routers() *gin.Engine {
 		systemRouter.InitInitRouter(PublicGroup) // 自动初始化相关
 	}
 	PrivateGroup := Router.Group("")
+	frontendRouter.InitFrontendRouter(PrivateGroup)
 	PrivateGroup.Use(middleware.JWTAuth()) // .Use(middleware.CasbinHandler()) // casbin的拦截规则
 	{
 		systemRouter.InitApiRouter(PrivateGroup)                 // 注册功能api路由
