@@ -24,7 +24,7 @@ func GetUserID(c *gin.Context) uint {
 		if cl, err := GetClaims(c); err != nil {
 			return 0
 		} else {
-			return cl.ID
+			return uint(cl.ID)
 		}
 	} else {
 		waitUse := claims.(*systemReq.CustomClaims)

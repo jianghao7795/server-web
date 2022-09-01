@@ -61,7 +61,7 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *gin.Context) {
 		response.FailWithMessage("查找或创建记录失败", c)
 		return
 	}
-	err, pathc := utils.BreakPointContinue(cen, fileName, chunkNumber, chunkTotal, fileMd5)
+	pathc, err := utils.BreakPointContinue(cen, fileName, chunkNumber, chunkTotal, fileMd5)
 	if err != nil {
 		global.GVA_LOG.Error("断点续传失败!", zap.Error(err))
 		response.FailWithMessage("断点续传失败", c)
@@ -108,7 +108,7 @@ func (u *FileUploadAndDownloadApi) FindFile(c *gin.Context) {
 func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *gin.Context) {
 	fileMd5 := c.Query("fileMd5")
 	fileName := c.Query("fileName")
-	err, filePath := utils.MakeFile(fileName, fileMd5)
+	filePath, err := utils.MakeFile(fileName, fileMd5)
 	if err != nil {
 		global.GVA_LOG.Error("文件创建失败!", zap.Error(err))
 		response.FailWithDetailed(exampleRes.FilePathResponse{FilePath: filePath}, "文件创建失败", c)

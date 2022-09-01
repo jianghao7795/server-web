@@ -2,10 +2,9 @@
   <div>
     <el-row :gutter="15" class="system_state">
       <el-col :span="12">
-        <Button></Button>
         <el-card v-if="state.os" class="card_item">
           <template #header>
-            <div>Runtime</div>
+            <div>系统</div>
           </template>
           <div>
             <el-row :gutter="10">
@@ -34,7 +33,7 @@
       <el-col :span="12">
         <el-card v-if="state.disk" class="card_item">
           <template #header>
-            <div>Disk</div>
+            <div>内存</div>
           </template>
           <div>
             <el-row :gutter="10">
@@ -85,7 +84,7 @@
       <el-col :span="12">
         <el-card v-if="state.ram" class="card_item">
           <template #header>
-            <div>Ram</div>
+            <div>磁盘</div>
           </template>
           <div>
             <el-row :gutter="10">
@@ -121,7 +120,6 @@
 <script setup>
 import { getSystemState } from "@/api/system";
 import { onUnmounted, ref } from "vue";
-import Button from "./button";
 const timer = ref(null);
 const state = ref({});
 const colors = ref([
@@ -138,7 +136,7 @@ const reload = async () => {
 reload();
 timer.value = setInterval(() => {
   reload();
-}, 1000 * 10);
+}, 1000 * 20);
 
 onUnmounted(() => {
   clearInterval(timer.value);
