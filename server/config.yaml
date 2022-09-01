@@ -84,7 +84,7 @@ jwt:
   signing-key: 519fb1f4-4321-446a-bb7b-bfb13b68b960
   expires-time: 86400
   buffer-time: 60
-  issuer: web
+  issuer: jianghao
 local:
   path: uploads/file
 mysql:

@@ -3,35 +3,17 @@
     <el-row :gutter="10">
       <el-col :span="24">
         <el-card>
-          <template #header>
-            <el-divider content-position="left">About Me</el-divider>
-          </template>
-          <!-- <div>
-            <el-row>
-              <el-col>{{ x }} {{ y }}</el-col>
-              <el-col>{{ isDark }}</el-col>
-              <el-col>{{ store.name }}</el-col>
-              <el-col>
-               <useMouse v-slot="{ x, y }"> x: {{ x }} y: {{ y }} </useMouse> 
-                <Button :lists="lists">
-                  <template v-slot:two="{ item }">
-                    <div>{{ item.name }}</div>
-                  </template>
-                  <template v-slot:active>
-                    <div>123123123</div>
-                  </template>
-                </Button>
-              </el-col>
-              <el-col>{{ timeDelay.y }}</el-col>
-              <p>{{ data.x }}</p>
-              <el-col :span="8" :offset="0">
-                <ButtonSlot :action="['default']">bilibili</ButtonSlot>
-              </el-col>
-              <el-col>
-                <draggable-vue />
-              </el-col>
-            </el-row>
-          </div> -->
+          <el-descriptions title="项目信息" direction="vertical" :column="3" size="default" border class="margin-top">
+            <el-descriptions-item label="项目名称">
+              <el-tag type="success">{{ pkg.name }}</el-tag>
+            </el-descriptions-item>
+            <el-descriptions-item label="版本">
+              <el-tag type="success">{{ pkg.version }}</el-tag>
+            </el-descriptions-item>
+            <el-descriptions-item label="Github地址">
+              <el-button link href="https://github.com/JiangHaoCode/server-web" target="_blank">Github地址</el-button>
+            </el-descriptions-item>
+          </el-descriptions>
         </el-card>
       </el-col>
     </el-row>
@@ -45,6 +27,8 @@ export default {
 </script>
 
 <script setup>
+import pkg from "~/package.json";
+console.log(pkg);
 // import ButtonSlot from "./slot";
 // import { reactive, ref } from "vue";
 // import draggableVue from "./draggable.vue";
