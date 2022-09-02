@@ -157,6 +157,6 @@ onMounted(() => {
   transform: translateX(-50%);
 }
 h4 {
-  margin: 20px 0;
+  margin: 1.3em 0;
 }
 </style>
