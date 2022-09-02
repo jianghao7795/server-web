@@ -3,7 +3,12 @@
     <el-row :gutter="10">
       <el-col :span="24">
         <el-card>
-          <el-descriptions title="项目信息" direction="vertical" :column="3" size="default" border class="margin-top">
+          <template #header>
+            <div class="card-header">
+              <span>项目信息</span>
+            </div>
+          </template>
+          <el-descriptions direction="vertical" :column="3" size="default" border class="margin-top">
             <el-descriptions-item label="项目名称">
               <el-tag type="success">{{ pkg.name }}</el-tag>
             </el-descriptions-item>
@@ -14,6 +19,23 @@
               <el-button link href="https://github.com/JiangHaoCode/server-web" target="_blank">Github地址</el-button>
             </el-descriptions-item>
           </el-descriptions>
+        </el-card>
+      </el-col>
+      <el-col :span="24">
+        <el-card style="margin-top: 20px" class="box-card">
+          <template #header>
+            <div class="card-header">
+              <span>提交记录</span>
+            </div>
+          </template>
+          <el-timeline>
+            <el-timeline-item placement="top" v-for="(activity, index) in commits" :key="index" :timestamp="activity.date">
+              <el-card>
+                <h4>{{ activity.name }}</h4>
+                <p>{{ activity.message }}</p>
+              </el-card>
+            </el-timeline-item>
+          </el-timeline>
         </el-card>
       </el-col>
     </el-row>
@@ -28,7 +50,17 @@ export default {
 
 <script setup>
 import pkg from "~/package.json";
-console.log(pkg);
+import { Commits } from "@/api/github";
+import { onMounted, ref } from "vue";
+
+const commits = ref([]);
+
+onMounted(() => {
+  Commits(0).then((resp) => {
+    commits.value = resp.data.map((i) => ({ name: i.commit.author.name, date: i.commit.author.date, message: i.commit.message }));
+  });
+});
+
 // import ButtonSlot from "./slot";
 // import { reactive, ref } from "vue";
 // import draggableVue from "./draggable.vue";
@@ -123,5 +155,8 @@ console.log(pkg);
 .dom-center {
   margin-left: 50%;
   transform: translateX(-50%);
+}
+h4 {
+  margin: 20px 0;
 }
 </style>

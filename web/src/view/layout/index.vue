@@ -119,7 +119,7 @@ import CustomPic from "@/components/customPic/index.vue";
 import Setting from "./setting/index.vue";
 import { setUserAuthority } from "@/api/user";
 import { emitter } from "@/utils/bus.js";
-import { computed, ref, onMounted, nextTick, watchEffect } from "vue";
+import { computed, ref, onMounted, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
 import { useRouterStore } from "@/pinia/modules/router";
@@ -128,9 +128,9 @@ import { useRefreshStore } from "@/pinia/modules/refresh";
 
 const refreshStore = useRefreshStore();
 
-watchEffect(() => {
-  console.log(refreshStore.isRefresh);
-});
+// watchEffect(() => {
+//   console.log(refreshStore.isRefresh);
+// });
 
 const router = useRouter();
 const route = useRoute();
