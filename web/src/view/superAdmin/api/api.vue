@@ -106,7 +106,7 @@ export default {
 import { getApiById, getApiList, createApi, updateApi, deleteApi, deleteApisByIds } from "@/api/api";
 import { toSQLLine } from "@/utils/stringFun";
 // import warningBar from "@/components/warningBar/warningBar.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 
 const methodFiletr = (value) => {
@@ -210,7 +210,9 @@ const getTableData = async () => {
   }
 };
 
-getTableData();
+onMounted(() => {
+  getTableData();
+});
 
 // 批量操作
 const handleSelectionChange = (val) => {

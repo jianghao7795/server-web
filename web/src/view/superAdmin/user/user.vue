@@ -3,9 +3,7 @@
     <!-- <warning-bar title="注：右上角头像下拉可切换角色" /> -->
     <div class="gva-table-box">
       <div class="gva-btn-list">
-        <el-button size="small" type="primary" icon="plus" @click="addUser"
-          >新增用户</el-button
-        >
+        <el-button size="small" type="primary" icon="plus" @click="addUser">新增用户</el-button>
       </div>
       <el-table :data="tableData" row-key="ID">
         <el-table-column align="left" label="头像" min-width="75">
@@ -71,29 +69,14 @@
                 <el-button link type="primary" icon="delete" size="small">删除</el-button>
               </template>
             </el-popconfirm>
-            <el-button
-              link
-              type="primary"
-              icon="edit"
-              size="small"
-              @click="openEdit(scope.row)"
-            >
-              编辑
-            </el-button>
-            <el-button
-              link
-              type="primary"
-              icon="magic-stick"
-              size="small"
-              @click="resetPasswordFunc(scope.row)"
-            >
-              重置密码
-            </el-button>
+            <el-button link type="primary" icon="edit" size="small" @click="openEdit(scope.row)">编辑</el-button>
+            <el-button link type="primary" icon="magic-stick" size="small" @click="resetPasswordFunc(scope.row)">重置密码</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination background
+        <el-pagination
+          background
           :current-page="page"
           :page-size="pageSize"
           :page-sizes="[10, 30, 50, 100]"
@@ -151,11 +134,7 @@
               <img
                 v-if="userInfo.headerImg"
                 class="header-img-box"
-                :src="
-                  userInfo.headerImg && userInfo.headerImg.slice(0, 4) !== 'http'
-                    ? path + userInfo.headerImg
-                    : userInfo.headerImg
-                "
+                :src="userInfo.headerImg && userInfo.headerImg.slice(0, 4) !== 'http' ? path + userInfo.headerImg : userInfo.headerImg"
               />
               <div v-else class="header-img-box">从媒体库选择</div>
             </div>
@@ -166,9 +145,7 @@
       <template #footer>
         <div class="dialog-footer">
           <el-button size="small" @click="closeAddUserDialog">取 消</el-button>
-          <el-button size="small" type="primary" @click="enterAddUserDialog"
-            >确 定</el-button
-          >
+          <el-button size="small" type="primary" @click="enterAddUserDialog">确 定</el-button>
         </div>
       </template>
     </el-dialog>
@@ -191,7 +168,7 @@ import ChooseImg from "@/components/chooseImg/index.vue";
 // import warningBar from "@/components/warningBar/warningBar.vue";
 import { setUserInfo, resetPassword } from "@/api/user.js";
 
-import { nextTick, ref, watch } from "vue";
+import { nextTick, ref, watch, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 const path = ref(import.meta.env.VITE_BASE_API);
 // 初始化相关
@@ -252,7 +229,9 @@ const initPage = async () => {
   setOptions(res.data.list);
 };
 
-initPage();
+onMounted(() => {
+  initPage();
+});
 
 const resetPasswordFunc = (row) => {
   ElMessageBox.confirm("是否将此用户密码重置为123456?", "警告", {
@@ -377,7 +356,7 @@ const changeAuthority = async (row, flag) => {
     return;
   }
 
-  // await nextTick();
+  await nextTick(); //更新角色
   const res = await setUserAuthorities({
     ID: row.ID,
     authorityIds: row.authorityIds,

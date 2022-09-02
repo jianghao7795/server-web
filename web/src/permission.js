@@ -87,7 +87,5 @@ router.beforeEach(async (to, from, next) => {
 });
 
 router.afterEach(() => {
-  setTimeout(() => {
-    NProgress.done();
-  });
+  NProgress.done();
 });

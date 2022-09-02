@@ -34,8 +34,19 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column align="left" label="链接" prop="url" min-width="300" />
-        <el-table-column align="left" label="标签" prop="tag" width="100">
+        <el-table-column align="left" label="链接" props="url" min-width="300">
+          <template #default="scope">
+            <el-image
+              :src="`/api/${scope.row.url}`"
+              fit="cover"
+              style="width: 100px; height: 100px"
+              :hide-on-click-modal="false"
+              :z-index="10000"
+              :preview-src-list="[`/api/${scope.row.url}`]"
+            ></el-image>
+          </template>
+        </el-table-column>
+        <el-table-column align="left" label="标签" props="tag" width="100">
           <template #default="scope">
             <el-tag :type="scope.row.tag === 'jpg' ? 'warning' : 'success'" disable-transitions>
               {{ scope.row.tag }}

@@ -30,7 +30,7 @@
       <div class="gva-btn-list">
         <el-button size="small" type="primary" icon="plus" @click="openDialog">新增</el-button>
       </div>
-      <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID">
+      <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID" v-loading="loading">
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="日期" width="180">
           <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
@@ -151,6 +151,7 @@ const total = ref(0);
 const pageSize = ref(10);
 const tableData = ref([]);
 const searchInfo = ref({});
+const loading = ref(false);
 
 const onReset = () => {
   searchInfo.value = {};
@@ -179,11 +180,13 @@ const handleCurrentChange = (val) => {
 
 // 查询
 const getTableData = async () => {
+  loading.value = true;
   const table = await getSysDictionaryList({
     page: page.value,
     pageSize: pageSize.value,
     ...searchInfo.value,
   });
+  loading.value = false;
   if (table.code === 0) {
     tableData.value = table.data.list;
     total.value = table.data.total;
