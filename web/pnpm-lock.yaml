@@ -36,6 +36,7 @@ specifiers:
   spark-md5: ^3.0.2
   swiper: ^8.3.2
   terser: ^5.14.2
+  undraw-ui: ^0.5.9
   v-viewer: ^3.0.10
   vite: ^3.0.9
   vite-plugin-banner: ^0.4.0
@@ -63,6 +64,7 @@ dependencies:
   screenfull: 6.0.2
   spark-md5: 3.0.2
   swiper: 8.3.2
+  undraw-ui: 0.5.9
   v-viewer: 3.0.10_vue@3.2.37
   vue: 3.2.37
   vue-router: 4.1.4_vue@3.2.37
@@ -6664,6 +6666,10 @@ packages:
       websocket-driver: 0.7.4
     dev: true
 
+  /sortablejs/1.15.0:
+    resolution: {integrity: sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==}
+    dev: false
+
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
@@ -6763,6 +6769,10 @@ packages:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
     engines: {node: '>= 0.8'}
     dev: true
+
+  /store/2.0.12:
+    resolution: {integrity: sha512-eO9xlzDpXLiMr9W1nQ3Nfp9EzZieIQc10zPPMP5jsVV7bLOziSFFBP0XoDXACEIFtdI+rIz0NwWVA/QVJ8zJtw==}
+    dev: false
 
   /string-width/2.1.1:
     resolution: {integrity: sha512-nOqH59deCq9SRHlxq1Aw85Jnt4w6KvLKqWVik6oA9ZklXLNIOlqg4F2yrT1MVaTjAqvVwdfeZ7w7aCvJD7ugkw==}
@@ -7032,6 +7042,17 @@ packages:
       media-typer: 0.3.0
       mime-types: 2.1.35
     dev: true
+
+  /undraw-ui/0.5.9:
+    resolution: {integrity: sha512-0zJJjrsRT/GgKaQQjcJqfdQbWV+cU4nGeitAQjCbHD67ZwtLdmVuv1vzXQ3nTjeeEZ7XER07S3HtJ1b7UbR7nw==}
+    dependencies:
+      element-plus: 2.2.14_vue@3.2.37
+      sortablejs: 1.15.0
+      store: 2.0.12
+      vue: 3.2.37
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+    dev: false
 
   /unicode-canonical-property-names-ecmascript/2.0.0:
     resolution: {integrity: sha512-yY5PpDlfVIU5+y/BSCxAJRBIS1Zc2dDG3Ujq+sR0U+JjUevW2JhocOF+soROYDSaAezOzOKuyyixhD6mBknSmQ==}
