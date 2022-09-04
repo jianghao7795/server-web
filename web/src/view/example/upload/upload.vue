@@ -160,7 +160,7 @@ const downloadFile = (row) => {
  * @returns {Promise<void>}
  */
 const editFileNameFunc = async (row) => {
-  console.log(row);
+  // console.log(row);
   ElMessageBox.prompt("请输入文件名或者备注", "编辑", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
@@ -170,7 +170,7 @@ const editFileNameFunc = async (row) => {
   })
     .then(async ({ value }) => {
       row.name = value;
-      console.log(value);
+      // console.log(value);
       const res = await editFileName(row);
       if (res.code === 0) {
         ElMessage({
