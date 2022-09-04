@@ -19,7 +19,7 @@
       <el-table :data="tableData">
         <el-table-column align="left" label="预览" width="100">
           <template #default="scope">
-            <CustomPic pic-type="file" :pic-src="scope.row.url" />
+            <div><viewer :images="[scope.row.url]"><CustomPic pic-type="file" :pic-src="scope.row.url" /></viewer></div>
           </template>
         </el-table-column>
         <el-table-column align="left" label="日期" prop="UpdatedAt" width="180">
@@ -36,14 +36,7 @@
         </el-table-column>
         <el-table-column align="left" label="链接" props="url" min-width="300">
           <template #default="scope">
-            <el-image
-              :src="`/api/${scope.row.url}`"
-              fit="cover"
-              style="width: 100px; height: 100px"
-              :hide-on-click-modal="false"
-              :z-index="10000"
-              :preview-src-list="[`/api/${scope.row.url}`]"
-            ></el-image>
+          <div>{{ scope.row.url }}</div>
           </template>
         </el-table-column>
         <el-table-column align="left" label="标签" props="tag" width="100">
@@ -80,7 +73,6 @@
 <script setup>
 import { getFileList, deleteFile, editFileName } from "@/api/fileUploadAndDownload";
 import { downloadImage } from "@/utils/downloadImg";
-// import { useUserStore } from '@/pinia/modules/user';
 import CustomPic from "@/components/customPic/index.vue";
 import UploadImage from "@/components/upload/image.vue";
 import UploadCommon from "@/components/upload/common.vue";

@@ -36,6 +36,7 @@
               </el-card>
             </el-timeline-item>
           </el-timeline>
+          <el-button type="text" size="default" @click="">Loading More</el-button>         
         </el-card>
       </el-col>
     </el-row>
@@ -54,6 +55,8 @@ import { Commits } from "@/api/github";
 import { onMounted, ref } from "vue";
 
 const commits = ref([]);
+
+const isLoading = ref(true);
 
 onMounted(() => {
   Commits(0).then((resp) => {
