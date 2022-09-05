@@ -846,8 +846,9 @@ CREATE TABLE `comment` (
   `updated_at` datetime(3) DEFAULT NULL,
   `deleted_at` datetime(3) DEFAULT NULL,
   `article_id` int unsigned not null comment '文章id',
-  `parent_id` int unsigned not null comment '上级',
+  `parent_id` int unsigned not null default 0 comment '上级',
   `content` text not null comment '内容',
+  `user_id` bigint(20) unsigned comment '用户id',
+  `praise` int(10) unsigned default 0 comment '赞'
   PRIMARY KEY (`id`),
-  KEY `idx_sys_users_deleted_at` (`deleted_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;

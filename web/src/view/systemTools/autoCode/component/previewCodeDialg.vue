@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import * as marked from "marked";
+import * as markedjs from "marked";
 import hljs from "highlight.js";
 // import "highlight.js/styles/atelier-plateau-light.css";
 import { ElMessage } from "element-plus";
@@ -26,8 +26,8 @@ const props = defineProps({
 
 const activeName = ref("");
 onMounted(() => {
-  marked.setOptions({
-    renderer: new marked.Renderer(),
+  markedjs.setOptions({
+    renderer: new markedjs.Renderer(),
     highlight: function (code) {
       return hljs.highlightAuto(code).value;
     },
@@ -44,7 +44,7 @@ onMounted(() => {
     if (activeName.value === "") {
       activeName.value = key;
     }
-    document.getElementById(key).innerHTML = marked(props.previewCode[key]);
+    document.getElementById(key).innerHTML = markedjs.marked(props.previewCode[key]);
   }
 });
 

@@ -19,7 +19,7 @@
     <div class="gva-table-box">
       <div class="gva-btn-list">
         <el-button type="primary" size="small" icon="plus" @click="openDialog">新增</el-button>
-        <el-popconfirm title="确定要删除吗?" @confirm="onDelete" placement="top">
+        <el-popconfirm title="确定要删除吗?" @confirm="onDelete" placement="top" width="200">
           <template #reference>
             <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length">删除</el-button>
           </template>
@@ -35,7 +35,7 @@
         v-loading="loadingInit"
       >
         <el-table-column type="selection" width="55" />
-        <el-table-column props="ID" width="55" />
+        <el-table-column label="ID" prop="ID" width="55" />
         <el-table-column label="标题" prop="title"></el-table-column>
         <el-table-column label="标签" prop="tag">
           <template #default="{ row }">
@@ -110,7 +110,7 @@ export default { name: "Article" };
 <script setup>
 import { formatDate } from "@/utils/format";
 import { ElMessage } from "element-plus";
-import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle, uploadFile } from "@/api/article";
+import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle, uploadFile, deleteArticleByIds } from "@/api/article";
 import { getAppTabList } from "@/api/appTab";
 import { ref, onBeforeMount } from "vue";
 import { useDebounceFn } from "@vueuse/core";
@@ -210,10 +210,10 @@ const onDelete = async () => {
     return;
   }
   multipleSelection.value &&
-    multipleSelection.value.map((item) => {
+    multipleSelection.value.forEach((item) => {
       ids.push(item.ID);
     });
-  const res = await deleteAppTabByIds({ ids });
+  const res = await deleteArticleByIds({ ids });
   if (res.code === 0) {
     ElMessage({
       type: "success",
@@ -222,7 +222,7 @@ const onDelete = async () => {
     if (tableData.value.length === ids.length && page.value > 1) {
       page.value--;
     }
-    deleteVisible.value = false;
+    // deleteVisible.value = false;
     getTableData();
   }
 };
