@@ -1,10 +1,12 @@
 package app
 
 import (
+	"log"
 	"server/global"
 	comment "server/model/app"
 	commentReq "server/model/app/request"
 	"server/model/common/request"
+	"strings"
 )
 
 type CommentService struct {
@@ -41,7 +43,7 @@ func (commentService *CommentService) UpdateComment(comment comment.Comment) (er
 // GetComment 根据id获取Comment记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (commentService *CommentService) GetComment(id uint) (comment comment.Comment, err error) {
-	err = global.GVA_DB.Where("id = ?", id).First(&comment).Error
+	err = global.GVA_DB.Preload("Article").Preload("SysUser").Where("id = ?", id).First(&comment).Error
 	return
 }
 
@@ -51,7 +53,14 @@ func (commentService *CommentService) GetCommentInfoList(info commentReq.Comment
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
-	db := global.GVA_DB.Model(&comment.Comment{})
+	db := global.GVA_DB.Model(&comment.Comment{}).Preload("Article").Preload("SysUser")
+	log.Println(info.ArticleId)
+	if info.ArticleId != 0 {
+		db = db.Where("article_id = ", info.ArticleId)
+	}
+	if info.Content != "" {
+		db = db.Where("content like ", strings.Join([]string{"%", info.Content, "%"}, ""))
+	}
 	var comments []comment.Comment
 	// 如果有条件搜索 下方会自动创建搜索语句
 	err = db.Count(&total).Error

@@ -2,6 +2,21 @@
   <div>
     <div class="gva-search-box">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
+        <el-form-item label="文章：">
+          <el-select
+            v-model="searchInfo.articleId"
+            :multiple="false"
+            filterable
+            remote
+            clearable
+            reserve-keyword
+            placeholder="请输入"
+            :remote-method="searchArticle"
+            :loading="loading"
+          >
+            <el-option v-for="item in options" :key="item.ID" :label="item.title" :value="item.ID" />
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button size="small" type="primary" icon="search" @click="onSubmit">查询</el-button>
           <el-button size="small" icon="refresh" @click="onReset">重置</el-button>
@@ -14,7 +29,7 @@
         <el-popover v-model:visible="deleteVisible" placement="top" width="160">
           <p>确定要删除吗？</p>
           <div style="text-align: right; margin-top: 8px">
-            <el-button size="small" type="text" @click="deleteVisible = false">取消</el-button>
+            <el-button size="small" link @click="deleteVisible = false">取消</el-button>
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
@@ -34,18 +49,24 @@
       >
         <el-table-column type="selection" width="55" />
         <el-table-column header-align="center" align="center" prop="ID" label="ID" width="55"></el-table-column>
-        <el-table-column align="left" label="文章id" prop="articleId" width="120" />
+        <el-table-column align="left" label="文章" prop="articleId" width="120">
+          <template #default="scope">{{ scope.row?.article?.title }}</template>
+        </el-table-column>
         <el-table-column align="left" label="上级" prop="parentId" width="120" />
         <el-table-column align="left" label="内容" prop="content" width="120" />
-        <el-table-column align="left" label="用户id" prop="userId" width="120" />
+        <el-table-column align="left" label="用户" prop="userId" width="120">
+          <template #default="scope">
+            {{ scope.row?.SysUser?.nickName }}
+          </template>
+        </el-table-column>
         <el-table-column align="left" label="赞数" prop="praise" width="120" />
         <el-table-column align="left" label="评论时间" width="180">
           <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
         </el-table-column>
         <el-table-column align="left" label="操作">
           <template #default="scope">
-            <el-button type="text" icon="edit" size="small" class="table-button" @click="updateCommentFunc(scope.row)">编辑</el-button>
-            <el-button type="text" icon="delete" size="small" @click="deleteRow(scope.row)">删除</el-button>
+            <el-button link icon="edit" type="primary" size="small" class="table-button" @click="updateCommentFunc(scope.row)">编辑</el-button>
+            <el-button link icon="delete" type="primary" size="small" @click="deleteRow(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -63,8 +84,10 @@
     </div>
     <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" :title="!!formData.articleId ? '创建评论' : '更新评论'">
       <el-form :model="formData" label-position="right" label-width="80px">
-        <el-form-item label="文章id:">
-          <el-input v-model.number="formData.articleId" clearable placeholder="请输入" />
+        <el-form-item label="文章:">
+          <el-select v-model="formData.articleId" placeholder="请输入">
+            <el-option v-for="item in options" :key="item.ID" :label="item.title" :value="item.ID"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="上级:">
           <el-input v-model.number="formData.parentId" clearable placeholder="请输入" />
@@ -72,8 +95,10 @@
         <el-form-item label="内容:">
           <el-input v-model="formData.content" clearable placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="用户id:">
-          <el-input v-model.number="formData.userId" clearable placeholder="请输入" />
+        <el-form-item label="用户:">
+          <el-select v-model="formData.userId" placeholder="请输入">
+            <el-option v-for="item in userInfo" :key="item.ID" :label="item.nickName" :value="item.ID"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="赞数:">
           <el-input v-model.number="formData.praise" clearable placeholder="请输入" />
@@ -102,6 +127,8 @@ import { createComment, deleteComment, deleteCommentByIds, updateComment, findCo
 import { getDictFunc, formatDate, formatBoolean, filterDict } from "@/utils/format";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { ref } from "vue";
+import { useDebounceFn } from "@vueuse/core";
+import { getArticleList } from "@/api/article";
 
 // 自动化生成的字典（可能为空）以及字段
 const formData = ref({
@@ -118,6 +145,9 @@ const total = ref(0);
 const pageSize = ref(10);
 const tableData = ref([]);
 const searchInfo = ref({});
+const loading = ref(false);
+const options = ref([]);
+const userInfo = ref([]);
 
 // 重置
 const onReset = () => {
@@ -145,6 +175,7 @@ const handleCurrentChange = (val) => {
 
 // 查询
 const getTableData = async () => {
+  // console.log(searchInfo.value);
   const table = await getCommentList({ page: page.value, pageSize: pageSize.value, ...searchInfo.value });
   if (table.code === 0) {
     tableData.value = table.data.list;
@@ -155,6 +186,19 @@ const getTableData = async () => {
 };
 
 getTableData();
+
+// 搜索文章
+const search = (query) => {
+  if (query) {
+    getArticleList({ title: query }).then((resp) => {
+      if (resp.code === 0) {
+        options.value = resp.data.list;
+      }
+    });
+  }
+};
+
+const searchArticle = useDebounceFn(search, 800);
 
 // ============== 表格控制部分结束 ===============
 
@@ -222,7 +266,11 @@ const updateCommentFunc = async (row) => {
   type.value = "update";
   if (res.code === 0) {
     formData.value = res.data.recomment;
+    // formData.value.SysUser = undefined;
+    // formData.value.article = undefined;
     dialogFormVisible.value = true;
+    userInfo.value = [res.data.recomment.SysUser];
+    options.value = [res.data.recomment.article];
   }
 };
 
@@ -264,12 +312,13 @@ const closeDialog = () => {
 // 弹窗确定
 const enterDialog = async () => {
   let res;
+  // console.log(formData.value);
   switch (type.value) {
     case "create":
       res = await createComment(formData.value);
       break;
     case "update":
-      res = await updateComment(formData.value);
+      res = await updateComment({ ...formData.value, SysUser: undefined, article: undefined });
       break;
     default:
       res = await createComment(formData.value);
