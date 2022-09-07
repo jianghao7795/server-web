@@ -1,11 +1,11 @@
 package request
 
 import (
-	comment "server/model/app"
 	"server/model/common/request"
 )
 
 type CommentSearch struct {
-	comment.Comment
+	ArticleId int    `json:"articleId" form:"articleId"`
+	Content   string `json:"content" form:"content"`
 	request.PageInfo
 }

@@ -56,10 +56,10 @@ func (commentService *CommentService) GetCommentInfoList(info commentReq.Comment
 	db := global.GVA_DB.Model(&comment.Comment{}).Preload("Article").Preload("SysUser")
 	log.Println(info.ArticleId)
 	if info.ArticleId != 0 {
-		db = db.Where("article_id = ", info.ArticleId)
+		db = db.Where("article_id = ?", info.ArticleId)
 	}
 	if info.Content != "" {
-		db = db.Where("content like ", strings.Join([]string{"%", info.Content, "%"}, ""))
+		db = db.Where("content like ?", strings.Join([]string{"%", info.Content, "%"}, ""))
 	}
 	var comments []comment.Comment
 	// 如果有条件搜索 下方会自动创建搜索语句
