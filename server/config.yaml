@@ -22,7 +22,7 @@ autocode:
 aws-s3:
   bucket: xxxxx-10005608
   region: ap-shanghai
-  endpoint: ''
+  endpoint: ""
   s3-force-path-style: false
   disable-ssl: false
   secret-id: xxxxxxxx
@@ -50,26 +50,26 @@ cors:
       allow-credentials: true
 db-list:
   - disable: false
-    type: ''
-    alias-name: ''
-    path: ''
-    port: ''
-    config: ''
-    db-name: ''
-    username: ''
-    password: ''
+    type: ""
+    alias-name: ""
+    path: ""
+    port: ""
+    config: ""
+    db-name: ""
+    username: ""
+    password: ""
     max-idle-conns: 10
     max-open-conns: 100
-    log-mode: ''
+    log-mode: ""
     log-zap: false
 email:
   to: 978561120@qq.com
   port: 465
-  from: cadencehao@163.com
-  host: smtp.163.com
+  from: 760986739@qq.com
+  host: smtp.qq.com
   is-ssl: true
-  secret: wuwuwuwuwuwuwuw
-  nickname: test
+  secret: evyqrjfqsvczbegc
+  nickname: 760986739
 excel:
   dir: ./resource/excel/
 hua-wei-obs:
@@ -87,38 +87,38 @@ local:
   path: uploads/file
 mysql:
   path: 127.0.0.1
-  port: '3306'
+  port: "3306"
   config: charset=utf8mb4&parseTime=True&loc=Local
   db-name: gva
   username: root
-  password: '123456'
+  password: "123456"
   max-idle-conns: 100
   max-open-conns: 1000
-  log-mode: true
+  log-mode: "1"
   log-zap: false
 pgsql:
-  path: ''
-  port: ''
-  config: ''
-  db-name: ''
-  username: ''
-  password: ''
+  path: ""
+  port: ""
+  config: ""
+  db-name: ""
+  username: ""
+  password: ""
   max-idle-conns: 10
   max-open-conns: 100
-  log-mode: ''
+  log-mode: ""
   log-zap: false
 qiniu:
   zone: ZoneHuaDong
-  bucket: ''
-  img-path: ''
+  bucket: ""
+  img-path: ""
   use-https: false
-  access-key: ''
-  secret-key: ''
+  access-key: ""
+  secret-key: ""
   use-cdn-domains: false
 redis:
   db: 0
   addr: 127.0.0.1:6379
-  password: ''
+  password: ""
 system:
   env: public
   addr: 3100
@@ -137,7 +137,7 @@ tencent-cos:
   path-prefix: server
 timer:
   start: true
-  spec: '@daily'
+  spec: "@daily"
   detail:
     - tableName: sys_operation_records
       compareField: created_at
@@ -148,9 +148,8 @@ timer:
 zap:
   level: info
   format: console
-  prefix: '[server]-'
+  prefix: "[server]-"
   director: log
-  link-name: latest_log
   show-line: true
   encode-level: LowercaseColorLevelEncoder
   stacktrace-key: stacktrace

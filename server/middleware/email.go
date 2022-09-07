@@ -29,8 +29,9 @@ func ErrorToEmail() gin.HandlerFunc {
 			user, err := userService.FindUserById(id)
 			if err != nil {
 				username = "Unknown"
+			} else {
+				username = user.Username
 			}
-			username = user.Username
 		}
 		body, _ := ioutil.ReadAll(c.Request.Body)
 		// 再重新写回请求体body中，ioutil.ReadAll会清空c.Request.Body中的数据
