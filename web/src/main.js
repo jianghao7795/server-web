@@ -13,6 +13,7 @@ import run from '@/core/gin-vue-admin.js';
 import auth from '@/directive/auth';
 import { store } from '@/pinia';
 import App from './App.vue';
+
 const app = createApp(App);
 app.config.productionTip = false;
 

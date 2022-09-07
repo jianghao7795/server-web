@@ -1,24 +1,33 @@
 <template>
   <div id="app">
-    <router-view />
+    <el-config-provider :locale="locale">
+      <router-view />
+    </el-config-provider>
   </div>
 </template>
 
 <script>
+import zhCn from "element-plus/es/locale/lang/zh-cn";
+import { ElConfigProvider } from "element-plus";
 export default {
-  name: 'App',
+  name: "App",
+  components: {
+    ElConfigProvider,
+  },
   data() {
     // console.log(this.$router);
-    return {};
+    return {
+      locale: zhCn,
+    };
   },
 };
 </script>
 
 <style lang="scss">
 // 引入初始化样式
-@import '@/style/main.scss';
-@import '@/style/base.scss';
-@import '@/style/mobile.scss';
+@import "@/style/main.scss";
+@import "@/style/base.scss";
+@import "@/style/mobile.scss";
 #app {
   background: #eee;
   height: 100vh;
@@ -40,7 +49,7 @@ a {
 }
 // 加载条的 css
 #nprogress .bar {
-  background-color: '#409eff';
+  background-color: "#409eff";
   height: 4px;
 }
 </style>

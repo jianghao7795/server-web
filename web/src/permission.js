@@ -89,3 +89,8 @@ router.beforeEach(async (to, from, next) => {
 router.afterEach(() => {
   NProgress.done();
 });
+
+router.onError(() => {
+  // 路由发生错误后销毁进度条
+  NProgress.remove();
+})

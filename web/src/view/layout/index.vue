@@ -236,14 +236,14 @@ const reload = async () => {
       router.push({ name: "Reload", params: { title } });
     }
   }, 400);
-  // if (route.meta.keepAlive) {
-  //   reloadFlag.value = false;
-  //   await nextTick();
-  //   reloadFlag.value = true;
-  // } else {
-  //   const title = route.meta.title;
-  //   router.push({ name: "Reload", params: { title } });
-  // }
+  if (route.meta.keepAlive) {
+    reloadFlag.value = false;
+    await nextTick();
+    reloadFlag.value = true;
+  } else {
+    const title = route.meta.title;
+    router.push({ name: "Reload", params: { title } });
+  }
 };
 
 const isShadowBg = ref(false);
