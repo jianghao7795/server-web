@@ -7,9 +7,13 @@ import * as path from "path";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
 import vuePlugin from "@vitejs/plugin-vue";
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // import vueJsx from '@vitejs/plugin-vue-jsx';
 // import { isAsyncFunction } from 'util/types';
 // @see https://cn.vitejs.dev/config/
+
 export default defineConfig(({ command, mode }) => {
   // mode development and production
   // console.log(command, mode);
@@ -97,6 +101,12 @@ export default defineConfig(({ command, mode }) => {
       vuePlugin({}),
       // vueJsx(),
       [Banner(`\n Build based on gin-vue-admin \n Time : ${timestamp}`)],
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+      }),
+      Components({
+        resolvers: [ElementPlusResolver()],
+      }),
     ],
     css: {
       preprocessorOptions: {
