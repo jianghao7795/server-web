@@ -352,7 +352,7 @@ export default {
 import { getSystemConfig, setSystemConfig } from "@/api/system";
 import { emailTest } from "@/api/email";
 import { ref, reactive } from "vue";
-import { ElMessage } from "element-plus";
+// import { ElMessage } from "element-plus";
 
 const activeNames = reactive([]);
 const config = ref({

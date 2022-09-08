@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- <router-view /> -->
     <el-config-provider :locale="locale">
       <router-view />
     </el-config-provider>
@@ -8,12 +9,12 @@
 
 <script>
 import zhCn from "element-plus/es/locale/lang/zh-cn";
-import { ElConfigProvider } from "element-plus";
+// import { ElConfigProvider } from "element-plus";
 export default {
   name: "App",
-  components: {
-    ElConfigProvider,
-  },
+  // components: {
+  //   ElConfigProvider,
+  // },
   data() {
     // console.log(this.$router);
     return {

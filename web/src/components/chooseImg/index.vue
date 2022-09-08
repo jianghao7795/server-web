@@ -1,31 +1,15 @@
 <template>
   <el-drawer v-model="drawer" title="媒体库" size="650px">
     <div class="gva-btn-list">
-      <upload-common
-        v-model:imageCommon="imageCommon"
-        class="upload-btn-media-library"
-        @on-success="open"
-      />
-      <upload-image
-        v-model:imageUrl="imageUrl"
-        :file-size="512"
-        :max-w-h="1080"
-        class="upload-btn-media-library"
-        @on-success="open"
-      />
+      <upload-common v-model:imageCommon="imageCommon" class="upload-btn-media-library" @on-success="open" />
+      <upload-image v-model:imageUrl="imageUrl" :file-size="512" :max-w-h="1080" class="upload-btn-media-library" @on-success="open" />
       <el-form ref="searchForm" :inline="true" :model="search">
         <el-form-item label="">
-          <el-input
-            v-model="search.keyword"
-            class="keyword"
-            placeholder="请输入文件名或备注"
-          />
+          <el-input v-model="search.keyword" class="keyword" placeholder="请输入文件名或备注" />
         </el-form-item>
 
         <el-form-item>
-          <el-button size="small" type="primary" icon="search" @click="open">
-            查询
-          </el-button>
+          <el-button size="small" type="primary" icon="search" @click="open">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -34,9 +18,7 @@
         <div class="header-img-box-list">
           <el-image
             :key="key"
-            :src="
-              item.url && item.url.slice(0, 4) !== 'http' ? path + item.url : item.url
-            "
+            :src="item.url && item.url.slice(0, 4) !== 'http' ? path + item.url : item.url"
             @click="chooseImg(item.url, target, targetKey)"
           >
             <template #error>
@@ -53,7 +35,8 @@
         </div>
       </div>
     </div>
-    <el-pagination background
+    <el-pagination
+      background
       :current-page="page"
       :page-size="pageSize"
       :total="total"
@@ -70,7 +53,7 @@ import { ref } from "vue";
 import { getFileList, editFileName } from "@/api/fileUploadAndDownload";
 import UploadImage from "@/components/upload/image.vue";
 import UploadCommon from "@/components/upload/common.vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+// import { ElMessage, ElMessageBox } from "element-plus";
 
 const imageUrl = ref("");
 const imageCommon = ref("");

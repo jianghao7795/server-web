@@ -107,7 +107,7 @@ import { createAppTab, deleteAppTab, deleteAppTabByIds, updateAppTab, findAppTab
 
 // 全量引入格式化工具 请按需保留
 import { formatDate } from "@/utils/format";
-import { ElMessage, ElMessageBox } from "element-plus";
+// import { ElMessage, ElMessageBox } from "element-plus";
 import { ref, onBeforeMount } from "vue";
 
 // 自动化生成的字典（可能为空）以及字段

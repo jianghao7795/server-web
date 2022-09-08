@@ -12,7 +12,7 @@
 import * as markedjs from "marked";
 import hljs from "highlight.js";
 // import "highlight.js/styles/atelier-plateau-light.css";
-import { ElMessage } from "element-plus";
+// import { ElMessage } from "element-plus";
 import { onMounted, ref } from "vue";
 
 const props = defineProps({

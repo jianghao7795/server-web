@@ -59,7 +59,7 @@ export default {
 <script setup>
 import { getSysHistory, rollback, delSysHistory } from "@/api/autoCode.js";
 import { useRouter } from "vue-router";
-import { ElMessage, ElMessageBox } from "element-plus";
+// import { ElMessage, ElMessageBox } from "element-plus";
 import { ref } from "vue";
 import { formatDate } from "@/utils/format";
 const router = useRouter();

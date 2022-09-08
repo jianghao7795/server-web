@@ -10,14 +10,14 @@
       :show-file-list="false"
       class="upload-btn"
     >
-      <el-button size="small" type="primary"> 普通上传 </el-button>
+      <el-button size="small" type="primary">普通上传</el-button>
     </el-upload>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import { ElMessage } from "element-plus";
+// import { ElMessage } from "element-plus";
 import { useUserStore } from "@/pinia/modules/user";
 
 const emit = defineEmits(["on-success"]);

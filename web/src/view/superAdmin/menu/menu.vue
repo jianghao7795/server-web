@@ -184,7 +184,7 @@ import icon from "@/view/superAdmin/menu/icon.vue";
 import warningBar from "@/components/warningBar/warningBar.vue";
 import { canRemoveAuthorityBtnApi } from "@/api/authorityBtn";
 import { reactive, ref, onMounted } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+// import { ElMessage, ElMessageBox } from "element-plus";
 
 const rules = reactive({
   path: [{ required: true, message: "请输入菜单name", trigger: "blur" }],

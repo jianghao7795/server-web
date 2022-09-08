@@ -51,7 +51,7 @@ export default {
 import { createPackageApi, getPackageApi, deletePackageApi } from "@/api/autoCode";
 import { ref } from "vue";
 import WarningBar from "@/components/warningBar/warningBar.vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+// import { ElMessage, ElMessageBox } from "element-plus";
 
 const form = ref({
   packageName: "",

@@ -19,7 +19,9 @@
       <el-table :data="tableData">
         <el-table-column align="left" label="预览" width="100">
           <template #default="scope">
-            <div><viewer :images="[scope.row.url]"><CustomPic pic-type="file" :pic-src="scope.row.url" /></viewer></div>
+            <div>
+              <viewer :images="[scope.row.url]"><CustomPic pic-type="file" :pic-src="scope.row.url" /></viewer>
+            </div>
           </template>
         </el-table-column>
         <el-table-column align="left" label="日期" prop="UpdatedAt" width="180">
@@ -36,7 +38,7 @@
         </el-table-column>
         <el-table-column align="left" label="链接" props="url" min-width="300">
           <template #default="scope">
-          <div>{{ scope.row.url }}</div>
+            <div>{{ scope.row.url }}</div>
           </template>
         </el-table-column>
         <el-table-column align="left" label="标签" props="tag" width="100">
@@ -79,7 +81,7 @@ import UploadCommon from "@/components/upload/common.vue";
 import { formatDate } from "@/utils/format";
 
 import { ref } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+// import { ElMessage, ElMessageBox } from "element-plus";
 
 const path = ref(import.meta.env.VITE_BASE_API);
 // const userStore = useUserStore();

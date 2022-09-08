@@ -60,8 +60,8 @@
       </template>
     </el-dialog>
 
-    <el-drawer v-if="drawer" v-model="drawer" :with-header="false" size="40%" title="角色配置">
-      <el-tabs :before-leave="autoEnter" class="role-box" type="border-card">
+    <el-drawer v-if="drawer" v-model="drawer" custom-class="auth-drawer" :with-header="false" size="40%" title="角色配置">
+      <el-tabs :before-leave="autoEnter" type="border-card">
         <el-tab-pane label="角色菜单">
           <Menus ref="menus" :row="activeRow" @changeRow="changeRow" />
         </el-tab-pane>
@@ -85,7 +85,7 @@ import Datas from "@/view/superAdmin/authority/components/datas.vue";
 // import warningBar from "@/components/warningBar/warningBar.vue";
 
 import { ref, onMounted } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+// import { ElMessage, ElMessageBox } from "element-plus";
 
 const mustUint = (rule, value, callback) => {
   if (!/^[0-9]*[1-9][0-9]*$/.test(value)) {
@@ -364,10 +364,16 @@ export default {
     }
   }
 }
-.role-box {
-  .el-tabs__content {
-    height: calc(100vh - 72px);
-    overflow: auto;
+
+.tree-content {
+  overflow: auto;
+  height: calc(100vh - 100px);
+  margin-top: 10px;
+}
+.auth-drawer {
+  .el-drawer__body {
+    padding: 0;
+    overflow: hidden;
   }
 }
 </style>

@@ -36,7 +36,7 @@ import { createAppTab, updateAppTab, findAppTab } from "@/api/appTab";
 // 自动获取字典
 import { getDictFunc } from "@/utils/format";
 import { useRoute, useRouter } from "vue-router";
-import { ElMessage } from "element-plus";
+// import { ElMessage } from "element-plus";
 import { ref } from "vue";
 const route = useRoute();
 const router = useRouter();

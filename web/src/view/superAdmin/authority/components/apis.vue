@@ -26,7 +26,7 @@ export default {
 import { getAllApis } from "@/api/api";
 import { UpdateCasbin, getPolicyPathByAuthorityId } from "@/api/casbin";
 import { ref } from "vue";
-import { ElMessage } from "element-plus";
+// import { ElMessage } from "element-plus";
 const props = defineProps({
   row: {
     default: function () {
