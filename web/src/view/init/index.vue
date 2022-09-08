@@ -58,7 +58,7 @@ export default {
 <script setup>
 import { initDB } from "@/api/initdb";
 import { reactive, ref } from "vue";
-// import { ElLoading, ElMessage } from "element-plus";
+import { ElLoading, ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 
 const router = useRouter();

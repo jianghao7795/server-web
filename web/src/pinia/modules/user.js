@@ -1,24 +1,24 @@
-import { login, getUserInfo, setSelfInfo } from '@/api/user';
-import { jsonInBlacklist } from '@/api/jwt';
-import router from '@/router/index';
-// import { ElLoading, ElMessage } from 'element-plus';
-import { defineStore } from 'pinia';
-import { ref, computed, watch } from 'vue';
-import { useRouterStore } from './router';
+import { login, getUserInfo, setSelfInfo } from "@/api/user";
+import { jsonInBlacklist } from "@/api/jwt";
+import router from "@/router/index";
+import { ElLoading, ElMessage } from "element-plus";
+import { defineStore } from "pinia";
+import { ref, computed, watch } from "vue";
+import { useRouterStore } from "./router";
 
-export const useUserStore = defineStore('user', () => {
+export const useUserStore = defineStore("user", () => {
   const loadingInstance = ref(null);
 
   const userInfo = ref({
-    uuid: '',
-    nickName: '',
-    headerImg: '',
+    uuid: "",
+    nickName: "",
+    headerImg: "",
     authority: {},
-    sideMode: 'dark',
-    activeColor: '#4D70FF',
-    baseColor: '#fff',
+    sideMode: "dark",
+    activeColor: "#4D70FF",
+    baseColor: "#fff",
   });
-  const token = ref(window.localStorage.getItem('token') || '');
+  const token = ref(window.localStorage.getItem("token") || "");
   const isInit = ref(false);
   const setUserInfo = (val) => {
     userInfo.value = val;
@@ -29,10 +29,10 @@ export const useUserStore = defineStore('user', () => {
   };
 
   const NeedInit = () => {
-    token.value = '';
-    window.localStorage.removeItem('token');
+    token.value = "";
+    window.localStorage.removeItem("token");
     localStorage.clear();
-    router.push({ name: 'Init', replace: true });
+    router.push({ name: "Init", replace: true });
   };
 
   const ResetUserInfo = (value = {}) => {
@@ -53,7 +53,7 @@ export const useUserStore = defineStore('user', () => {
   const LoginIn = async (loginInfo) => {
     loadingInstance.value = ElLoading.service({
       fullscreen: true,
-      text: '登陆中，请稍候...',
+      text: "登陆中，请稍候...",
     });
     try {
       const res = await login(loginInfo);
@@ -78,10 +78,10 @@ export const useUserStore = defineStore('user', () => {
   const LoginOut = async () => {
     const res = await jsonInBlacklist();
     if (res.code === 0) {
-      token.value = '';
+      token.value = "";
       sessionStorage.clear();
       localStorage.clear();
-      router.push({ name: 'Login', replace: true });
+      router.push({ name: "Login", replace: true });
       window.location.reload();
     }
   };
@@ -91,40 +91,40 @@ export const useUserStore = defineStore('user', () => {
     if (res.code === 0) {
       userInfo.value.sideMode = data;
       ElMessage({
-        type: 'success',
-        message: '设置成功',
+        type: "success",
+        message: "设置成功",
       });
     }
   };
 
   const mode = computed(() => userInfo.value.sideMode);
   const sideMode = computed(() => {
-    if (userInfo.value.sideMode === 'dark') {
-      return '#191a23';
-    } else if (userInfo.value.sideMode === 'light') {
-      return '#fff';
+    if (userInfo.value.sideMode === "dark") {
+      return "#191a23";
+    } else if (userInfo.value.sideMode === "light") {
+      return "#fff";
     } else {
       return userInfo.value.sideMode;
     }
   });
   const baseColor = computed(() => {
-    if (userInfo.value.sideMode === 'dark') {
-      return '#fff';
-    } else if (userInfo.value.sideMode === 'light') {
-      return '#191a23';
+    if (userInfo.value.sideMode === "dark") {
+      return "#fff";
+    } else if (userInfo.value.sideMode === "light") {
+      return "#191a23";
     } else {
       return userInfo.value.baseColor;
     }
   });
   const activeColor = computed(() => {
-    if (userInfo.value.sideMode === 'dark' || userInfo.value.sideMode === 'light') {
-      return '#4D70FF';
+    if (userInfo.value.sideMode === "dark" || userInfo.value.sideMode === "light") {
+      return "#4D70FF";
     }
     return userInfo.activeColor;
   });
 
   watch(token, () => {
-    window.localStorage.setItem('token', token.value);
+    window.localStorage.setItem("token", token.value);
   });
 
   return {

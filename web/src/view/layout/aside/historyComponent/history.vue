@@ -62,7 +62,8 @@ import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
 import { fmtTitle } from "@/utils/fmtRouterTitle";
 import { useRefreshStore } from "@/pinia/modules/refresh";
-// import { ElLoading } from "element-plus";
+import { ElLoading } from "element-plus";
+import NProgress from "nprogress";
 
 const route = useRoute();
 const router = useRouter();
@@ -72,6 +73,7 @@ const getFmtString = (item) => {
 const refreshStore = useRefreshStore();
 
 const refresh = () => {
+  NProgress.start();
   const loadingInstance = ElLoading.service({ fullscreen: false, target: "#refreshView", text: "加载中" });
   setTimeout(() => {
     refreshStore.changIsRefresh(false);
@@ -80,6 +82,7 @@ const refresh = () => {
     });
     setTimeout(() => {
       loadingInstance.close();
+      NProgress.done();
     }, 100);
   }, 1000);
 };
