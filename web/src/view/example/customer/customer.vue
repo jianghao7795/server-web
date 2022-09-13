@@ -33,7 +33,7 @@
         <el-table-column align="left" label="电话" prop="customerPhoneData" width="120" />
         <el-table-column align="left" label="创建人" prop="sysUserId" width="120">
           <template #default="{ row }">
-            <el-tag class="ml-2" :type="row.sysUser.name === admin ? 'success' : 'info'">{{ row.sysUser.userName }}</el-tag>
+            <el-tag class="ml-2" :type="row.sysUser.name === 'admin' ? 'success' : 'info'">{{ row.sysUser.userName }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column align="left" label="操作" min-width="160">
@@ -48,7 +48,7 @@
             >
               <!-- @click="deleteCustomer(scope.row)" -->
               <template #reference>
-                <el-button type="link" icon="delete" size="small">删除</el-button>
+                <el-button link type="danger" icon="delete" size="small">删除</el-button>
               </template>
             </el-popconfirm>
           </template>
