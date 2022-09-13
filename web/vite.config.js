@@ -100,7 +100,7 @@ export default defineConfig(({ command, mode }) => {
       }),
       vuePlugin({}),
       // vueJsx(),
-      [Banner(`\n Build based on gin-vue-admin \n Time : ${timestamp}`)],
+      [Banner(`\n Build based on server-web \n Time : ${timestamp}`)],
       Components({
         resolvers: [ElementPlusResolver()],
       }),
