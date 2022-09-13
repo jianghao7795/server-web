@@ -126,7 +126,7 @@
 import { deleteSysOperationRecord, getSysOperationRecordList, deleteSysOperationRecordByIds } from "@/api/sysOperationRecord"; // 此处请自行替换地址
 import { formatDate } from "@/utils/format";
 import { ref, onMounted } from "vue";
-// import { ElMessage } from "element-plus";
+import { ElMessage } from "element-plus";
 
 const page = ref(1);
 const total = ref(0);

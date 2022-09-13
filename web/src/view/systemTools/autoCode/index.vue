@@ -159,7 +159,7 @@ import { createTemp, getDB, getTable, getColumn, preview, getMeta, getPackageApi
 import { getDict } from "@/utils/dictionary";
 import { ref, getCurrentInstance, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
-// import { ElMessage } from "element-plus";
+import { ElMessage } from "element-plus";
 
 const fieldTemplate = {
   fieldName: "",

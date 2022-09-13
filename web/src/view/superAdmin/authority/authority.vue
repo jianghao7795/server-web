@@ -85,7 +85,7 @@ import Datas from "@/view/superAdmin/authority/components/datas.vue";
 // import warningBar from "@/components/warningBar/warningBar.vue";
 
 import { ref, onMounted } from "vue";
-// import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 const mustUint = (rule, value, callback) => {
   if (!/^[0-9]*[1-9][0-9]*$/.test(value)) {

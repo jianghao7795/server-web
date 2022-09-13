@@ -66,7 +66,7 @@ import { captcha } from "@/api/user";
 import { checkDB } from "@/api/initdb";
 import bootomInfo from "@/view/layout/bottomInfo/bottomInfo.vue";
 import { reactive, ref, onMounted } from "vue";
-// import { ElMessage } from "element-plus";
+import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
 import dayjs from "dayjs";

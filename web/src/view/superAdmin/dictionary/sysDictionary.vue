@@ -111,7 +111,7 @@ import { createSysDictionary, deleteSysDictionary, updateSysDictionary, findSysD
 // import warningBar from "@/components/warningBar/warningBar.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-// import { ElMessage } from "element-plus";
+import { ElMessage } from "element-plus";
 import { formatBoolean, formatDate } from "@/utils/format";
 
 const router = useRouter();

@@ -169,7 +169,7 @@ import ChooseImg from "@/components/chooseImg/index.vue";
 import { setUserInfo, resetPassword } from "@/api/user.js";
 
 import { nextTick, ref, watch, onMounted } from "vue";
-// import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 const path = ref(import.meta.env.VITE_BASE_API);
 // 初始化相关
 const setAuthorityOptions = (AuthorityData, optionsData) => {

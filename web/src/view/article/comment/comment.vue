@@ -17,6 +17,9 @@
             <el-option v-for="item in options" :key="item.ID" :label="item.title" :value="item.ID" />
           </el-select>
         </el-form-item>
+        <el-form-item label="内容：">
+          <el-input v-model="searchInfo.content" placeholder="请输入"></el-input>
+        </el-form-item>
         <el-form-item>
           <el-button size="small" type="primary" icon="search" @click="onSubmit">查询</el-button>
           <el-button size="small" icon="refresh" @click="onReset">重置</el-button>
@@ -59,7 +62,12 @@
             {{ scope.row?.SysUser?.nickName }}
           </template>
         </el-table-column>
-        <el-table-column align="left" label="赞数" prop="praise" width="120" />
+        <el-table-column align="left" label="赞数" prop="praise" width="120">
+          <template #header="scope">
+            赞
+            <el-icon><Star /></el-icon>
+          </template>
+        </el-table-column>
         <el-table-column align="left" label="评论时间" width="180">
           <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
         </el-table-column>
@@ -82,10 +90,19 @@
         />
       </div>
     </div>
-    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" :title="!!formData.articleId ? '创建评论' : '更新评论'">
+    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" :title="!formData.articleId ? '创建评论' : '更新评论'">
       <el-form :model="formData" label-position="right" label-width="80px">
         <el-form-item label="文章:">
-          <el-select v-model="formData.articleId" placeholder="请输入">
+          <el-select
+            v-model="formData.articleId"
+            :multiple="false"
+            filterable
+            remote
+            clearable
+            reserve-keyword
+            placeholder="请输入"
+            :remote-method="searchArticle"
+          >
             <el-option v-for="item in options" :key="item.ID" :label="item.title" :value="item.ID"></el-option>
           </el-select>
         </el-form-item>
@@ -124,18 +141,18 @@ export default {
 import { createComment, deleteComment, deleteCommentByIds, updateComment, findComment, getCommentList } from "@/api/comment";
 
 // 全量引入格式化工具 请按需保留
-import { getDictFunc, formatDate, formatBoolean, filterDict } from "@/utils/format";
-// import { ElMessage, ElMessageBox } from "element-plus";
+import { formatDate } from "@/utils/format";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { ref } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 import { getArticleList } from "@/api/article";
 
 // 自动化生成的字典（可能为空）以及字段
 const formData = ref({
-  articleId: 0,
-  parentId: 0,
+  articleId: undefined,
+  parentId: undefined,
   content: "",
-  userId: 0,
+  userId: undefined,
   praise: 0,
 });
 
@@ -301,13 +318,16 @@ const openDialog = () => {
 // 关闭弹窗
 const closeDialog = () => {
   dialogFormVisible.value = false;
-  formData.value = {
-    articleId: 0,
-    parentId: 0,
-    content: "",
-    userId: 0,
-    praise: 0,
-  };
+  console.log(dialogFormVisible.value);
+  setTimeout(() => {
+    formData.value = {
+      articleId: undefined,
+      parentId: undefined,
+      content: "",
+      userId: undefined,
+      praise: 0,
+    };
+  }, 300);
 };
 // 弹窗确定
 const enterDialog = async () => {

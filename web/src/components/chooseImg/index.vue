@@ -53,7 +53,7 @@ import { ref } from "vue";
 import { getFileList, editFileName } from "@/api/fileUploadAndDownload";
 import UploadImage from "@/components/upload/image.vue";
 import UploadCommon from "@/components/upload/common.vue";
-// import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 const imageUrl = ref("");
 const imageCommon = ref("");

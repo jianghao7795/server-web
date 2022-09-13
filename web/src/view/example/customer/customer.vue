@@ -90,7 +90,7 @@
 import { createExaCustomer, updateExaCustomer, deleteExaCustomer, getExaCustomer, getExaCustomerList } from "@/api/customer";
 // import warningBar from "@/components/warningBar/warningBar.vue";
 import { ref, onMounted } from "vue";
-// import { ElMessage } from "element-plus";
+import { ElMessage } from "element-plus";
 import { formatDate } from "@/utils/format";
 
 const searchInfo = ref({});

@@ -109,7 +109,7 @@ export default { name: "Article" };
 
 <script setup>
 import { formatDate } from "@/utils/format";
-// import { ElMessage } from "element-plus";
+import { ElMessage } from "element-plus";
 import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle, uploadFile, deleteArticleByIds } from "@/api/article";
 import { getAppTabList } from "@/api/appTab";
 import { ref, onBeforeMount } from "vue";

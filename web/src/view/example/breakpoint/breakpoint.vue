@@ -33,7 +33,7 @@
 import SparkMD5 from "spark-md5";
 import { findFile, breakpointContinueFinish, removeChunk, breakpointContinue } from "@/api/breakpoint";
 import { ref, watch } from "vue";
-// import { ElMessage } from "element-plus";
+import { ElMessage } from "element-plus";
 
 const file = ref(null);
 const fileMd5 = ref("");

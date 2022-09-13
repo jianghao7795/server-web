@@ -198,7 +198,7 @@ export default {
 import ChooseImg from "@/components/chooseImg/index.vue";
 import { setSelfInfo, changePassword } from "@/api/user.js";
 import { reactive, ref } from "vue";
-// import { ElMessage } from "element-plus";
+import { ElMessage } from "element-plus";
 import { useUserStore } from "@/pinia/modules/user";
 
 const path = ref(import.meta.env.VITE_BASE_API);
