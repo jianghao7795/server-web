@@ -71,22 +71,32 @@
       </div>
     </div>
     <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" :title="type === 'update' ? '更新文章' : '新建文章'" draggable :width="1100">
-      <el-form :model="formData" label-position="right" label-width="80px">
-        <el-form-item label="标签:">
+      <el-form
+        :model="formData"
+        ref="ruleFormRef"
+        label-position="right"
+        label-width="80px"
+        :inline-message="true"
+        :scroll-to-error="true"
+        label-suffix=":"
+        :rules="rules"
+        status-icon
+      >
+        <el-form-item label="标签" prop="tag_id">
           <el-select v-model="formData.tag_id" placeholder="请选择" filterable remote reserve-keyword :remote-method="searchTag" :loading="loading">
             <el-option v-for="item in tags" :key="item.ID" :label="item.name" :value="item.ID"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="标题">
+        <el-form-item label="标题" prop="title">
           <el-input v-model="formData.title" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="简化内容">
+        <el-form-item label="简化内容" prop="desc">
           <el-input v-model="formData.desc" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="内容">
+        <el-form-item label="内容" prop="content">
           <MdEditor style="width: 1000px" v-model="text" @on-upload-img="onUploadImg"></MdEditor>
         </el-form-item>
-        <el-form-item label="状态:">
+        <el-form-item label="状态:" prop="state">
           <el-radio-group v-model="formData.state">
             <el-radio-button :label="1">显示</el-radio-button>
             <el-radio-button :label="0">隐藏</el-radio-button>
@@ -95,8 +105,8 @@
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button size="small" @click="closeDialog">取 消</el-button>
-          <el-button size="small" type="primary" @click="enterDialog">确 定</el-button>
+          <el-button size="small" @click="closeDialog(ruleFormRef)">取 消</el-button>
+          <el-button size="small" type="primary" @click="enterDialog(ruleFormRef)">确 定</el-button>
         </div>
       </template>
     </el-dialog>
@@ -112,7 +122,7 @@ import { formatDate } from "@/utils/format";
 import { ElMessage } from "element-plus";
 import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle, uploadFile, deleteArticleByIds } from "@/api/article";
 import { getAppTabList } from "@/api/appTab";
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, reactive } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
@@ -123,6 +133,12 @@ const formData = ref({
   desc: "",
   content: "",
   state: 1,
+});
+
+const ruleFormRef = ref(null); // form ref
+const rules = reactive({
+  tag_id: [{ required: true, message: "请查询并选择", trigger: "blur" }],
+  title: [{ required: true, message: "请输入", trigger: "blur" }],
 });
 
 // search tag loading
@@ -248,7 +264,9 @@ const openDialog = () => {
   dialogFormVisible.value = true;
 };
 
-const closeDialog = () => {
+const closeDialog = (formEl) => {
+  if (!formEl) return;
+  formEl.resetFields();
   dialogFormVisible.value = false;
   formData.value = {
     title: "",
@@ -257,6 +275,7 @@ const closeDialog = () => {
     content: "",
     state: 1,
   };
+  text.value = "";
 };
 
 const updateArticleFunc = async (row) => {
@@ -271,7 +290,17 @@ const updateArticleFunc = async (row) => {
   }
 };
 
-const enterDialog = async () => {
+const enterDialog = async (formRules) => {
+  if (!formRules) return;
+  await formRules.validate((valid, fields) => {
+    console.log(valid, fields);
+    if (valid) {
+      console.log("submit!");
+    } else {
+      console.log("error submit!", fields);
+    }
+  });
+  return;
   let res;
   formData.value.content = text.value;
   switch (type.value) {
@@ -285,7 +314,7 @@ const enterDialog = async () => {
       res = await createArticle(formData.value);
       break;
   }
-  console.log(formData.value);
+  // console.log(formData.value);
   if (res.code === 0) {
     ElMessage({
       type: "success",
