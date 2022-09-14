@@ -109,13 +109,13 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
 import { useNow, useDateFormat } from "@vueuse/core";
-import SwiperCore, { Navigation, Pagination } from "swiper";
+import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-SwiperCore.use([Navigation, Pagination]);
+SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const userStore = useUserStore();
 const formatted = useDateFormat(useNow(), "YYYY-MM-DD HH:mm:ss");
@@ -135,12 +135,28 @@ onMounted(() => {
 });
 
 const swiperExample = ref([
-  { id: 0, label: "Default", options: {} },
+  {
+    id: 0,
+    label: "Default",
+    options: {
+      autoplay: {
+        delay: 1000,
+        stopOnLastSlide: false,
+        disableOnInteraction: true,
+      },
+    },
+  },
   {
     id: 1,
     label: "Navigation",
+    // autoplay: true,
     options: {
       navigation: true,
+      // autoplay: {
+      //   delay: 300,
+      //   stopOnLastSlide: false,
+      //   disableOnInteraction: true,
+      // },
     },
   },
   {

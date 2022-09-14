@@ -63,7 +63,7 @@
         <el-table-column align="left" label="请求" prop="path" width="80">
           <template #default="scope">
             <div>
-              <el-popover v-if="scope.row.body" placement="left-start" trigger="click" :width="420">
+              <el-popover v-if="scope.row.body" placement="left-start" trigger="click" :width="445">
                 <div class="popover-box">
                   <pre>{{ fmtBody(scope.row.body) }}</pre>
                 </div>
@@ -79,7 +79,7 @@
         <el-table-column align="left" label="响应" prop="path" width="80">
           <template #default="scope">
             <div>
-              <el-popover v-if="scope.row.resp" placement="left-start" trigger="click" :width="420">
+              <el-popover v-if="scope.row.resp" placement="left-start" trigger="click" :width="445">
                 <div class="popover-box">
                   <pre>{{ fmtBody(scope.row.resp) }}</pre>
                 </div>

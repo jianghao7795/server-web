@@ -60,6 +60,7 @@ func (commentService *CommentService) GetCommentInfoList(info commentReq.Comment
 	}
 	if info.Content != "" {
 		db = db.Where("content like ?", strings.Join([]string{"%", info.Content, "%"}, ""))
+		// db = db.Where("MATCH(content) AGAINST('+" + info.Content + "')")
 	}
 	var comments []comment.Comment
 	// 如果有条件搜索 下方会自动创建搜索语句
