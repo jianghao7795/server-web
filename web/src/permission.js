@@ -1,13 +1,13 @@
-import { useUserStore } from '@/pinia/modules/user';
-import { useRouterStore } from '@/pinia/modules/router';
-import getPageTitle from '@/utils/page';
-import router from '@/router';
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
+import { useUserStore } from "@/pinia/modules/user";
+import { useRouterStore } from "@/pinia/modules/router";
+import getPageTitle from "@/utils/page";
+import router from "@/router";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 let asyncRouterFlag = 0;
 
-const whiteList = ['Login', 'Init'];
+const whiteList = ["Login", "Init"];
 
 NProgress.configure({ showSpinner: false });
 
@@ -25,12 +25,12 @@ async function handleKeepAlive(to) {
   if (to.matched && to.matched.length > 2) {
     for (let i = 1; i < to.matched.length; i++) {
       const element = to.matched[i - 1];
-      if (element.name === 'layout') {
+      if (element.name === "layout") {
         to.matched.splice(i, 1);
         await handleKeepAlive(to);
       }
       // 如果没有按需加载完成则等待加载
-      if (typeof element.components.default === 'function') {
+      if (typeof element.components.default === "function") {
         await element.components.default();
         await handleKeepAlive(to);
       }
@@ -39,8 +39,9 @@ async function handleKeepAlive(to) {
 }
 
 router.beforeEach(async (to, from, next) => {
-  NProgress.start();
-  // console.log(to);
+  if (!(to.fullPath === "/layout/reload")) {
+    NProgress.start();
+  }
   const userStore = useUserStore();
   to.meta.matched = [...to.matched];
   await handleKeepAlive(to);
@@ -93,4 +94,4 @@ router.afterEach(() => {
 router.onError(() => {
   // 路由发生错误后销毁进度条
   NProgress.remove();
-})
+});

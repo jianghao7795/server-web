@@ -28,11 +28,6 @@
         </template>
       </el-tab-pane>
     </el-tabs>
-    <div class="refreshView" @click="refresh()">
-      <el-tooltip effect="dark" placement="top-end" content="重新加载">
-        <el-icon><Refresh class="is-loading" /></el-icon>
-      </el-tooltip>
-    </div>
     <!--自定义右键菜单html代码-->
     <ul v-show="contextMenuVisible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
       <li @click="closeAll">关闭所有</li>
@@ -61,31 +56,17 @@ import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
 import { fmtTitle } from "@/utils/fmtRouterTitle";
-import { useRefreshStore } from "@/pinia/modules/refresh";
-import { ElLoading } from "element-plus";
-import NProgress from "nprogress";
+// import { useRefreshStore } from "@/pinia/modules/refresh";
+// import { ElLoading } from "element-plus";
+// import NProgress from "nprogress";
 
 const route = useRoute();
 const router = useRouter();
 const getFmtString = (item) => {
   return item.name + JSON.stringify(item.query) + JSON.stringify(item.params);
 };
-const refreshStore = useRefreshStore();
+// const refreshStore = useRefreshStore();
 
-const refresh = () => {
-  NProgress.start();
-  const loadingInstance = ElLoading.service({ fullscreen: false, target: "#refreshView", text: "加载中" });
-  setTimeout(() => {
-    refreshStore.changIsRefresh(false);
-    setTimeout(() => {
-      refreshStore.changIsRefresh(true);
-    });
-    setTimeout(() => {
-      loadingInstance.close();
-      NProgress.done();
-    }, 100);
-  }, 1000);
-};
 const historys = ref([]);
 const activeValue = ref("");
 const contextMenuVisible = ref(false);
@@ -332,29 +313,6 @@ onUnmounted(() => {
   emitter.off("mobile");
 });
 </script>
-
-<style lang="scss" scoped>
-.router-history {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.addResh {
-  width: calc(100% - 40px);
-}
-.refreshView {
-  display: inline-block;
-  height: 39px;
-  width: 39px;
-  text-align: center;
-  line-height: 39px;
-  border-bottom: 1px solid #f4f4f4;
-}
-.refreshView:hover {
-  background-color: #eee;
-}
-</style>
-
 <style lang="scss">
 .contextmenu {
   width: 100px;

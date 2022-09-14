@@ -34,6 +34,7 @@ import { emitter } from "@/utils/bus.js";
 import { ref, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { useRouterStore } from "@/pinia/modules/router";
+import { ElLoading } from "element-plus";
 
 const router = useRouter();
 
@@ -65,11 +66,25 @@ const showSearch = async () => {
 const reload = ref(false);
 const handleReload = () => {
   reload.value = true;
+  const loadingInstance = ElLoading.service({ fullscreen: false, target: "#refreshView", text: "加载中" });
   emitter.emit("reload");
   setTimeout(() => {
     reload.value = false;
+    loadingInstance.close();
   }, 500);
 };
+// const refresh = () => {
+//   setTimeout(() => {
+//     refreshStore.changIsRefresh(false);
+//     setTimeout(() => {
+//       refreshStore.changIsRefresh(true);
+//     });
+//     setTimeout(() => {
+//       loadingInstance.close();
+//       NProgress.done();
+//     }, 100);
+//   }, 1000);
+// };
 // const toService = () => {
 //   window.open("https://support.qq.com/product/371961");
 // };
