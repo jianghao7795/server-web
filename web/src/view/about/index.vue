@@ -36,7 +36,7 @@
               </el-card>
             </el-timeline-item>
           </el-timeline>
-          <el-button type="text" size="default" @click="">Loading More</el-button>         
+          <el-button type="text" size="default" @click="">Loading More</el-button>
         </el-card>
       </el-col>
     </el-row>
