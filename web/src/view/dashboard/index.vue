@@ -127,7 +127,7 @@ onMounted(() => {
     period.value = "凌晨好";
   } else if (nowHours <= 12) {
     period.value = "早上好";
-  } else if (nowHours <= 19) {
+  } else if (nowHours <= 18) {
     period.value = "下午好";
   } else {
     period.value = "晚上好";
@@ -140,9 +140,10 @@ const swiperExample = ref([
     label: "Default",
     options: {
       autoplay: {
-        delay: 1000,
+        delay: 3000,
         stopOnLastSlide: false,
-        disableOnInteraction: true,
+        disableOnInteraction: false, // 设置为false和自动播放将在用户交互后不会被禁用（Swipes），互动后每次都会重新启动它
+        pauseOnMouseEnter: true, // 当启用时，将在鼠标上通过Swiper容器进入鼠标时暂停。如果还启用了disableOninteraction，它将停止自动播放而不是暂停
       },
     },
   },
@@ -163,7 +164,9 @@ const swiperExample = ref([
     id: 2,
     label: "Pagination",
     options: {
-      pagination: true,
+      pagination: {
+        clickable: true,
+      },
     },
   },
   {
