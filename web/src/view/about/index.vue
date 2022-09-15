@@ -36,7 +36,8 @@
               </el-card>
             </el-timeline-item>
           </el-timeline>
-          <el-button type="text" size="default" @click="">Loading More</el-button>
+          <el-icon class="is-loading" v-if="isLoading"><Loading></Loading></el-icon>
+          <el-button link type="primary" v-show="!isShow" size="default" @click="commitHistory">Loading More</el-button>
         </el-card>
       </el-col>
     </el-row>
@@ -56,13 +57,28 @@ import { onMounted, ref } from "vue";
 
 const commits = ref([]);
 
-const isLoading = ref(true);
+const isLoading = ref(false);
+const isShow = ref(false);
+const page = ref(1);
 
 onMounted(() => {
-  Commits(0).then((resp) => {
+  Commits(page.value).then((resp) => {
     commits.value = resp.data.map((i) => ({ name: i.commit.author.name, date: i.commit.author.date, message: i.commit.message }));
   });
 });
+
+const commitHistory = () => {
+  isLoading.value = true;
+  page.value = page.value + 1;
+  Commits(page.value).then((resp) => {
+    isLoading.value = false;
+    isShow.value = true;
+    commits.value = [
+      ...commits.value,
+      ...resp.data.map((i) => ({ name: i.commit.author.name, date: i.commit.author.date, message: i.commit.message })),
+    ];
+  });
+};
 
 // import ButtonSlot from "./slot";
 // import { reactive, ref } from "vue";

@@ -2,117 +2,126 @@
   <div>
     <el-row>
       <el-col :span="6">
-        <div class="fl-left avatar-box">
-          <div class="user-card">
-            <div
-              class="user-headpic-update"
-              :style="{
-                'background-image': `url(${
-                  userStore.userInfo.headerImg && userStore.userInfo.headerImg.slice(0, 4) !== 'http'
-                    ? path + userStore.userInfo.headerImg
-                    : userStore.userInfo.headerImg
-                })`,
-                'background-repeat': 'no-repeat',
-                'background-size': 'cover',
-              }"
-            >
-              <span class="update" @click="openChooseImg">
-                <el-icon>
-                  <edit />
-                </el-icon>
-                重新上传
-              </span>
-            </div>
-            <div class="user-personality">
-              <p v-if="!editFlag" class="nickName">
-                {{ userStore.userInfo.nickName }}
-                <el-icon class="pointer" color="#66b1ff" @click="openEidt">
-                  <edit />
-                </el-icon>
-              </p>
-              <p v-if="editFlag" class="nickName">
-                <el-input v-model="nickName" />
-                <el-icon class="pointer" color="#67c23a" @click="enterEdit">
-                  <check />
-                </el-icon>
-                <el-icon class="pointer" color="#f23c3c" @click="closeEdit">
-                  <close />
-                </el-icon>
-              </p>
-              <p class="person-info">这个家伙很懒，什么都没有留下</p>
-            </div>
-            <div class="user-information">
-              <ul>
-                <li>
+        <el-card style="min-height: 500px">
+          <div slot="header">个人信息</div>
+
+          <div class="fl-center avatar-box">
+            <div class="user-card">
+              <div
+                class="user-headpic-update"
+                :style="{
+                  'background-image': `url(${
+                    userStore.userInfo.headerImg && userStore.userInfo.headerImg.slice(0, 4) !== 'http'
+                      ? path + userStore.userInfo.headerImg
+                      : userStore.userInfo.headerImg
+                  })`,
+                  'background-repeat': 'no-repeat',
+                  'background-size': 'cover',
+                }"
+              >
+                <span class="update" @click="openChooseImg">
                   <el-icon>
-                    <user />
+                    <edit />
                   </el-icon>
+                  重新上传
+                </span>
+              </div>
+              <div class="user-personality">
+                <p v-if="!editFlag" class="nickName">
                   {{ userStore.userInfo.nickName }}
-                </li>
-                <el-tooltip class="item" effect="light" content="北京反转极光科技有限公司-技术部-前端事业群" placement="top">
-                  <li>
-                    <el-icon>
-                      <data-analysis />
-                    </el-icon>
-                    北京反转极光科技有限公司-技术部-前端事业群
-                  </li>
-                </el-tooltip>
-                <li>
-                  <el-icon>
-                    <video-camera />
+                  <el-icon class="pointer" color="#66b1ff" @click="openEidt">
+                    <edit />
                   </el-icon>
-                  中国·北京市·朝阳区
-                </li>
-                <el-tooltip class="item" effect="light" content="GoLang/JavaScript/Vue/Gorm" placement="top">
+                </p>
+                <p v-if="editFlag" class="nickName">
+                  <el-input v-model="nickName" />
+                  <el-icon class="pointer" color="#67c23a" @click="enterEdit">
+                    <check />
+                  </el-icon>
+                  <el-icon class="pointer" color="#f23c3c" @click="closeEdit">
+                    <close />
+                  </el-icon>
+                </p>
+                <p class="person-info">这个家伙很懒，什么都没有留下</p>
+              </div>
+              <div class="user-information">
+                <ul>
                   <li>
                     <el-icon>
-                      <medal />
+                      <user />
                     </el-icon>
-                    GoLang/JavaScript/Vue/Gorm
+                    {{ userStore.userInfo.nickName }}
                   </li>
-                </el-tooltip>
-              </ul>
+                  <el-tooltip class="item" effect="light" content="前端事业群" placement="top">
+                    <li>
+                      <el-icon>
+                        <data-analysis />
+                      </el-icon>
+                      前端事业群
+                    </li>
+                  </el-tooltip>
+                  <li>
+                    <el-icon>
+                      <video-camera />
+                    </el-icon>
+                    中国
+                  </li>
+                  <el-tooltip class="item" effect="light" content="Vue" placement="top">
+                    <li>
+                      <el-icon>
+                        <medal />
+                      </el-icon>
+                      Vue
+                    </li>
+                  </el-tooltip>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        </el-card>
       </el-col>
       <el-col :span="18">
-        <div class="user-addcount">
-          <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="账号绑定" name="second">
-              <ul>
-                <li>
-                  <p class="title">密保手机</p>
-                  <p class="desc">
-                    已绑定手机:{{ userStore.userInfo.phone }}
-                    <a href="javascript:void(0)" @click="changePhoneFlag = true">立即修改</a>
-                  </p>
-                </li>
-                <li>
-                  <p class="title">密保邮箱</p>
-                  <p class="desc">
-                    已绑定邮箱：{{ userStore.userInfo.email }}
-                    <a href="javascript:void(0)" @click="changeEmailFlag = true">立即修改</a>
-                  </p>
-                </li>
-                <li>
-                  <p class="title">密保问题</p>
-                  <p class="desc">
-                    未设置密保问题
-                    <a href="javascript:void(0)">去设置</a>
-                  </p>
-                </li>
-                <li>
-                  <p class="title">修改密码</p>
-                  <p class="desc">
-                    修改个人密码
-                    <a href="javascript:void(0)" @click="showPassword = true">修改密码</a>
-                  </p>
-                </li>
-              </ul>
-            </el-tab-pane>
-          </el-tabs>
-        </div>
+        <el-card style="min-height: 580.73px">
+          <div slot="header"></div>
+          <div>
+            <div class="user-addcount">
+              <el-tabs v-model="activeName" @tab-click="handleClick">
+                <el-tab-pane label="账号绑定" name="second">
+                  <ul>
+                    <li>
+                      <p class="title">密保手机</p>
+                      <p class="desc">
+                        已绑定手机:{{ userStore.userInfo.phone }}
+                        <a href="javascript:void(0)" @click="changePhoneFlag = true">立即修改</a>
+                      </p>
+                    </li>
+                    <li>
+                      <p class="title">密保邮箱</p>
+                      <p class="desc">
+                        已绑定邮箱：{{ userStore.userInfo.email }}
+                        <a href="javascript:void(0)" @click="changeEmailFlag = true">立即修改</a>
+                      </p>
+                    </li>
+                    <li>
+                      <p class="title">密保问题</p>
+                      <p class="desc">
+                        未设置密保问题
+                        <a href="javascript:void(0)">去设置</a>
+                      </p>
+                    </li>
+                    <li>
+                      <p class="title">修改密码</p>
+                      <p class="desc">
+                        修改个人密码
+                        <a href="javascript:void(0)" @click="showPassword = true">修改密码</a>
+                      </p>
+                    </li>
+                  </ul>
+                </el-tab-pane>
+              </el-tabs>
+            </div>
+          </div>
+        </el-card>
       </el-col>
     </el-row>
 
@@ -399,8 +408,8 @@ const changeEmail = async () => {
   display: block;
 }
 .avatar-box {
-  box-shadow: -2px 0 20px -16px;
-  width: 80%;
+  // box-shadow: -2px 0 20px -16px;
+  width: 100%;
   height: 100%;
   .user-card {
     min-height: calc(90vh - 200px);
