@@ -75,7 +75,7 @@ func (autoApi *AutoCodeApi) CreateTemp(c *gin.Context) {
 	a.PackageT = cases.Title(language.Dutch).String(a.Package)
 	err := autoCodeService.CreateTemp(a, apiIds...)
 	if err != nil {
-		if errors.Is(err, system.AutoMoveErr) {
+		if errors.Is(err, system.ErrAutoMove) {
 			c.Writer.Header().Add("success", "true")
 			c.Writer.Header().Add("msg", url.QueryEscape(err.Error()))
 		} else {

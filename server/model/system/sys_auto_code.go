@@ -33,7 +33,7 @@ type Field struct {
 	DictType        string `json:"dictType"`        // 字典
 }
 
-var AutoMoveErr error = errors.New("创建代码成功并移动文件成功")
+var ErrAutoMove error = errors.New("创建代码成功并移动文件成功")
 
 type SysAutoCode struct {
 	global.GVA_MODEL

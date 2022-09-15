@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="6">
-        <el-card style="min-height: 500px">
+        <el-card style="height: 580px">
           <div slot="header">个人信息</div>
 
           <div class="fl-center avatar-box">
@@ -81,7 +81,7 @@
         </el-card>
       </el-col>
       <el-col :span="18">
-        <el-card style="min-height: 580.73px">
+        <el-card style="height: 580px">
           <div slot="header"></div>
           <div>
             <div class="user-addcount">
@@ -196,17 +196,13 @@
 <script>
 export default {
   name: "Person",
-  data() {
-    console.log(this);
-    return {};
-  },
 };
 </script>
 
 <script setup>
 import ChooseImg from "@/components/chooseImg/index.vue";
 import { setSelfInfo, changePassword } from "@/api/user.js";
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useUserStore } from "@/pinia/modules/user";
 
@@ -238,24 +234,29 @@ const rules = reactive({
 });
 
 const userStore = useUserStore();
+
+onMounted(() => {});
+// watch([], (newUserStore, prevUserStore) => {
+//   console.log(newUserStore, prevUserStore);
+// });
+
 const modifyPwdForm = ref(null);
 const showPassword = ref(false);
 const pwdModify = ref({});
 const nickName = ref("");
 const editFlag = ref(false);
-const savePassword = async () => {
-  modifyPwdForm.value.validate((valid) => {
+const savePassword = () => {
+  modifyPwdForm.value.validate(async (valid) => {
     if (valid) {
-      changePassword({
+      const res = await changePassword({
         username: userStore.userInfo.userName,
         password: pwdModify.value.password,
         newPassword: pwdModify.value.newPassword,
-      }).then((res) => {
-        if (res.code === 0) {
-          ElMessage.success("修改密码成功！");
-        }
-        showPassword.value = false;
       });
+      if (res.code === 0) {
+        ElMessage.success("修改密码成功！");
+      }
+      showPassword.value = false;
     } else {
       return false;
     }
