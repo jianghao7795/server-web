@@ -2,13 +2,14 @@ package middleware
 
 import (
 	"bytes"
-	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 	"time"
+
+	jsoniter "github.com/json-iterator/go"
 
 	"server/utils"
 
@@ -23,6 +24,7 @@ import (
 var operationRecordService = service.ServiceGroupApp.SystemServiceGroup.OperationRecordService
 
 func OperationRecord() gin.HandlerFunc {
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	return func(c *gin.Context) {
 		var body []byte
 		var userId int
