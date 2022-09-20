@@ -33,7 +33,7 @@
       <el-col :span="12">
         <el-card v-if="state.disk" class="card_item">
           <template #header>
-            <div>内存</div>
+            <div>磁盘</div>
           </template>
           <div>
             <el-row :gutter="10">
@@ -84,7 +84,7 @@
       <el-col :span="12">
         <el-card v-if="state.ram" class="card_item">
           <template #header>
-            <div>磁盘</div>
+            <div>内存</div>
           </template>
           <div>
             <el-row :gutter="10">

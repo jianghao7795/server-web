@@ -27,7 +27,7 @@ aws-s3:
   disable-ssl: false
   secret-id: xxxxxxxx
   secret-key: xxxxxxxx
-  base-url: https://gin.vue.admin
+  base-url: http://localhost:8080
   path-prefix: server
 captcha:
   key-long: 6
@@ -133,7 +133,7 @@ tencent-cos:
   region: ap-shanghai
   secret-id: xxxxxxxx
   secret-key: xxxxxxxx
-  base-url: https://gin.vue.admin
+  base-url: http://localhost:8080
   path-prefix: server
 timer:
   start: true

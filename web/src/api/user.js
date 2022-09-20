@@ -1,12 +1,12 @@
-import service from '@/utils/request';
+import service from "@/utils/request";
 // @Summary 用户登录
 // @Produce  application/json
 // @Param data body {username:"string",password:"string"}
 // @Router /base/login [post]
 export const login = (data) => {
   return service({
-    url: '/base/login',
-    method: 'post',
+    url: "/base/login",
+    method: "post",
     data: data,
   });
 };
@@ -17,8 +17,8 @@ export const login = (data) => {
 // @Router /base/captcha [post]
 export const captcha = () => {
   return service({
-    url: '/base/captcha',
-    method: 'get',
+    url: "/base/captcha",
+    method: "get",
   });
 };
 
@@ -28,8 +28,8 @@ export const captcha = () => {
 // @Router /base/resige [post]
 export const register = (data) => {
   return service({
-    url: '/user/admin_register',
-    method: 'post',
+    url: "/user/admin_register",
+    method: "post",
     data: data,
   });
 };
@@ -40,8 +40,8 @@ export const register = (data) => {
 // @Router /user/changePassword [post]
 export const changePassword = (data) => {
   return service({
-    url: '/user/changePassword',
-    method: 'post',
+    url: "/user/changePassword",
+    method: "post",
     data: data,
   });
 };
@@ -56,8 +56,8 @@ export const changePassword = (data) => {
 // @Router /user/getUserList [post]
 export const getUserList = (data) => {
   return service({
-    url: '/user/getUserList',
-    method: 'post',
+    url: "/user/getUserList",
+    method: "post",
     data: data,
   });
 };
@@ -72,8 +72,8 @@ export const getUserList = (data) => {
 // @Router /user/setUserAuthority [post]
 export const setUserAuthority = (data) => {
   return service({
-    url: '/user/setUserAuthority',
-    method: 'post',
+    url: "/user/setUserAuthority",
+    method: "post",
     data: data,
   });
 };
@@ -88,8 +88,8 @@ export const setUserAuthority = (data) => {
 // @Router /user/deleteUser [delete]
 export const deleteUser = (data) => {
   return service({
-    url: '/user/deleteUser',
-    method: 'delete',
+    url: "/user/deleteUser",
+    method: "delete",
     data: data,
   });
 };
@@ -104,8 +104,8 @@ export const deleteUser = (data) => {
 // @Router /user/setUserInfo [put]
 export const setUserInfo = (data) => {
   return service({
-    url: '/user/setUserInfo',
-    method: 'put',
+    url: "/user/setUserInfo",
+    method: "put",
     data: data,
   });
 };
@@ -120,8 +120,8 @@ export const setUserInfo = (data) => {
 // @Router /user/setSelfInfo [put]
 export const setSelfInfo = (data) => {
   return service({
-    url: '/user/setSelfInfo',
-    method: 'put',
+    url: "/user/setSelfInfo",
+    method: "put",
     data: data,
   });
 };
@@ -136,8 +136,8 @@ export const setSelfInfo = (data) => {
 // @Router /user/setUserAuthorities [post]
 export const setUserAuthorities = (data) => {
   return service({
-    url: '/user/setUserAuthorities',
-    method: 'post',
+    url: "/user/setUserAuthorities",
+    method: "post",
     data: data,
   });
 };
@@ -151,15 +151,23 @@ export const setUserAuthorities = (data) => {
 // @Router /user/getUserInfo [get]
 export const getUserInfo = () => {
   return service({
-    url: '/user/getUserInfo',
-    method: 'get',
+    url: "/user/getUserInfo",
+    method: "get",
+  });
+};
+// 重置密码
+export const resetPassword = (data) => {
+  return service({
+    url: "/user/resetPassword",
+    method: "post",
+    data: data,
   });
 };
 
-export const resetPassword = (data) => {
+// 获取密保
+export const getProblemList = (data) => {
   return service({
-    url: '/user/resetPassword',
-    method: 'post',
-    data: data,
+    url: `/problem/getProblemList/${data.id}`,
+    method: "get",
   });
 };

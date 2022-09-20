@@ -105,8 +105,10 @@
                     <li>
                       <p class="title">密保问题</p>
                       <p class="desc">
-                        未设置密保问题
-                        <a href="javascript:void(0)">去设置</a>
+                        {{ securityQuestionList.length === 0 ? "未设置密保问题" : "" }}
+                        <a href="javascript:void(0)" @click="securityQuestion = true">
+                          {{ securityQuestionList.length === 0 ? "去设置" : "立即修改" }}
+                        </a>
                       </p>
                     </li>
                     <li>
@@ -190,6 +192,17 @@
         </span>
       </template>
     </el-dialog>
+
+    <el-dialog title="设置密保问题" v-model="securityQuestion" width="600px" @close="clearSecurity">
+      <div v-if="securityQuestionList.length !== 0">
+        <el-steps :active="1">
+          <el-step title="回答密保问题" :icon="Edit" />
+          <el-step title="Step 2" :icon="Upload" />
+          <el-step title="Step 3" :icon="Picture" />
+        </el-steps>
+      </div>
+      <div v-else>123123</div>
+    </el-dialog>
   </div>
 </template>
 
@@ -201,10 +214,11 @@ export default {
 
 <script setup>
 import ChooseImg from "@/components/chooseImg/index.vue";
-import { setSelfInfo, changePassword } from "@/api/user.js";
+import { setSelfInfo, changePassword, getProblemList } from "@/api/user.js";
 import { reactive, ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useUserStore } from "@/pinia/modules/user";
+import { Edit, Picture, Upload } from "@element-plus/icons-vue";
 
 const path = ref(import.meta.env.VITE_BASE_API);
 const activeName = ref("second");
@@ -233,12 +247,27 @@ const rules = reactive({
   ],
 });
 
-const userStore = useUserStore();
+const securityQuestion = ref(false);
+const securityQuestionList = ref([]);
 
-onMounted(() => {});
+const userStore = useUserStore();
+// console.log(userStore.userInfo);
+
+onMounted(() => {
+  getProblemList({ id: userStore.userInfo.ID }).then((resp) => {
+    // console.log(resp);
+    if (resp.code === 0) {
+      securityQuestionList.value = resp.data.list.problem_settting || [];
+    }
+  });
+});
 // watch([], (newUserStore, prevUserStore) => {
 //   console.log(newUserStore, prevUserStore);
 // });
+
+const clearSecurity = () => {
+  securityQuestion.value = false;
+};
 
 const modifyPwdForm = ref(null);
 const showPassword = ref(false);

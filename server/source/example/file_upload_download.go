@@ -2,10 +2,11 @@ package example
 
 import (
 	"context"
-	"github.com/pkg/errors"
-	"gorm.io/gorm"
 	"server/model/example"
 	"server/service/system"
+
+	"github.com/pkg/errors"
+	"gorm.io/gorm"
 )
 
 const initOrderExaFile = system.InitOrderInternal + 1
@@ -58,8 +59,5 @@ func (i *initExaFileMysql) DataInserted(ctx context.Context) bool {
 		return false
 	}
 	lookup := example.ExaFileUploadAndDownload{Name: "logo.png", Key: "1587973709logo.png"}
-	if errors.Is(db.First(&lookup, &lookup).Error, gorm.ErrRecordNotFound) {
-		return false
-	}
-	return true
+	return !errors.Is(db.First(&lookup, &lookup).Error, gorm.ErrRecordNotFound)
 }
