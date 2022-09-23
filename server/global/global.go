@@ -5,6 +5,8 @@ import (
 	"server/utils/timer"
 	"sync"
 
+	ut "github.com/go-playground/universal-translator"
+
 	"github.com/go-redis/redis/v8"
 	"github.com/songzhibin97/gkit/cache/local_cache"
 	"github.com/spf13/viper"
@@ -26,6 +28,7 @@ var (
 
 	BlackCache local_cache.Cache
 	lock       sync.RWMutex
+	Validate   ut.Translator
 )
 
 // GetGlobalDBByDBName 通过名称获取db list中的db

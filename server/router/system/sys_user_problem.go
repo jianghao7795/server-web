@@ -13,5 +13,9 @@ func (*ProblemRouter) InitProblemRouter(Router *gin.RouterGroup) {
 	var problemApi = v1.ApiGroupApp.SystemApiGroup.UserProblem
 	{
 		problemRouter.GET("getProblemList/:id", problemApi.GetProblemSetting)
+		problemRouter.PUT("updateProblem", problemApi.UpdateProblemSetting)
+
+		problemRouter.GET("getIsSetting/:uid", problemApi.HasSetting)
+		problemRouter.POST("verifyAnswer", problemApi.VerifyAnswer)
 	}
 }

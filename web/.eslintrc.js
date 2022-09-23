@@ -18,25 +18,39 @@ module.exports = {
   // it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
     "vue/no-v-model-argument": "off",
+    // "vue/max-attributes-per-line": [
+    //   2,
+    //   {
+    //     singleline: 10,
+    //     multiline: {
+    //       max: 1,
+    //       allowFirstLine: false,
+    //     },
+    //   },
+    // ],
     "vue/max-attributes-per-line": [
-      2,
+      "error",
       {
-        singleline: 10,
-        multiline: {
+        singleline: {
           max: 1,
-          allowFirstLine: false,
+        },
+        multiline: {
+          max: 4,
         },
       },
     ],
-    // "vue/html-self-closing": ["error", {
-    //   "html": {
-    //     "void": "always",
-    //     "normal": "never",
-    //     "component": "always"
-    //   },
-    //   "svg": "always",
-    //   "math": "always"
-    // }],
+    "vue/html-self-closing": [
+      "error",
+      {
+        html: {
+          void: "always",
+          normal: "never",
+          component: "always",
+        },
+        svg: "always",
+        math: "always",
+      },
+    ],
     "vue/singleline-html-element-content-newline": "off",
     "vue/multiline-html-element-content-newline": "off",
     "vue/name-property-casing": ["error", "PascalCase"],

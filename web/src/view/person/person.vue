@@ -105,9 +105,9 @@
                     <li>
                       <p class="title">密保问题</p>
                       <p class="desc">
-                        {{ securityQuestionList.length === 0 ? "未设置密保问题" : "" }}
-                        <a href="javascript:void(0)" @click="securityQuestion = true">
-                          {{ securityQuestionList.length === 0 ? "去设置" : "立即修改" }}
+                        {{ !hasSetting ? "未设置密保问题" : "修改密保" }}
+                        <a href="javascript:void(0)" @click="changeSecurity(true)">
+                          {{ !hasSetting ? "去设置" : "立即修改" }}
                         </a>
                       </p>
                     </li>
@@ -193,13 +193,29 @@
       </template>
     </el-dialog>
 
-    <el-dialog title="设置密保问题" v-model="securityQuestion" width="600px" @close="clearSecurity">
-      <div v-if="securityQuestionList.length !== 0">
-        <el-steps :active="1">
-          <el-step title="回答密保问题" :icon="Edit" />
-          <el-step title="Step 2" :icon="Upload" />
-          <el-step title="Step 3" :icon="Picture" />
+    <el-dialog title="设置密保问题" v-model="securityQuestion" width="600px" @close="changeSecurity(false)">
+      <div v-if="!!hasSetting">
+        <el-steps :active="active" simple :space="200" class="botto">
+          <el-step title="回答问题" :icon="Edit" />
+          <el-step title="设置问题" :icon="Upload" />
+          <el-step title="完成" :icon="Picture" />
         </el-steps>
+        <div v-if="active === 0">
+          <el-form :model="random">
+            <el-form-item label="问题" label-width="100px">
+              <el-input v-model="random.problem" :disabled="true" />
+            </el-form-item>
+            <el-form-item label="答案" label-width="100px">
+              <el-input v-model="random.answer" />
+            </el-form-item>
+          </el-form>
+        </div>
+        <div v-if="active === 1">123123123</div>
+        <div v-if="active === 2">123123123</div>
+        <div style="text-align: center">
+          <el-button @click="forwardStep">{{ active === 0 ? "换个问题" : "上一步" }}</el-button>
+          <el-button type="primary" @click="nextStep">{{ active === 2 ? "完成" : "下一步" }}</el-button>
+        </div>
       </div>
       <div v-else>123123</div>
     </el-dialog>
@@ -214,7 +230,7 @@ export default {
 
 <script setup>
 import ChooseImg from "@/components/chooseImg/index.vue";
-import { setSelfInfo, changePassword, getProblemList } from "@/api/user.js";
+import { setSelfInfo, changePassword, getProblemList, isSettingProblem, VerifyAnswer } from "@/api/user.js";
 import { reactive, ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useUserStore } from "@/pinia/modules/user";
@@ -247,26 +263,77 @@ const rules = reactive({
   ],
 });
 
+const random = ref({});
+const kiomRabdom = ref(0);
+
+const active = ref(0);
+const nextStep = async () => {
+  const resp = await VerifyAnswer({ data: random.value });
+  if (resp?.code === 0) {
+    if (resp.data) {
+      ElMessage.success({
+        message: "回答成功，请设置问题并提交",
+      });
+      active.value = active.value + 1;
+    } else {
+      ElMessage.warning({
+        message: "回答错误，请更改答案",
+      });
+    }
+    // console.log(resp);
+    // active.value = active.value + 1;
+  }
+};
+
+const forwardStep = () => {
+  if (active.value === 0) {
+    if (kiomRabdom.value === securityQuestionList.value.length - 1) {
+      kiomRabdom.value = 0;
+    } else {
+      kiomRabdom.value = kiomRabdom.value + 1;
+    }
+    random.value = securityQuestionList.value[kiomRabdom.value];
+
+    return;
+  }
+  active.value = active.value - 1;
+};
+
 const securityQuestion = ref(false);
 const securityQuestionList = ref([]);
+const hasSetting = ref(false);
 
 const userStore = useUserStore();
 // console.log(userStore.userInfo);
 
 onMounted(() => {
-  getProblemList({ id: userStore.userInfo.ID }).then((resp) => {
-    // console.log(resp);
-    if (resp.code === 0) {
-      securityQuestionList.value = resp.data.list.problem_settting || [];
+  isSettingProblem({ uid: userStore.userInfo.ID }).then((resp) => {
+    if (resp?.code === 0) {
+      hasSetting.value = resp.data || false;
     }
   });
+  // getProblemList({ id: userStore.userInfo.ID }).then((resp) => {
+  //   if (resp.code === 0) {
+  //     securityQuestionList.value = resp.data.list || [];
+  //     random.value = resp.data.list[0];
+  //     random.value;
+  //   }
+  // });
 });
 // watch([], (newUserStore, prevUserStore) => {
 //   console.log(newUserStore, prevUserStore);
 // });
 
-const clearSecurity = () => {
-  securityQuestion.value = false;
+const changeSecurity = (status = false) => {
+  securityQuestion.value = status;
+  if (status && hasSetting) {
+    getProblemList({ id: userStore.userInfo.ID }).then((resp) => {
+      if (resp.code === 0) {
+        securityQuestionList.value = resp.data.list || [];
+        random.value = resp.data.list[0];
+      }
+    });
+  }
 };
 
 const modifyPwdForm = ref(null);
@@ -414,6 +481,9 @@ const changeEmail = async () => {
 </script>
 
 <style lang="scss">
+.botto {
+  margin-bottom: 15px;
+}
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;

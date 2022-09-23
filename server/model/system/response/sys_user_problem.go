@@ -6,7 +6,7 @@ type SysUserProblemSetting struct {
 	global.GVA_MODEL
 	SysUserId uint   `json:"sys_user_id"`
 	Problem   string `json:"problem"`
-	Answer    string `json:"answer"`
+	// Answer    string `json:"answer"`
 }
 
 type SysUserProblemSettingResponse struct {

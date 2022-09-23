@@ -171,3 +171,27 @@ export const getProblemList = (data) => {
     method: "get",
   });
 };
+
+// 设置密保
+export const putProblem = (data) => {
+  return service({
+    url: "/problem/updateProblem",
+    method: "put",
+    data: data,
+  });
+};
+// 获取是否有密保
+export const isSettingProblem = ({ uid }) => {
+  return service({
+    url: `/problem/getIsSetting/${uid}`,
+    method: "get",
+  });
+};
+// 验证问题是否对
+export const VerifyAnswer = (data) => {
+  return service({
+    url: "/problem/verifyAnswer",
+    method: "post",
+    data,
+  });
+};

@@ -64,8 +64,9 @@
         </el-table-column>
         <el-table-column align="left" label="赞数" prop="praise" width="120">
           <template #header="scope">
-            赞
-            <el-icon><Star /></el-icon>
+            <el-icon><ThumbsDownFilled /></el-icon>
+            /
+            <el-icon><ThumbsUpFilled /></el-icon>
           </template>
         </el-table-column>
         <el-table-column align="left" label="评论时间" width="180">
@@ -146,6 +147,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { ref } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 import { getArticleList } from "@/api/article";
+import { ThumbsDownFilled, ThumbsUpFilled } from "@vicons/carbon";
 
 // 自动化生成的字典（可能为空）以及字段
 const formData = ref({
