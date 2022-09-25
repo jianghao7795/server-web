@@ -1,4 +1,5 @@
 mysqldump: [Warning] Using a password on the command line interface can be insecure.
+create database gva DEFAULT CHARSET=utf8mb4;
 -- MySQL dump 10.13  Distrib 5.7.36, for Linux (x86_64)
 --
 -- Host: localhost    Database: gva
