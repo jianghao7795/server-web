@@ -27,10 +27,11 @@ func (*Problem) SetUserProblemSetting(problem []system.SysUserProblem) (string, 
 	if len(problem) == 0 {
 		return "没有新建和更新", nil
 	}
-	db := global.GVA_DB.Model(&system.SysUserProblem{})
+
 	var messageString string = ""
 	for index, item := range problem {
 		if item.ID == 0 {
+			db := global.GVA_DB.Model(&system.SysUserProblem{})
 			err := db.Create(&item).Error
 			if err != nil {
 				return "", err
@@ -38,6 +39,7 @@ func (*Problem) SetUserProblemSetting(problem []system.SysUserProblem) (string, 
 			messageString += "[" + strconv.Itoa(index) + "]" + "新建成功 "
 		} else {
 			// log.Println(item)
+			db := global.GVA_DB.Model(&system.SysUserProblem{})
 			var dataProblemFirst system.SysUserProblem
 			err := db.Where("id = ?", item.ID).First(&dataProblemFirst).Error
 

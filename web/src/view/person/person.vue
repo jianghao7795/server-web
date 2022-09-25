@@ -210,11 +210,21 @@
             </el-form-item>
           </el-form>
         </div>
-        <div v-if="active === 1">123123123</div>
-        <div v-if="active === 2">123123123</div>
+        <div v-if="active === 1">
+          <div v-for="item in securityQuestionList" :key="item.id">
+            <el-form :model="item">
+              <el-form-item label="问题" label-width="100px">
+                <el-input v-model="item.problem" />
+              </el-form-item>
+              <el-form-item label="答案" label-width="100px">
+                <el-input v-model="item.answer" />
+              </el-form-item>
+            </el-form>
+          </div>
+        </div>
         <div style="text-align: center">
-          <el-button @click="forwardStep">{{ active === 0 ? "换个问题" : "上一步" }}</el-button>
-          <el-button type="primary" @click="nextStep">{{ active === 2 ? "完成" : "下一步" }}</el-button>
+          <el-button v-show="active < 3" @click="forwardStep">{{ active === 0 ? "换个问题" : "上一步" }}</el-button>
+          <el-button type="primary" @click="nextStep">{{ active === 3 ? "完成" : "下一步" }}</el-button>
         </div>
       </div>
       <div v-else>123123</div>
@@ -230,7 +240,7 @@ export default {
 
 <script setup>
 import ChooseImg from "@/components/chooseImg/index.vue";
-import { setSelfInfo, changePassword, getProblemList, isSettingProblem, VerifyAnswer } from "@/api/user.js";
+import { setSelfInfo, changePassword, getProblemList, isSettingProblem, VerifyAnswer, putProblem } from "@/api/user.js";
 import { reactive, ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useUserStore } from "@/pinia/modules/user";
@@ -267,21 +277,54 @@ const random = ref({});
 const kiomRabdom = ref(0);
 
 const active = ref(0);
+
+const securityQuestion = ref(false);
+const securityQuestionList = ref([]);
+const hasSetting = ref(false);
+
+const userStore = useUserStore();
+
 const nextStep = async () => {
-  const resp = await VerifyAnswer({ data: random.value });
-  if (resp?.code === 0) {
-    if (resp.data) {
-      ElMessage.success({
-        message: "回答成功，请设置问题并提交",
-      });
-      active.value = active.value + 1;
-    } else {
-      ElMessage.warning({
-        message: "回答错误，请更改答案",
-      });
+  const activeValue = active.value;
+  if (activeValue === 0) {
+    const resp = await VerifyAnswer({ data: random.value });
+    if (resp?.code === 0) {
+      if (resp.data) {
+        ElMessage.success({
+          message: "回答成功，请设置问题并提交",
+        });
+        active.value = active.value + 1;
+      } else {
+        ElMessage.warning({
+          message: "回答错误，请更改答案",
+        });
+      }
+      // console.log(resp);
+      // active.value = active.value + 1;
     }
-    // console.log(resp);
-    // active.value = active.value + 1;
+  }
+
+  if (activeValue === 1) {
+    console.log(securityQuestionList.value);
+    const resp = await putProblem({ data: securityQuestionList.value });
+    if (resp?.code === 0) {
+      if (resp.data) {
+        ElMessage.success({
+          message: "设置成功",
+        });
+        active.value = active.value + 2;
+      } else {
+        ElMessage.warning({
+          message: "设置失败",
+        });
+      }
+      // console.log(resp);
+      // active.value = active.value + 1;
+    }
+  }
+
+  if (activeValue === 3) {
+    securityQuestion.value = false;
   }
 };
 
@@ -299,11 +342,6 @@ const forwardStep = () => {
   active.value = active.value - 1;
 };
 
-const securityQuestion = ref(false);
-const securityQuestionList = ref([]);
-const hasSetting = ref(false);
-
-const userStore = useUserStore();
 // console.log(userStore.userInfo);
 
 onMounted(() => {
