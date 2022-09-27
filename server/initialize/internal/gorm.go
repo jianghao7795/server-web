@@ -23,7 +23,7 @@ type _gorm struct{}
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (g *_gorm) Config() *gorm.Config {
 	config := &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true} // 在 AutoMigrate 或 CreateTable 时，GORM 会自动创建外键约束，若要禁用该特性，可将其设置为 true
-	_default := logger.New(NewWriter(log.New(os.Stdout, "\r\n", log.LstdFlags)), logger.Config{
+	_default := logger.New(NewWriter(log.New(os.Stdout, "\n", log.LstdFlags)), logger.Config{
 		SlowThreshold: 200 * time.Millisecond,
 		LogLevel:      logger.Warn,
 		Colorful:      true,
