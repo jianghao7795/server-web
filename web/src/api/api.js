@@ -1,5 +1,5 @@
-import service from '@/utils/request';
-import { stringify } from 'qs';
+import service from "@/utils/request";
+import { stringify } from "qs";
 // @Tags api
 // @Summary 分页获取角色列表
 // @Security ApiKeyAuth
@@ -16,7 +16,7 @@ export const getApiList = (data) => {
   // console.log(data)
   return service({
     url: `/api/getApiList?${stringify(data)}`,
-    method: 'get',
+    method: "get",
   });
 };
 
@@ -30,8 +30,8 @@ export const getApiList = (data) => {
 // @Router /api/createApi [post]
 export const createApi = (data) => {
   return service({
-    url: '/api/createApi',
-    method: 'post',
+    url: "/api/createApi",
+    method: "post",
     data,
   });
 };
@@ -47,7 +47,7 @@ export const createApi = (data) => {
 export const getApiById = (data) => {
   return service({
     url: `/api/getApiById/${data.id}`,
-    method: 'get',
+    method: "get",
   });
 };
 
@@ -62,7 +62,7 @@ export const getApiById = (data) => {
 export const updateApi = (data) => {
   return service({
     url: `/api/updateApi/${data.ID}`,
-    method: 'put',
+    method: "put",
     data,
   });
 };
@@ -77,8 +77,8 @@ export const updateApi = (data) => {
 // @Router /api/setAuthApi [post]
 export const setAuthApi = (data) => {
   return service({
-    url: '/api/setAuthApi',
-    method: 'put',
+    url: "/api/setAuthApi",
+    method: "put",
     data,
   });
 };
@@ -92,8 +92,8 @@ export const setAuthApi = (data) => {
 // @Router /api/getAllApis [post]
 export const getAllApis = (data) => {
   return service({
-    url: '/api/getAllApis',
-    method: 'get',
+    url: "/api/getAllApis",
+    method: "get",
     data,
   });
 };
@@ -109,7 +109,7 @@ export const getAllApis = (data) => {
 export const deleteApi = (data) => {
   return service({
     url: `/api/deleteApi/${data.ID}`,
-    method: 'delete',
+    method: "delete",
     data,
   });
 };
@@ -124,8 +124,8 @@ export const deleteApi = (data) => {
 // @Router /api/deleteApisByIds [delete]
 export const deleteApisByIds = (data) => {
   return service({
-    url: '/api/deleteApisByIds',
-    method: 'delete',
+    url: "/api/deleteApisByIds",
+    method: "delete",
     data,
   });
 };

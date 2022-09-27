@@ -1,4 +1,4 @@
-import service from '@/utils/request';
+import service from "@/utils/request";
 
 // @Tags AppTab
 // @Summary 创建AppTab
@@ -10,8 +10,8 @@ import service from '@/utils/request';
 // @Router /appTab/createAppTab [post]
 export const createAppTab = (data) => {
   return service({
-    url: '/appTab/createAppTab',
-    method: 'post',
+    url: "/appTab/createAppTab",
+    method: "post",
     data,
   });
 };
@@ -26,8 +26,8 @@ export const createAppTab = (data) => {
 // @Router /appTab/deleteAppTab [delete]
 export const deleteAppTab = (data) => {
   return service({
-    url: '/appTab/deleteAppTab',
-    method: 'delete',
+    url: "/appTab/deleteAppTab",
+    method: "delete",
     data,
   });
 };
@@ -42,8 +42,8 @@ export const deleteAppTab = (data) => {
 // @Router /appTab/deleteAppTab [delete]
 export const deleteAppTabByIds = (data) => {
   return service({
-    url: '/appTab/deleteAppTabByIds',
-    method: 'delete',
+    url: "/appTab/deleteAppTabByIds",
+    method: "delete",
     data,
   });
 };
@@ -58,8 +58,8 @@ export const deleteAppTabByIds = (data) => {
 // @Router /appTab/updateAppTab [put]
 export const updateAppTab = (data) => {
   return service({
-    url: '/appTab/updateAppTab',
-    method: 'put',
+    url: "/appTab/updateAppTab",
+    method: "put",
     data,
   });
 };
@@ -74,8 +74,8 @@ export const updateAppTab = (data) => {
 // @Router /appTab/findAppTab [get]
 export const findAppTab = (params) => {
   return service({
-    url: '/appTab/findAppTab',
-    method: 'get',
+    url: "/appTab/findAppTab",
+    method: "get",
     params,
   });
 };
@@ -90,8 +90,8 @@ export const findAppTab = (params) => {
 // @Router /appTab/getAppTabList [get]
 export const getAppTabList = (params) => {
   return service({
-    url: '/appTab/getAppTabList',
-    method: 'get',
+    url: "/appTab/getAppTabList",
+    method: "get",
     params,
   });
 };
