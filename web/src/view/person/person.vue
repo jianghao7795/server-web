@@ -221,13 +221,52 @@
               </el-form-item>
             </el-form>
           </div>
+          <div>
+            <el-form-item label="" label-width="100px">
+              <el-button
+                size="small"
+                @click="addChallenge"
+                :disabled="securityQuestionList.length >= 4"
+                :plain="true"
+                style="width: 100%"
+                :icon="Plus"
+              ></el-button>
+            </el-form-item>
+          </div>
         </div>
         <div style="text-align: center">
-          <el-button v-show="active < 3" @click="forwardStep">{{ active === 0 ? "换个问题" : "上一步" }}</el-button>
+          <el-button v-show="active < 3" v-if="active !== 0" @click="forwardStep">上一步</el-button>
+          <el-button v-else-if="active === 0" @click="forwardStep">换个问题</el-button>
           <el-button type="primary" @click="nextStep">{{ active === 3 ? "完成" : "下一步" }}</el-button>
         </div>
       </div>
-      <div v-else>123123</div>
+      <div v-else>
+        <div v-for="item in securityQuestionList" :key="item.id">
+          <el-form :model="item">
+            <el-form-item label="问题" label-width="100px">
+              <el-input v-model="item.problem" />
+            </el-form-item>
+            <el-form-item label="答案" label-width="100px">
+              <el-input v-model="item.answer" />
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-form-item label="" label-width="100px">
+            <el-button
+              size="small"
+              @click="addChallenge"
+              :disabled="securityQuestionList.length >= 4"
+              :plain="true"
+              style="width: 100%"
+              :icon="Plus"
+            ></el-button>
+          </el-form-item>
+        </div>
+        <div style="text-align: center">
+          <el-button type="primary" @click="setProblem">设置</el-button>
+        </div>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -244,7 +283,7 @@ import { setSelfInfo, changePassword, getProblemList, isSettingProblem, VerifyAn
 import { reactive, ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useUserStore } from "@/pinia/modules/user";
-import { Edit, Picture, Upload } from "@element-plus/icons-vue";
+import { Edit, Picture, Plus, Upload } from "@element-plus/icons-vue";
 
 const path = ref(import.meta.env.VITE_BASE_API);
 const activeName = ref("second");
@@ -283,6 +322,28 @@ const securityQuestionList = ref([]);
 const hasSetting = ref(false);
 
 const userStore = useUserStore();
+
+const addChallenge = () => {
+  securityQuestionList.value = [...securityQuestionList.value, { problem: undefined, answer: undefined, sys_user_id: userStore.userInfo.ID }];
+};
+
+const setProblem = async () => {
+  securityQuestionList.value = securityQuestionList.value.map((i) => ({ ...i, sys_user_id: userStore.userInfo.ID }));
+  const resp = await putProblem({ data: securityQuestionList.value });
+  if (resp?.code === 0) {
+    if (resp.data) {
+      ElMessage.success({
+        message: "设置成功",
+      });
+      securityQuestion.value = false;
+      hasSetting.value = true;
+    } else {
+      ElMessage.warning({
+        message: "设置失败",
+      });
+    }
+  }
+};
 
 const nextStep = async () => {
   const activeValue = active.value;
@@ -347,7 +408,7 @@ const forwardStep = () => {
 onMounted(() => {
   isSettingProblem({ uid: userStore.userInfo.ID }).then((resp) => {
     if (resp?.code === 0) {
-      hasSetting.value = resp.data || false;
+      hasSetting.value = resp?.data || false;
     }
   });
   // getProblemList({ id: userStore.userInfo.ID }).then((resp) => {
@@ -364,13 +425,16 @@ onMounted(() => {
 
 const changeSecurity = (status = false) => {
   securityQuestion.value = status;
-  if (status && hasSetting) {
+  if (status && hasSetting.value) {
     getProblemList({ id: userStore.userInfo.ID }).then((resp) => {
       if (resp.code === 0) {
         securityQuestionList.value = resp.data.list || [];
         random.value = resp.data.list[0];
       }
     });
+  } else {
+    securityQuestionList.value = [{ problem: undefined, answer: undefined }];
+    console.log(securityQuestionList.value);
   }
 };
 

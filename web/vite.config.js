@@ -73,6 +73,8 @@ export default defineConfig(({ command, mode }) => {
     server: {
       // 如果使用docker-compose开发模式，设置为false
       open: true,
+      cors: true,
+      hmr: true,
       port: process.env.VITE_CLI_PORT,
       proxy: {
         // 把key的路径代理到target位置
