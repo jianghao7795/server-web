@@ -88,8 +88,8 @@
       </div>
     </div>
     <el-dialog
-      v-model="addUserDialog"
-      custom-class="user-dialog"
+      :model-value="addUserDialog"
+      class="user-dialog"
       title="用户"
       :show-close="false"
       :close-on-press-escape="false"
