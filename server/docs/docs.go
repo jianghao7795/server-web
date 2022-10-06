@@ -5,14 +5,13 @@ package docs
 
 import (
 	"bytes"
-	jsoniter "github.com/json-iterator/go"
+	"encoding/json"
 	"strings"
 
 	"github.com/alecthomas/template"
 	"github.com/swaggo/swag"
 )
 
-var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 var doc = `{
     "schemes": {{ marshal .Schemes }},

@@ -44,7 +44,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <el-dialog v-model="dialogFormVisible" :before-close="handleClose" :title="dialogTitle">
+    <el-dialog v-model="dialogFormVisible" :before-close="handleClose" :title="dialogTitle" width="80%">
       <el-form v-if="dialogFormVisible" ref="menuForm" :inline="true" :model="form" :rules="rules" label-position="top" label-width="85px">
         <el-form-item label="路由Name" prop="path" style="width: 30%">
           <el-input v-model="form.name" autocomplete="off" placeholder="唯一英文字符串" @change="changeName" />

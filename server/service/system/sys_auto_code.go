@@ -2,6 +2,7 @@ package system
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"go/ast"
@@ -15,8 +16,6 @@ import (
 	"strconv"
 	"strings"
 	"text/template"
-
-	jsoniter "github.com/json-iterator/go"
 
 	"server/resource/template/subcontract"
 
@@ -50,8 +49,6 @@ var (
 	packageInjectionMap map[string]astInjectionMeta
 	injectionPaths      []injectionMeta
 )
-
-var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 func Init(Package string) {
 	injectionPaths = []injectionMeta{
