@@ -91,7 +91,7 @@
         />
       </div>
     </div>
-    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" :title="!formData.articleId ? '创建评论' : '更新评论'">
+    <el-dialog :model-value="dialogFormVisible" :before-close="closeDialog" :title="!formData.articleId ? '创建评论' : '更新评论'">
       <el-form :model="formData" label-position="right" label-width="80px">
         <el-form-item label="文章:">
           <el-select

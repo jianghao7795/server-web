@@ -74,7 +74,7 @@
         />
       </div>
     </div>
-    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="标签">
+    <el-dialog :model-value="dialogFormVisible" :before-close="closeDialog" title="标签">
       <el-form :model="formData" label-position="right" label-width="80px">
         <el-form-item label="标签名称:">
           <el-input v-model="formData.name" clearable placeholder="请输入" />

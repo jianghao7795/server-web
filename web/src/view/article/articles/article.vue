@@ -70,7 +70,13 @@
         />
       </div>
     </div>
-    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" :title="type === 'update' ? '更新文章' : '新建文章'" draggable :width="1100">
+    <el-dialog
+      :model-value="dialogFormVisible"
+      :before-close="closeDialog"
+      :title="type === 'update' ? '更新文章' : '新建文章'"
+      draggable
+      :width="1100"
+    >
       <el-form
         :model="formData"
         ref="ruleFormRef"
