@@ -94,8 +94,8 @@ mysql:
   password: "123456"
   max-idle-conns: 100
   max-open-conns: 1000
-  log-mode: "1"
-  log-zap: false
+  log-mode: silent
+  log-zap: true
 pgsql:
   path: ""
   port: ""
