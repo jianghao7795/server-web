@@ -70,7 +70,13 @@
         />
       </div>
     </div>
-    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" :title="type === 'update' ? '更新文章' : '新建文章'" draggable :width="1100">
+    <el-dialog
+      :model-value="dialogFormVisible"
+      :before-close="closeDialog"
+      :title="type === 'update' ? '更新文章' : '新建文章'"
+      draggable
+      :width="1100"
+    >
       <el-form
         :model="formData"
         ref="ruleFormRef"
@@ -264,9 +270,10 @@ const openDialog = () => {
   dialogFormVisible.value = true;
 };
 
-const closeDialog = (formEl) => {
-  if (!formEl) return;
-  formEl.resetFields();
+const closeDialog = () => {
+  if (type.value === "create") {
+    ruleFormRef.resetFields();
+  }
   dialogFormVisible.value = false;
   formData.value = {
     title: "",
@@ -292,37 +299,37 @@ const updateArticleFunc = async (row) => {
 
 const enterDialog = async (formRules) => {
   if (!formRules) return;
-  await formRules.validate((valid, fields) => {
-    console.log(valid, fields);
+  await formRules.validate(async (valid, fields) => {
+    // console.log(valid, fields);
     if (valid) {
       console.log("submit!");
+      let res;
+      formData.value.content = text.value;
+      switch (type.value) {
+        case "create":
+          res = await createArticle(formData.value);
+          break;
+        case "update":
+          res = await updateArticle(formData.value);
+          break;
+        default:
+          res = await createArticle(formData.value);
+          break;
+      }
+      // console.log(formData.value);
+      if (res.code === 0) {
+        ElMessage({
+          type: "success",
+          message: "创建/更改成功",
+        });
+        closeDialog();
+        getTableData();
+      }
     } else {
       console.log("error submit!", fields);
     }
   });
-  return;
-  let res;
-  formData.value.content = text.value;
-  switch (type.value) {
-    case "create":
-      res = await createArticle(formData.value);
-      break;
-    case "update":
-      res = await updateArticle(formData.value);
-      break;
-    default:
-      res = await createArticle(formData.value);
-      break;
-  }
-  // console.log(formData.value);
-  if (res.code === 0) {
-    ElMessage({
-      type: "success",
-      message: "创建/更改成功",
-    });
-    closeDialog();
-    getTableData();
-  }
+  // return;
 };
 
 const search = (val) => {

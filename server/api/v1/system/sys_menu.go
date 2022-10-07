@@ -195,6 +195,7 @@ func (a *AuthorityMenuApi) GetBaseMenuById(c *gin.Context) {
 	} else {
 		response.OkWithDetailed(systemRes.SysBaseMenuResponse{Menu: menu}, "获取成功", c)
 	}
+	// response.OkWithDetailed("", "获取成功", c)
 }
 
 // @Tags Menu

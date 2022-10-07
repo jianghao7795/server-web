@@ -76,7 +76,7 @@
       </div>
     </div>
     <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="字典">
-      <el-form ref="dialogForm" :model="formData" :rules="rules" size="medium" label-width="110px">
+      <el-form ref="dialogForm" :model="formData" :rules="rules" size="default" label-width="110px">
         <el-form-item label="字典名（中）" prop="name">
           <el-input v-model="formData.name" placeholder="请输入字典名（中）" clearable :style="{ width: '100%' }" />
         </el-form-item>

@@ -7,8 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type AppTabRouter struct {
-}
+type AppTabRouter struct{}
 
 // InitAppTabRouter 初始化 AppTab 路由信息
 func (s *AppTabRouter) InitAppTabRouter(Router *gin.RouterGroup) {

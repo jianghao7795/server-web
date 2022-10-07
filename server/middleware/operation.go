@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"bytes"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -9,13 +10,12 @@ import (
 	"strings"
 	"time"
 
-	jsoniter "github.com/json-iterator/go"
-
-	"server/utils"
+	// jsoniter "github.com/json-iterator/go"
 
 	"server/global"
 	"server/model/system"
 	"server/service"
+	"server/utils"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -24,7 +24,7 @@ import (
 var operationRecordService = service.ServiceGroupApp.SystemServiceGroup.OperationRecordService
 
 func OperationRecord() gin.HandlerFunc {
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	// var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	return func(c *gin.Context) {
 		var body []byte
 		var userId int

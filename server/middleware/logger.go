@@ -2,12 +2,11 @@ package middleware
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"strings"
 	"time"
-
-	jsoniter "github.com/json-iterator/go"
 
 	"github.com/gin-gonic/gin"
 )
@@ -77,7 +76,6 @@ func (l Logger) SetLoggerMiddleware() gin.HandlerFunc {
 }
 
 func DefaultLogger() gin.HandlerFunc {
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	return Logger{
 		Print: func(layout LogLayout) {
 			// 标准输出,k8s做收集

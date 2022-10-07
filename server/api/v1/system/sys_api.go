@@ -139,7 +139,7 @@ func (s *SystemApiApi) GetApiList(c *gin.Context) {
 func (s *SystemApiApi) GetApiById(c *gin.Context) {
 	var idInfo request.GetById
 	idInfo.ID, _ = strconv.Atoi(c.Param("id"))
-	fmt.Println(idInfo)
+	// fmt.Println(idInfo)
 	if err := utils.Verify(idInfo, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
