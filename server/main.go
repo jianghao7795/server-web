@@ -23,7 +23,6 @@ import (
 // @name x-token
 // @BasePath /
 func main() {
-	// log.Println(utils.ConfigFile, "record")
 	global.GVA_VP = core.Viper()       // 初始化Viper 配置
 	global.GVA_LOG = core.Zap()        // 初始化zap日志库
 	zap.ReplaceGlobals(global.GVA_LOG) // 部署到全局
