@@ -64,9 +64,19 @@
         </el-table-column>
         <el-table-column align="left" label="赞数" prop="praise" width="120">
           <template #header="scope">
-            <el-icon><ThumbsDownFilled /></el-icon>
+            <span class="iconfont icon-aixin"></span>
             /
-            <el-icon><ThumbsUpFilled /></el-icon>
+            <span class="iconfont icon-aixin1"></span>
+          </template>
+          <template #default="scope">
+            <div class="like-num-wrapper">
+              <transition :name="scope.row.praise ? 'plus' : 'minus'">
+                <div class="like-num" :style="{ color: scope.row.praise ? 'red' : '#333' }" :key="scope.row.praise">
+                  <span class="iconfont icon-aixin"></span>
+                  {{ scope.row.praise }}
+                </div>
+              </transition>
+            </div>
           </template>
         </el-table-column>
         <el-table-column align="left" label="评论时间" width="180">
@@ -147,7 +157,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { ref } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 import { getArticleList } from "@/api/article";
-import { ThumbsDownFilled, ThumbsUpFilled } from "@vicons/carbon";
+// import { ThumbsDownFilled, ThumbsUpFilled } from "@vicons/carbon";
 
 // 自动化生成的字典（可能为空）以及字段
 const formData = ref({
@@ -357,4 +367,75 @@ const enterDialog = async () => {
 };
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.like-num-wrapper {
+  position: relative;
+  font-size: 13px;
+  height: 17px;
+  overflow-y: hidden;
+
+  .like-num {
+    top: 0;
+    left: 0;
+    position: relative;
+    line-height: 17px;
+  }
+}
+.plus-enter-active,
+.plus-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.plus-enter,
+.plus-leave {
+  transform: translateY(0);
+}
+
+.plus-enter-to,
+.plus-leave-to {
+  transform: translateY(-17px);
+}
+
+// 点赞数字-1动画
+.minus-enter-active,
+.minus-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.minus-enter {
+  transform: translateY(-34px);
+}
+
+.minus-enter-to {
+  transform: translateY(-17px);
+}
+
+.minus-leave {
+  transform: translateY(0);
+}
+
+.minus-leave-to {
+  transform: translateY(17px);
+}
+
+/** 动画进行时的class **/
+.zoom-enter-active,
+.zoom-leave-active {
+  transition: all 0.15s cubic-bezier(0.42, 0, 0.34, 1.55);
+}
+
+/** 设置进场开始的状态和离场结束的状态，都是缩放到0 **/
+.zoom-enter,
+.zoom-leave-to {
+  transform: scale(0);
+}
+
+/** 设置进场结束的状态和离场开始的状态, 都是缩放到1 **/
+.zoom-enter-to,
+.zoom-leave {
+  transform: scale(1);
+}
+.minus-enter {
+  transform: translateY(-34px);
+}
+</style>

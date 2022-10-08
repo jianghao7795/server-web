@@ -141,3 +141,20 @@ func (commentApi *CommentApi) GetCommentList(c *gin.Context) {
 		}, "获取成功", c)
 	}
 }
+
+type LikeIt struct {
+	LikeIt int `json:"LikeIt"`
+	ID     int `json:"ID"`
+}
+
+// 点赞
+func (*CommentApi) PutLikeItOrDislike(c *gin.Context) {
+	var likeIt LikeIt
+	_ = c.ShouldBindQuery(&likeIt)
+	if err := commentService.PutLikeItOrDislike(likeIt.ID, likeIt.LikeIt); err != nil {
+		global.GVA_LOG.Error("点赞失败!", zap.Error(err))
+		response.FailWithMessage("点赞失败", c)
+	} else {
+		response.OkWithMessage("点赞成功", c)
+	}
+}

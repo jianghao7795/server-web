@@ -71,3 +71,15 @@ func (commentService *CommentService) GetCommentInfoList(info commentReq.Comment
 	err = db.Limit(limit).Offset(offset).Find(&comments).Error
 	return comments, total, err
 }
+
+// LikeIt 点赞一条记录
+func (*CommentService) PutLikeItOrDislike(id int, likeIt int) error {
+	db := global.GVA_DB.Model(&comment.Comment{})
+	var comment comment.Comment
+	err := db.Where("id = ?", likeIt).First(&comment).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
