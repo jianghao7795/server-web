@@ -25,7 +25,10 @@
         <el-card style="margin-top: 20px" class="box-card">
           <template #header>
             <div class="card-header">
-              <span>提交记录</span>
+              <span style="margin-right: 40px">提交记录</span>
+              <div @click="changeShake()" :class="isShake ? 'swing' : ''" class="sncok">
+                <span class="iconfont icon-aixin1"></span>
+              </div>
             </div>
           </template>
           <el-timeline>
@@ -55,11 +58,20 @@ import pkg from "~/package.json";
 import { Commits } from "@/api/github";
 import { onMounted, ref } from "vue";
 
+const isShake = ref(false);
+
 const commits = ref([]);
 
 const isLoading = ref(false);
 const isShow = ref(false);
 const page = ref(1);
+
+const changeShake = () => {
+  isShake.value = true;
+  setTimeout(() => {
+    isShake.value = false;
+  }, 1500);
+};
 
 onMounted(() => {
   Commits(page.value).then((resp) => {
@@ -177,5 +189,85 @@ const commitHistory = () => {
 }
 h4 {
   margin: 1.3em 0;
+}
+
+.sncok {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  transform-origin: 50% 0;
+}
+.swing {
+  animation: 1s ease-in-out 0s normal running upAnimation;
+}
+
+@keyframes upAnimation {
+  /* 0% {
+    transform: rotate(0deg);
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  10% {
+    transform: rotate(-12deg);
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  20% {
+    transform: rotate(12deg);
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  28% {
+    transform: rotate(-10deg);
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  36% {
+    transform: rotate(10deg);
+    transition-timing-function: cubic-bezier(0.755, 0.5, 0.855, 0.06);
+  }
+
+  42% {
+    transform: rotate(-8deg);
+    transition-timing-function: cubic-bezier(0.755, 0.5, 0.855, 0.06);
+  }
+
+  48% {
+    transform: rotate(8deg);
+    transition-timing-function: cubic-bezier(0.755, 0.5, 0.855, 0.06);
+  }
+
+  52% {
+    transform: rotate(-4deg);
+    transition-timing-function: cubic-bezier(0.755, 0.5, 0.855, 0.06);
+  }
+
+  56% {
+    transform: rotate(4deg);
+    transition-timing-function: cubic-bezier(0.755, 0.5, 0.855, 0.06);
+  }
+
+  60% {
+    transform: rotate(0deg);
+    transition-timing-function: cubic-bezier(0.755, 0.5, 0.855, 0.06);
+  }
+
+  100% {
+    transform: rotate(0deg);
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  } */
+  0% {
+    transform: translateX(0px);
+  }
+  33.3% {
+    transform: translateX(10px);
+  }
+  66.7% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
 }
 </style>
