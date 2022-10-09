@@ -368,19 +368,19 @@ const enterDialog = async () => {
 </script>
 
 <style scoped lang="scss">
-.like-num-wrapper {
-  position: relative;
-  font-size: 13px;
-  height: 17px;
-  overflow-y: hidden;
+// .like-num-wrapper {
+//   position: relative;
+//   font-size: 13px;
+//   height: 17px;
+//   overflow-y: hidden;
 
-  .like-num {
-    top: 0;
-    left: 0;
-    position: relative;
-    line-height: 17px;
-  }
-}
+//   .like-num {
+//     top: 0;
+//     left: 0;
+//     position: relative;
+//     line-height: 17px;
+//   }
+// }
 .plus-enter-active,
 .plus-leave-active {
   transition: all 0.3s ease-in;

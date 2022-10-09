@@ -11,6 +11,7 @@ type Mysql struct {
 	MaxOpenConns int    `mapstructure:"max-open-conns" json:"max-open-conns" yaml:"max-open-conns"` // 打开到数据库的最大连接数
 	LogMode      string `mapstructure:"log-mode" json:"log-mode" yaml:"log-mode"`                   // 是否开启Gorm全局日志
 	LogZap       bool   `mapstructure:"log-zap" json:"log-zap" yaml:"log-zap"`                      // 是否通过zap写入日志文件
+	Debug        bool   `mapstructure:"debug" json:"debug" yaml:"debug"`                            //是否开启debug
 }
 
 func (m *Mysql) Dsn() string {

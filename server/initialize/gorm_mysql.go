@@ -25,10 +25,14 @@ func GormMysql() *gorm.DB {
 	if db, err := gorm.Open(mysql.New(mysqlConfig), internal.Gorm.Config()); err != nil {
 		return nil
 	} else {
+
 		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(m.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(m.MaxOpenConns)
 		// db = db.Debug() // 线上注释
+		if m.Debug {
+			db = db.Debug()
+		}
 		return db
 	}
 }
