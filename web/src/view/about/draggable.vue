@@ -2,6 +2,8 @@
 import { ref, onMounted } from "vue";
 import draggable from "vuedraggable";
 
+const drag = ref(false);
+
 let gridLists = ref([
   { grid: "cn", num: 1 },
   { grid: "cn", num: 2 },
@@ -90,14 +92,21 @@ onMounted(() => {
               </div>
             </template>
             <!-- 拖拽实现元素位置切换 -->
-            <div class="cut-container">
-              <div class="item-cut" v-for="(item, index) in cutLists" :key="index">
-                <p>{{ item.name }}</p>
-              </div>
-            </div>
+            <draggable v-model="cutLists" class="cut-container" @start="drag = true" @end="drag = false" item-key="name">
+              <template #item="{ element }">
+                <div class="item-cut">
+                  <p>{{ element.name }}</p>
+                </div>
+              </template>
+            </draggable>
           </el-card>
         </el-col>
       </el-row>
+      <!-- <div class="cut-container">
+                <div class="item-cut" v-for="(item, index) in cutLists" :key="index">
+                  <p>{{ item.name }}</p>
+                </div>
+              </div> -->
     </div>
   </el-card>
 </template>
