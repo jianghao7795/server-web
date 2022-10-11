@@ -38,13 +38,13 @@ onMounted(() => {
   // 使用原生sortable实现元素位置切换
   // @ts-ignore
   // eslint-disable-next-line no-undef
-  // new Sortable(document.querySelector(".cut-container"), {
-  //   swap: true,
-  //   forceFallback: true,
-  //   chosenClass: "chosen",
-  //   swapClass: "highlight",
-  //   animation: 300,
-  // });
+  new Sortable(document.querySelector(".cut-container"), {
+    swap: true,
+    forceFallback: true,
+    chosenClass: "chosen",
+    swapClass: "highlight",
+    animation: 300,
+  });
 });
 </script>
 
@@ -92,13 +92,18 @@ onMounted(() => {
               </div>
             </template>
             <!-- 拖拽实现元素位置切换 -->
-            <draggable v-model="cutLists" class="cut-container" @start="drag = true" @end="drag = false" item-key="name">
+            <!-- <draggable v-model="cutLists" @start="drag = true" @end="drag = false" item-key="name" :animation="300">
               <template #item="{ element }">
                 <div class="item-cut">
                   <p>{{ element.name }}</p>
                 </div>
               </template>
-            </draggable>
+            </draggable> -->
+            <div class="cut-container">
+              <div class="item-cut" v-for="(item, index) in cutLists" :key="index">
+                <p>{{ item.name }}</p>
+              </div>
+            </div>
           </el-card>
         </el-col>
       </el-row>
