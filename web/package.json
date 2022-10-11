@@ -17,6 +17,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.9",
     "@vueuse/core": "^9.1.0",
+    "animate.css": "^4.1.1",
     "axios": "^0.27.2",
     "core-js": "^3.24.1",
     "dayjs": "^1.11.5",
@@ -37,7 +38,8 @@
     "undraw-ui": "^0.5.9",
     "v-viewer": "^3.0.10",
     "vue": "^3.2.39",
-    "vue-router": "^4.1.4"
+    "vue-router": "^4.1.4",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@vicons/carbon": "^0.12.0",

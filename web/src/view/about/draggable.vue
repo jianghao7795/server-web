@@ -36,18 +36,18 @@ onMounted(() => {
   // 使用原生sortable实现元素位置切换
   // @ts-ignore
   // eslint-disable-next-line no-undef
-  new Sortable(document.querySelector(".cut-container"), {
-    swap: true,
-    forceFallback: true,
-    chosenClass: "chosen",
-    swapClass: "highlight",
-    animation: 300,
-  });
+  // new Sortable(document.querySelector(".cut-container"), {
+  //   swap: true,
+  //   forceFallback: true,
+  //   chosenClass: "chosen",
+  //   swapClass: "highlight",
+  //   animation: 300,
+  // });
 });
 </script>
 
 <template>
-  <el-card>
+  <el-card style="margin-top: 20px" class="box-card">
     <div class="drag-container">
       <!-- grid列表拖拽 -->
       <el-row :gutter="25">
@@ -58,14 +58,7 @@ onMounted(() => {
                 <span>grid列表拖拽</span>
               </div>
             </template>
-            <draggable
-              v-model="gridLists"
-              class="grid-container"
-              item-key="grid"
-              animation="300"
-              chosenClass="chosen"
-              forceFallback="true"
-            >
+            <draggable v-model="gridLists" class="grid-container" item-key="grid" animation="300" chosenClass="chosen" forceFallback="true">
               <template #item="{ element }">
                 <div :class="'item' + ' ' + 'item-' + element.num">
                   {{ element.num }}
@@ -82,14 +75,7 @@ onMounted(() => {
               </div>
             </template>
             <!-- 单列拖拽 -->
-            <draggable
-              v-model="lists"
-              item-key="name"
-              @change="change"
-              chosen-class="chosen"
-              force-fallback="true"
-              animation="300"
-            >
+            <draggable v-model="lists" item-key="name" @change="change" chosen-class="chosen" force-fallback="true" animation="300">
               <template #item="{ element }">
                 <div class="item-single">{{ element.name }}</div>
               </template>

@@ -12,6 +12,7 @@ specifiers:
   '@vue/cli-service': ~5.0.8
   '@vue/compiler-sfc': ^3.2.37
   '@vueuse/core': ^9.1.0
+  animate.css: ^4.1.1
   axios: ^0.27.2
   babel-eslint: ^10.1.0
   babel-plugin-import: ^1.13.5
@@ -46,10 +47,12 @@ specifiers:
   vite-plugin-importer: ^0.2.5
   vue: ^3.2.39
   vue-router: ^4.1.4
+  vuedraggable: ^4.1.0
 
 dependencies:
   '@element-plus/icons-vue': 2.0.9_vue@3.2.39
   '@vueuse/core': 9.1.0_vue@3.2.39
+  animate.css: 4.1.1
   axios: 0.27.2
   core-js: 3.24.1
   dayjs: 1.11.5
@@ -71,6 +74,7 @@ dependencies:
   v-viewer: 3.0.10_vue@3.2.39
   vue: 3.2.39
   vue-router: 4.1.4_vue@3.2.39
+  vuedraggable: 4.1.0_vue@3.2.39
 
 devDependencies:
   '@vicons/carbon': 0.12.0
@@ -2565,6 +2569,10 @@ packages:
       require-from-string: 2.0.2
       uri-js: 4.4.1
     dev: true
+
+  /animate.css/4.1.1:
+    resolution: {integrity: sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==}
+    dev: false
 
   /ansi-escapes/3.2.0:
     resolution: {integrity: sha512-cBhpre4ma+U0T1oM5fXg7Dy1Jw7zzwv7lt/GoCpr+hDQJoYnKVPLL4dCvSEFMmQurOQvSrwT7SL/DAlhBI97RQ==}
@@ -6784,6 +6792,10 @@ packages:
       websocket-driver: 0.7.4
     dev: true
 
+  /sortablejs/1.14.0:
+    resolution: {integrity: sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==}
+    dev: false
+
   /sortablejs/1.15.0:
     resolution: {integrity: sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==}
     dev: false
@@ -7539,6 +7551,15 @@ packages:
       '@vue/runtime-dom': 3.2.39
       '@vue/server-renderer': 3.2.39_vue@3.2.39
       '@vue/shared': 3.2.39
+
+  /vuedraggable/4.1.0_vue@3.2.39:
+    resolution: {integrity: sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==}
+    peerDependencies:
+      vue: ^3.0.1
+    dependencies:
+      sortablejs: 1.14.0
+      vue: 3.2.39
+    dev: false
 
   /watchpack/2.4.0:
     resolution: {integrity: sha512-Lcvm7MGST/4fup+ifyKi2hjyIAwcdI4HRgtvTpIUxBRhB+RFtUh8XtDOxUfctVCnhVi+QQj49i91OyvzkJl6cg==}

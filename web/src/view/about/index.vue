@@ -22,6 +22,9 @@
         </el-card>
       </el-col>
       <el-col :span="24">
+        <draggableVue />
+      </el-col>
+      <el-col :span="24">
         <el-card style="margin-top: 20px" class="box-card">
           <template #header>
             <div class="card-header">
@@ -29,6 +32,10 @@
               <div @click="changeShake()" :class="isShake ? 'swing' : ''" class="sncok">
                 <span class="iconfont icon-aixin1"></span>
               </div>
+              <div class="sncok animate__shakeX">
+                <span class="iconfont icon-aixin1"></span>
+              </div>
+              <h1 class="animate__animated" :class="isShake ? 'animate__shakeX' : ''">An animated element</h1>
             </div>
           </template>
           <el-timeline>
@@ -54,6 +61,7 @@ export default {
 </script>
 
 <script setup>
+import draggableVue from "./draggable.vue";
 import pkg from "~/package.json";
 import { Commits } from "@/api/github";
 import { onMounted, ref } from "vue";
