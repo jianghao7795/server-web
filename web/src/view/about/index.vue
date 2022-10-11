@@ -32,10 +32,9 @@
               <div @click="changeShake()" :class="isShake ? 'swing' : ''" class="sncok">
                 <span class="iconfont icon-aixin1"></span>
               </div>
-              <div class="sncok animate__shakeX">
+              <div @click="changeShake()" class="animate__animated" :class="isShake ? 'animate__shakeX' : ''">
                 <span class="iconfont icon-aixin1"></span>
               </div>
-              <h1 class="animate__animated" :class="isShake ? 'animate__shakeX' : ''">An animated element</h1>
             </div>
           </template>
           <el-timeline>
@@ -78,7 +77,7 @@ const changeShake = () => {
   isShake.value = true;
   setTimeout(() => {
     isShake.value = false;
-  }, 1500);
+  }, 1100);
 };
 
 onMounted(() => {
