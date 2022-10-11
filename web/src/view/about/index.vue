@@ -32,9 +32,20 @@
               <div @click="changeShake()" :class="isShake ? 'swing' : ''" class="sncok">
                 <span class="iconfont icon-aixin1"></span>
               </div>
-              <div @click="changeShake()" class="animate__animated" :class="isShake ? 'animate__shakeX' : ''">
-                <span class="iconfont icon-aixin1"></span>
+              <div @click="changeShake()" class="animate__animated sncok" :class="isShake ? 'animate__shakeX' : ''">
+                <like theme="filled" size="16" fill="#f00" strokeLinejoin="miter" />
+                <bank-card-one theme="outline" size="16" fill="#333" strokeLinejoin="miter" />
               </div>
+
+              <!-- prop	description	type	default	note
+theme	Theme of the icons.	'outline' | 'filled' | 'two-tone' | 'multi-color'	'outline'
+size	The width/height of the icon	number | string	'1em'
+spin	Rotate icon with animation	boolean	false
+fill	Colors of theme	string | string[]	'currentColor'
+strokeLinecap	the stroke-linecap prop of svg element	'butt' | 'round' | 'square'	'round'
+strokeLinejoin	the stroke-linejoin prop of svg element	'miter' | 'round' | 'bevel'	'round'
+strokeWidth	the stroke-width prop of svg element	number	4
+-->
             </div>
           </template>
           <el-timeline>
@@ -64,6 +75,7 @@ import draggableVue from "./draggable.vue";
 import pkg from "~/package.json";
 import { Commits } from "@/api/github";
 import { onMounted, ref } from "vue";
+import { Like, BankCardOne } from "@icon-park/vue-next";
 
 const isShake = ref(false);
 

@@ -157,7 +157,6 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { ref } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 import { getArticleList } from "@/api/article";
-// import { ThumbsDownFilled, ThumbsUpFilled } from "@vicons/carbon";
 
 // 自动化生成的字典（可能为空）以及字段
 const formData = ref({
