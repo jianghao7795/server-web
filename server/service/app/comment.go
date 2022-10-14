@@ -76,10 +76,14 @@ func (commentService *CommentService) GetCommentInfoList(info commentReq.Comment
 func (*CommentService) PutLikeItOrDislike(id int, likeIt int) error {
 	db := global.GVA_DB.Model(&comment.Comment{})
 	var comment comment.Comment
-	err := db.Where("id = ?", likeIt).First(&comment).Error
+	err := db.Where("id = ?", id).First(&comment).Error
 	if err != nil {
 		return err
 	}
 
+	db.Where("id = ?", comment.ID).Update("praise", comment.Praise+likeIt)
+	// if err != nil {
+	// 	return err
+	// }
 	return nil
 }

@@ -20,6 +20,7 @@ func (s *CommentRouter) InitCommentRouter(Router *gin.RouterGroup) {
 		commentRouter.DELETE("deleteComment", commentApi.DeleteComment)           // 删除Comment
 		commentRouter.DELETE("deleteCommentByIds", commentApi.DeleteCommentByIds) // 批量删除Comment
 		commentRouter.PUT("updateComment", commentApi.UpdateComment)              // 更新Comment
+		commentRouter.PUT("pariseComment", commentApi.PutLikeItOrDislike)         //点赞
 	}
 	{
 		commentRouterWithoutRecord.GET("findComment", commentApi.FindComment)       // 根据ID获取Comment

@@ -62,15 +62,33 @@
             {{ scope.row?.SysUser?.nickName }}
           </template>
         </el-table-column>
-        <el-table-column align="left" label="赞数" prop="praise" width="120">
-          <template #header="scope">
-            <Like theme="filled" size="16" fill="#f00" />
-            /
-            <Like theme="outline" size="16"></Like>
+        <el-table-column align="left" label="赞数" prop="praise" width="200">
+          <template #header>
+            <div style="padding-left: 10px">
+              <Like theme="filled" size="16" fill="#f00" />
+              /
+              <Like theme="outline" size="16"></Like>
+            </div>
           </template>
           <template #default="scope">
             <div>
-              <Like :theme="scope.row.praise ? 'filled' : 'outline'" size="16" :fill="scope.row.praise ? '#f00' : undefined" />
+              <div
+                v-if="!!scope.row.praise"
+                style="display: inline-block; width: 40px; text-align: center"
+                :class="likeItStatus[scope.$index] ? 'animate__animated animate__heartBeat' : ''"
+                @click="changeLikeItStatus(scope.row, scope.$index, -1)"
+              >
+                <Like theme="filled" size="16" fill="#f00" />
+              </div>
+
+              <div
+                @click="changeLikeItStatus(scope.row, scope.$index, 1)"
+                style="display: inline-block; width: 40px; text-align: center"
+                v-else
+                :class="likeItStatus[scope.$index] ? 'animate__animated animate__heartBeat' : ''"
+              >
+                <Like theme="outline" size="16" />
+              </div>
               {{ scope.row.praise }}
             </div>
           </template>
@@ -147,7 +165,7 @@ export default {
 </script>
 
 <script setup>
-import { createComment, deleteComment, deleteCommentByIds, updateComment, findComment, getCommentList } from "@/api/comment";
+import { createComment, deleteComment, deleteCommentByIds, updateComment, findComment, getCommentList, pariseComment } from "@/api/comment";
 
 // 全量引入格式化工具 请按需保留
 import { formatDate } from "@/utils/format";
@@ -189,6 +207,31 @@ const loading = ref(false);
 const options = ref([]);
 const userInfo = ref([]);
 const searchLoading = ref(false);
+const likeItStatus = ref({});
+
+// 点赞更新
+const changeLikeItStatus = (row, index, addValue) => {
+  pariseComment({ id: row.ID, parise: addValue }).then((resp) => {
+    if (resp?.code === 0) {
+      row.praise += addValue;
+      if (addValue === 1) {
+        ElMessage.success({
+          showClose: true,
+          message: "点赞成功",
+        });
+      } else {
+        ElMessage.success({
+          showClose: true,
+          message: "取消成功",
+        });
+      }
+    }
+  });
+  likeItStatus.value = { ...likeItStatus.value, [index]: true };
+  setTimeout(() => {
+    likeItStatus.value = { ...likeItStatus.value, [index]: false };
+  }, 1200);
+};
 
 // 重置
 const onReset = () => {

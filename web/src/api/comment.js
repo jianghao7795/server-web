@@ -1,4 +1,4 @@
-import service from '@/utils/request'
+import service from "@/utils/request";
 
 // @Tags Comment
 // @Summary 创建Comment
@@ -10,11 +10,11 @@ import service from '@/utils/request'
 // @Router /comment/createComment [post]
 export const createComment = (data) => {
   return service({
-    url: '/comment/createComment',
-    method: 'post',
-    data
-  })
-}
+    url: "/comment/createComment",
+    method: "post",
+    data,
+  });
+};
 
 // @Tags Comment
 // @Summary 删除Comment
@@ -26,11 +26,11 @@ export const createComment = (data) => {
 // @Router /comment/deleteComment [delete]
 export const deleteComment = (data) => {
   return service({
-    url: '/comment/deleteComment',
-    method: 'delete',
-    data
-  })
-}
+    url: "/comment/deleteComment",
+    method: "delete",
+    data,
+  });
+};
 
 // @Tags Comment
 // @Summary 删除Comment
@@ -42,11 +42,11 @@ export const deleteComment = (data) => {
 // @Router /comment/deleteComment [delete]
 export const deleteCommentByIds = (data) => {
   return service({
-    url: '/comment/deleteCommentByIds',
-    method: 'delete',
-    data
-  })
-}
+    url: "/comment/deleteCommentByIds",
+    method: "delete",
+    data,
+  });
+};
 
 // @Tags Comment
 // @Summary 更新Comment
@@ -58,11 +58,11 @@ export const deleteCommentByIds = (data) => {
 // @Router /comment/updateComment [put]
 export const updateComment = (data) => {
   return service({
-    url: '/comment/updateComment',
-    method: 'put',
-    data
-  })
-}
+    url: "/comment/updateComment",
+    method: "put",
+    data,
+  });
+};
 
 // @Tags Comment
 // @Summary 用id查询Comment
@@ -74,11 +74,11 @@ export const updateComment = (data) => {
 // @Router /comment/findComment [get]
 export const findComment = (params) => {
   return service({
-    url: '/comment/findComment',
-    method: 'get',
-    params
-  })
-}
+    url: "/comment/findComment",
+    method: "get",
+    params,
+  });
+};
 
 // @Tags Comment
 // @Summary 分页获取Comment列表
@@ -90,8 +90,17 @@ export const findComment = (params) => {
 // @Router /comment/getCommentList [get]
 export const getCommentList = (params) => {
   return service({
-    url: '/comment/getCommentList',
-    method: 'get',
-    params
-  })
-}
+    url: "/comment/getCommentList",
+    method: "get",
+    params,
+  });
+};
+
+// 点赞
+export const pariseComment = (data) => {
+  return service({
+    url: "/comment/pariseComment",
+    method: "put",
+    data,
+  });
+};
