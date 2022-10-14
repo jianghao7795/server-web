@@ -57,8 +57,8 @@ export const changePassword = (data) => {
 export const getUserList = (data) => {
   return service({
     url: "/user/getUserList",
-    method: "post",
-    data: data,
+    method: "get",
+    params: data,
   });
 };
 

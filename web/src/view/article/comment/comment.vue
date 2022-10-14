@@ -64,18 +64,14 @@
         </el-table-column>
         <el-table-column align="left" label="赞数" prop="praise" width="120">
           <template #header="scope">
-            <span class="iconfont icon-aixin"></span>
+            <Like theme="filled" size="16" fill="#f00" />
             /
-            <span class="iconfont icon-aixin1"></span>
+            <Like theme="outline" size="16"></Like>
           </template>
           <template #default="scope">
-            <div class="like-num-wrapper">
-              <transition :name="scope.row.praise ? 'plus' : 'minus'">
-                <div class="like-num" :style="{ color: scope.row.praise ? 'red' : '#333' }" :key="scope.row.praise">
-                  <span class="iconfont icon-aixin"></span>
-                  {{ scope.row.praise }}
-                </div>
-              </transition>
+            <div>
+              <Like :theme="scope.row.praise ? 'filled' : 'outline'" size="16" :fill="scope.row.praise ? '#f00' : undefined" />
+              {{ scope.row.praise }}
             </div>
           </template>
         </el-table-column>
@@ -110,9 +106,11 @@
             filterable
             remote
             clearable
+            style="width: 100%"
             reserve-keyword
             placeholder="请输入"
             :remote-method="searchArticle"
+            :loading="searchLoading"
           >
             <el-option v-for="item in options" :key="item.ID" :label="item.title" :value="item.ID"></el-option>
           </el-select>
@@ -154,9 +152,23 @@ import { createComment, deleteComment, deleteCommentByIds, updateComment, findCo
 // 全量引入格式化工具 请按需保留
 import { formatDate } from "@/utils/format";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 import { getArticleList } from "@/api/article";
+import { Like } from "@icon-park/vue-next";
+import { useUserStore } from "@/pinia/modules/user";
+import { getUserList } from "@/api/user";
+
+const currentUser = useUserStore();
+
+onMounted(() => {
+  getUserList({ page: 1, pageSize: 999 }).then((resp) => {
+    // console.log(resp);
+    if (resp?.code === 0) {
+      userInfo.value = resp?.data?.list || [];
+    }
+  });
+});
 
 // 自动化生成的字典（可能为空）以及字段
 const formData = ref({
@@ -176,6 +188,7 @@ const searchInfo = ref({});
 const loading = ref(false);
 const options = ref([]);
 const userInfo = ref([]);
+const searchLoading = ref(false);
 
 // 重置
 const onReset = () => {
@@ -204,7 +217,11 @@ const handleCurrentChange = (val) => {
 // 查询
 const getTableData = async () => {
   // console.log(searchInfo.value);
-  const table = await getCommentList({ page: page.value, pageSize: pageSize.value, ...searchInfo.value });
+  const table = await getCommentList({
+    page: page.value,
+    pageSize: pageSize.value,
+    ...searchInfo.value,
+  });
   if (table.code === 0) {
     tableData.value = table.data.list;
     total.value = table.data.total;
@@ -217,24 +234,28 @@ getTableData();
 
 // 搜索文章
 const search = (query) => {
+  searchLoading.value = true;
   if (query) {
     getArticleList({ title: query }).then((resp) => {
+      searchLoading.value = false;
       if (resp.code === 0) {
         options.value = resp.data.list;
       }
     });
+  } else {
+    searchLoading.value = false;
   }
 };
 
-const searchArticle = useDebounceFn(search, 800);
+const searchArticle = useDebounceFn(search, 100);
 
 // ============== 表格控制部分结束 ===============
 
-// 获取需要的字典 可能为空 按需保留
-const setOptions = async () => {};
+// // 获取需要的字典 可能为空 按需保留
+// const setOptions = async () => {};
 
-// 获取需要的字典 可能为空 按需保留
-setOptions();
+// // 获取需要的字典 可能为空 按需保留
+// setOptions();
 
 // 多选数据
 const multipleSelection = ref([]);
@@ -297,8 +318,8 @@ const updateCommentFunc = async (row) => {
     // formData.value.SysUser = undefined;
     // formData.value.article = undefined;
     dialogFormVisible.value = true;
-    userInfo.value = [res.data.recomment.SysUser];
-    options.value = [res.data.recomment.article];
+    // userInfo.value = [res.data.recomment.SysUser];
+    // options.value = [res.data.recomment.article];
   }
 };
 
@@ -346,10 +367,17 @@ const enterDialog = async () => {
   // console.log(formData.value);
   switch (type.value) {
     case "create":
-      res = await createComment(formData.value);
+      res = await createComment({
+        ...formData.value,
+        userId: currentUser.userInfo.ID,
+      });
       break;
     case "update":
-      res = await updateComment({ ...formData.value, SysUser: undefined, article: undefined });
+      res = await updateComment({
+        ...formData.value,
+        SysUser: undefined,
+        article: undefined,
+      });
       break;
     default:
       res = await createComment(formData.value);
