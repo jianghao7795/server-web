@@ -6,7 +6,7 @@ import service from "@/utils/request";
 export const asyncMenu = () => {
   return service({
     url: "/menu/getMenu",
-    method: "post",
+    method: "get",
   });
 };
 
@@ -20,8 +20,8 @@ export const asyncMenu = () => {
 export const getMenuList = (data) => {
   return service({
     url: "/menu/getMenuList",
-    method: "post",
-    data,
+    method: "get",
+    params: data,
   });
 };
 
@@ -44,7 +44,7 @@ export const addBaseMenu = (data) => {
 export const getBaseMenuTree = () => {
   return service({
     url: "/menu/getBaseMenuTree",
-    method: "post",
+    method: "get",
   });
 };
 
@@ -106,8 +106,7 @@ export const updateBaseMenu = (data) => {
 // @Router /menu/getBaseMenuById [post]
 export const getBaseMenuById = (data) => {
   return service({
-    url: "/menu/getBaseMenuById",
-    method: "post",
-    data,
+    url: `/menu/getBaseMenuById/${data.id}`,
+    method: "get",
   });
 };

@@ -1,10 +1,10 @@
-import service from '@/utils/request';
-// @Router /authority/getAuthorityList [post]
+import service from "@/utils/request";
+// @Router /authority/getAuthorityList [get]
 export const getAuthorityList = (data) => {
   return service({
-    url: '/authority/getAuthorityList',
-    method: 'post',
-    data,
+    url: "/authority/getAuthorityList",
+    method: "get",
+    params: data,
   });
 };
 
@@ -17,8 +17,8 @@ export const getAuthorityList = (data) => {
 // @Router /authority/deleteAuthority [post]
 export const deleteAuthority = (data) => {
   return service({
-    url: '/authority/deleteAuthority',
-    method: 'post',
+    url: "/authority/deleteAuthority",
+    method: "post",
     data,
   });
 };
@@ -32,8 +32,8 @@ export const deleteAuthority = (data) => {
 // @Router /authority/createAuthority [post]
 export const createAuthority = (data) => {
   return service({
-    url: '/authority/createAuthority',
-    method: 'post',
+    url: "/authority/createAuthority",
+    method: "post",
     data,
   });
 };
@@ -48,8 +48,8 @@ export const createAuthority = (data) => {
 // @Router /authority/copyAuthority [post]
 export const copyAuthority = (data) => {
   return service({
-    url: '/authority/copyAuthority',
-    method: 'post',
+    url: "/authority/copyAuthority",
+    method: "post",
     data,
   });
 };
@@ -63,8 +63,8 @@ export const copyAuthority = (data) => {
 // @Router /authority/setDataAuthority [post]
 export const setDataAuthority = (data) => {
   return service({
-    url: '/authority/setDataAuthority',
-    method: 'post',
+    url: "/authority/setDataAuthority",
+    method: "post",
     data,
   });
 };
@@ -78,8 +78,8 @@ export const setDataAuthority = (data) => {
 // @Router /authority/setDataAuthority [post]
 export const updateAuthority = (data) => {
   return service({
-    url: '/authority/updateAuthority',
-    method: 'put',
+    url: "/authority/updateAuthority",
+    method: "put",
     data,
   });
 };

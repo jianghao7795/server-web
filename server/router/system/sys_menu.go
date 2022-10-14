@@ -20,11 +20,11 @@ func (s *MenuRouter) InitMenuRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
 		menuRouter.POST("updateBaseMenu", authorityMenuApi.UpdateBaseMenu)     // 更新菜单
 	}
 	{
-		menuRouterWithoutRecord.POST("getMenu", authorityMenuApi.GetMenu)                   // 获取菜单树
-		menuRouterWithoutRecord.POST("getMenuList", authorityMenuApi.GetMenuList)           // 分页获取基础menu列表
-		menuRouterWithoutRecord.POST("getBaseMenuTree", authorityMenuApi.GetBaseMenuTree)   // 获取用户动态路由
-		menuRouterWithoutRecord.POST("getMenuAuthority", authorityMenuApi.GetMenuAuthority) // 获取指定角色menu
-		menuRouterWithoutRecord.POST("getBaseMenuById", authorityMenuApi.GetBaseMenuById)   // 根据id获取菜单
+		menuRouterWithoutRecord.GET("getMenu", authorityMenuApi.GetMenu)                     // 获取菜单树
+		menuRouterWithoutRecord.GET("getMenuList", authorityMenuApi.GetMenuList)             // 分页获取基础menu列表
+		menuRouterWithoutRecord.GET("getBaseMenuTree", authorityMenuApi.GetBaseMenuTree)     // 获取用户动态路由
+		menuRouterWithoutRecord.POST("getMenuAuthority", authorityMenuApi.GetMenuAuthority)  // 获取指定角色menu
+		menuRouterWithoutRecord.GET("getBaseMenuById/:id", authorityMenuApi.GetBaseMenuById) // 根据id获取菜单
 	}
 	return menuRouter
 }

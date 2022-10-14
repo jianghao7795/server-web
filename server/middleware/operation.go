@@ -23,6 +23,8 @@ import (
 
 var operationRecordService = service.ServiceGroupApp.SystemServiceGroup.OperationRecordService
 
+// 写入操作历史
+
 func OperationRecord() gin.HandlerFunc {
 	// var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	return func(c *gin.Context) {

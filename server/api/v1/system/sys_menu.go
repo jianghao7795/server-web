@@ -8,6 +8,7 @@ import (
 	systemReq "server/model/system/request"
 	systemRes "server/model/system/response"
 	"server/utils"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -40,7 +41,7 @@ func (a *AuthorityMenuApi) GetMenu(c *gin.Context) {
 // @Produce  application/json
 // @Param data body request.Empty true "空"
 // @Success 200 {object} response.Response{data=systemRes.SysBaseMenusResponse,msg=string} "获取用户动态路由,返回包括系统菜单列表"
-// @Router /menu/getBaseMenuTree [post]
+// @Router /menu/getBaseMenuTree [get]
 func (a *AuthorityMenuApi) GetBaseMenuTree(c *gin.Context) {
 	if menus, err := menuService.GetBaseMenuTree(); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
@@ -184,7 +185,9 @@ func (a *AuthorityMenuApi) UpdateBaseMenu(c *gin.Context) {
 // @Router /menu/getBaseMenuById [post]
 func (a *AuthorityMenuApi) GetBaseMenuById(c *gin.Context) {
 	var idInfo request.GetById
-	_ = c.ShouldBindJSON(&idInfo)
+	var id = c.Param("id")
+	ids, _ := strconv.ParseInt(id, 10, 64)
+	idInfo.ID = int(ids)
 	if err := utils.Verify(idInfo, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -208,7 +211,7 @@ func (a *AuthorityMenuApi) GetBaseMenuById(c *gin.Context) {
 // @Router /menu/getMenuList [post]
 func (a *AuthorityMenuApi) GetMenuList(c *gin.Context) {
 	var pageInfo request.PageInfo
-	_ = c.ShouldBindJSON(&pageInfo)
+	_ = c.ShouldBindQuery(&pageInfo)
 	if err := utils.Verify(pageInfo, utils.PageInfoVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
