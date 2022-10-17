@@ -903,3 +903,17 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2022-10-09  8:31:14
+
+create TABLE base_message(
+	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `created_at` datetime(3) DEFAULT NULL,
+  `updated_at` datetime(3) DEFAULT NULL,
+  `deleted_at` datetime(3) DEFAULT NULL,
+	`title` varchar(50) not null comment '网站标题',
+	`introduction` varchar(255) not null comment '网站简介',
+	`head_img` varchar(255) not null comment '网站头像',
+	`copyright` varchar(255) not null comment '版权信息',
+	`link` varchar(255) comment '链接',
+	`record_info` varchar(255) comment '备案信息',
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='基础信息';
