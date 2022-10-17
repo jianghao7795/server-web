@@ -21,6 +21,7 @@ var baseMessageService = service.ServiceGroupApp.AppServiceGroup.BaseMessageServ
 func (baseMessageApi *BaseMessageApi) CreateBaseMessage(c *gin.Context) {
 	var baseMessage app.BaseMessage
 	_ = c.ShouldBindJSON(&baseMessage)
+	log.Println(baseMessage)
 	if err := baseMessageService.CreateBaseMessage(baseMessage); err != nil {
 		global.GVA_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
@@ -49,6 +50,11 @@ type baseMessageNotFound struct {
 	message string
 }
 
+/**
+ * @description: 查找最后一条数据
+ * @param {*gin.Context} c
+ * @return {*}
+ */
 func (BaseMessageApi *BaseMessageApi) FindBaseMessage(c *gin.Context) {
 	if responseBaseMessage, err := baseMessageService.FindBaseMessage(); err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
