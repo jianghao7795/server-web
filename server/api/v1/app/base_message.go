@@ -72,3 +72,7 @@ func (BaseMessageApi *BaseMessageApi) FindBaseMessage(c *gin.Context) {
 		response.OkWithData(gin.H{"baseMessage": responseBaseMessage}, c)
 	}
 }
+
+func (*BaseMessageApi) UplodaFile(c *gin.Context) {
+	
+}
