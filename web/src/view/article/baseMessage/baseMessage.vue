@@ -2,7 +2,7 @@
  * @Author: jianghao
  * @Date: 2022-10-17 14:50:22
  * @LastEditors: jianghao
- * @LastEditTime: 2022-10-18 09:06:32
+ * @LastEditTime: 2022-10-18 16:18:18
 -->
 
 <template>
@@ -14,14 +14,14 @@
           <el-button :loading="loading" type="primary" @click="handleSubmit">提交</el-button>
         </div>
       </template>
-      <el-form :model="formData" label-position="right" label-width="160px">
-        <el-form-item label="网站标题:">
+      <el-form :model="formData" label-position="right" label-width="160px" :rules="rules">
+        <el-form-item label="网站标题:" prop="title">
           <el-input v-model="formData.title" clearable placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="网站简介:">
+        <el-form-item label="网站简介:" prop="introduction">
           <el-input v-model.number="formData.introduction" clearable placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="网站头像:">
+        <el-form-item label="网站头像:" prop="head_img">
           <el-upload
             action="/api/base_message/upload_file"
             ref="upload"
@@ -58,13 +58,13 @@
             </template>
           </el-upload>
         </el-form-item>
-        <el-form-item label="版权信息:">
+        <el-form-item label="版权信息:" prop="copyright">
           <el-input v-model="formData.copyright" placeholder="请输入" size="default" clearable></el-input>
         </el-form-item>
-        <el-form-item label="链接:">
+        <el-form-item label="链接:" prop="link">
           <el-input v-model.number="formData.link" clearable placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="备案信息:">
+        <el-form-item label="备案信息:" prop="record_info">
           <el-input v-model.number="formData.record_info" clearable placeholder="请输入" />
         </el-form-item>
       </el-form>
@@ -98,6 +98,13 @@ const formData = ref({
 const loading = ref(false);
 
 const userStore = useUserStore();
+
+const rules = ref({
+  title: { required: true, message: "请输入", trigger: "blur" },
+  introduction: { required: true, message: "请输入", trigger: "blur" },
+  head_img: { required: true, message: "请输入", trigger: "blur" },
+  copyright: { required: true, message: "请输入", trigger: "blur" },
+});
 
 onMounted(() => {
   getBaseMessage().then((resp) => {
