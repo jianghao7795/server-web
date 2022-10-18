@@ -41,7 +41,6 @@ specifiers:
   terser: ^5.14.2
   undraw-ui: ^0.5.9
   unplugin-vue-components: ^0.22.4
-  v-viewer: ^3.0.10
   vite: ^3.0.9
   vite-plugin-banner: ^0.4.0
   vite-plugin-element-plus: ^0.0.12
@@ -73,7 +72,6 @@ dependencies:
   spark-md5: 3.0.2
   swiper: 8.3.2
   undraw-ui: 0.5.9
-  v-viewer: 3.0.10_vue@3.2.39
   vue: 3.2.39
   vue-router: 4.1.4_vue@3.2.39
   vuedraggable: 4.1.0_vue@3.2.39
@@ -7322,16 +7320,6 @@ packages:
     hasBin: true
     dev: true
 
-  /v-viewer/3.0.10_vue@3.2.39:
-    resolution: {integrity: sha512-ZT5sYYS+Cy4z2TP/PuhqPyiK4NonaZzhkDPfiY9bwa5EjGyusO8R7/k/4c1ptvTzx2nBSV9MvQHl2X3XzhANqw==}
-    peerDependencies:
-      vue: ^3.0.0
-    dependencies:
-      lodash: 4.17.21
-      viewerjs: 1.10.5
-      vue: 3.2.39
-    dev: false
-
   /v8-compile-cache/2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
@@ -7347,10 +7335,6 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
     dev: true
-
-  /viewerjs/1.10.5:
-    resolution: {integrity: sha512-QwKrmXlSfKg5x4y74F/jicpHIRqBMMfHXyboOxHDi5n4XAaejjpalphPq4/HW6venQAoMiD57HpVwBk0JvqpSA==}
-    dev: false
 
   /vite-plugin-banner/0.4.0:
     resolution: {integrity: sha512-M78tCenhspTiNd3cGcXzG9Hw60Bcfh2w1tKHDy9GjVoiS5XtkAK2D7LjWumHiSX7vMnQ4DkMjcZ87Ola+qj0Hw==}

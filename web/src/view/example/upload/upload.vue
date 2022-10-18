@@ -20,7 +20,8 @@
         <el-table-column align="left" label="预览" width="100">
           <template #default="scope">
             <div>
-              <viewer :images="[scope.row.url]"><CustomPic pic-type="file" :pic-src="scope.row.url" /></viewer>
+              <!-- <viewer :images="[scope.row.url]"><CustomPic pic-type="file" :pic-src="scope.row.url" /></viewer> -->
+              <CustomPic pic-type="file" :pic-src="scope.row.url" />
             </div>
           </template>
         </el-table-column>
@@ -68,6 +69,11 @@
           @size-change="handleSizeChange"
         />
       </div>
+      <!-- <VueViewer :images="tableData.map((i) => i.url)">
+        <template slot-scope="scope">
+          <img v-for="src in scope.images" :src="src" :key="src" class="image" />
+        </template>
+      </VueViewer> -->
     </div>
   </div>
 </template>
@@ -79,6 +85,7 @@ import CustomPic from "@/components/customPic/index.vue";
 import UploadImage from "@/components/upload/image.vue";
 import UploadCommon from "@/components/upload/common.vue";
 import { formatDate } from "@/utils/format";
+// import VueViewer from "v-viewer";
 
 import { ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -112,6 +119,7 @@ const getTableData = async () => {
     pageSize: pageSize.value,
     ...search.value,
   });
+  console.log(table);
   if (table.code === 0) {
     tableData.value = table.data.list;
     total.value = table.data.total;
