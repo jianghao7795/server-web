@@ -2,7 +2,7 @@
  * @Author: jianghao
  * @Date: 2022-10-17 14:50:22
  * @LastEditors: jianghao
- * @LastEditTime: 2022-10-18 16:18:18
+ * @LastEditTime: 2022-10-18 16:23:56
 -->
 
 <template>
@@ -11,7 +11,7 @@
       <template #header>
         <div class="card-header">
           <span>基本信息</span>
-          <el-button :loading="loading" type="primary" @click="handleSubmit">提交</el-button>
+          <el-button :loading="loading" type="primary" @click="handleSubmit">{{ formData.ID ? "修改" : "提交" }}</el-button>
         </div>
       </template>
       <el-form :model="formData" label-position="right" label-width="160px" :rules="rules">

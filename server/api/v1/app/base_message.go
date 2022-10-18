@@ -1,8 +1,13 @@
+/*
+ * @Author: jianghao
+ * @Date: 2022-10-17 14:22:51
+ * @LastEditors: jianghao
+ * @LastEditTime: 2022-10-18 17:41:39
+ */
 package app
 
 import (
 	"errors"
-	"log"
 	"server/global"
 	"server/model/app"
 	"server/model/common/response"
@@ -21,7 +26,6 @@ var baseMessageService = service.ServiceGroupApp.AppServiceGroup.BaseMessageServ
 func (baseMessageApi *BaseMessageApi) CreateBaseMessage(c *gin.Context) {
 	var baseMessage app.BaseMessage
 	_ = c.ShouldBindJSON(&baseMessage)
-	log.Println(baseMessage)
 	if err := baseMessageService.CreateBaseMessage(baseMessage); err != nil {
 		global.GVA_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
@@ -61,7 +65,6 @@ func (BaseMessageApi *BaseMessageApi) FindBaseMessage(c *gin.Context) {
 			// respBaseMessage := baseMessageNotFound{message: "not found"}
 			var respBaseMessage baseMessageNotFound
 			respBaseMessage.message = "not found"
-			log.Println(respBaseMessage)
 			response.OkWithData(gin.H{"baseMessage": respBaseMessage}, c)
 		} else {
 			global.GVA_LOG.Error("查询失败!", zap.Error(err))
@@ -71,8 +74,4 @@ func (BaseMessageApi *BaseMessageApi) FindBaseMessage(c *gin.Context) {
 	} else {
 		response.OkWithData(gin.H{"baseMessage": responseBaseMessage}, c)
 	}
-}
-
-func (*BaseMessageApi) UplodaFile(c *gin.Context) {
-	
 }
