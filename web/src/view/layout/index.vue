@@ -3,7 +3,7 @@
     <el-container :class="[isSider ? 'openside' : 'hideside', isMobile ? 'mobile' : '']">
       <el-row :class="[isShadowBg ? 'shadowBg' : '']" @click="changeShadow()" />
       <el-aside class="main-cont main-left">
-        <div class="tilte" :style="{ background: backgroundColor }">
+        <div class="tilte" :style="{ background: backgroundColor }" @click="returnHome">
           <img alt class="logoimg" :src="$GIN_VUE_ADMIN.appLogo" />
           <h2 v-if="isSider" class="tit-text" :style="{ color: textColor }">
             {{ $GIN_VUE_ADMIN.appName }}
@@ -262,6 +262,10 @@ const changeShadow = () => {
   isShadowBg.value = !isShadowBg.value;
   isSider.value = !!isCollapse.value;
   totalCollapse();
+};
+
+const returnHome = () => {
+  router.push({ name: "dashboard" });
 };
 </script>
 
