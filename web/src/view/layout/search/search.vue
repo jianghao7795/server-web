@@ -33,20 +33,19 @@ export default {
 import Screenfull from "@/view/layout/screenfull/index.vue";
 import { emitter } from "@/utils/bus.js";
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 // import { useRouterStore } from "@/pinia/modules/router";
 import { ElLoading } from "element-plus";
 import SearchModal from "@/view/layout/search/components/SearchModal.vue";
 
-const router = useRouter();
+// const router = useRouter();
 
 // const routerStore = useRouterStore();
 
 const value = ref("");
-const changeRouter = () => {
-  router.push({ name: value.value });
-  value.value = "";
-};
+// const changeRouter = () => {
+//   router.push({ name: value.value });
+//   value.value = "";
+// };
 
 const show = ref(false);
 // const btnShow = ref(true);
