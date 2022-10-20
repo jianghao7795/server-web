@@ -14,7 +14,7 @@
           >
             <div class="after-search">
               <div class="margin-icon">
-                <el-space wrap size="5">
+                <el-space wrap :size="5">
                   <el-icon v-if="routeMap[i.value]?.meta?.icon"><component :is="routeMap[i.value]?.meta?.icon" /></el-icon>
                   <span>{{ i.label }}</span>
                 </el-space>
@@ -70,7 +70,7 @@ const changeInputSearch = (e) => {
   if (e) {
     const searchRouterInfo = routerStore.routerList.filter((i) => {
       //   console.log(i.value);
-      console.log(routeMap[i.value].meta.icon);
+      //   console.log(routeMap[i.value].meta.icon);
       if (i.label.includes(e)) {
         return true;
       }
