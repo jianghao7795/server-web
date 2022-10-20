@@ -6,6 +6,7 @@
           <template #header>
             <div class="card-header">
               <span>项目信息</span>
+              <!-- changeVNode() -->
             </div>
           </template>
           <el-descriptions direction="vertical" :column="3" size="default" border class="margin-top">
@@ -74,8 +75,13 @@ export default {
 import draggableVue from "./draggable.vue";
 import pkg from "~/package.json";
 import { Commits } from "@/api/github";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, h } from "vue";
 import { Like, BankCardOne } from "@icon-park/vue-next";
+// import H from "./Tabs/h.vue";
+
+const changeVNode = () => {
+  return h("h1", {}, "fsdfasfasf");
+};
 
 const isShake = ref(false);
 

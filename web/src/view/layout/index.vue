@@ -90,7 +90,7 @@
         </transition>
         <router-view v-if="reloadFlag" v-slot="{ Component, route }" v-loading="loadingFlag" element-loading-text="正在加载中" class="admin-box">
           <div id="refreshView">
-            <transition mode="out-in" name="el-fade-in-linear">
+            <transition mode="out-in" name="el-fade-in-linear" type="transition" :appear="true">
               <keep-alive :include="routerStore.keepAliveRouters">
                 <component :is="Component" :key="route.name" />
               </keep-alive>
@@ -279,5 +279,18 @@ const returnHome = () => {
 .light {
   background-color: #fff !important;
   color: #000 !important;
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: opacity 0.25s, transform 0.3s;
+}
+.list-enter-from {
+  opacity: 0;
+  transform: translateX(-10%);
+}
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(10%);
 }
 </style>

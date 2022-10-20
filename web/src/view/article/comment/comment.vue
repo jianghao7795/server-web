@@ -451,61 +451,61 @@ const enterDialog = async () => {
 //     line-height: 17px;
 //   }
 // }
-.plus-enter-active,
-.plus-leave-active {
-  transition: all 0.3s ease-in;
-}
+// .plus-enter-active,
+// .plus-leave-active {
+//   transition: all 0.3s ease-in;
+// }
 
-.plus-enter,
-.plus-leave {
-  transform: translateY(0);
-}
+// .plus-enter,
+// .plus-leave {
+//   transform: translateY(0);
+// }
 
-.plus-enter-to,
-.plus-leave-to {
-  transform: translateY(-17px);
-}
+// .plus-enter-to,
+// .plus-leave-to {
+//   transform: translateY(-17px);
+// }
 
-// 点赞数字-1动画
-.minus-enter-active,
-.minus-leave-active {
-  transition: all 0.3s ease-in;
-}
+// // 点赞数字-1动画
+// .minus-enter-active,
+// .minus-leave-active {
+//   transition: all 0.3s ease-in;
+// }
 
-.minus-enter {
-  transform: translateY(-34px);
-}
+// .minus-enter {
+//   transform: translateY(-34px);
+// }
 
-.minus-enter-to {
-  transform: translateY(-17px);
-}
+// .minus-enter-to {
+//   transform: translateY(-17px);
+// }
 
-.minus-leave {
-  transform: translateY(0);
-}
+// .minus-leave {
+//   transform: translateY(0);
+// }
 
-.minus-leave-to {
-  transform: translateY(17px);
-}
+// .minus-leave-to {
+//   transform: translateY(17px);
+// }
 
-/** 动画进行时的class **/
-.zoom-enter-active,
-.zoom-leave-active {
-  transition: all 0.15s cubic-bezier(0.42, 0, 0.34, 1.55);
-}
+// /** 动画进行时的class **/
+// .zoom-enter-active,
+// .zoom-leave-active {
+//   transition: all 0.15s cubic-bezier(0.42, 0, 0.34, 1.55);
+// }
 
-/** 设置进场开始的状态和离场结束的状态，都是缩放到0 **/
-.zoom-enter,
-.zoom-leave-to {
-  transform: scale(0);
-}
+// /** 设置进场开始的状态和离场结束的状态，都是缩放到0 **/
+// .zoom-enter,
+// .zoom-leave-to {
+//   transform: scale(0);
+// }
 
-/** 设置进场结束的状态和离场开始的状态, 都是缩放到1 **/
-.zoom-enter-to,
-.zoom-leave {
-  transform: scale(1);
-}
-.minus-enter {
-  transform: translateY(-34px);
-}
+// /** 设置进场结束的状态和离场开始的状态, 都是缩放到1 **/
+// .zoom-enter-to,
+// .zoom-leave {
+//   transform: scale(1);
+// }
+// .minus-enter {
+//   transform: translateY(-34px);
+// }
 </style>
