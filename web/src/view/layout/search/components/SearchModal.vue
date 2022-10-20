@@ -13,8 +13,13 @@
             @click="linkRouter(i.value)"
           >
             <div class="after-search">
-              <span>{{ i.label }}</span>
-              <span><connection theme="outline" size="12" /></span>
+              <div class="margin-icon">
+                <el-space wrap size="5">
+                  <el-icon v-if="routeMap[i.value]?.meta?.icon"><component :is="routeMap[i.value]?.meta?.icon" /></el-icon>
+                  <span>{{ i.label }}</span>
+                </el-space>
+              </div>
+              <div><connection theme="outline" size="12" /></div>
             </div>
           </div>
         </template>
@@ -59,11 +64,13 @@ const changeShow = () => {
 };
 
 const routerStore = useRouterStore();
+const routeMap = routerStore.routeMap;
 const searchRouter = ref([]);
 const changeInputSearch = (e) => {
   if (e) {
     const searchRouterInfo = routerStore.routerList.filter((i) => {
-      console.log(i.label);
+      //   console.log(i.value);
+      console.log(routeMap[i.value].meta.icon);
       if (i.label.includes(e)) {
         return true;
       }
@@ -78,7 +85,7 @@ const changeInputSearch = (e) => {
 
 const changeSearchRouter = useDebounceFn(changeInputSearch, 1000);
 // console.log(routerStore.asyncRouters);
-console.log(routerStore);
+// console.log(routerStore.routeMap["dashboard"].meta.icon);
 // console.log(props.show);
 
 const linkRouter = (name = "") => {
@@ -137,5 +144,13 @@ const linkRouter = (name = "") => {
   border: 1px solid #eee;
   margin: 5px 0;
   padding: 5px 10px;
+}
+
+.margin-icon {
+  line-height: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

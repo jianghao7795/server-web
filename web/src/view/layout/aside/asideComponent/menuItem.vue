@@ -1,10 +1,10 @@
 <template>
-  <el-menu-item :index="routerInfo.name">
-    <el-icon v-if="routerInfo.meta.icon">
-      <component :is="routerInfo.meta.icon" />
+  <el-menu-item :index="props.routerInfo.name">
+    <el-icon v-if="props.routerInfo.meta.icon">
+      <component :is="props.routerInfo.meta.icon" />
     </el-icon>
     <template #title>
-      <span class="gva-menu-item-title">{{ routerInfo.meta.title }}</span>
+      <span class="gva-menu-item-title">{{ props.routerInfo.meta.title }}</span>
     </template>
   </el-menu-item>
 </template>
@@ -16,7 +16,7 @@ export default {
 </script>
 
 <script setup>
-defineProps({
+const props = defineProps({
   routerInfo: {
     default: function () {
       return null;
@@ -24,6 +24,7 @@ defineProps({
     type: Object,
   },
 });
+// console.log(typeof props.routerInfo.meta.icon);
 </script>
 
 <style lang="scss" scoped>
