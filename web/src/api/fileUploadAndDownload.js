@@ -1,4 +1,4 @@
-import service from '@/utils/request';
+import service from "@/utils/request";
 // @Tags FileUploadAndDownload
 // @Summary 分页文件列表
 // @Security ApiKeyAuth
@@ -9,9 +9,9 @@ import service from '@/utils/request';
 // @Router /fileUploadAndDownload/getFileList [post]
 export const getFileList = (data) => {
   return service({
-    url: '/fileUploadAndDownload/getFileList',
-    method: 'post',
-    data,
+    url: "/fileUploadAndDownload/getFileList",
+    method: "get",
+    params: data,
   });
 };
 
@@ -24,9 +24,8 @@ export const getFileList = (data) => {
 // @Router /fileUploadAndDownload/deleteFile [post]
 export const deleteFile = (data) => {
   return service({
-    url: '/fileUploadAndDownload/deleteFile',
-    method: 'post',
-    data,
+    url: `/fileUploadAndDownload/deleteFile/${data.ID}`,
+    method: "delete",
   });
 };
 
@@ -37,8 +36,8 @@ export const deleteFile = (data) => {
  */
 export const editFileName = (data) => {
   return service({
-    url: '/fileUploadAndDownload/editFileName',
-    method: 'post',
+    url: "/fileUploadAndDownload/editFileName",
+    method: "put",
     data,
   });
 };

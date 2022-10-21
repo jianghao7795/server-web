@@ -1,11 +1,13 @@
 package example
 
 import (
+	"log"
 	"server/global"
 	"server/model/common/request"
 	"server/model/common/response"
 	"server/model/example"
 	exampleRes "server/model/example/response"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -60,7 +62,11 @@ func (u *FileUploadAndDownloadApi) EditFileName(c *gin.Context) {
 // @Router /fileUploadAndDownload/deleteFile [post]
 func (u *FileUploadAndDownloadApi) DeleteFile(c *gin.Context) {
 	var file example.ExaFileUploadAndDownload
-	_ = c.ShouldBindJSON(&file)
+	id := c.Param("id")
+	log.Println("id-------", id)
+	ids, _ := strconv.Atoi(id)
+	file.ID = uint(ids)
+	log.Println(file.ID)
 	if err := fileUploadAndDownloadService.DeleteFile(file); err != nil {
 		global.GVA_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败", c)
@@ -79,7 +85,7 @@ func (u *FileUploadAndDownloadApi) DeleteFile(c *gin.Context) {
 // @Router /fileUploadAndDownload/getFileList [post]
 func (u *FileUploadAndDownloadApi) GetFileList(c *gin.Context) {
 	var pageInfo request.PageInfo
-	_ = c.ShouldBindJSON(&pageInfo)
+	_ = c.ShouldBindQuery(&pageInfo)
 	list, total, err := fileUploadAndDownloadService.GetFileRecordInfoList(pageInfo)
 	if err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
