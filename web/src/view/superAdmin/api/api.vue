@@ -3,7 +3,7 @@
     <div class="gva-search-box">
       <el-form ref="searchForm" :inline="true" :model="searchInfo">
         <el-form-item label="路径">
-          <el-input v-model="searchInfo.path" placeholder="路径" />
+          <el-input v-model="searchInfo.path" ref="pathRef" placeholder="路径" />
         </el-form-item>
         <el-form-item label="描述">
           <el-input v-model="searchInfo.description" placeholder="描述" />
@@ -116,6 +116,7 @@ const methodFiletr = (value) => {
 
 const apis = ref([]);
 const loading = ref(false);
+const pathRef = ref();
 const form = ref({
   path: "",
   apiGroup: "",
@@ -212,6 +213,7 @@ const getTableData = async () => {
 
 onMounted(() => {
   getTableData();
+  pathRef.value.focus();
 });
 
 // 批量操作
