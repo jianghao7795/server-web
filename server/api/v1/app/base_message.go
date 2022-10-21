@@ -8,6 +8,7 @@ package app
 
 import (
 	"errors"
+	"log"
 	"server/global"
 	"server/model/app"
 	"server/model/common/response"
@@ -50,10 +51,6 @@ func (baseMessageApi *BaseMessageApi) UpdateBaseMessage(c *gin.Context) {
 	}
 }
 
-type baseMessageNotFound struct {
-	message string
-}
-
 /**
  * @description: 查找最后一条数据
  * @param {*gin.Context} c
@@ -63,9 +60,11 @@ func (BaseMessageApi *BaseMessageApi) FindBaseMessage(c *gin.Context) {
 	if responseBaseMessage, err := baseMessageService.FindBaseMessage(); err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// respBaseMessage := baseMessageNotFound{message: "not found"}
-			var respBaseMessage baseMessageNotFound
-			respBaseMessage.message = "not found"
-			response.OkWithData(gin.H{"baseMessage": respBaseMessage}, c)
+			log.Println("err: ", err)
+			str := "not found"
+			// respBaseMessage := baseMessageNotFound{message: str}
+			// respBaseMessage.message = str
+			response.OkWithData(gin.H{"error": str}, c)
 		} else {
 			global.GVA_LOG.Error("查询失败!", zap.Error(err))
 			response.FailWithMessage("查询失败", c)

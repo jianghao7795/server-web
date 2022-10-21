@@ -108,7 +108,7 @@ const rules = ref({
 
 onMounted(() => {
   getBaseMessage().then((resp) => {
-    if (resp?.code === 0 && resp?.data?.baseMessage?.ID) {
+    if (resp?.code === 0 && !resp?.data?.error) {
       formData.value = resp.data.baseMessage || {};
       fileList.value = [{ name: resp.data.baseMessage.head_img.split("/").pop(), url: `/api/${resp.data.baseMessage.head_img}` }];
     }
