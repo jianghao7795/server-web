@@ -119,7 +119,6 @@ const getTableData = async () => {
     pageSize: pageSize.value,
     ...search.value,
   });
-  console.log(table);
   if (table.code === 0) {
     tableData.value = table.data.list;
     total.value = table.data.total;
