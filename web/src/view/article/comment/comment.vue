@@ -85,7 +85,7 @@
                 @click="changeLikeItStatus(scope.row, scope.$index, 1)"
                 style="display: inline-block; width: 40px; text-align: center"
                 v-else
-                :class="likeItStatus[scope.$index] ? 'animate__animated animate__heartBeat' : ''"
+                :class="likeItStatus[scope.$index] ? 'animate__animated animate__fadeOut' : ''"
               >
                 <Like theme="outline" size="16" />
               </div>
