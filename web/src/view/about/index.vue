@@ -17,7 +17,7 @@
               <el-tag type="success">{{ pkg.version }}</el-tag>
             </el-descriptions-item>
             <el-descriptions-item label="Github地址">
-              <el-button link href="https://github.com/JiangHaoCode/server-web" target="_blank">Github地址</el-button>
+              <a style="color: #606266" href="https://github.com/JiangHaoCode/server-web" target="_blank">Github地址</a>
             </el-descriptions-item>
           </el-descriptions>
         </el-card>
@@ -78,14 +78,16 @@ import { Commits } from "@/api/github";
 import { onMounted, ref, h } from "vue";
 import { Like, BankCardOne } from "@icon-park/vue-next";
 import { useI18n } from "vue-i18n";
+// import dayjs from "dayjs";
 // import H from "./Tabs/h.vue";
+// console.log(dayjs().format("YYYY-MM-DD HH:mm:ss"));
 
 const changeVNode = () => {
   return h("h1", {}, "fsdfasfasf");
 };
 
 const { t } = useI18n();
-console.log(t("menus.home"));
+// console.log(t("menus.home"));
 
 const isShake = ref(false);
 
