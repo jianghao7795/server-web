@@ -9,14 +9,9 @@
 
 <script>
 import zhCn from "element-plus/es/locale/lang/zh-cn";
-// import { ElConfigProvider } from "element-plus";
 export default {
   name: "App",
-  // components: {
-  //   ElConfigProvider,
-  // },
   data() {
-    // console.log(this.$router);
     return {
       locale: zhCn,
     };

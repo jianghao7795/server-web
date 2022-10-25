@@ -29,7 +29,7 @@
         <el-card style="margin-top: 20px" class="box-card">
           <template #header>
             <div class="card-header">
-              <span style="margin-right: 40px">提交记录</span>
+              <span style="margin-right: 40px">提交记录 {{ t("menus.home") }}</span>
               <div @click="changeShake()" :class="isShake ? 'swing' : ''" class="sncok">
                 <span class="iconfont icon-aixin1"></span>
               </div>
@@ -77,11 +77,15 @@ import pkg from "~/package.json";
 import { Commits } from "@/api/github";
 import { onMounted, ref, h } from "vue";
 import { Like, BankCardOne } from "@icon-park/vue-next";
+import { useI18n } from "vue-i18n";
 // import H from "./Tabs/h.vue";
 
 const changeVNode = () => {
   return h("h1", {}, "fsdfasfasf");
 };
+
+const { t } = useI18n();
+console.log(t("menus.home"));
 
 const isShake = ref(false);
 

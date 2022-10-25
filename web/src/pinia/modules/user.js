@@ -11,12 +11,16 @@ export const useUserStore = defineStore("user", () => {
 
   const userInfo = ref({
     uuid: "",
+    userName: "",
     nickName: "",
+    sideMode: "",
     headerImg: "",
+    baseColor: "",
+    activeColor: "",
+    authorityId: "",
     authority: {},
-    sideMode: "dark",
-    activeColor: "#4D70FF",
-    baseColor: "#fff",
+    phone: "",
+    email: "",
   });
   const token = ref(window.localStorage.getItem("token") || "");
   const isInit = ref(false);

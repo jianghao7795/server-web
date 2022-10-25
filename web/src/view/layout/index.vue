@@ -89,7 +89,7 @@
           </div>
         </transition>
         <router-view v-if="reloadFlag" v-slot="{ Component, route }" v-loading="loadingFlag" element-loading-text="正在加载中" class="admin-box">
-          <div id="refreshView">
+          <div v-bind:id="'refreshView'">
             <!-- el-fade-in-linear -->
             <transition mode="out-in" name="el-fade-in-linear" type="transition" :appear="true">
               <keep-alive :include="routerStore.keepAliveRouters">

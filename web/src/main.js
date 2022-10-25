@@ -21,10 +21,11 @@ import { store } from "@/pinia";
 import App from "./App.vue";
 // import "virtual:windi.css"; // 会搞乱的
 import "animate.css"; //导入animate.css包 https://animate.style/
+import i18n from "@/locals/index"; //语言翻译 i18b
 
 const app = createApp(App);
-app.config.productionTip = false;
+app.config.productionTip = true;
 
-app.use(run).use(store).use(auth).use(router).mount("#app");
+app.use(run).use(store).use(auth).use(router).use(i18n).mount("#app");
 
 export default app;
