@@ -1,14 +1,11 @@
 package app
 
 import (
-	"errors"
 	"server/global"
 	comment "server/model/app"
 	commentReq "server/model/app/request"
 	"server/model/common/request"
 	"strings"
-
-	"gorm.io/gorm"
 )
 
 type CommentService struct {
@@ -81,17 +78,15 @@ func (*CommentService) PutLikeItOrDislike(info comment.Praise) (praise comment.P
 		var praise comment.Praise
 		err = db.Raw("Select id, comment_id, user_id, created_at, updated_at from praise where user_id = ? and comment_id = ? limit 1", info.UserId, info.CommentId).Scan(&praise).Error
 		if err != nil {
-			if errors.Is(err, gorm.ErrRecordNotFound) {
-				err = db.Create(&info).Error
-			} else {
-				return praise, err
-			}
+			return praise, err
 		}
-		if praise.ID != 0 {
+		if praise.ID == 0 {
+			err = db.Create(&info).Error
+		} else {
 			info.ID = praise.ID
 			info.CreatedAt = praise.CreatedAt
 			info.UpdatedAt = praise.UpdatedAt
-			err = db.Exec("UPDATE `praise` SET `created_at`=?,`updated_at`=?,`deleted_at`=NULL,`comment_id`=?,`user_id`=? where id = ? ORDER BY `praise`.`id` LIMIT 1", info.CreatedAt, info.UpdatedAt, info.CommentId, info.UserId, info.ID).Error
+			err = db.Exec("UPDATE `praise` SET `deleted_at`=NULL,`comment_id`=?,`user_id`=? where id = ? ORDER BY `praise`.`id` LIMIT 1", info.CommentId, info.UserId, info.ID).Error
 
 		}
 	} else {
