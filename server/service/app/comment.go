@@ -45,7 +45,7 @@ func (commentService *CommentService) UpdateComment(comment comment.Comment) (er
 // GetComment 根据id获取Comment记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (commentService *CommentService) GetComment(id uint) (comment comment.Comment, err error) {
-	err = global.GVA_DB.Preload("Article").Preload("SysUser").Where("id = ?", id).First(&comment).Error
+	err = global.GVA_DB.Preload("Article").Where("id = ?", id).First(&comment).Error
 	return
 }
 

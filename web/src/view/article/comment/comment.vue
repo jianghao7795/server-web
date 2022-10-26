@@ -373,6 +373,7 @@ const updateCommentFunc = async (row) => {
   type.value = "update";
   if (res.code === 0) {
     formData.value = res.data.recomment;
+    options.value = [res.data.recomment.article];
     // formData.value.SysUser = undefined;
     // formData.value.article = undefined;
     dialogFormVisible.value = true;
