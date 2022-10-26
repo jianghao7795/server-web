@@ -6,6 +6,8 @@ import (
 	commentReq "server/model/app/request"
 	"server/model/common/request"
 	"strings"
+
+	"gorm.io/gorm"
 )
 
 type CommentService struct {
@@ -52,7 +54,9 @@ func (commentService *CommentService) GetCommentInfoList(info commentReq.Comment
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
-	db := global.GVA_DB.Model(&comment.Comment{}).Preload("Article").Preload("Praise")
+	db := global.GVA_DB.Model(&comment.Comment{}).Preload("Article", func(db *gorm.DB) *gorm.DB {
+		return db.Preload("User")
+	}).Preload("Praise")
 	if info.ArticleId != 0 {
 		db = db.Where("article_id = ?", info.ArticleId)
 	}

@@ -51,7 +51,7 @@ func (articleSearch *ArticleService) GetArticle(id uint) (article app.Article, e
 func (articleSearch *ArticleService) GetArticleInfoList(info appReq.ArticleSearch) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
-	db := global.GVA_DB.Model(&app.Article{}).Preload("Tag")
+	db := global.GVA_DB.Model(&app.Article{}).Preload("Tag").Preload("User")
 	var articles []app.Article
 
 	if info.Title != "" {

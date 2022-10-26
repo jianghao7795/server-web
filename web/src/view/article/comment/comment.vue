@@ -59,7 +59,7 @@
         <el-table-column align="left" label="内容" prop="content" width="120" />
         <el-table-column align="left" label="文章作者" prop="userId" width="120">
           <template #default="scope">
-            {{ scope.row?.article?.created_by }}
+            {{ scope.row?.article?.sys_user?.nickName }}
           </template>
         </el-table-column>
         <el-table-column align="left" label="赞数" prop="praise" width="200">

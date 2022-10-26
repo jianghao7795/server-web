@@ -949,3 +949,5 @@ CREATE TABLE `praise` (
   KEY `FK_praise_user` (`user_id`),
   UNIQUE KEY `UK_praise` (`comment_id`,`user_id`)
 )
+
+alter table article add user_id bigint(20) not null;
