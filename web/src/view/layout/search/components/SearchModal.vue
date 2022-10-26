@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog :model-value="show" :before-close="() => (show = false)" :draggable="true" :width="500">
+    <el-dialog :model-value="show" :before-close="() => (show = false)" :draggable="true" :width="500" custom-class="gva-header">
       <el-form>
         <el-form-item>
           <el-input
@@ -13,6 +13,9 @@
           ></el-input>
         </el-form-item>
       </el-form>
+      <template #header>
+        <div>搜索</div>
+      </template>
       <el-empty description="暂无搜索结果" v-if="searchRouter.length === 0" />
       <el-scrollbar v-else>
         <template v-for="(i, index) in searchRouter" :key="i.label">
@@ -97,7 +100,7 @@ const show = computed({
   },
 });
 
-watch(show, async (val) => {
+watch(show, (val) => {
   if (val) {
     /** 自动聚焦 */
     // await nextTick(() => searchInputRef.value.focus()); //不行 无法渲染成功
@@ -211,10 +214,17 @@ onKeyStroke("ArrowUp", handleUp);
 onKeyStroke("ArrowDown", handleDown);
 </script>
 
-<style>
-.el-dialog .el-dialog__header {
-  padding: 0;
+<style lang="scss" scoped>
+.gva-header .el-dialog__header {
   border-bottom: 0;
+  .el-dialog__header {
+    padding: 0;
+    border-bottom: 0;
+  }
+  .el-dialog .el-dialog__header {
+    padding: 2px 20px 12px 20px;
+    border-bottom: 0;
+  }
 }
 
 .infinite-list {
