@@ -57,9 +57,9 @@
         </el-table-column>
         <el-table-column align="left" label="上级" prop="parentId" width="120" />
         <el-table-column align="left" label="内容" prop="content" width="120" />
-        <el-table-column align="left" label="用户" prop="userId" width="120">
+        <el-table-column align="left" label="文章作者" prop="userId" width="120">
           <template #default="scope">
-            {{ scope.row?.SysUser?.nickName }}
+            {{ scope.row?.article?.created_by }}
           </template>
         </el-table-column>
         <el-table-column align="left" label="赞数" prop="praise" width="200">
@@ -73,23 +73,23 @@
           <template #default="scope">
             <div :class="likeItStatus[scope.$index] ? 'pointer-style' : ''">
               <div
-                v-if="!!scope.row.praise"
+                v-if="viewPraise(scope.row.praise)"
                 style="display: inline-block; width: 40px; text-align: center"
                 :class="likeItStatus[scope.$index] ? 'animate__animated animate__heartBeat' : ''"
-                @click="changeLikeItStatus(scope.row, scope.$index, -1)"
+                @click="changeLikeItStatus(scope.row, scope.$index)"
               >
                 <Like theme="filled" size="16" fill="#f00" />
               </div>
 
               <div
-                @click="changeLikeItStatus(scope.row, scope.$index, 1)"
+                @click="changeLikeItStatus(scope.row, scope.$index)"
                 style="display: inline-block; width: 40px; text-align: center"
                 v-else
                 :class="likeItStatus[scope.$index] ? 'animate__animated animate__fadeOut' : ''"
               >
                 <Like theme="outline" size="16" />
               </div>
-              {{ scope.row.praise }}
+              {{ scope.row.praise?.length }}
             </div>
           </template>
         </el-table-column>
@@ -139,14 +139,6 @@
         <el-form-item label="内容:">
           <el-input v-model="formData.content" clearable placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="用户:">
-          <el-select v-model="formData.userId" placeholder="请输入">
-            <el-option v-for="item in userInfo" :key="item.ID" :label="item.nickName" :value="item.ID"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="赞数:">
-          <el-input v-model.number="formData.praise" clearable placeholder="请输入" />
-        </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -175,17 +167,17 @@ import { useDebounceFn } from "@vueuse/core";
 import { getArticleList } from "@/api/article";
 import { Like } from "@icon-park/vue-next";
 import { useUserStore } from "@/pinia/modules/user";
-import { getUserList } from "@/api/user";
+// import { getUserList } from "@/api/user";
 
 const currentUser = useUserStore();
 
 onMounted(() => {
-  getUserList({ page: 1, pageSize: 999 }).then((resp) => {
-    // console.log(resp);
-    if (resp?.code === 0) {
-      userInfo.value = resp?.data?.list || [];
-    }
-  });
+  // getUserList({ page: 1, pageSize: 999 }).then((resp) => {
+  //   // console.log(resp);
+  //   if (resp?.code === 0) {
+  //     userInfo.value = resp?.data?.list || [];
+  //   }
+  // });
 });
 
 // 自动化生成的字典（可能为空）以及字段
@@ -205,21 +197,35 @@ const tableData = ref([]);
 const searchInfo = ref({});
 const loading = ref(false);
 const options = ref([]);
-const userInfo = ref([]);
+// const userInfo = ref([]);
 const searchLoading = ref(false);
 const likeItStatus = ref({});
 
 // 点赞更新
-const changeLikeItStatus = (row, index, addValue) => {
-  pariseComment({ id: row.ID, parise: addValue }).then((resp) => {
+const changeLikeItStatus = (row, index) => {
+  let praiseAuth = {};
+  const recordIsInclude = row.praise.map((i) => {
+    if (currentUser.userInfo.ID === i.user_id) {
+      praiseAuth = { ...i };
+    }
+    return i.user_id;
+  });
+  let addValue = false;
+  if (recordIsInclude.includes(currentUser.userInfo.ID)) {
+    addValue = true;
+  }
+
+  pariseComment({ user_id: currentUser.userInfo.ID, comment_id: row.ID, ID: praiseAuth.ID }).then((resp) => {
     if (resp?.code === 0) {
-      row.praise += addValue;
-      if (addValue === 1) {
+      if (!addValue) {
+        row.praise = [...row.praise, { user_id: currentUser.userInfo.ID, comment_id: row.ID, ID: resp.data.ID }];
         ElMessage.success({
           showClose: true,
           message: "点赞成功",
         });
       } else {
+        const praiseLow = row.praise.filter((i) => i.user_id !== currentUser.userInfo.ID);
+        row.praise = praiseLow;
         ElMessage.success({
           showClose: true,
           message: "取消成功",
@@ -231,6 +237,15 @@ const changeLikeItStatus = (row, index, addValue) => {
   setTimeout(() => {
     likeItStatus.value = { ...likeItStatus.value, [index]: false };
   }, 1200);
+};
+// console.log(currentUser.userInfo);
+const viewPraise = (record = []) => {
+  const recordIsInclude = record.map((i) => i.user_id);
+  // console.log(recordIsInclude);
+  if (recordIsInclude.includes(currentUser.userInfo.ID)) {
+    return true;
+  }
+  return false;
 };
 
 // 重置

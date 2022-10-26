@@ -144,12 +144,13 @@ func (commentApi *CommentApi) GetCommentList(c *gin.Context) {
 
 // 点赞
 func (*CommentApi) PutLikeItOrDislike(c *gin.Context) {
-	var likeIt commentReq.CommentParise
+	var likeIt comment.Praise
 	_ = c.ShouldBindJSON(&likeIt)
-	if err := commentService.PutLikeItOrDislike(likeIt.ID, likeIt.Parise); err != nil {
+
+	if praise, err := commentService.PutLikeItOrDislike(likeIt); err != nil {
 		global.GVA_LOG.Error("点赞失败!", zap.Error(err))
-		response.FailWithMessage("点赞失败", c)
+		response.FailWithDetailed(err, "点赞失败", c)
 	} else {
-		response.OkWithMessage("点赞成功", c)
+		response.OkWithDetailed(praise, "点赞成功", c)
 	}
 }

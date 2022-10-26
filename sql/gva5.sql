@@ -936,3 +936,16 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2022-10-18  8:06:50
+
+CREATE TABLE `praise` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `created_at` datetime(3) DEFAULT NULL,
+  `updated_at` datetime(3) DEFAULT NULL,
+  `deleted_at` datetime(3) DEFAULT NULL,
+  `comment_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_praise_comment` (`comment_id`),
+  KEY `FK_praise_user` (`user_id`),
+  UNIQUE KEY `UK_praise` (`comment_id`,`user_id`)
+)

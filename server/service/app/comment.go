@@ -1,12 +1,14 @@
 package app
 
 import (
-	"log"
+	"errors"
 	"server/global"
 	comment "server/model/app"
 	commentReq "server/model/app/request"
 	"server/model/common/request"
 	"strings"
+
+	"gorm.io/gorm"
 )
 
 type CommentService struct {
@@ -53,8 +55,7 @@ func (commentService *CommentService) GetCommentInfoList(info commentReq.Comment
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
-	db := global.GVA_DB.Model(&comment.Comment{}).Preload("Article").Preload("SysUser")
-	log.Println(info.ArticleId)
+	db := global.GVA_DB.Model(&comment.Comment{}).Preload("Article").Preload("Praise")
 	if info.ArticleId != 0 {
 		db = db.Where("article_id = ?", info.ArticleId)
 	}
@@ -73,17 +74,32 @@ func (commentService *CommentService) GetCommentInfoList(info commentReq.Comment
 }
 
 // LikeIt 点赞一条记录
-func (*CommentService) PutLikeItOrDislike(id int, likeIt int) error {
-	db := global.GVA_DB.Model(&comment.Comment{})
-	var comment comment.Comment
-	err := db.Where("id = ?", id).First(&comment).Error
-	if err != nil {
-		return err
+func (*CommentService) PutLikeItOrDislike(info comment.Praise) (praise comment.Praise, err error) {
+	db := global.GVA_DB.Model(&comment.Praise{})
+
+	if info.ID == 0 {
+		var praise comment.Praise
+		err = db.Raw("Select id, comment_id, user_id, created_at, updated_at from praise where user_id = ? and comment_id = ? limit 1", info.UserId, info.CommentId).Scan(&praise).Error
+		if err != nil {
+			if errors.Is(err, gorm.ErrRecordNotFound) {
+				err = db.Create(&info).Error
+			} else {
+				return praise, err
+			}
+		}
+		if praise.ID != 0 {
+			info.ID = praise.ID
+			info.CreatedAt = praise.CreatedAt
+			info.UpdatedAt = praise.UpdatedAt
+			err = db.Exec("UPDATE `praise` SET `created_at`=?,`updated_at`=?,`deleted_at`=NULL,`comment_id`=?,`user_id`=? where id = ? ORDER BY `praise`.`id` LIMIT 1", info.CreatedAt, info.UpdatedAt, info.CommentId, info.UserId, info.ID).Error
+
+		}
+	} else {
+		err = db.Where("id = ?", info.ID).Delete(&info).Error
 	}
 
-	db.Where("id = ?", comment.ID).Update("praise", comment.Praise+likeIt)
 	// if err != nil {
 	// 	return err
 	// }
-	return nil
+	return info, err
 }
