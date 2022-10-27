@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog :model-value="show" :before-close="() => (show = false)" :draggable="true" :width="500" custom-class="gva-header">
+    <el-dialog :model-value="show" :before-close="() => (show = false)" :draggable="true" :width="500">
       <el-form>
         <el-form-item>
           <el-input

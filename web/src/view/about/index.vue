@@ -37,7 +37,6 @@
                 <like theme="filled" size="16" fill="#f00" strokeLinejoin="miter" />
                 <bank-card-one theme="outline" size="16" fill="#333" strokeLinejoin="miter" />
               </div>
-
               <!-- prop	description	type	default	note
 theme	Theme of the icons.	'outline' | 'filled' | 'two-tone' | 'multi-color'	'outline'
 size	The width/height of the icon	number | string	'1em'
@@ -228,77 +227,5 @@ h4 {
   height: 32px;
   text-align: center;
   transform-origin: 50% 0;
-}
-.swing {
-  animation: 1s ease-in-out 0s normal running upAnimation;
-}
-
-@keyframes upAnimation {
-  /* 0% {
-    transform: rotate(0deg);
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-
-  10% {
-    transform: rotate(-12deg);
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-
-  20% {
-    transform: rotate(12deg);
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-
-  28% {
-    transform: rotate(-10deg);
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-
-  36% {
-    transform: rotate(10deg);
-    transition-timing-function: cubic-bezier(0.755, 0.5, 0.855, 0.06);
-  }
-
-  42% {
-    transform: rotate(-8deg);
-    transition-timing-function: cubic-bezier(0.755, 0.5, 0.855, 0.06);
-  }
-
-  48% {
-    transform: rotate(8deg);
-    transition-timing-function: cubic-bezier(0.755, 0.5, 0.855, 0.06);
-  }
-
-  52% {
-    transform: rotate(-4deg);
-    transition-timing-function: cubic-bezier(0.755, 0.5, 0.855, 0.06);
-  }
-
-  56% {
-    transform: rotate(4deg);
-    transition-timing-function: cubic-bezier(0.755, 0.5, 0.855, 0.06);
-  }
-
-  60% {
-    transform: rotate(0deg);
-    transition-timing-function: cubic-bezier(0.755, 0.5, 0.855, 0.06);
-  }
-
-  100% {
-    transform: rotate(0deg);
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  } */
-  0% {
-    transform: translateX(0px);
-  }
-  33.3% {
-    transform: translateX(10px);
-  }
-  66.7% {
-    transform: translateX(-10px);
-  }
-  100% {
-    transform: translateX(0px);
-  }
 }
 </style>
