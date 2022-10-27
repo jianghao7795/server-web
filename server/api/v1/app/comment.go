@@ -142,6 +142,23 @@ func (commentApi *CommentApi) GetCommentList(c *gin.Context) {
 	}
 }
 
+func (*CommentApi) GetCommentTreeList(c *gin.Context) {
+	var pageInfo commentReq.CommentSearch
+	_ = c.ShouldBindQuery(&pageInfo)
+
+	if list, total, err := commentService.GetCommentTreeList(pageInfo); err != nil {
+		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+	} else {
+		response.OkWithDetailed(response.PageResult{
+			List:     list,
+			Total:    total,
+			Page:     pageInfo.Page,
+			PageSize: pageInfo.PageSize,
+		}, "获取成功", c)
+	}
+}
+
 // 点赞
 func (*CommentApi) PutLikeItOrDislike(c *gin.Context) {
 	var likeIt comment.Praise

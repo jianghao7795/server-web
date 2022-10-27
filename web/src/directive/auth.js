@@ -1,3 +1,9 @@
+/*
+ * @Author: jianghao
+ * @Date: 2022-07-29 09:48:24
+ * @LastEditors: jianghao
+ * @LastEditTime: 2022-10-27 10:28:44
+ */
 // 权限按钮展示指令
 import { useUserStore } from "@/pinia/modules/user";
 export default {

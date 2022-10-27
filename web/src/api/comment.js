@@ -104,3 +104,11 @@ export const pariseComment = (data) => {
     data,
   });
 };
+
+export const getCommentTreeList = (data) => {
+  return service({
+    url: "/comment/getCommentTreeList",
+    method: "get",
+    params: data,
+  });
+};

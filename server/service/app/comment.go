@@ -74,6 +74,41 @@ func (commentService *CommentService) GetCommentInfoList(info commentReq.Comment
 	return comments, total, err
 }
 
+// GetCommentTreeList 分页获取Treelist
+
+func (commentService *CommentService) GetCommentTreeList(info commentReq.CommentSearch) (list []comment.Comment, total int64, err error) {
+	limit := info.PageSize
+	offset := info.PageSize * (info.Page - 1)
+	db := global.GVA_DB.Model(&comment.Comment{})
+	err = db.Where("parent_id = ?", "0").Count(&total).Error
+	if err != nil {
+		return
+	}
+
+	var commentList []comment.Comment
+	err = db.Limit(limit).Offset(offset).Preload("Article", func(db *gorm.DB) *gorm.DB {
+		return db.Preload("User")
+	}).Preload("Praise").Where("parent_id = ?", "0").Find(&commentList).Error
+
+	if len(commentList) > 0 {
+		for comment := range commentList {
+			err = commentService.findChildrenComment(&commentList[comment])
+		}
+	}
+
+	return commentList, total, err
+}
+
+func (commentService *CommentService) findChildrenComment(comment *comment.Comment) (err error) {
+	err = global.GVA_DB.Preload("Praise").Where("parent_id = ?", comment.ID).Find(&comment.Children).Error
+	if len(comment.Children) > 0 {
+		for k := range comment.Children {
+			err = commentService.findChildrenComment(&comment.Children[k])
+		}
+	}
+	return err
+}
+
 // LikeIt 点赞一条记录
 func (*CommentService) PutLikeItOrDislike(info comment.Praise) (praise comment.Praise, err error) {
 	db := global.GVA_DB.Model(&comment.Praise{})

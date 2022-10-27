@@ -43,6 +43,7 @@
         </el-popover>
       </div>
       <el-table
+        :highlight-current-row="true"
         ref="multipleTable"
         style="width: 100%"
         tooltip-effect="dark"
@@ -51,11 +52,10 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" />
-        <el-table-column header-align="center" align="center" prop="ID" label="ID" width="55"></el-table-column>
+        <el-table-column header-align="center" align="center" prop="ID" label="ID" width="100"></el-table-column>
         <el-table-column align="left" label="文章" prop="articleId" width="120">
           <template #default="scope">{{ scope.row?.article?.title }}</template>
         </el-table-column>
-        <el-table-column align="left" label="上级" prop="parentId" width="120" />
         <el-table-column align="left" label="内容" prop="content" width="120" />
         <el-table-column align="left" label="文章作者" prop="userId" width="120">
           <template #default="scope">
@@ -157,7 +157,7 @@ export default {
 </script>
 
 <script setup>
-import { createComment, deleteComment, deleteCommentByIds, updateComment, findComment, getCommentList, pariseComment } from "@/api/comment";
+import { createComment, deleteComment, deleteCommentByIds, updateComment, findComment, getCommentTreeList, pariseComment } from "@/api/comment";
 
 // 全量引入格式化工具 请按需保留
 import { formatDate } from "@/utils/format";
@@ -202,7 +202,7 @@ const searchLoading = ref(false);
 const likeItStatus = ref({});
 
 // 点赞更新
-const changeLikeItStatus = (row, index) => {
+const changeLikeItStatus = async (row, index) => {
   let praiseAuth = {};
   const recordIsInclude = row.praise.map((i) => {
     if (currentUser.userInfo.ID === i.user_id) {
@@ -215,28 +215,27 @@ const changeLikeItStatus = (row, index) => {
     addValue = true;
   }
 
-  pariseComment({ user_id: currentUser.userInfo.ID, comment_id: row.ID, ID: praiseAuth.ID }).then((resp) => {
-    if (resp?.code === 0) {
-      if (!addValue) {
-        row.praise = [...row.praise, { user_id: currentUser.userInfo.ID, comment_id: row.ID, ID: resp.data.ID }];
-        ElMessage.success({
-          showClose: true,
-          message: "点赞成功",
-        });
-      } else {
-        const praiseLow = row.praise.filter((i) => i.user_id !== currentUser.userInfo.ID);
-        row.praise = praiseLow;
-        ElMessage.success({
-          showClose: true,
-          message: "取消成功",
-        });
-      }
+  const resp = await pariseComment({ user_id: currentUser.userInfo.ID, comment_id: row.ID, ID: praiseAuth.ID });
+  if (resp?.code === 0) {
+    if (!addValue) {
+      row.praise = [...row.praise, { user_id: currentUser.userInfo.ID, comment_id: row.ID, ID: resp.data.ID }];
+      ElMessage.success({
+        showClose: true,
+        message: "点赞成功",
+      });
+    } else {
+      const praiseLow = row.praise.filter((i) => i.user_id !== currentUser.userInfo.ID);
+      row.praise = praiseLow;
+      ElMessage.success({
+        showClose: true,
+        message: "取消成功",
+      });
     }
-  });
-  likeItStatus.value = { ...likeItStatus.value, [index]: true };
-  setTimeout(() => {
-    likeItStatus.value = { ...likeItStatus.value, [index]: false };
-  }, 1200);
+    likeItStatus.value = { ...likeItStatus.value, [index]: true };
+    setTimeout(() => {
+      likeItStatus.value = { ...likeItStatus.value, [index]: false };
+    }, 1200);
+  }
 };
 // console.log(currentUser.userInfo);
 const viewPraise = (record = []) => {
@@ -275,9 +274,9 @@ const handleCurrentChange = (val) => {
 // 查询
 const getTableData = async () => {
   // console.log(searchInfo.value);
-  const table = await getCommentList({
-    page: page.value,
-    pageSize: pageSize.value,
+  const table = await getCommentTreeList({
+    page: page.value || 1,
+    pageSize: pageSize.value | 10,
     ...searchInfo.value,
   });
   if (table.code === 0) {

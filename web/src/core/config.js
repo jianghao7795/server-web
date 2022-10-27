@@ -3,14 +3,14 @@
  */
 
 const config = {
-  appName: '后台管理',
-  appLogo: '/Thesquid.ink-Free-Flat-Sample-Space-rocket.ico',
+  appName: "后台管理",
+  appLogo: "/Thesquid.ink-Free-Flat-Sample-Space-rocket.ico",
   showViteLogo: true,
 };
 
 export const viteLogo = (env) => {
   if (config.showViteLogo) {
-    const chalk = require('chalk');
+    // const chalk = require('chalk');
     // console.log(
     //   chalk.green(
     //     `> 欢迎使用Gin-Vue-Admin，开源地址：https://github.com/flipped-aurora/gin-vue-admin`,

@@ -23,7 +23,8 @@ func (s *CommentRouter) InitCommentRouter(Router *gin.RouterGroup) {
 		commentRouter.PUT("pariseComment", commentApi.PutLikeItOrDislike)         //点赞
 	}
 	{
-		commentRouterWithoutRecord.GET("findComment", commentApi.FindComment)       // 根据ID获取Comment
-		commentRouterWithoutRecord.GET("getCommentList", commentApi.GetCommentList) // 获取Comment列表
+		commentRouterWithoutRecord.GET("findComment", commentApi.FindComment)               // 根据ID获取Comment
+		commentRouterWithoutRecord.GET("getCommentList", commentApi.GetCommentList)         // 获取Comment列表
+		commentRouterWithoutRecord.GET("getCommentTreeList", commentApi.GetCommentTreeList) //  获取Comment Tree列表
 	}
 }
