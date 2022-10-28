@@ -171,7 +171,7 @@
       <template #footer>
         <div class="dialog-footer">
           <el-button size="small" @click="closeDialog">取 消</el-button>
-          <el-button size="small" type="primary" @click="enterDialog">确 定</el-button>
+          <el-button size="small" type="primary" :loading="loadingSubmit" @click="enterDialog">确 定</el-button>
         </div>
       </template>
     </el-dialog>
@@ -198,6 +198,7 @@ const pageSize = ref(999);
 const tableData = ref([]);
 const searchInfo = ref({});
 const loading = ref(false);
+const loadingSubmit = ref(false);
 // 查询
 const getTableData = async () => {
   loading.value = true;
@@ -344,12 +345,14 @@ const closeDialog = () => {
 const enterDialog = async () => {
   menuForm.value.validate(async (valid) => {
     if (valid) {
+      loadingSubmit.value = true;
       let res;
       if (isEdit.value) {
         res = await updateBaseMenu(form.value);
       } else {
         res = await addBaseMenu(form.value);
       }
+      loadingSubmit.value = false;
       if (res.code === 0) {
         ElMessage({
           type: "success",
