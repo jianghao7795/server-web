@@ -9,9 +9,11 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@vueuse/core": "^9.4.0",
     "axios": "^0.27.2",
     "naive-ui": "^2.32.1",
     "pinia": "^2.0.16",
+    "terser": "^5.15.1",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2"
   },
