@@ -16,7 +16,7 @@
           </template>
         </el-table-column>
         <el-table-column align="left" label="父节点" min-width="90" prop="parentId" />
-        <el-table-column align="left" label="排序" min-width="70" prop="sort" />
+        <el-table-column align="left" label="排序" min-width="80" sortable prop="sort" />
         <el-table-column align="left" label="文件路径" min-width="360" prop="component" />
         <el-table-column align="left" label="展示名称" min-width="120" prop="authorityName">
           <template #default="scope">
