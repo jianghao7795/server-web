@@ -15,9 +15,9 @@ const rollupOptions = {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    legacyPlugin({
-      targets: ["Chrome >= 98"],
-    }),
+    // legacyPlugin({
+    //   targets: ["Chrome >= 98"],
+    // }),
     // vue(),
     vuePlugin({}),
   ],
