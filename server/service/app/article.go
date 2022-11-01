@@ -32,17 +32,26 @@ func (articleSearch *ArticleService) DeleteArticleByIds(ids request.IdsReq) (err
 // update
 func (articleSearch *ArticleService) UpdateArticle(article app.Article) (err error) {
 	var articleDetail app.Article
+
 	err = global.GVA_DB.Where("id = ?", article.ID).First(&articleDetail).Error
 	if err != nil {
 		return
 	}
+	tx := global.GVA_DB.Begin()
+	tx = tx.Model(&app.ArticleTag{})
+	err = tx.Delete("article_id = ?", article.ID).Error
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	tx.Commit()
 	err = global.GVA_DB.Save(&article).Error
 	return err
 }
 
 // getDetail by id
 func (articleSearch *ArticleService) GetArticle(id uint) (article app.Article, err error) {
-	err = global.GVA_DB.Preload("Tag").Where("id = ?", id).First(&article).Error
+	err = global.GVA_DB.Preload("Tags").Where("id = ?", id).First(&article).Error
 	return
 }
 
@@ -51,21 +60,21 @@ func (articleSearch *ArticleService) GetArticle(id uint) (article app.Article, e
 func (articleSearch *ArticleService) GetArticleInfoList(info appReq.ArticleSearch) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
-	db := global.GVA_DB.Model(&app.Article{}).Preload("Tag").Preload("User")
+	db := global.GVA_DB.Model(&app.Article{})
 	var articles []app.Article
 
 	if info.Title != "" {
 		db = db.Where("title like ?", strings.Join([]string{"%", info.Title, "%"}, ""))
 	}
-
-	if info.TagId != 0 {
-		db = db.Where("tag_id = ?", info.TagId)
-	}
-
+	// db.SetupJoinTable(&articles, "article_tag")
+	// if info.TagId != 0 {
+	// 	db = db.Where("tag_id = ?", info.TagId)
+	// }
+	// db.Association("Tags")
 	err = db.Count(&total).Error
 	if err != nil {
 		return
 	}
-	err = db.Limit(limit).Offset(offset).Order("id desc").Find(&articles).Error
+	err = db.Limit(limit).Offset(offset).Order("id desc").Preload("Tags").Find(&articles).Error
 	return articles, total, err
 }

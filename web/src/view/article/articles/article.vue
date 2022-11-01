@@ -6,7 +6,7 @@
           <el-input v-model="searchInfo.title"></el-input>
         </el-form-item>
         <el-form-item label="标签:">
-          <el-select v-model="searchInfo.tag_id" placeholder="请选择" filterable remote reserve-keyword :remote-method="searchTag" :loading="loading">
+          <el-select v-model="searchInfo.tag_id" placeholder="请选择" filterable remote reserve-keyword :loading="loading">
             <el-option v-for="item in tags" :key="item.ID" :label="item.name" :value="item.ID"></el-option>
           </el-select>
         </el-form-item>
@@ -39,7 +39,11 @@
         <el-table-column label="标题" prop="title"></el-table-column>
         <el-table-column label="标签" prop="tag">
           <template #default="{ row }">
-            <div>{{ row?.tag?.name }}</div>
+            <div style="line-height: 40px">
+              <el-space>
+                <el-tag v-for="item in row.tags" :key="item.id" class="ml-2" type="info">{{ item.name }}</el-tag>
+              </el-space>
+            </div>
           </template>
         </el-table-column>
         <el-table-column label="简化内容" prop="desc"></el-table-column>
@@ -88,8 +92,16 @@
         :rules="rules"
         status-icon
       >
-        <el-form-item label="标签" prop="tag_id">
-          <el-select v-model="formData.tag_id" placeholder="请选择" filterable remote reserve-keyword :remote-method="searchTag" :loading="loading">
+        <el-form-item label="标签" prop="tags">
+          <el-select
+            v-model="formData.tags"
+            placeholder="请选择"
+            filterable
+            multiple
+            style="width: 100%"
+            @change="changeTagsFunc"
+            @remove-tag="removeTag"
+          >
             <el-option v-for="item in tags" :key="item.ID" :label="item.name" :value="item.ID"></el-option>
           </el-select>
         </el-form-item>
@@ -129,13 +141,13 @@ import { ElMessage } from "element-plus";
 import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle, uploadFile, deleteArticleByIds } from "@/api/article";
 import { getAppTabList } from "@/api/appTab";
 import { ref, onBeforeMount, reactive } from "vue";
-import { useDebounceFn } from "@vueuse/core";
+// import { useDebounceFn } from "@vueuse/core";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 
 const formData = ref({
   title: "",
-  tag_id: undefined,
+  tags: [],
   desc: "",
   content: "",
   state: 1,
@@ -143,7 +155,7 @@ const formData = ref({
 
 const ruleFormRef = ref(null); // form ref
 const rules = reactive({
-  tag_id: [{ required: true, message: "请查询并选择", trigger: "blur" }],
+  tags: [{ required: true, message: "请查询并选择", trigger: "blur" }],
   title: [{ required: true, message: "请输入", trigger: "blur" }],
 });
 
@@ -153,6 +165,7 @@ const loadingInit = ref(false);
 const text = ref("");
 
 const tags = ref([]);
+const changeTags = ref([]);
 
 const page = ref(1);
 const total = ref(0);
@@ -160,6 +173,16 @@ const pageSize = ref(10);
 const tableData = ref([]);
 const searchInfo = ref({});
 const path = ref(import.meta.env.VITE_BASE_API);
+
+const changeTagsFunc = (row) => {
+  const selectTag = tags.value.filter((i) => row.includes(i.ID));
+  changeTags.value = selectTag;
+};
+
+const removeTag = (val) => {
+  const selectTag = changeTags.value.filter((i) => val !== i.ID);
+  changeTags.value = selectTag;
+};
 
 const getTableData = async () => {
   loadingInit.value = true;
@@ -200,6 +223,11 @@ const onUploadImg = async (files, callback) => {
 
 onBeforeMount(() => {
   getTableData();
+  getAppTabList({ page: 1, pageSize: 999 }).then((resp) => {
+    if (resp.code === 0) {
+      tags.value = resp.data.list;
+    }
+  });
 });
 
 const onSubmit = () => {
@@ -277,7 +305,6 @@ const closeDialog = () => {
   dialogFormVisible.value = false;
   formData.value = {
     title: "",
-    tag_id: undefined,
     desc: "",
     content: "",
     state: 1,
@@ -289,9 +316,9 @@ const updateArticleFunc = async (row) => {
   const res = await findArticle({ ID: row.ID });
   type.value = "update";
   if (res.code === 0) {
-    tags.value = [res.data.rearticle.tag];
+    changeTags.value = res.data.rearticle.tags;
     formData.value = res.data.rearticle;
-    formData.value.tag = undefined;
+    formData.value.tags = res.data.rearticle.tags.map((i) => i.ID);
     text.value = formData.value.content;
     dialogFormVisible.value = true;
   }
@@ -302,18 +329,19 @@ const enterDialog = async (formRules) => {
   await formRules.validate(async (valid, fields) => {
     // console.log(valid, fields);
     if (valid) {
-      console.log("submit!");
+      // console.log("submit!");
       let res;
       formData.value.content = text.value;
+
       switch (type.value) {
         case "create":
-          res = await createArticle(formData.value);
+          res = await createArticle({ ...formData.value, tags: changeTags.value });
           break;
         case "update":
-          res = await updateArticle(formData.value);
+          res = await updateArticle({ ...formData.value, tags: changeTags.value });
           break;
         default:
-          res = await createArticle(formData.value);
+          res = await createArticle({ ...formData.value, tags: changeTags.value });
           break;
       }
       // console.log(formData.value);
@@ -332,19 +360,14 @@ const enterDialog = async (formRules) => {
   // return;
 };
 
-const search = (val) => {
-  if (!!val) {
-    loading.value = true;
-    getAppTabList({ name: val }).then((resp) => {
-      loading.value = false;
-      if (resp.code === 0) {
-        tags.value = resp.data.list;
-      }
-    });
-  }
-};
+// const search = (val) => {
+//   if (!!val) {
+//     loading.value = true;
 
-const searchTag = useDebounceFn(search, 500, { maxWait: 5000 });
+//   }
+// };
+
+// const searchTag = useDebounceFn(search, 500, { maxWait: 5000 });
 </script>
 
 <style></style>
