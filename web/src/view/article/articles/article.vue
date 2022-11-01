@@ -6,7 +6,7 @@
           <el-input v-model="searchInfo.title"></el-input>
         </el-form-item>
         <el-form-item label="标签:">
-          <el-select v-model="searchInfo.tag_id" placeholder="请选择" filterable remote reserve-keyword :loading="loading">
+          <el-select v-model="searchInfo.tag_id" placeholder="请选择" filterable remote reserve-keyword clearable>
             <el-option v-for="item in tags" :key="item.ID" :label="item.name" :value="item.ID"></el-option>
           </el-select>
         </el-form-item>
@@ -41,7 +41,7 @@
           <template #default="{ row }">
             <div style="line-height: 40px">
               <el-space>
-                <el-tag v-for="item in row.tags" :key="item.id" class="ml-2" type="info">{{ item.name }}</el-tag>
+                <el-tag v-for="item in row.tags" :key="item.id">{{ item.name }}</el-tag>
               </el-space>
             </div>
           </template>
