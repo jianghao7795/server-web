@@ -160,7 +160,7 @@ const rules = reactive({
 });
 
 // search tag loading
-const loading = ref(false);
+// const loading = ref(false);
 const loadingInit = ref(false);
 const text = ref("");
 
