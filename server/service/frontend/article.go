@@ -13,3 +13,9 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch) (list [
 	err = db.Order("id desc").Find(&list).Error
 	return list, err
 }
+
+func (s *FrontendArticle) GetAricleDetail(articleId int) (articleDetail frontend.Article, err error) {
+	db := global.GVA_DB.Model(&frontend.Article{})
+	err = db.Where("id = ?", articleId).Preload("Tags").Preload("User").First(&articleDetail).Error
+	return
+}
