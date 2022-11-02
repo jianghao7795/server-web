@@ -25,7 +25,10 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         // 支持内联 JavaScript
-        javascriptEnabled: true,
+        // javascriptEnabled: true,
+        // modifyVars: {
+        //   hack: `true; @import (reference) "${resolve('src/style/global/config.less')}";`,
+        // },
       },
     },
   },
