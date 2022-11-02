@@ -13,7 +13,7 @@ func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
 	var frontendTagApi = v1.ApiGroupApp.FrontendApiGroup.FrontendTagApi
 	{
 		frontend.GET("getTagList", frontendTagApi.GetAppTabList)
-		frontend.GET("getTagArticleList", frontendTagApi.GetTagList)
+		frontend.GET("getTagArticleList/:id", frontendTagApi.GetTagList)
 	}
 	var frontendArticleApi = v1.ApiGroupApp.FrontendApiGroup
 	{
