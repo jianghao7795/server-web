@@ -38,7 +38,7 @@
           </template>
           上一页
         </n-button>
-        <n-button icon-placement="right" v-show="articleLength !== 10">
+        <n-button icon-placement="right" v-show="articleLength === 10">
           下一页
           <template #icon>
             <right theme="outline" size="24" fill="#333" />
