@@ -23,13 +23,13 @@
           </div>
         </n-card>
       </n-layout-header>
-      <n-layout-content position="static" content-style="height: calc(100vh - 430px)">
+      <n-layout-content position="static">
         <RouterView />
       </n-layout-content>
-      <n-layout-footer position="static" bordered>
+      <n-layout-footer position="absolute">
         <!-- style="width: 100%; height: 100px; position: absolute; bottom: 0px; left: 0px" -->
         <footer class="footerStyle">
-          <span>Copyright ©2021</span>
+          <span>Copyright ©2022</span>
         </footer>
       </n-layout-footer>
     </n-layout>
@@ -61,6 +61,10 @@ import {
   font-size: 15px;
 }
 
+.layoutHight {
+  height: calc(100vh - 2000px);
+}
+
 .darkStyle {
   background: url("/home-bg.png") no-repeat center center;
   height: auto;
@@ -73,6 +77,8 @@ import {
 
 .footerStyle {
   text-align: center;
+  height: 40px;
+  flex: 0 0 auto;
 }
 
 hr.small {
@@ -81,8 +87,7 @@ hr.small {
   border-width: 4px;
   border-color: white;
 }
-.small,
-small {
+.small {
   font-size: 85%;
 }
 hr {

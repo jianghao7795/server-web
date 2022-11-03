@@ -3,7 +3,7 @@ import type { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } fro
 
 /* 服务器返回数据的的类型，根据接口文档确定 */
 export interface Result<T = any> {
-  code: number;
+  code: 0 | 7;
   msg: string;
   data: T;
 }
@@ -16,7 +16,6 @@ const service: AxiosInstance = axios.create({
 /* 请求拦截器 */
 service.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-    console.log(config);
     //  伪代码
     // if (user.token) {
     //   config.headers.Authorization = `Bearer ${token}`;
@@ -32,13 +31,13 @@ service.interceptors.request.use(
 /* 响应拦截器 */
 service.interceptors.response.use(
   (response: AxiosResponse<Result>) => {
-    console.log(response);
-    const { code, msg, data } = response.data;
+    // console.log(response);
+    const { code, msg } = response.data;
 
     // 根据自定义错误码判断请求是否成功
     if (code === 0) {
       // 将组件用的数据返回
-      return data;
+      return response.data;
     } else {
       // 处理业务错误。
       // Message.error(message)

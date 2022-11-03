@@ -9,8 +9,10 @@ import (
 type FrontendArticle struct{}
 
 func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch) (list []frontend.Article, err error) {
-	db := global.GVA_DB.Model(&frontend.Article{}).Preload("User")
-	err = db.Order("id desc").Find(&list).Error
+	limit := info.PageSize
+	offset := info.PageSize * (info.Page - 1)
+	db := global.GVA_DB.Model(&frontend.Article{})
+	err = db.Limit(limit).Offset(offset).Order("id desc").Preload("Tags").Preload("User").Find(&list).Error
 	return list, err
 }
 

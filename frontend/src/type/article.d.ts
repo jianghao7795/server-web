@@ -41,4 +41,10 @@ declare namespace API {
     };
     msg: string;
   };
+
+  export type SearchArticle = {
+    page?: number;
+    pageSize?: number;
+    title?: string;
+  };
 }

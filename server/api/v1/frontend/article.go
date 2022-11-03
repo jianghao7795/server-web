@@ -17,6 +17,13 @@ type FrontendArticleApi struct{}
 func (s *FrontendArticleApi) GetArticleList(c *gin.Context) {
 	var pageInfo request.ArticleSearch
 	_ = c.ShouldBindQuery(&pageInfo)
+	if pageInfo.Page == 0 {
+		pageInfo.Page = 1
+	}
+
+	if pageInfo.PageSize == 0 {
+		pageInfo.PageSize = 10
+	}
 
 	if list, err := frontendService.FrontendArticle.GetArticleList(pageInfo); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))

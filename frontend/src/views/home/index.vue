@@ -1,53 +1,80 @@
 <template>
   <div class="article-list">
     <n-list hoverable clickable>
-      <n-list-item>
-        <n-thing title="相见恨晚" content-style="margin-top: 10px;">
-          <template #description>
-            <n-space size="small" style="margin-top: 4px">
-              <n-tag :bordered="false" type="info" size="small"> 暑夜 </n-tag>
-              <n-tag :bordered="false" type="info" size="small"> 晚春 </n-tag>
-            </n-space>
-          </template>
-          奋勇呀然后休息呀<br />
-          完成你伟大的人生
-        </n-thing>
-      </n-list-item>
-      <n-list-item>
+      <n-list-item v-for="item in data" :key="item.ID">
         <n-thing content-style="margin-top: 10px;">
           <template #header>
-            <div><h1>123123123</h1></div>
+            <div>
+              <h1>{{ item.title }}</h1>
+            </div>
           </template>
           <template #description>
+            <div>
+              简述: <b>{{ item.desc }}</b>
+            </div>
+          </template>
+          <!-- <md-editor v-model="item.content" preview-only /> -->
+          <template #footer>
             <n-space size="small" style="margin-top: 4px">
-              <n-tag :bordered="false" type="info" size="small"> 环形公路 </n-tag>
-              <n-tag :bordered="false" type="info" size="small"> 潜水艇司机 </n-tag>
+              <n-tag
+                :bordered="false"
+                type="info"
+                size="small"
+                v-for="i in item.tags"
+                :key="i.ID"
+              >
+                {{ i.name }}
+              </n-tag>
             </n-space>
           </template>
-          最新的打印机<br />
-          复制着彩色傀儡<br />
-          早上好我的罐头先生<br />
-          让他带你去被工厂敲击
         </n-thing>
       </n-list-item>
     </n-list>
+    <div class="pageNext">
+      <n-space justify="space-between">
+        <n-button v-show="page !== 1" icon-placement="left">
+          <template #icon>
+            <right theme="outline" size="24" fill="#333" />
+          </template>
+          上一页
+        </n-button>
+        <n-button icon-placement="right" v-show="articleLength !== 10">
+          下一页
+          <template #icon>
+            <right theme="outline" size="24" fill="#333" />
+          </template>
+        </n-button>
+      </n-space>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { NList, NThing, NListItem, NSpace, NTag } from "naive-ui";
-import { ref, onMounted } from "vue";
+import { NList, NThing, NListItem, NSpace, NTag, NButton } from "naive-ui";
+import { ref, onMounted, computed } from "vue";
 import { getArticleList } from "@/services/article";
+import type { API } from "@/type/article";
+// import MdEditor from "md-editor-v3";
+// import "md-editor-v3/lib/style.css";
+import { Right, Left } from "@icon-park/vue-next";
 
-const data = ref([]);
+const data = ref<API.Article[]>([]);
+const page = ref<number>(1);
+const articleLength = computed(() => data.value.length);
 
 onMounted(async () => {
-  const response = await getArticleList();
+  const response = await getArticleList({ page: 1 });
+  if (response.code === 0) {
+    data.value = response.data?.list as API.Article[];
+  }
 });
 </script>
 
 <style scoped lang="less">
 .article-list {
   margin: auto 25%;
+}
+.pageNext {
+  margin: 15px 0 45px 0;
 }
 </style>
