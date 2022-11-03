@@ -6,17 +6,17 @@
           <template #header-extra>
             <div class="headerStyleLine">
               <NSpace>
-                <b>首页</b>
-                <b>标签</b>
-                <b>公众号</b>
-                <b>关于</b>
+                <a @click="changePath('/')"><b>首页</b></a>
+                <a @click="changePath('/articles')"><b>文章</b></a>
+                <a @click="changePath('/tags')"><b>标签</b></a>
+                <a @click="changePath('/about')"><b>关于</b></a>
               </NSpace>
             </div>
           </template>
           <template #header>
             <div class="headerStyleLine"><b>瓦都尅</b></div>
           </template>
-          <div style="height: 300px; text-align: center">
+          <div v-if="fullPath === '/'" style="height: 300px; text-align: center">
             <h1>瓦都尅</h1>
             <hr class="small" />
             <span class="subheading">愈有知，愈无知。</span>
@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { RouterView } from "vue-router";
+import { RouterView, useRouter, useRoute } from "vue-router";
 import {
   NCard,
   NSpace,
@@ -46,23 +46,20 @@ import {
   NLayoutFooter,
   NLayoutHeader,
 } from "naive-ui";
+import { computed } from "vue";
+const route = useRoute();
+const router = useRouter();
+const fullPath = computed<string>(() => route.fullPath);
+
+const changePath = (url: string) => {
+  router.push(url);
+};
 </script>
 
 <style scoped lang="less">
-@import "@/static/less/content.less";
-.headerStyle {
-  padding: 15px 15px;
-  height: 60px;
-  line-height: 60px;
-}
-
 .headerStyleLine {
   color: #fff;
   font-size: 15px;
-}
-
-.layoutHight {
-  height: calc(100vh - 2000px);
 }
 
 .darkStyle {
@@ -73,6 +70,7 @@ import {
   background-attachment: scroll;
   color: #fff;
   z-index: 1;
+  margin-bottom: 20px;
 }
 
 .footerStyle {
@@ -102,13 +100,7 @@ hr {
   font-weight: 300;
   margin: 10px 0 0;
 }
-// .admin-layout__footer {
-//   left: 0;
-//   bottom: 0;
-//   flex-shrink: 0;
-//   box-sizing: border-box;
-//   width: 100%;
-//   transition-property: padding-left;
-//   flex: 0 0 auto;
-// }
+a::before {
+  cursor: pointer;
+}
 </style>
