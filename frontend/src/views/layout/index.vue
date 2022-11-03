@@ -14,7 +14,7 @@
             </div>
           </template>
           <template #header>
-            <div class="headerStyleLine"><b>瓦都尅'Blog</b></div>
+            <div class="headerStyleLine"><b>瓦都尅</b></div>
           </template>
           <div style="height: 300px; text-align: center">
             <h1>瓦都尅</h1>
@@ -29,7 +29,7 @@
       <n-layout-footer position="static" bordered>
         <!-- style="width: 100%; height: 100px; position: absolute; bottom: 0px; left: 0px" -->
         <footer class="footerStyle">
-          <span>Copyright ©2021 Soybean Admin</span>
+          <span>Copyright ©2021</span>
         </footer>
       </n-layout-footer>
     </n-layout>

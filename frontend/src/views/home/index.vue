@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="article-list">
     <n-list hoverable clickable>
       <n-list-item>
         <n-thing title="相见恨晚" content-style="margin-top: 10px;">
@@ -14,7 +14,10 @@
         </n-thing>
       </n-list-item>
       <n-list-item>
-        <n-thing title="他在时间门外" content-style="margin-top: 10px;">
+        <n-thing content-style="margin-top: 10px;">
+          <template #header>
+            <div><h1>123123123</h1></div>
+          </template>
           <template #description>
             <n-space size="small" style="margin-top: 4px">
               <n-tag :bordered="false" type="info" size="small"> 环形公路 </n-tag>
@@ -33,4 +36,18 @@
 
 <script setup lang="ts">
 import { NList, NThing, NListItem, NSpace, NTag } from "naive-ui";
+import { ref, onMounted } from "vue";
+import { getArticleList } from "@/services/article";
+
+const data = ref([]);
+
+onMounted(async () => {
+  const response = await getArticleList();
+});
 </script>
+
+<style scoped lang="less">
+.article-list {
+  margin: auto 25%;
+}
+</style>

@@ -11,13 +11,13 @@ const rollupOptions = {
     assetFileNames: `assets/[name].[hash].[ext]`,
   },
 };
-
+// console.log(process.env);
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    // legacyPlugin({
-    //   targets: ["Chrome >= 98"],
-    // }),
+    legacyPlugin({
+      targets: ["Chrome >= 60"],
+    }),
     // vue(),
     vuePlugin({}),
   ],
@@ -25,7 +25,7 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         // 支持内联 JavaScript
-        // javascriptEnabled: true,
+        javascriptEnabled: true,
         // modifyVars: {
         //   hack: `true; @import (reference) "${resolve('src/style/global/config.less')}";`,
         // },
@@ -42,10 +42,17 @@ export default defineConfig({
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       "/api": {
         // 需要代理的路径   例如 '/api'
-        target: `${process.env.VITE_BASE_PATH}:${process.env.VITE_SERVER_PORT}/`, // 代理到 目标路径
+        target: `http://localhost:3100/`, // 代理到 目标路径
         changeOrigin: true,
-        rewrite: (path) => path.replace(new RegExp("^" + process.env.VITE_BASE_API), ""),
+        rewrite: (path) => path.replace(new RegExp("^/api"), ""),
       },
+      // "/api": {
+      //   target: "http://localhsot:3100", // 目标服务器 代理的地址
+      //   changeOrigin: true, // 允许跨域
+      //   secure: true, // 支持https
+      //   // pathRewrite: { "^/api": "/" }, // 相当于用'/api'代替target里面的地址，调接口时用/api代替
+      //   rewrite: (path) => path.replace(new RegExp("^" + process.env.VITE_BASE_API), ""),
+      // },
     },
   },
   build: {
