@@ -60,7 +60,7 @@ func Routers() *gin.Engine {
 	}
 	PrivateGroup := Router.Group("")
 	frontendRouter.InitFrontendRouter(PrivateGroup)
-	PrivateGroup.Use(middleware.JWTAuth()) // .Use(middleware.CasbinHandler()) // casbin的拦截规则
+	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler()) // casbin的拦截规则
 	{
 		systemRouter.InitApiRouter(PrivateGroup)                 // 注册功能api路由
 		systemRouter.InitJwtRouter(PrivateGroup)                 // jwt相关路由
