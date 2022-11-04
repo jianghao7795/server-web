@@ -373,7 +373,7 @@ export default {
 .auth-drawer {
   .el-drawer__body {
     padding: 0;
-    overflow: hidden;
+    // overflow: hidden;
   }
 }
 </style>

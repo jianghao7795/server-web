@@ -4,10 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+
+	ioutil "io"
 	"strings"
 	"time"
 
+	// "io/ioutil"
 	"github.com/gin-gonic/gin"
 )
 

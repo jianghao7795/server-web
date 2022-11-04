@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"server/global"
 	"server/model/common/response"
 	"server/service"
 	"server/utils"
@@ -25,7 +24,8 @@ func CasbinHandler() gin.HandlerFunc {
 		// 判断策略中是否存在
 		success, _ := e.Enforce(sub, obj, act)
 		// log.Println(obj, act, sub, e)
-		if global.GVA_CONFIG.System.Env == "develop" || success {
+		// if global.GVA_CONFIG.System.Env == "develop" || success {
+		if success {
 			c.Next()
 		} else {
 			response.FailWithDetailed(gin.H{}, "权限不足", c)

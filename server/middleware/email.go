@@ -2,7 +2,8 @@ package middleware
 
 import (
 	"bytes"
-	"io/ioutil"
+	// "io/ioutil"
+	ioutil "io"
 	"strconv"
 	"time"
 

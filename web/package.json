@@ -17,6 +17,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.9",
     "@icon-park/vue-next": "^1.4.2",
+    "@vue/shared": "^3.2.41",
     "@vueuse/core": "^9.1.0",
     "animate.css": "^4.1.1",
     "axios": "^0.27.2",

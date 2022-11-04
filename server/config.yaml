@@ -121,7 +121,7 @@ redis:
   addr: 127.0.0.1:6379
   password: ""
 system:
-  env: public
+  env: develop
   addr: 3100
   db-type: mysql
   oss-type: local

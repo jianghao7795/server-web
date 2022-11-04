@@ -3,13 +3,14 @@ package middleware
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
+	ioutil "io"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 	"time"
 
+	// "io/ioutil"
 	// jsoniter "github.com/json-iterator/go"
 
 	"server/global"
