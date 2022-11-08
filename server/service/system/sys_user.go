@@ -218,3 +218,8 @@ func (userService *UserService) ResetPassword(ID uint) (err error) {
 	err = global.GVA_DB.Model(&system.SysUser{}).Where("id = ?", ID).Update("password", utils.MD5V([]byte("123456"))).Error
 	return err
 }
+
+func (*UserService) UserCount() (userCount int64, err error) {
+	err = global.GVA_DB.Model(&system.SysUser{}).Count(&userCount).Error
+	return
+}

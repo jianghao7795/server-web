@@ -5,14 +5,15 @@
         <div class="gva-top-card-left">
           <div class="gva-top-card-left-title">{{ period }}，{{ userStore.userInfo.nickName }}，请开始一天的工作吧</div>
           <div class="gva-top-card-left-dot">当前时间：{{ formatted }}</div>
-          <!-- <div class="gva-top-card-left-rows">
+          <div class="gva-top-card-left-dot">{{ weatherInfo }}</div>
+          <div class="gva-top-card-left-rows">
             <el-row v-auth="888">
               <el-col :span="8" :xs="24" :sm="8">
                 <div class="flex-center">
                   <el-icon class="dasboard-icon">
                     <sort />
                   </el-icon>
-                  今日流量 (1231231)
+                  今日流量 (1)
                 </div>
               </el-col>
               <el-col :span="8" :xs="24" :sm="8">
@@ -20,7 +21,7 @@
                   <el-icon class="dasboard-icon">
                     <avatar />
                   </el-icon>
-                  总用户数 (24001)
+                  总用户数 ({{ userNumber }})
                 </div>
               </el-col>
               <el-col :span="8" :xs="24" :sm="8">
@@ -32,12 +33,12 @@
                 </div>
               </el-col>
             </el-row>
-          </div> -->
+          </div>
         </div>
         <img src="@/assets/dashboard.png" class="gva-top-card-right" alt />
       </div>
     </div>
-    <div class="gva-card-box">
+    <div class="gva-card-box" v-auth="888">
       <el-card class="gva-card quick-entrance">
         <template #header>
           <div class="card-header">
@@ -111,15 +112,19 @@ import { useUserStore } from "@/pinia/modules/user";
 import { useNow, useDateFormat } from "@vueuse/core";
 import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
+import { useWeatherInfo } from "./weather";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import { userCount } from "@/api/user";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
+const weatherInfo = useWeatherInfo();
 const userStore = useUserStore();
 const formatted = useDateFormat(useNow(), "YYYY-MM-DD HH:mm:ss");
 const period = ref("");
+const userNumber = ref(0);
 
 onMounted(() => {
   const nowHours = useNow().value.getHours();
@@ -132,6 +137,11 @@ onMounted(() => {
   } else {
     period.value = "晚上好";
   }
+  userCount().then((resp) => {
+    if (resp?.code === 0) {
+      userNumber.value = resp.data.count || 0;
+    }
+  });
 });
 
 const swiperExample = ref([

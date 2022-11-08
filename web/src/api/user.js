@@ -195,3 +195,12 @@ export const VerifyAnswer = (data) => {
     data,
   });
 };
+
+// 获取user 人数
+export const userCount = () => {
+  return service({
+    url: "/user/getUserCount",
+    method: "get",
+    params: {},
+  });
+};

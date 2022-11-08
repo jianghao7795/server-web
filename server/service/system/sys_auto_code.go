@@ -9,7 +9,7 @@ import (
 	"go/format"
 	"go/parser"
 	"go/token"
-	"io/ioutil"
+	ioutil "io"
 	"log"
 	"os"
 	"path/filepath"
@@ -345,7 +345,7 @@ func (autoCodeService *AutoCodeService) CreateTemp(autoCode system.AutoCodeStruc
 //@return: []string, error
 
 func (autoCodeService *AutoCodeService) GetAllTplFile(pathName string, fileList []string) ([]string, error) {
-	files, err := ioutil.ReadDir(pathName)
+	files, err := os.ReadDir(pathName)
 	for _, fi := range files {
 		if fi.IsDir() {
 			fileList, err = autoCodeService.GetAllTplFile(pathName+"/"+fi.Name(), fileList)
@@ -790,5 +790,5 @@ func ImportReference(filepath, importCode, structName, packageName, groupName st
 		log.Fatal(err)
 	}
 	// 写回数据
-	return ioutil.WriteFile(filepath, buffer.Bytes(), 0o600)
+	return os.WriteFile(filepath, buffer.Bytes(), 0o600)
 }

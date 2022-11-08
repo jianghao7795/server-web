@@ -81,10 +81,10 @@ func (a *AuthorityMenuApi) AddMenuAuthority(c *gin.Context) {
 // @Produce application/json
 // @Param data body request.GetAuthorityId true "角色ID"
 // @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "获取指定角色menu"
-// @Router /menu/getMenuAuthority [post]
+// @Router /menu/getMenuAuthority [get]
 func (a *AuthorityMenuApi) GetMenuAuthority(c *gin.Context) {
 	var param request.GetAuthorityId
-	_ = c.ShouldBindJSON(&param)
+	_ = c.ShouldBindQuery(&param)
 	if err := utils.Verify(param, utils.AuthorityIdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -135,7 +135,8 @@ func (a *AuthorityMenuApi) AddBaseMenu(c *gin.Context) {
 // @Router /menu/deleteBaseMenu [post]
 func (a *AuthorityMenuApi) DeleteBaseMenu(c *gin.Context) {
 	var menu request.GetById
-	_ = c.ShouldBindJSON(&menu)
+	id := c.Param("id")
+	menu.ID, _ = strconv.Atoi(id)
 	if err := utils.Verify(menu, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

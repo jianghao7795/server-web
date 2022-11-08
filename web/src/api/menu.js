@@ -67,8 +67,8 @@ export const addMenuAuthority = (data) => {
 export const getMenuAuthority = (data) => {
   return service({
     url: "/menu/getMenuAuthority",
-    method: "post",
-    data,
+    method: "get",
+    params: data,
   });
 };
 
@@ -78,20 +78,19 @@ export const getMenuAuthority = (data) => {
 // @Router /menu/deleteBaseMenu [post]
 export const deleteBaseMenu = (data) => {
   return service({
-    url: "/menu/deleteBaseMenu",
-    method: "post",
-    data,
+    url: `/menu/deleteBaseMenu/${data.ID}`,
+    method: "delete",
   });
 };
 
 // @Summary 修改menu列表
 // @Produce  application/json
 // @Param menu Object
-// @Router /menu/updateBaseMenu [post]
+// @Router /menu/updateBaseMenu [put]
 export const updateBaseMenu = (data) => {
   return service({
     url: "/menu/updateBaseMenu",
-    method: "post",
+    method: "put",
     data,
   });
 };

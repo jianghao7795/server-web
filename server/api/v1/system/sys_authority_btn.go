@@ -21,7 +21,7 @@ type AuthorityBtnApi struct{}
 // @Router /authorityBtn/getAuthorityBtn [post]
 func (a *AuthorityBtnApi) GetAuthorityBtn(c *gin.Context) {
 	var req request.SysAuthorityBtnReq
-	_ = c.ShouldBindJSON(&req)
+	_ = c.ShouldBindQuery(&req)
 	if res, err := authorityBtnService.GetAuthorityBtn(req); err != nil {
 		global.GVA_LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
@@ -57,7 +57,7 @@ func (a *AuthorityBtnApi) SetAuthorityBtn(c *gin.Context) {
 // @Success 200 {object} response.Response{msg=string} "删除成功"
 // @Router /authorityBtn/canRemoveAuthorityBtn [post]
 func (a *AuthorityBtnApi) CanRemoveAuthorityBtn(c *gin.Context) {
-	id := c.Query("id")
+	id := c.Param("id")
 	if err := authorityBtnService.CanRemoveAuthorityBtn(id); err != nil {
 		global.GVA_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)

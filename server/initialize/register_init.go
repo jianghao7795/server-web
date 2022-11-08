@@ -1,10 +1,10 @@
 package initialize
 
-import (
-	_ "server/source/example"
-	_ "server/source/system"
-)
+// import (
+// 	_ "server/source/example"
+// 	_ "server/source/system"
+// )
 
-func init() {
-	// do nothing,only import source package so that inits can be registered
-}
+// func init() {
+// 	// do nothing,only import source package so that inits can be registered
+// }

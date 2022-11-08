@@ -365,3 +365,14 @@ func (b *BaseApi) ResetPassword(c *gin.Context) {
 		response.OkWithMessage("重置成功", c)
 	}
 }
+
+//Count user
+
+func (b *BaseApi) GetUserCount(c *gin.Context) {
+	if userCount, err := userService.UserCount(); err != nil {
+		global.GVA_LOG.Error("获取总数失败!", zap.Error(err))
+		response.FailWithMessage("获取总数失败"+err.Error(), c)
+	} else {
+		response.OkWithDetailed(gin.H{"count": userCount}, "获取成功", c)
+	}
+}

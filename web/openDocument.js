@@ -5,24 +5,24 @@
                           否则将依法维权
 */
 
-const { exec } = require('child_process');
+const { exec } = require("child_process");
 
-const url = 'https://www.gin-vue-admin.com';
-let cmd = '';
+const url = "https://www.gin-vue-admin.com";
+let cmd = "";
 // console.log(process.platform)
 switch (process.platform) {
-  case 'win32':
-    cmd = 'start'
-    exec(cmd + ' ' + url)
-    break
+  case "win32":
+    cmd = "start";
+    exec(cmd + " " + url);
+    break;
 
-  case 'darwin':
-    cmd = 'open'
-    exec(cmd + ' ' + url)
-    break
+  case "darwin":
+    cmd = "open";
+    exec(cmd + " " + url);
+    break;
 
-  case 'linux':
-    cmd = 'open'
-    exec(cmd + ' ' + url)
-    break
+  case "linux":
+    cmd = "open";
+    exec(cmd + " " + url);
+    break;
 }
