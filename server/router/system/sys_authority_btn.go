@@ -15,6 +15,6 @@ func (s *AuthorityBtnRouter) InitAuthorityBtnRouterRouter(Router *gin.RouterGrou
 	{
 		authorityRouterWithoutRecord.GET("getAuthorityBtn", authorityBtnApi.GetAuthorityBtn)
 		authorityRouterWithoutRecord.POST("setAuthorityBtn", authorityBtnApi.SetAuthorityBtn)
-		authorityRouterWithoutRecord.DELETE("canRemoveAuthorityBtn", authorityBtnApi.CanRemoveAuthorityBtn)
+		authorityRouterWithoutRecord.DELETE("canRemoveAuthorityBtn/:id", authorityBtnApi.CanRemoveAuthorityBtn)
 	}
 }

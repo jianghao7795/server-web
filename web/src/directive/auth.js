@@ -14,7 +14,6 @@ export default {
       mounted: function (el, binding) {
         const userInfo = userStore.userInfo;
         let type = "";
-        console.log(binding.value);
         switch (Object.prototype.toString.call(binding.value)) {
           case "[object Array]":
             type = "Array";
@@ -34,9 +33,7 @@ export default {
           return;
         }
         const waitUse = binding.value.toString().split(",");
-        console.log(waitUse);
         let flag = waitUse.some((item) => item === userInfo.authorityId);
-        console.log(flag);
         if (binding.modifiers.not) {
           flag = !flag;
         }

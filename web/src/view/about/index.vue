@@ -5,7 +5,7 @@
         <el-card>
           <template #header>
             <div class="card-header">
-              <span>项目信息</span>
+              <span v-auth="btnAuth.a">项目信息</span>
               <!-- changeVNode() -->
             </div>
           </template>
@@ -77,13 +77,13 @@ import { Commits } from "@/api/github";
 import { onMounted, ref, h } from "vue";
 import { Like, BankCardOne } from "@icon-park/vue-next";
 import { useI18n } from "vue-i18n";
+import { useBtnAuth } from "@/utils/btnAuth";
 // import dayjs from "dayjs";
 // import H from "./Tabs/h.vue";
 // console.log(dayjs().format("YYYY-MM-DD HH:mm:ss"));
 
-const changeVNode = () => {
-  return h("h1", {}, "fsdfasfasf");
-};
+const btnAuth = useBtnAuth();
+console.log(btnAuth);
 
 const { t } = useI18n();
 // console.log(t("menus.home"));
