@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="clearflex">
+      <el-input v-model="filterText" class="fitler" placeholder="筛选" />
       <el-button class="fl-right" size="small" type="primary" @click="relation">确 定</el-button>
     </div>
     <el-tree
@@ -12,6 +13,7 @@
       highlight-current
       node-key="ID"
       show-checkbox
+      :filter-node-method="filterNode"
       @check="nodeChange"
     >
       <template #default="{ node, data }">
@@ -56,7 +58,7 @@
 import { getBaseMenuTree, getMenuAuthority, addMenuAuthority } from "@/api/menu";
 import { updateAuthority } from "@/api/authority";
 import { getAuthorityBtnApi, setAuthorityBtnApi } from "@/api/authorityBtn";
-import { nextTick, ref } from "vue";
+import { nextTick, ref, watch } from "vue";
 import { ElMessage } from "element-plus";
 const props = defineProps({
   row: {
@@ -68,7 +70,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["changeRow"]);
-
+// 菜单筛选
+const filterText = ref("");
 const menuTreeData = ref([]);
 const menuTreeIds = ref([]);
 const needConfirm = ref(false);
@@ -182,6 +185,15 @@ const enterDialog = async () => {
     btnVisible.value = false;
   }
 };
+
+const filterNode = (value, data) => {
+  if (!value) return true;
+  return data.meta.title.includes(value);
+};
+
+watch(filterText, (val) => {
+  menuTree.value.filter(val);
+});
 </script>
 
 <script>
@@ -195,5 +207,12 @@ export default {
   span + span {
     margin-left: 12px;
   }
+}
+
+.clearflex {
+  margin-bottom: 15px;
+}
+.fitler {
+  width: 400px;
 }
 </style>
