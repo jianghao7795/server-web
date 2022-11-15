@@ -16,7 +16,15 @@ type ArticleApi struct{}
 
 var articleService = service.ServiceGroupApp.AppServiceGroup.ArticleService
 
-// CreateArticle 创建article
+// CreateArticle 创建Article
+// @Tags Article
+// @Summary 创建Article
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body app.Article true "创建Article"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /Article/createArticle [post]
 func (articleApi *ArticleApi) CreateArticle(c *gin.Context) {
 	var article app.Article
 	_ = c.ShouldBindJSON(&article)
