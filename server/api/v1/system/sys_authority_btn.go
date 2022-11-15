@@ -1,6 +1,7 @@
 package system
 
 import (
+	"log"
 	"server/global"
 	"server/model/common/response"
 	"server/model/system/request"
@@ -22,6 +23,7 @@ type AuthorityBtnApi struct{}
 func (a *AuthorityBtnApi) GetAuthorityBtn(c *gin.Context) {
 	var req request.SysAuthorityBtnReq
 	_ = c.ShouldBindQuery(&req)
+	log.Println(req)
 	if res, err := authorityBtnService.GetAuthorityBtn(req); err != nil {
 		global.GVA_LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)

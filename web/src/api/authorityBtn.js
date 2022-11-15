@@ -4,7 +4,7 @@ export const getAuthorityBtnApi = (data) => {
   return service({
     url: "/authorityBtn/getAuthorityBtn",
     method: "get",
-    data,
+    params: data,
   });
 };
 
