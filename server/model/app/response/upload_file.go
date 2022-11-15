@@ -10,5 +10,5 @@ package response
 import "server/model/app"
 
 type ResponseUploadFile struct {
-	File app.FileUploadAndDownload `json:"file"`
+	File app.FileUploadAndDownload `json:"file" form:"file"`
 }

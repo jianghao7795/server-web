@@ -17,7 +17,7 @@
       <template #default="{ node, data }">
         <span class="custom-tree-node">
           <span>{{ node.label }}</span>
-          <span>
+          <span v-if="!data.children">
             <el-button
               link
               type="primary"

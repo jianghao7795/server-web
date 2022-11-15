@@ -19,7 +19,7 @@ type Comment struct {
 	Article   Article   `json:"article" gorm:"foreignKey:ArticleId"`
 	ParentId  int       `json:"parentId" form:"parentId" gorm:"column:parent_id;comment:上级;size:10;"`
 	Content   string    `json:"content" form:"content" gorm:"column:content;comment:内容;"`
-	Praise    []Praise  `json:"praise" from:"praise"`
+	Praise    []Praise  `json:"praise" from:"praise" gorm:"-"`
 	Children  []Comment `json:"children" form:"children" gorm:"-"`
 }
 
