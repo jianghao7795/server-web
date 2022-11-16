@@ -16,7 +16,7 @@ const rollupOptions = {
 export default defineConfig({
   plugins: [
     legacyPlugin({
-      targets: ["Chrome >= 60"],
+      targets: ["defaults", "not IE 11"],
     }),
     // vue(),
     vuePlugin({}),
