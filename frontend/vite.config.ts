@@ -11,7 +11,7 @@ const rollupOptions = {
     assetFileNames: `assets/[name].[hash].[ext]`,
   },
 };
-// console.log(process.env);
+console.log(import.meta);
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
