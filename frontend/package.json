@@ -2,8 +2,8 @@
   "name": "frontend",
   "version": "0.0.1",
   "scripts": {
-    "dev": "vite",
-    "build": "run-p type-check build-only",
+    "dev": "vite --mode development",
+    "build": "run-p type-check build-only --mode production",
     "preview": "vite preview --port 4173",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit"
