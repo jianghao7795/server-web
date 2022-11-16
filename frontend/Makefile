@@ -1,4 +1,4 @@
 dev:
 	pnpm run dev
-build
+build:
 	pnpm run build

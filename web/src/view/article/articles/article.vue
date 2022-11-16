@@ -39,7 +39,7 @@
         <el-table-column label="标题" prop="title"></el-table-column>
         <el-table-column label="标签" prop="tag">
           <template #default="{ row }">
-            <div style="line-height: 40px">
+            <div class="centerBg">
               <el-space>
                 <el-tag v-for="item in row.tags" :key="item.id">{{ item.name }}</el-tag>
               </el-space>
@@ -370,4 +370,10 @@ const enterDialog = async (formRules) => {
 // const searchTag = useDebounceFn(search, 500, { maxWait: 5000 });
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.centerBg {
+  .el-space {
+    vertical-align: middle;
+  }
+}
+</style>

@@ -80,16 +80,16 @@ func (commentService *CommentService) GetCommentTreeList(info commentReq.Comment
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.GVA_DB.Model(&comment.Comment{})
-	err = db.Where("parent_id = ?", "0").Count(&total).Error
+	err = db.Where("parent_id = ?", 0).Count(&total).Error
 	if err != nil {
 		return
 	}
 
 	var commentList []comment.Comment
-	err = db.Limit(limit).Offset(offset).Preload("Article", func(db *gorm.DB) *gorm.DB {
+	err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Preload("Article", func(db *gorm.DB) *gorm.DB {
 		return db.Preload("User")
-	}).Preload("Praise").Where("parent_id = ?", "0").Find(&commentList).Error
-
+	}).Preload("Praise").Find(&commentList).Error
+	// err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Find(&commentList).Error
 	if len(commentList) > 0 {
 		for comment := range commentList {
 			err = commentService.findChildrenComment(&commentList[comment])
