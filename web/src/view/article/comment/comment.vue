@@ -62,7 +62,7 @@
             {{ scope.row?.article?.sys_user?.nickName }}
           </template>
         </el-table-column>
-        <el-table-column align="left" label="赞数" prop="praise" width="200">
+        <!-- <el-table-column align="left" label="赞数" prop="praise" width="200">
           <template #header>
             <div style="padding-left: 10px">
               <Like theme="filled" size="16" fill="#f00" />
@@ -92,7 +92,7 @@
               {{ scope.row.praise?.length }}
             </div>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column align="left" label="评论时间" width="180">
           <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
         </el-table-column>
