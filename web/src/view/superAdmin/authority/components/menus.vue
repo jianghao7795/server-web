@@ -208,11 +208,4 @@ export default {
     margin-left: 12px;
   }
 }
-
-.clearflex {
-  margin-bottom: 15px;
-}
-.fitler {
-  width: 400px;
-}
 </style>
