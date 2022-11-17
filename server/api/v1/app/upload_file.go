@@ -37,7 +37,7 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *gin.Context) {
 	_, header, err := c.Request.FormFile("file")
 	if err != nil {
 		global.GVA_LOG.Error("接收文件失败!", zap.Error(err))
-		response.FailWithMessage("接收文件失败", c)
+		response.FailWithMessage400("接收文件失败", c)
 		return
 	}
 	file, err = fileUploadService.UploadFile(header, noSave) // 文件上传后拿到文件路径

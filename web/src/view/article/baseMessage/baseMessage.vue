@@ -28,11 +28,11 @@
             accept=".png,.jpg,.jpeg"
             list-type="picture-card"
             :headers="{ 'x-token': userStore.token }"
-            v-model:file-list="fileList"
-            :limit="1"
-            :on-change="changeFile"
+            :file-list="fileList"
             :on-success="uploadSuccess"
-            :disabled="fileList.length === 1"
+            :on-remove="handleRemove"
+            :on-error="uploadError"
+            :on-change="changeFile"
           >
             <template #default>
               <div>
@@ -81,7 +81,7 @@ import { ref, onMounted } from "vue";
 import { getBaseMessage, updateBaseMessage, createBaseMessage } from "@/api/baseMessage";
 import { Delete, Download, Plus, ZoomIn } from "@element-plus/icons-vue";
 import { useUserStore } from "@/pinia/modules/user";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElNotification } from "element-plus";
 
 const upload = ref(null);
 const dialogImageUrl = ref("");
@@ -110,18 +110,31 @@ onMounted(() => {
   getBaseMessage().then((resp) => {
     if (resp?.code === 0 && !resp?.data?.error) {
       formData.value = resp.data.baseMessage || {};
-      fileList.value = [{ name: resp.data.baseMessage.head_img.split("/").pop(), url: `/api/${resp.data.baseMessage.head_img}` }];
+      if (resp.data.baseMessage.head_img) {
+        fileList.value = resp.data.baseMessage.head_img.split(",").map((i) => ({ name: i.split("/").pop(), url: i, status: "success" }));
+      }
     }
   });
 });
 
-const uploadSuccess = (response) => {
-  // console.log(response);
-  if (response?.data?.file?.url) {
-    formData.value.head_img = response?.data?.file?.url;
-  } else {
-    formData.value.head_img = "";
-  }
+const uploadSuccess = (_response, _uploadFile, uploadFiles) => {
+  formData.value.head_img = uploadFiles
+    .map((i) => {
+      if (i.url.includes("blob")) {
+        return i.response.data.file.url;
+      }
+      return i;
+    })
+    .join(",");
+};
+
+const uploadError = (error) => {
+  const response = JSON.parse(error.message);
+  ElNotification({
+    title: "上传错误",
+    message: response.msg,
+    type: "error",
+  });
 };
 
 const handlePictureCardPreview = (file) => {
@@ -143,6 +156,7 @@ const handleDownload = (file) => {
 };
 
 const handleRemove = (file) => {
+  // console.log(file);
   fileList.value = [];
 };
 

@@ -28,6 +28,12 @@ func CasbinHandler() gin.HandlerFunc {
 		if success {
 			c.Next()
 		} else {
+			// 上传文件 由于是ajxs 必须返回400 错误 才能展示错误信息
+			if obj == "/base_message/upload_file" {
+				response.FailWithDetailed400(gin.H{}, "权限不足", c)
+				c.Abort()
+				return
+			}
 			response.FailWithDetailed(gin.H{}, "权限不足", c)
 			c.Abort()
 			return

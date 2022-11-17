@@ -46,13 +46,17 @@
                       <div class="right-box">
                         <Search />
                         <el-dropdown>
-                          <div class="dp-flex justify-content-center align-items height-full width-full">
+                          <div
+                            class="dp-flex justify-content-center align-items height-full width-full"
+                            @mouseenter="changeMouse"
+                            @mouseleave="changeMouse"
+                          >
                             <span class="header-avatar" style="cursor: pointer">
                               <CustomPic />
                               <span style="margin-left: 5px">
                                 {{ userStore.userInfo.nickName }}
                               </span>
-                              <el-icon>
+                              <el-icon class="" :class="mouseLeaveOrEnter ? 'switch-mouse mouse-enter-leave' : 'switch-mouse'">
                                 <arrow-down />
                               </el-icon>
                             </span>
@@ -60,7 +64,7 @@
                           <template #dropdown>
                             <el-dropdown-menu class="dropdown-group">
                               <el-dropdown-item>
-                                <span style="font-weight: 600">当前角色：{{ userStore.userInfo.authority.authorityName }}</span>
+                                <span style="font-weight: 600">当前角色：{{ userStore.userInfo.authority?.authorityName }}</span>
                               </el-dropdown-item>
                               <template v-if="userStore.userInfo.authorities">
                                 <el-dropdown-item
@@ -268,6 +272,19 @@ const changeShadow = () => {
 const returnHome = () => {
   router.push({ name: "dashboard" });
 };
+
+const mouseLeaveOrEnter = ref(false);
+
+const changeMouse = (e) => {
+  console.log(e.type);
+  if (e?.type === "mouseleave") {
+    mouseLeaveOrEnter.value = false;
+  }
+
+  if (e?.type === "mouseenter") {
+    mouseLeaveOrEnter.value = true;
+  }
+};
 </script>
 
 <style lang="scss">
@@ -281,7 +298,12 @@ const returnHome = () => {
   background-color: #fff !important;
   color: #000 !important;
 }
-
+.mouse-enter-leave {
+  transform: rotate(180deg);
+}
+.switch-mouse {
+  transition: transform 0.5s;
+}
 // .list-enter-active, 动画  内置过渡动画
 // .list-leave-active {
 //   transition: opacity 0.5s, transform 0.5s;

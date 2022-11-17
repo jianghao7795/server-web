@@ -53,3 +53,21 @@ func FailWithMessage(message string, c *gin.Context) {
 func FailWithDetailed(data interface{}, message string, c *gin.Context) {
 	Result(ERROR, data, message, c)
 }
+
+// 返回400 错误信息
+func FailWithDetailed400(data interface{}, message string, c *gin.Context) {
+	Result400(ERROR, data, message, c)
+}
+
+func FailWithMessage400(message string, c *gin.Context) {
+	Result400(ERROR, map[string]interface{}{}, message, c)
+}
+
+func Result400(code int, data interface{}, msg string, c *gin.Context) {
+	// 开始时间
+	c.JSON(http.StatusBadRequest, Response{
+		code,
+		data,
+		msg,
+	})
+}
