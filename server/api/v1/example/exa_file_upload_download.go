@@ -1,7 +1,6 @@
 package example
 
 import (
-	"log"
 	"server/global"
 	"server/model/common/request"
 	"server/model/common/response"
@@ -63,13 +62,12 @@ func (u *FileUploadAndDownloadApi) EditFileName(c *gin.Context) {
 func (u *FileUploadAndDownloadApi) DeleteFile(c *gin.Context) {
 	var file example.ExaFileUploadAndDownload
 	id := c.Param("id")
-	log.Println("id-------", id)
+	// log.Println("id-------", id)
 	ids, _ := strconv.Atoi(id)
 	file.ID = uint(ids)
-	log.Println(file.ID)
 	if err := fileUploadAndDownloadService.DeleteFile(file); err != nil {
 		global.GVA_LOG.Error("删除失败!", zap.Error(err))
-		response.FailWithMessage("删除失败", c)
+		response.FailWithDetailed(gin.H{"msg": err.Error()}, "删除失败", c)
 		return
 	}
 	response.OkWithMessage("删除成功", c)

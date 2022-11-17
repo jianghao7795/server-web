@@ -70,8 +70,8 @@
       </el-form>
       <!-- card body -->
     </el-card>
-    <el-dialog v-model="dialogVisible" @closed="() => (dialogVisible = false)">
-      <img w-full :src="dialogImageUrl" alt="图片" />
+    <el-dialog v-model="dialogVisible" @closed="() => (dialogVisible = false)" title="查看图片">
+      <img w-full :src="dialogImageUrl" alt="图片" style="width: 100%" />
     </el-dialog>
   </div>
 </template>
@@ -111,7 +111,7 @@ onMounted(() => {
     if (resp?.code === 0 && !resp?.data?.error) {
       formData.value = resp.data.baseMessage || {};
       if (resp.data.baseMessage.head_img) {
-        fileList.value = resp.data.baseMessage.head_img.split(",").map((i) => ({ name: i.split("/").pop(), url: i, status: "success" }));
+        fileList.value = resp.data.baseMessage.head_img.split(",").map((i) => ({ name: i.split("/").pop(), url: `/api/${i}`, status: "success" }));
       }
     }
   });
@@ -121,7 +121,7 @@ const uploadSuccess = (_response, _uploadFile, uploadFiles) => {
   formData.value.head_img = uploadFiles
     .map((i) => {
       if (i.url.includes("blob")) {
-        return i.response.data.file.url;
+        return i.response.data.file.url.replace("/api/", "");
       }
       return i;
     })
@@ -156,8 +156,7 @@ const handleDownload = (file) => {
 };
 
 const handleRemove = (file) => {
-  // console.log(file);
-  fileList.value = [];
+  fileList.value = fileList.value.filter((i) => i.url !== file.url);
 };
 
 const handleSubmit = () => {

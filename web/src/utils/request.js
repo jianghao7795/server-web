@@ -81,7 +81,7 @@ service.interceptors.response.use(
     } else {
       ElMessage({
         showClose: true,
-        message: response.data.msg || decodeURI(response.headers.msg),
+        message: response.data.data.msg || response.data.msg || decodeURI(response.headers.msg),
         type: "error",
       });
       // console.log(router);
