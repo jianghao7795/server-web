@@ -276,7 +276,6 @@ const returnHome = () => {
 const mouseLeaveOrEnter = ref(false);
 
 const changeMouse = (e) => {
-  console.log(e.type);
   if (e?.type === "mouseleave") {
     mouseLeaveOrEnter.value = false;
   }
