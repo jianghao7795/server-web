@@ -1,4 +1,4 @@
-import service from '@/utils/request';
+import service from "@/utils/request";
 // @Tags authority
 // @Summary 更改角色api权限
 // @Security ApiKeyAuth
@@ -9,8 +9,8 @@ import service from '@/utils/request';
 // @Router /casbin/UpdateCasbin [post]
 export const UpdateCasbin = (data) => {
   return service({
-    url: '/casbin/updateCasbin',
-    method: 'post',
+    url: "/casbin/updateCasbin",
+    method: "post",
     data,
   });
 };
@@ -25,8 +25,7 @@ export const UpdateCasbin = (data) => {
 // @Router /casbin/getPolicyPathByAuthorityId [post]
 export const getPolicyPathByAuthorityId = (data) => {
   return service({
-    url: '/casbin/getPolicyPathByAuthorityId',
-    method: 'post',
-    data,
+    url: `/casbin/getPolicyPathByAuthorityId/${data.id}`,
+    method: "get",
   });
 };

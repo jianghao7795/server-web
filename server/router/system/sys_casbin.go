@@ -17,6 +17,6 @@ func (s *CasbinRouter) InitCasbinRouter(Router *gin.RouterGroup) {
 		casbinRouter.POST("updateCasbin", casbinApi.UpdateCasbin)
 	}
 	{
-		casbinRouterWithoutRecord.POST("getPolicyPathByAuthorityId", casbinApi.GetPolicyPathByAuthorityId)
+		casbinRouterWithoutRecord.GET("getPolicyPathByAuthorityId/:id", casbinApi.GetPolicyPathByAuthorityId)
 	}
 }

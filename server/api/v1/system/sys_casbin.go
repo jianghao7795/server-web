@@ -46,7 +46,8 @@ func (cas *CasbinApi) UpdateCasbin(c *gin.Context) {
 // @Router /casbin/getPolicyPathByAuthorityId [post]
 func (cas *CasbinApi) GetPolicyPathByAuthorityId(c *gin.Context) {
 	var casbin request.CasbinInReceive
-	_ = c.ShouldBindJSON(&casbin)
+	// _ = c.ShouldBindJSON(&casbin)
+	casbin.AuthorityId = c.Param("id")
 	if err := utils.Verify(casbin, utils.AuthorityIdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
