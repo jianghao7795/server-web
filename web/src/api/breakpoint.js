@@ -1,4 +1,4 @@
-import service from '@/utils/request';
+import service from "@/utils/request";
 // @Summary 设置角色资源权限
 // @Security ApiKeyAuth
 // @accept application/json
@@ -9,33 +9,33 @@ import service from '@/utils/request';
 
 export const findFile = (params) => {
   return service({
-    url: '/fileUploadAndDownload/findFile',
-    method: 'get',
+    url: "/fileUploadAndDownload/findFile",
+    method: "get",
     params,
   });
 };
 
 export const breakpointContinue = (data) => {
   return service({
-    url: '/fileUploadAndDownload/breakpointContinue',
-    method: 'post',
-    headers: { 'Content-Type': 'multipart/form-data' },
+    url: "/fileUploadAndDownload/breakpointContinue",
+    method: "post",
+    headers: { "Content-Type": "multipart/form-data" },
     data,
   });
 };
 
 export const breakpointContinueFinish = (params) => {
   return service({
-    url: '/fileUploadAndDownload/breakpointContinueFinish',
-    method: 'post',
+    url: "/fileUploadAndDownload/breakpointContinueFinish",
+    method: "post",
     params,
   });
 };
 
 export const removeChunk = (data, params) => {
   return service({
-    url: '/fileUploadAndDownload/removeChunk',
-    method: 'post',
+    url: "/fileUploadAndDownload/removeChunk",
+    method: "post",
     data,
     params,
   });

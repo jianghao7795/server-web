@@ -54,7 +54,7 @@ const init = async () => {
 
   apiTreeData.value = buildApiTree(apis);
   const res = await getPolicyPathByAuthorityId({
-    authorityId: props.row.authorityId,
+    id: props.row.authorityId,
   });
   activeUserId.value = props.row.authorityId;
   apiTreeIds.value = [];
