@@ -7,7 +7,7 @@ aliyun-oss:
   base-path: yourBasePath
 autocode:
   transfer-restart: true
-  root: /home/jianghao/man/gin-vue-admin
+  root: /home/jianghao/man/server-web
   server: /server
   server-api: /api/v1/%s
   server-initialize: /initialize

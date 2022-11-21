@@ -272,11 +272,7 @@ const returnHome = () => {
 const mouseLeaveOrEnter = ref(false);
 
 const changeMouse = (e) => {
-  if (e) {
-    mouseLeaveOrEnter.value = false;
-  } else {
-    mouseLeaveOrEnter.value = true;
-  }
+  mouseLeaveOrEnter.value = e;
 };
 </script>
 
