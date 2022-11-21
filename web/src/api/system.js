@@ -1,4 +1,4 @@
-import service from '@/utils/request';
+import service from "@/utils/request";
 // @Tags systrm
 // @Summary 获取配置文件内容
 // @Security ApiKeyAuth
@@ -7,8 +7,8 @@ import service from '@/utils/request';
 // @Router /system/getSystemConfig [post]
 export const getSystemConfig = () => {
   return service({
-    url: '/system/getSystemConfig',
-    method: 'post',
+    url: "/system/getSystemConfig",
+    method: "get",
   });
 };
 
@@ -18,11 +18,11 @@ export const getSystemConfig = () => {
 // @Produce  application/json
 // @Param data body sysModel.System true
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"返回成功"}"
-// @Router /system/setSystemConfig [post]
+// @Router /system/setSystemConfig [put]
 export const setSystemConfig = (data) => {
   return service({
-    url: '/system/setSystemConfig',
-    method: 'post',
+    url: "/system/setSystemConfig",
+    method: "put",
     data,
   });
 };
@@ -32,11 +32,11 @@ export const setSystemConfig = (data) => {
 // @Security ApiKeyAuth
 // @Produce  application/json
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"返回成功"}"
-// @Router /system/getServerInfo [post]
+// @Router /system/getServerInfo [get]
 export const getSystemState = () => {
   return service({
-    url: '/system/getServerInfo',
-    method: 'post',
+    url: "/system/getServerInfo",
+    method: "get",
     donNotShowLoading: true,
   });
 };

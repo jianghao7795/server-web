@@ -34,7 +34,7 @@ func (s *SystemApi) GetSystemConfig(c *gin.Context) {
 // @Produce  application/json
 // @Param data body system.System true "设置配置文件内容"
 // @Success 200 {object} response.Response{data=string} "设置配置文件内容"
-// @Router /system/setSystemConfig [post]
+// @Router /system/setSystemConfig [put]
 func (s *SystemApi) SetSystemConfig(c *gin.Context) {
 	var sys system.System
 	_ = c.ShouldBindJSON(&sys)

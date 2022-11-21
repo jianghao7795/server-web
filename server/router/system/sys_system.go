@@ -11,11 +11,14 @@ type SysRouter struct{}
 
 func (s *SysRouter) InitSystemRouter(Router *gin.RouterGroup) {
 	sysRouter := Router.Group("system").Use(middleware.OperationRecord())
+	sysGetRouter := Router.Group("system")
 	systemApi := v1.ApiGroupApp.SystemApiGroup.SystemApi
 	{
-		sysRouter.POST("getSystemConfig", systemApi.GetSystemConfig) // 获取配置文件内容
-		sysRouter.POST("setSystemConfig", systemApi.SetSystemConfig) // 设置配置文件内容
-		sysRouter.POST("getServerInfo", systemApi.GetServerInfo)     // 获取服务器信息
-		sysRouter.POST("reloadSystem", systemApi.ReloadSystem)       // 重启服务
+		sysRouter.PUT("setSystemConfig", systemApi.SetSystemConfig) // 设置配置文件内容
+		sysRouter.POST("reloadSystem", systemApi.ReloadSystem)      // 重启服务
+	}
+	{
+		sysRouter.GET("getSystemConfig", systemApi.GetSystemConfig) // 获取配置文件内容
+		sysGetRouter.GET("getServerInfo", systemApi.GetServerInfo)  // 获取服务器信息
 	}
 }
