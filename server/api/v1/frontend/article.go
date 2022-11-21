@@ -1,11 +1,15 @@
 package frontend
 
 import (
+	"encoding/json"
 	"errors"
+	"log"
 	"server/global"
 	"server/model/common/response"
+	"server/model/frontend"
 	"server/model/frontend/request"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -29,6 +33,22 @@ func (s *FrontendArticleApi) GetArticleList(c *gin.Context) {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
+		// global.GVA_REDIS.Set(c, "list", list, time.Hour)
+		// err = global.GVA_REDIS.Do("set", "name", "abc")
+		global.GVA_REDIS.Set(c, "list", "list", 1*time.Hour)
+		val, _ := global.GVA_REDIS.Get(c, "list").Result()
+		log.Println(val)
+		b, _ := json.Marshal(list)
+
+		global.GVA_REDIS.Set(c, "key4", string(b), 1*time.Hour)
+		d, _ := global.GVA_REDIS.Get(c, "key4").Result()
+		var f []frontend.Article
+		err = json.Unmarshal([]byte(d), &f)
+		if err != nil {
+			panic(err)
+		}
+		log.Println(f)
+
 		response.OkWithDetailed(response.PageResult{
 			List: list,
 			// Total:    total,
