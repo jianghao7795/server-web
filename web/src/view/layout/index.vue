@@ -45,12 +45,8 @@
                     <el-col :xs="12" :lg="9" :md="9" :sm="14" :xl="9">
                       <div class="right-box">
                         <Search />
-                        <el-dropdown>
-                          <div
-                            class="dp-flex justify-content-center align-items height-full width-full"
-                            @mouseenter="changeMouse"
-                            @mouseleave="changeMouse"
-                          >
+                        <el-dropdown @visible-change="changeMouse">
+                          <div class="dp-flex justify-content-center align-items height-full width-full">
                             <span class="header-avatar" style="cursor: pointer">
                               <CustomPic />
                               <span style="margin-left: 5px">
@@ -276,11 +272,9 @@ const returnHome = () => {
 const mouseLeaveOrEnter = ref(false);
 
 const changeMouse = (e) => {
-  if (e?.type === "mouseleave") {
+  if (e) {
     mouseLeaveOrEnter.value = false;
-  }
-
-  if (e?.type === "mouseenter") {
+  } else {
     mouseLeaveOrEnter.value = true;
   }
 };

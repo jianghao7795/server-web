@@ -25,8 +25,11 @@
           <el-upload
             action="/api/base_message/upload_file"
             ref="upload"
+            :class="[fileList.length === 5 ? 'disUoloadSty' : '']"
             accept=".png,.jpg,.jpeg"
             list-type="picture-card"
+            :disabled="fileList.length === 5"
+            :limit="5"
             :headers="{ 'x-token': userStore.token }"
             :file-list="fileList"
             :on-success="uploadSuccess"
@@ -186,38 +189,38 @@ const handleSubmit = () => {
 </script>
 
 <style scoped lang="scss">
-.avatar-uploader .el-upload {
-  border: 1px dashed var(--el-border-color);
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: var(--el-transition-duration-fast);
-}
+// .avatar-uploader .el-upload {
+//   border: 1px dashed var(--el-border-color);
+//   border-radius: 6px;
+//   cursor: pointer;
+//   position: relative;
+//   overflow: hidden;
+//   transition: var(--el-transition-duration-fast);
+// }
 
-.avatar-uploader .el-upload:hover {
-  border-color: var(--el-color-primary);
-}
+// .avatar-uploader .el-upload:hover {
+//   border-color: var(--el-color-primary);
+// }
 
-.el-icon.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  text-align: center;
-}
+// .el-icon.avatar-uploader-icon {
+//   font-size: 28px;
+//   color: #8c939d;
+//   width: 178px;
+//   height: 178px;
+//   text-align: center;
+// }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+// .card-header {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// }
 
-.text {
-  font-size: 14px;
-}
+// .text {
+//   font-size: 14px;
+// }
 
-.item {
-  margin-bottom: 18px;
-}
+// .item {
+//   margin-bottom: 18px;
+// }
 </style>
