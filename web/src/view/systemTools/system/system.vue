@@ -327,7 +327,16 @@
           <el-form-item label="Spec(CRON表达式)">
             <el-input v-model="config.timer.spec" />
           </el-form-item>
+          <el-alert title="清除数据" type="success" :closable="false" />
           <template v-for="(item, k) in config.timer.detail">
+            <div v-for="(key, k2) in item" :key="k2">
+              <el-form-item :key="k + k2" :label="k2">
+                <el-input v-model="item[k2]" />
+              </el-form-item>
+            </div>
+          </template>
+          <el-alert title="任务" type="error" :closable="false" />
+          <template v-for="(item, k) in config.timer?.tasks">
             <div v-for="(key, k2) in item" :key="k2">
               <el-form-item :key="k + k2" :label="k2">
                 <el-input v-model="item[k2]" />

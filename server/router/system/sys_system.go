@@ -18,7 +18,7 @@ func (s *SysRouter) InitSystemRouter(Router *gin.RouterGroup) {
 		sysRouter.POST("reloadSystem", systemApi.ReloadSystem)      // 重启服务
 	}
 	{
-		sysRouter.GET("getSystemConfig", systemApi.GetSystemConfig) // 获取配置文件内容
-		sysGetRouter.GET("getServerInfo", systemApi.GetServerInfo)  // 获取服务器信息
+		sysGetRouter.GET("getSystemConfig", systemApi.GetSystemConfig) // 获取配置文件内容
+		sysGetRouter.GET("getServerInfo", systemApi.GetServerInfo)     // 获取服务器信息
 	}
 }
