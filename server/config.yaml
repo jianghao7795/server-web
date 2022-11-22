@@ -140,7 +140,7 @@ tencent-cos:
   path-prefix: server
 timer:
   start: true
-  spec: '@every 10h'
+  spec: '@every 100h'
   detail:
   - tableName: sys_operation_records
     compareField: created_at
