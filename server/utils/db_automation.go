@@ -25,5 +25,5 @@ func ClearTable(db *gorm.DB, tableName string, compareField string, interval str
 	if duration < 0 {
 		return errors.New("parse duration < 0")
 	}
-	return db.Debug().Exec(fmt.Sprintf("DELETE FROM %s WHERE %s < ?", tableName, compareField), time.Now().Add(-duration)).Error
+	return db.Debug().Exec(fmt.Sprintf("update %s SET deleted_at = ? WHERE %s < ?", tableName, compareField), time.Now().Add(-duration), time.Now().Add(-duration)).Error
 }

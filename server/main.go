@@ -34,6 +34,8 @@ func main() {
 	zap.ReplaceGlobals(global.GVA_LOG) // 部署到全局
 	global.GVA_DB = initialize.Gorm()  // gorm连接数据库
 	initialize.Timer()
+	// conn, err := global.GVA_Timer.FindCron("ClearDB")
+	// log.Println(conn, err)
 	initialize.DBList()
 	utilsInit.TransInit("zh")
 	if global.GVA_DB != nil {

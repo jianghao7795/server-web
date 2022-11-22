@@ -2,11 +2,8 @@ package initialize
 
 import (
 	"context"
-	"server/model/example"
-	sysModel "server/model/system"
 	"server/service/system"
 
-	adapter "github.com/casbin/gorm-adapter/v3"
 	"gorm.io/gorm"
 )
 
@@ -36,26 +33,26 @@ func (e *ensureTables) MigrateTable(ctx context.Context) (context.Context, error
 		return ctx, system.ErrMissingDBContext
 	}
 	tables := []interface{}{
-		sysModel.SysApi{},
-		sysModel.SysUser{},
-		sysModel.SysBaseMenu{},
-		sysModel.SysAuthority{},
-		sysModel.JwtBlacklist{},
-		sysModel.SysDictionary{},
-		sysModel.SysAutoCodeHistory{},
-		sysModel.SysOperationRecord{},
-		sysModel.SysDictionaryDetail{},
-		sysModel.SysBaseMenuParameter{},
-		sysModel.SysBaseMenuBtn{},
-		sysModel.SysAuthorityBtn{},
-		sysModel.SysAutoCode{},
+		// sysModel.SysApi{},
+		// sysModel.SysUser{},
+		// sysModel.SysBaseMenu{},
+		// sysModel.SysAuthority{},
+		// sysModel.JwtBlacklist{},
+		// sysModel.SysDictionary{},
+		// sysModel.SysAutoCodeHistory{},
+		// sysModel.SysOperationRecord{},
+		// sysModel.SysDictionaryDetail{},
+		// sysModel.SysBaseMenuParameter{},
+		// sysModel.SysBaseMenuBtn{},
+		// sysModel.SysAuthorityBtn{},
+		// sysModel.SysAutoCode{},
 
-		adapter.CasbinRule{},
+		// adapter.CasbinRule{},
 
-		example.ExaFile{},
-		example.ExaCustomer{},
-		example.ExaFileChunk{},
-		example.ExaFileUploadAndDownload{},
+		// example.ExaFile{},
+		// example.ExaCustomer{},
+		// example.ExaFileChunk{},
+		// example.ExaFileUploadAndDownload{},
 	}
 	for _, t := range tables {
 		_ = db.AutoMigrate(&t)
@@ -71,26 +68,26 @@ func (e *ensureTables) TableCreated(ctx context.Context) bool {
 		return false
 	}
 	tables := []interface{}{
-		sysModel.SysApi{},
-		sysModel.SysUser{},
-		sysModel.SysBaseMenu{},
-		sysModel.SysAuthority{},
-		sysModel.JwtBlacklist{},
-		sysModel.SysDictionary{},
-		sysModel.SysAutoCodeHistory{},
-		sysModel.SysOperationRecord{},
-		sysModel.SysDictionaryDetail{},
-		sysModel.SysBaseMenuParameter{},
-		sysModel.SysBaseMenuBtn{},
-		sysModel.SysAuthorityBtn{},
-		sysModel.SysAutoCode{},
+		// sysModel.SysApi{},
+		// sysModel.SysUser{},
+		// sysModel.SysBaseMenu{},
+		// sysModel.SysAuthority{},
+		// sysModel.JwtBlacklist{},
+		// sysModel.SysDictionary{},
+		// sysModel.SysAutoCodeHistory{},
+		// sysModel.SysOperationRecord{},
+		// sysModel.SysDictionaryDetail{},
+		// sysModel.SysBaseMenuParameter{},
+		// sysModel.SysBaseMenuBtn{},
+		// sysModel.SysAuthorityBtn{},
+		// sysModel.SysAutoCode{},
 
-		adapter.CasbinRule{},
+		// adapter.CasbinRule{},
 
-		example.ExaFile{},
-		example.ExaCustomer{},
-		example.ExaFileChunk{},
-		example.ExaFileUploadAndDownload{},
+		// example.ExaFile{},
+		// example.ExaCustomer{},
+		// example.ExaFileChunk{},
+		// example.ExaFileUploadAndDownload{},
 	}
 	yes := true
 	for _, t := range tables {

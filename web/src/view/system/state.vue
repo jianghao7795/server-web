@@ -136,7 +136,7 @@ const reload = async () => {
 reload();
 timer.value = setInterval(() => {
   reload();
-}, 1000 * 20);
+}, 1000 * 60);
 
 onUnmounted(() => {
   clearInterval(timer.value);

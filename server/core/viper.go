@@ -3,7 +3,6 @@ package core
 import (
 	"flag"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"time"
@@ -18,6 +17,7 @@ import (
 	"github.com/spf13/viper" // 配置文件读取
 )
 
+// 读取配置
 func Viper(path ...string) *viper.Viper {
 	var config string
 	if len(path) == 0 {
@@ -40,7 +40,7 @@ func Viper(path ...string) *viper.Viper {
 	}
 
 	v := viper.New()
-	log.Println(config, "record")
+	// log.Println(config, "record")
 	v.SetConfigFile(config)
 	v.SetConfigType("yaml")
 	err := v.ReadInConfig()
@@ -58,7 +58,7 @@ func Viper(path ...string) *viper.Viper {
 	if err := v.Unmarshal(&global.GVA_CONFIG); err != nil {
 		fmt.Println(err)
 	}
-	log.Println("config", global.GVA_CONFIG)
+	// log.Println("config", global.GVA_CONFIG)
 	// root 适配性
 	// 根据root位置去找到对应迁移位置,保证root路径有效
 	global.GVA_CONFIG.AutoCode.Root, _ = filepath.Abs("..")
