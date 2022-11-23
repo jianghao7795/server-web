@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     ChooseImg: typeof import('./src/components/chooseImg/index.vue')['default']
     Common: typeof import('./src/components/upload/common.vue')['default']
     CustomPic: typeof import('./src/components/customPic/index.vue')['default']
+    ElAlert: typeof import('element-plus/es')['ElAlert']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBacktop: typeof import('element-plus/es')['ElBacktop']

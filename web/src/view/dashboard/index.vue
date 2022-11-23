@@ -38,7 +38,7 @@
         <img src="@/assets/dashboard.png" class="gva-top-card-right" alt />
       </div>
     </div>
-    <div class="gva-card-box" v-auth="888">
+    <div class="gva-card-box" v-auth="[888, 998]">
       <el-card class="gva-card quick-entrance">
         <template #header>
           <div class="card-header">

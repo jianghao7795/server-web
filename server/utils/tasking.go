@@ -15,7 +15,7 @@ import (
 func Tasking(taskName string, output string, interval string) (err error) {
 	duration, err := time.ParseDuration(interval)
 	if err != nil {
-		return
+		return err
 	}
 	if duration < 0 {
 		return errors.New("parse duration < 0")
