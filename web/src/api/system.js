@@ -40,3 +40,17 @@ export const getSystemState = () => {
     donNotShowLoading: true,
   });
 };
+
+// @Tags start task
+// @Summary 开启任务
+// @Security ApiKeyAuth
+// @Produce  application/json
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"开启成功"}"
+// @Router /tasking/start [get]
+export const startTasking = (params) => {
+  return service({
+    url: "/tasking/start",
+    method: "get",
+    params: params,
+  });
+};

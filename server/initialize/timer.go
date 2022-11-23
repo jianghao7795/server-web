@@ -31,10 +31,11 @@ func Tasks() {
 			go func(detail config.Task) {
 				global.GVA_Timer.AddTaskByFunc("Tasking", global.GVA_CONFIG.Timer.Spec, func() {
 					err := utils.Tasking(detail.TaskName, detail.Output, detail.Interval)
-					record++
 					if record == 10 {
+						record = 0
 						global.GVA_Timer.StopTask("Tasking")
 					}
+					record++
 					if err != nil {
 						fmt.Println("tasking error:", err)
 					}

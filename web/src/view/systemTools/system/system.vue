@@ -343,6 +343,11 @@
               </el-form-item>
             </div>
           </template>
+          <el-popconfirm placement="top" @confirm="handleStartTask" trigger="click" title="确定开启 任务task?" :width="300">
+            <template #reference>
+              <el-button type="primary">开始任务</el-button>
+            </template>
+          </el-popconfirm>
         </el-collapse-item>
       </el-collapse>
     </el-form>
@@ -361,7 +366,7 @@ export default {
 };
 </script>
 <script setup>
-import { getSystemConfig, setSystemConfig } from "@/api/system";
+import { getSystemConfig, setSystemConfig, startTasking } from "@/api/system";
 import { emailTest } from "@/api/email";
 import { ref, reactive } from "vue";
 import { ElMessage } from "element-plus";
@@ -400,7 +405,6 @@ const initForm = async () => {
   }
 };
 initForm();
-const reload = () => {};
 const update = async () => {
   const res = await setSystemConfig({ config: config.value });
   if (res.code === 0) {
@@ -423,6 +427,16 @@ const email = async () => {
     ElMessage({
       type: "error",
       message: "邮件发送失败",
+    });
+  }
+};
+//开启任务
+const handleStartTask = async () => {
+  const resp = await startTasking({ task: "Tasking" });
+  if (resp.code === 0) {
+    ElMessage({
+      message: "开启成功",
+      type: "success",
     });
   }
 };
