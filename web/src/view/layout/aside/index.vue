@@ -6,15 +6,14 @@
           :collapse="isCollapse"
           :collapse-transition="false"
           :default-active="active"
-          :background-color="userStore.sideMode"
-          :active-text-color="userStore.activeColor"
-          :text-color="userStore.baseColor"
+          :background-color="theme.background"
+          :active-text-color="theme.active"
           class="el-menu-vertical"
           unique-opened
           @select="selectMenuItem"
         >
           <template v-for="item in routerStore.asyncRouters[0].children">
-            <aside-component v-if="!item.hidden" :key="item.name" :router-info="item" />
+            <aside-component v-if="!item.hidden" :key="item.name" :is-collapse="isCollapse" :router-info="item" :theme="theme" />
           </template>
         </el-menu>
       </transition>
@@ -35,37 +34,65 @@ import { ref, watch, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
 import { useRouterStore } from "@/pinia/modules/router";
-
 const route = useRoute();
 const router = useRouter();
-
 const userStore = useUserStore();
 const routerStore = useRouterStore();
-
+const theme = ref({});
+const getTheme = () => {
+  switch (userStore.sideMode) {
+    case "#fff":
+      theme.value = {
+        background: "#fff",
+        activeBackground: "#4D70FF",
+        activeText: "#fff",
+        normalText: "#333",
+        hoverBackground: "rgba(64, 158, 255, 0.08)",
+        hoverText: "#333",
+      };
+      break;
+    case "#191a23":
+      theme.value = {
+        background: "#191a23",
+        activeBackground: "#337ecc",
+        activeText: "#fff",
+        normalText: "#fff",
+        hoverBackground: "rgba(64, 158, 255, 0.08)",
+        hoverText: "#fff",
+      };
+      break;
+  }
+};
+getTheme();
 const active = ref("");
-watch(route, () => {
-  active.value = route.name;
-});
-
+watch(
+  () => route,
+  () => {
+    active.value = route.meta.activeName || route.name;
+  },
+  { deep: true },
+);
+watch(
+  () => userStore.sideMode,
+  () => {
+    getTheme();
+  },
+);
 const isCollapse = ref(false);
 const initPage = () => {
-  active.value = route.name;
+  active.value = route.meta.activeName || route.name;
   const screenWidth = document.body.clientWidth;
   if (screenWidth < 1000) {
     isCollapse.value = !isCollapse.value;
   }
-
   emitter.on("collapse", (item) => {
     isCollapse.value = item;
   });
 };
-
 initPage();
-
 onUnmounted(() => {
   emitter.off("collapse");
 });
-
 const selectMenuItem = (index, _, ele, aaa) => {
   const query = {};
   const params = {};
@@ -85,25 +112,11 @@ const selectMenuItem = (index, _, ele, aaa) => {
   }
 };
 </script>
-
 <style lang="scss">
-.el-sub-menu__title,
-.el-menu-item {
-  i {
-    color: inherit !important;
-  }
-}
-
 .el-sub-menu__title:hover,
 .el-menu-item:hover {
-  i {
-    color: inherit !important;
-  }
-  span {
-    color: inherit !important;
-  }
+  background: transparent;
 }
-
 .el-scrollbar {
   .el-scrollbar__view {
     height: 100%;
