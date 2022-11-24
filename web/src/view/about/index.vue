@@ -83,7 +83,7 @@ import { useBtnAuth } from "@/utils/btnAuth";
 // console.log(dayjs().format("YYYY-MM-DD HH:mm:ss"));
 
 const btnAuth = useBtnAuth();
-console.log(btnAuth);
+// console.log(btnAuth);
 
 const { t } = useI18n();
 // console.log(t("menus.home"));

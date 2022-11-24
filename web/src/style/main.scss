@@ -587,10 +587,13 @@ li {
   }
 
   .aside {
+
+    // .el-menu-item {
+    //   >div {
+    //     padding: 0 15px !important;
+    //   }
     .el-menu-item {
-      >div {
-        padding: 0 15px !important;
-      }
+      padding: 0 15px;
     }
 
     .el-sub-menu {
