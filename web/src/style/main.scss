@@ -592,9 +592,9 @@ li {
     //   >div {
     //     padding: 0 15px !important;
     //   }
-    .el-menu-item {
-      padding: 0 15px;
-    }
+    // .el-menu-item {
+    //   padding: 0 15px;
+    // }
 
     .el-sub-menu {
       .el-menu {
@@ -1130,6 +1130,10 @@ $mainHight: 100vh;
 
     .el-menu--collapse {
       width: 50px;
+
+      .el-menu-item {
+        padding: 0 15px;
+      }
 
       li {
 
