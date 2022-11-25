@@ -50,6 +50,8 @@ export const useUserStore = defineStore("user", () => {
     const res = await getUserInfo();
     if (res.code === 0) {
       setUserInfo(res.data.userInfo);
+    } else {
+      setUserInfo({});
     }
     return res;
   };
@@ -71,6 +73,7 @@ export const useUserStore = defineStore("user", () => {
           router.addRoute(asyncRouter);
         });
         router.push({ name: userInfo.value.authority.defaultRouter });
+        // router.push({ name: "layout404" });
         return true;
       }
     } catch (e) {

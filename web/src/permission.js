@@ -14,11 +14,13 @@ NProgress.configure({ showSpinner: false });
 const getRouter = async (userStore) => {
   const routerStore = useRouterStore();
   await routerStore.SetAsyncRouter();
-  await userStore.GetUserInfo();
-  const asyncRouters = routerStore.asyncRouters;
-  asyncRouters.forEach((asyncRouter) => {
-    router.addRoute(asyncRouter);
-  });
+  const resp = await userStore.GetUserInfo();
+  if (resp.code === 0) {
+    const asyncRouters = routerStore.asyncRouters;
+    asyncRouters.forEach((asyncRouter) => {
+      router.addRoute(asyncRouter);
+    });
+  }
 };
 
 async function handleKeepAlive(to) {
@@ -54,7 +56,8 @@ router.beforeEach(async (to, from, next) => {
         asyncRouterFlag++;
         await getRouter(userStore);
       }
-      next({ name: userStore.userInfo.authority.defaultRouter });
+      // next({ name: userStore.userInfo.authority.defaultRouter });
+      next({ name: "layout404" });
     } else {
       next();
     }
