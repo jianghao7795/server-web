@@ -102,10 +102,12 @@ const checkPassword = (rule, value, callback) => {
 // 获取验证码
 const loginVerify = () => {
   captcha({}).then((ele) => {
-    rules.captcha[1].max = ele.data.captchaLength;
-    rules.captcha[1].min = ele.data.captchaLength;
-    picPath.value = ele.data.picPath;
-    loginFormData.captchaId = ele.data.captchaId;
+    if (ele.code === 0) {
+      rules.captcha[1].max = ele.data.captchaLength;
+      rules.captcha[1].min = ele.data.captchaLength;
+      picPath.value = ele.data.picPath;
+      loginFormData.captchaId = ele.data.captchaId;
+    }
   });
 };
 onMounted(() => {
