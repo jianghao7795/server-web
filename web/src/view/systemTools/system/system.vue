@@ -151,7 +151,12 @@
               <el-input v-model.number="config.mysql['max-open-conns']" />
             </el-form-item>
             <el-form-item label="logMode">
-              <el-checkbox v-model="config.mysql['log-mode']" />
+              <el-radio-group v-model="config.mysql['log-mode']">
+                <el-radio-button label="Slinet" />
+                <el-radio-button label="Washington" />
+                <el-radio-button label="Los Angeles" />
+                <el-radio-button label="Chicago" />
+              </el-radio-group>
             </el-form-item>
           </template>
           <template v-if="config.system.dbType === 'pgsql'">
