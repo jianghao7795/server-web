@@ -3,7 +3,7 @@ import { getDict } from '@/utils/dictionary';
 
 export const formatBoolean = (bool) => {
   if (bool !== null) {
-    return bool ? '是' : '否';
+    return bool ? '开启' : '停用';
   } else {
     return '';
   }

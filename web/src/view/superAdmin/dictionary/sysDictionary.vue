@@ -44,7 +44,7 @@
         <el-table-column align="left" label="操作">
           <template #default="scope">
             <el-button size="small" icon="document" link type="primary" @click="toDetile(scope.row)">详情</el-button>
-            <el-button size="small" icon="edit" link type="primary" @click="updateSysDictionaryFunc(scope.row)">变更</el-button>
+            <el-button size="small" icon="edit" link type="primary" @click="updateSysDictionaryFunc(scope.row)">编辑</el-button>
             <!-- v-model:visible="scope.row.visible" -->
             <el-popconfirm
               placement="top"
