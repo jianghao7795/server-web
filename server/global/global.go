@@ -29,6 +29,8 @@ var (
 	BlackCache local_cache.Cache
 	lock       sync.RWMutex
 	Validate   ut.Translator
+	// 缓存
+	// Cache config.Cache
 )
 
 // GetGlobalDBByDBName 通过名称获取db list中的db

@@ -161,3 +161,5 @@ zap:
   encode-level: LowercaseColorLevelEncoder
   stacktrace-key: stacktrace
   log-in-console: true
+cache:
+  time: 1 #时间 hour
