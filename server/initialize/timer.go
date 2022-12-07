@@ -25,19 +25,20 @@ func Timer() {
 
 func Tasks() {
 	// log.Println(global.GVA_CONFIG)
-	record := 0
+	record := 10
 	if global.GVA_CONFIG.Timer.Start {
 		for i := range global.GVA_CONFIG.Timer.Tasks {
 			go func(detail config.Task) {
 				global.GVA_Timer.AddTaskByFunc("Tasking", global.GVA_CONFIG.Timer.Spec, func() {
-					err := utils.Tasking(detail.TaskName, detail.Output, detail.Interval)
 					if record == 10 {
 						record = 0
 						global.GVA_Timer.StopTask("Tasking")
-					}
-					record++
-					if err != nil {
-						fmt.Println("tasking error:", err)
+					} else {
+						err := utils.Tasking(detail.TaskName, detail.Output, detail.Interval)
+						record++
+						if err != nil {
+							fmt.Println("tasking error:", err)
+						}
 					}
 				})
 			}(global.GVA_CONFIG.Timer.Tasks[i])
