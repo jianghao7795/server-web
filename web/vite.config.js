@@ -72,7 +72,7 @@ export default defineConfig(({ command, mode }) => {
     },
     server: {
       // 如果使用docker-compose开发模式，设置为false
-      open: true,
+      // open: true,
       cors: true,
       hmr: true,
       port: process.env.VITE_CLI_PORT,
