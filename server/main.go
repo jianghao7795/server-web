@@ -33,10 +33,10 @@ func main() {
 	global.GVA_LOG = core.Zap()        // 初始化zap日志库
 	zap.ReplaceGlobals(global.GVA_LOG) // 部署到全局
 	global.GVA_DB = initialize.Gorm()  // gorm连接数据库
-	// initialize.Timer()                 //定时清除数据库数据
+	initialize.Timer()                 //定时清除数据库数据
 	// conn, err := global.GVA_Timer.FindCron("ClearDB")
 	// log.Println(conn, err)
-	initialize.Tasks() //执行任务
+	initialize.Tasks() //定时 执行任务
 	initialize.DBList()
 	utilsInit.TransInit("zh")
 	if global.GVA_DB != nil {

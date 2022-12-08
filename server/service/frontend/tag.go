@@ -1,21 +1,65 @@
 package frontend
 
 import (
+	"encoding/json"
+	"errors"
 	"server/global"
 	"server/model/frontend"
+	"strconv"
+	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v8"
 )
 
 type FrontendTag struct{}
 
-func (s *FrontendTag) GetTagList() (list []frontend.AppTab, err error) {
-	db := global.GVA_DB.Model(&frontend.AppTab{})
-	var tags []frontend.AppTab
-	err = db.Order("id desc").Find(&tags).Error
-	return tags, err
+func (s *FrontendTag) GetTagList(c *gin.Context) (list []frontend.AppTab, err error) {
+	var tagListStr string
+	tagListStr, err = global.GVA_REDIS.Get(c, "tag-list").Result()
+	if err == redis.Nil {
+		db := global.GVA_DB.Model(&frontend.AppTab{})
+		err = db.Order("id desc").Find(&list).Error
+		if err != nil {
+			return list, err
+		}
+
+		err := global.GVA_REDIS.Set(c, "tag-list", list, 1*time.Hour).Err()
+		if err != nil {
+			return list, errors.New("redis 存储失败， 请查看redis服务 配置")
+		}
+		return list, nil
+	} else if err != nil {
+		return list, err
+	} else {
+		if tagListStr != "" {
+			err = json.Unmarshal([]byte(tagListStr), &list)
+			return list, err
+		}
+	}
+	return list, err
 }
 
-func (s *FrontendTag) GetTagArticle(tagId int) (tagArticle frontend.AppTab, err error) {
-	db := global.GVA_DB.Model(&frontend.AppTab{})
-	err = db.Where("id = ?", tagId).Order("id desc").Preload("Articles").First(&tagArticle).Error
+func (s *FrontendTag) GetTagArticle(tagId int, c *gin.Context) (tagArticle frontend.AppTab, err error) {
+	tagArticleStr := ""
+	tagArticleStr, err = global.GVA_REDIS.Get(c, "tag-"+strconv.Itoa(tagId)).Result()
+	if err == redis.Nil {
+		db := global.GVA_DB.Model(&frontend.AppTab{})
+		err = db.Where("id = ?", tagId).Order("id desc").Preload("Articles").First(&tagArticle).Error
+		if err != nil {
+			return tagArticle, err
+		}
+		err := global.GVA_REDIS.Set(c, "tag-list", tagArticle, 1*time.Hour).Err()
+		if err != nil {
+			return tagArticle, errors.New("redis 存储失败， 请查看redis服务 配置")
+		}
+		return tagArticle, nil
+		// return tagArticle, err
+	} else if err != nil {
+		return tagArticle, err
+	} else {
+		err = json.Unmarshal([]byte(tagArticleStr), &tagArticle)
+	}
+
 	return tagArticle, err
 }

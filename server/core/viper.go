@@ -17,7 +17,7 @@ import (
 	"github.com/spf13/viper" // 配置文件读取
 )
 
-// 读取配置
+// 读取配置 配置文件config.yaml
 func Viper(path ...string) *viper.Viper {
 	var config string
 	if len(path) == 0 {

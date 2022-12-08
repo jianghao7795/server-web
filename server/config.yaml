@@ -29,6 +29,8 @@ aws-s3:
   secret-key: xxxxxxxx
   base-url: http://localhost:8080
   path-prefix: server
+cache:
+  time: 1
 captcha:
   key-long: 6
   img-width: 240
@@ -96,7 +98,7 @@ mysql:
   password: "123456"
   max-idle-conns: 100
   max-open-conns: 1000
-  log-mode: silent # silent error warn info
+  log-mode: silent
   log-zap: true
   debug: true
 pgsql:
@@ -140,14 +142,14 @@ tencent-cos:
   path-prefix: server
 timer:
   start: true
-  spec: '@every 1s'
+  spec: '@monthly'
   detail:
   - tableName: sys_operation_records
     compareField: created_at
     interval: 2160h
   - tableName: jwt_blacklists
     compareField: created_at
-    interval: 168h
+    interval: 2160h
   tasks:
   - taskName: server1
     output: server run

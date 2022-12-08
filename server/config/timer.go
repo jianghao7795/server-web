@@ -16,5 +16,5 @@ type Detail struct {
 type Task struct {
 	TaskName string `mapstructure:"taskName" json:"taskName" yaml:"taskName"` // 执行任务名
 	Output   string `mapstructure:"output" json:"output" yaml:"output"`       // 输出
-	Interval string `mapstructure:"interval" json:"interval" yaml:"interval"` // 时间间隔
+	Interval string `mapstructure:"interval" json:"interval" yaml:"interval"` // 时间间隔 秒
 }

@@ -44,14 +44,6 @@ require (
 )
 
 require (
-	github.com/cosmtrek/air v1.40.4 // indirect
-	github.com/creack/pty v1.1.11 // indirect
-	github.com/fatih/color v1.13.0 // indirect
-	github.com/imdario/mergo v0.3.12 // indirect
-	github.com/mattn/go-colorable v0.1.9 // indirect
-)
-
-require (
 	github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
