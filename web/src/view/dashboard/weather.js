@@ -22,7 +22,7 @@ export const ip = async () => {
 
 const getWeather = async (code) => {
   const response = await axios.get("https://restapi.amap.com/v3/weather/weatherInfo?key=" + amapKey + "&extensions=base&city=" + code);
-  if (response.data.status === "1") {
+  if (response.data.info === "OK") {
     const s = response.data.lives[0];
     weatherInfo.value =
       s.city +
@@ -30,11 +30,12 @@ const getWeather = async (code) => {
       s.weather +
       " 温度：" +
       s.temperature +
-      "摄氏度 风向：" +
+      "℃ 风向：" +
       s.winddirection +
       " 风力：" +
       s.windpower +
       "级 空气湿度：" +
-      s.humidity;
+      s.humidity +
+      "%";
   }
 };
