@@ -125,13 +125,14 @@ const userStore = useUserStore();
 const formatted = useDateFormat(useNow(), "YYYY-MM-DD HH:mm:ss");
 const period = ref("");
 const userNumber = ref(0);
+console.log("上午好");
 
 onMounted(() => {
   const nowHours = useNow().value.getHours();
   if (nowHours <= 6) {
     period.value = "凌晨好";
   } else if (nowHours <= 12) {
-    period.value = "早上好";
+    period.value = "上午好";
   } else if (nowHours <= 18) {
     period.value = "下午好";
   } else {
