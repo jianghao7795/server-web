@@ -42,7 +42,7 @@
 
         <el-table-column align="left" label="操作">
           <template #default="scope">
-            <el-button size="small" link type="primary" icon="edit" @click="updateSysDictionaryDetailFunc(scope.row)">变更</el-button>
+            <el-button size="small" link type="primary" icon="edit" @click="updateSysDictionaryDetailFunc(scope.row)">编辑</el-button>
             <el-popconfirm
               placement="top"
               width="160"
