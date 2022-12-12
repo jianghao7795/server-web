@@ -55,10 +55,11 @@ const getTheme = () => {
       theme.value = {
         background: "#191a23",
         activeBackground: "#337ecc",
-        activeText: "#fff",
+        activeText: "#409eff",
         normalText: "#fff",
-        hoverBackground: "rgba(64, 158, 255, 0.08)",
-        hoverText: "#fff",
+        // hoverBackground: "rgba(64, 158, 255, 0.08)",
+        hoverBackground: "#f1e05a",
+        hoverText: "#f1e05a",
       };
       break;
   }

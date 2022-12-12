@@ -86,9 +86,9 @@ watch(
 }
 .el-menu-item.is-active {
   .gva-menu-item {
-    background: v-bind(activeBackground) !important;
-    border-radius: 4px;
-    box-shadow: 0 0 2px 1px v-bind(activeBackground) !important;
+    // background: v-bind(activeBackground) !important;
+    // border-radius: 4px;
+    // box-shadow: 0 0 2px 1px v-bind(activeBackground) !important;
     i {
       color: v-bind(activeText);
     }
@@ -99,10 +99,16 @@ watch(
 }
 .el-menu-item:hover {
   .gva-menu-item {
-    background: v-bind(hoverBackground);
-    border-radius: 4px;
-    box-shadow: 0 0 2px 1px v-bind(hoverBackground);
-    color: v-bind(hoverText);
+    // background: v-bind(hoverBackground);
+    // border-radius: 4px;
+    // box-shadow: 0 0 2px 1px v-bind(hoverBackground);
+    // color: v-bind(hoverText);
+    i {
+      color: v-bind(hoverText);
+    }
+    span {
+      color: v-bind(hoverText);
+    }
   }
 }
 </style>
