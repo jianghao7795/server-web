@@ -45,7 +45,9 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="login_panle_right" />
+      <div class="login_panle_right">
+        <!-- <img style="width: 100%; margin: auto 0" src="@/assets/login_left.jpg" fit="contain" /> -->
+      </div>
       <div class="login_panle_foot">
         <div class="copyright">
           <bootomInfo />

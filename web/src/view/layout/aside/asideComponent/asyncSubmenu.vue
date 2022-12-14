@@ -50,7 +50,8 @@ const activeBackground = ref(props.theme.activeBackground);
 const activeText = ref(props.theme.activeText);
 const normalText = ref(props.theme.normalText);
 // const hoverBackground = ref(props.theme.hoverBackground)
-// const hoverText = ref(props.theme.hoverText)
+const hoverText = ref(props.theme.hoverText);
+// console.log(hoverText.value);
 watch(
   () => props.theme,
   () => {
@@ -58,7 +59,7 @@ watch(
     activeText.value = props.theme.activeText;
     normalText.value = props.theme.normalText;
     // hoverBackground.value = props.theme.hoverBackground
-    // hoverText.value = props.theme.hoverText
+    hoverText.value = props.theme.hoverText;
   },
 );
 </script>
@@ -75,9 +76,9 @@ watch(
     flex: 1;
     height: 100%;
     line-height: 44px;
-    background: v-bind(activeBackground) !important;
+    // background: v-bind(activeBackground) !important;
     border-radius: 4px;
-    box-shadow: 0 0 2px 1px v-bind(activeBackground) !important;
+    // box-shadow: 0 0 2px 1px v-bind(activeBackground) !important;
     i {
       color: v-bind(activeText);
     }
@@ -85,8 +86,16 @@ watch(
       color: v-bind(activeText);
     }
   }
+  .gva-subMenu:hover {
+    i {
+      color: v-bind(hoverText);
+    }
+    span {
+      color: v-bind(hoverText);
+    }
+  }
 }
 .gva-subMenu {
-  padding-left: 4px;
+  padding-left: 3px;
 }
 </style>

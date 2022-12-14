@@ -80,7 +80,7 @@
         </el-collapse-item>
         <el-collapse-item title="Redis admin数据库配置" name="4">
           <el-form-item label="db">
-            <el-input v-model="config.redis.db" />
+            <el-input type="number" :max="15" :min="0" v-model.number="config.redis.db" />
           </el-form-item>
           <el-form-item label="addr">
             <el-input v-model="config.redis.addr" />
@@ -152,10 +152,10 @@
             </el-form-item>
             <el-form-item label="logMode">
               <el-radio-group v-model="config.mysql['log-mode']">
-                <el-radio-button label="Slinet" />
-                <el-radio-button label="Washington" />
-                <el-radio-button label="Los Angeles" />
-                <el-radio-button label="Chicago" />
+                <el-radio-button name="Silent" label="silent" />
+                <el-radio-button name="Error" label="error" />
+                <el-radio-button name="Warn" label="warn" />
+                <el-radio-button name="Info" label="info" />
               </el-radio-group>
             </el-form-item>
           </template>
