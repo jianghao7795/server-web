@@ -88,6 +88,9 @@
           <el-form-item label="password">
             <el-input v-model="config.redis.password" />
           </el-form-item>
+          <el-form-item label="缓存时间(s)">
+            <el-input v-model.number="config.cache.time" />
+          </el-form-item>
         </el-collapse-item>
 
         <el-collapse-item title="邮箱配置" name="5">
