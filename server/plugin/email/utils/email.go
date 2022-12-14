@@ -3,7 +3,6 @@ package utils
 import (
 	"crypto/tls"
 	"fmt"
-	"log"
 	"net/smtp"
 	"strings"
 
@@ -62,7 +61,7 @@ func send(to []string, subject string, body string) error {
 	port := global.GlobalConfig.Port
 	isSSL := global.GlobalConfig.IsSSL
 
-	log.Println("from: ", from, "nickname: ", nickname, secret, host, port, isSSL)
+	// log.Println("from: ", from, "nickname: ", nickname, secret, host, port, isSSL)
 	auth := smtp.PlainAuth("", from, secret, host)
 	e := email.NewEmail()
 	if nickname != "" {

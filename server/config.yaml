@@ -30,7 +30,7 @@ aws-s3:
   base-url: http://localhost:8080
   path-prefix: server
 cache:
-  time: 1
+  time: 10
 captcha:
   key-long: 6
   img-width: 240

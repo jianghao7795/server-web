@@ -1,7 +1,6 @@
 package system
 
 import (
-	"log"
 	"server/config"
 	"server/global"
 	"server/model/system"
@@ -18,7 +17,7 @@ import (
 type SystemConfigService struct{}
 
 func (systemConfigService *SystemConfigService) GetSystemConfig() (conf config.Server, err error) {
-	log.Println(global.GVA_CONFIG.Timer.Tasks)
+	// log.Println(global.GVA_CONFIG.Timer.Tasks)
 	return global.GVA_CONFIG, nil
 }
 

@@ -3,7 +3,6 @@ package system
 import (
 	"errors"
 	"fmt"
-	"log"
 
 	"server/global"
 	"server/model/common/request"
@@ -68,7 +67,7 @@ func (apiService *ApiService) GetAPIInfoList(api system.SysApi, info request.Pag
 	if api.ApiGroup != "" {
 		db = db.Where("api_group = ?", api.ApiGroup)
 	}
-	log.Println("api", api.Description)
+	// log.Println("api", api.Description)
 	err = db.Count(&total).Error
 
 	if err != nil {
@@ -96,7 +95,7 @@ func (apiService *ApiService) GetAPIInfoList(api system.SysApi, info request.Pag
 				err = fmt.Errorf("非法的排序字段: %v", order)
 				return apiList, total, err
 			}
-			log.Println("1: ", OrderStr)
+			// log.Println("1: ", OrderStr)
 			err = db.Order(OrderStr).Find(&apiList).Error
 		} else {
 			err = db.Order("api_group").Find(&apiList).Error

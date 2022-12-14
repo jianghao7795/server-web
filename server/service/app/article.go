@@ -1,7 +1,6 @@
 package app
 
 import (
-	"log"
 	"server/global"
 	"server/model/app"
 	appReq "server/model/app/request"
@@ -65,7 +64,7 @@ func (articleSearch *ArticleService) GetArticleInfoList(info appReq.ArticleSearc
 	var articles []app.Article
 	aritlceList := make([]int64, 0)
 	if info.TagId != "" {
-		log.Println(info.TagId)
+		// log.Println(info.TagId)
 		dbTag := global.GVA_DB.Model(&app.ArticleTag{})
 		var articleTag []app.ArticleTag
 		err = dbTag.Where("app_tab_id = ?", info.TagId).Find(&articleTag).Error

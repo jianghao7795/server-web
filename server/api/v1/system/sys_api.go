@@ -2,7 +2,6 @@ package system
 
 import (
 	"fmt"
-	"log"
 	"server/global"
 	"server/model/common/request"
 	"server/model/common/response"
@@ -53,7 +52,7 @@ func (s *SystemApiApi) DeleteApi(c *gin.Context) {
 	var api system.SysApi
 	id, _ := strconv.Atoi(c.Param("id"))
 	api.ID = uint(id)
-	log.Println("api: ", api.ID)
+	// log.Println("api: ", api.ID)
 	if err := utils.Verify(api.GVA_MODEL, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

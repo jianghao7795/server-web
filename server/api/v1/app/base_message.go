@@ -8,7 +8,6 @@ package app
 
 import (
 	"errors"
-	"log"
 	"server/global"
 	"server/model/app"
 	"server/model/common/response"
@@ -60,7 +59,7 @@ func (BaseMessageApi *BaseMessageApi) FindBaseMessage(c *gin.Context) {
 	if responseBaseMessage, err := baseMessageService.FindBaseMessage(); err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// respBaseMessage := baseMessageNotFound{message: "not found"}
-			log.Println("err: ", err)
+			// log.Println("err: ", err)
 			str := "not found"
 			// respBaseMessage := baseMessageNotFound{message: str}
 			// respBaseMessage.message = str

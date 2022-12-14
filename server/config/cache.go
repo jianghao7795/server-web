@@ -1,5 +1,5 @@
 package config
 
 type Cache struct {
-	Time int `mapstructure:"time" json:"time" yaml:"time"`
+	Time int64 `mapstructure:"time" json:"time" yaml:"time"`
 }
