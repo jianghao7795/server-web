@@ -3,7 +3,6 @@ package core
 import (
 	"flag"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"time"
@@ -60,7 +59,7 @@ func Viper(path ...string) *viper.Viper {
 		fmt.Println(err)
 	}
 
-	log.Println("config", global.GVA_CONFIG.Cache.Time)
+	// log.Println("config", global.GVA_CONFIG.Cache.Time)
 	// root 适配性
 	// 根据root位置去找到对应迁移位置,保证root路径有效
 	global.GVA_CONFIG.AutoCode.Root, _ = filepath.Abs("..")

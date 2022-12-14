@@ -3,7 +3,6 @@ package frontend
 import (
 	"encoding/json"
 	"errors"
-	"log"
 	"server/global"
 	"server/model/frontend"
 	frontendReq "server/model/frontend/request"
@@ -21,7 +20,7 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *gin.
 	var cacheTime = global.GVA_CONFIG.Cache.Time
 	var articleStr string
 	articleStr, err = global.GVA_REDIS.Get(c, "article-list").Result()
-	log.Println("redis cache time", cacheTime)
+	// log.Println("redis cache time", cacheTime)
 	// log.Println(articleStr)
 	if err == redis.Nil {
 		limit := info.PageSize

@@ -2,7 +2,6 @@ package frontend
 
 import (
 	"errors"
-	"log"
 	"server/global"
 	"server/model/common/response"
 	"server/model/frontend/request"
@@ -16,7 +15,7 @@ import (
 type FrontendArticleApi struct{}
 
 func (s *FrontendArticleApi) GetArticleList(c *gin.Context) {
-	log.Println(global.GVA_CONFIG.Cache)
+	// log.Println(global.GVA_CONFIG.Cache)
 	var pageInfo request.ArticleSearch
 	_ = c.ShouldBindQuery(&pageInfo)
 	if pageInfo.Page == 0 {
