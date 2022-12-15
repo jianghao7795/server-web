@@ -30,7 +30,7 @@ aws-s3:
   base-url: http://localhost:8080
   path-prefix: server
 cache:
-  time: 10
+  time: 100
 captcha:
   key-long: 6
   img-width: 240
@@ -91,7 +91,7 @@ local:
   path: uploads/file
 mysql:
   path: 127.0.0.1
-  port: "3306"
+  port: "3316"
   config: charset=utf8mb4&parseTime=True&loc=Local
   db-name: gva
   username: root

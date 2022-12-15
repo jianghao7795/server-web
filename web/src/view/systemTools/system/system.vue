@@ -361,9 +361,7 @@
     </el-form>
     <div class="gva-btn-list">
       <el-button type="primary" size="small" @click="update">立即更新</el-button>
-      <!-- <el-button type="primary" size="small" @click="reload"
-        >重启服务（开发中）</el-button
-      > -->
+      <el-button type="primary" size="small" @click="reload">重启服务（开发中）</el-button>
     </div>
   </div>
 </template>
@@ -374,7 +372,7 @@ export default {
 };
 </script>
 <script setup>
-import { getSystemConfig, setSystemConfig, startTasking } from "@/api/system";
+import { getSystemConfig, setSystemConfig, startTasking, reloadSystem } from "@/api/system";
 import { emailTest } from "@/api/email";
 import { ref, reactive } from "vue";
 import { ElMessage } from "element-plus";
@@ -403,16 +401,17 @@ const config = ref({
   timer: {
     detail: {},
   },
+  cache: { time: 0 },
 });
 
 const initForm = async () => {
   const res = await getSystemConfig();
   if (res.code === 0) {
     config.value = res.data.config;
-    console.log(config.value);
   }
 };
 initForm();
+// console.log(config.value);
 const update = async () => {
   const res = await setSystemConfig({ config: config.value });
   if (res.code === 0) {
@@ -446,6 +445,17 @@ const handleStartTask = async () => {
       message: "开启成功",
       type: "success",
     });
+  }
+};
+
+const reload = async () => {
+  const resp = await reloadSystem();
+  if (resp.code === 0) {
+    ElMessage({
+      message: "重启成功",
+      type: "success",
+    });
+    initForm();
   }
 };
 </script>

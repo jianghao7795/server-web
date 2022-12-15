@@ -37,7 +37,7 @@ func main() {
 	// conn, err := global.GVA_Timer.FindCron("ClearDB")
 	// log.Println(conn, err)
 	initialize.Tasks() //定时 执行任务
-	initialize.DBList()
+	// initialize.DBList()
 	utilsInit.TransInit("zh")
 	if global.GVA_DB != nil {
 		// initialize.RegisterTables(global.GVA_DB) // 初始化表

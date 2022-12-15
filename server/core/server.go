@@ -2,7 +2,6 @@ package core
 
 import (
 	"fmt"
-	"time"
 
 	"server/global"
 	"server/initialize"
@@ -33,7 +32,7 @@ func RunWindowsServer() {
 	s := initServer(address, Router)
 	// 保证文本顺序输出
 	// In order to ensure that the text order output can be deleted
-	time.Sleep(10 * time.Microsecond)
+	// time.Sleep(10 * time.Microsecond)
 	global.GVA_LOG.Info("server run success on ", zap.String("address", address))
 
 	fmt.Println(`欢迎使用 API接口`)

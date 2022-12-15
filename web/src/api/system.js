@@ -54,3 +54,17 @@ export const startTasking = (params) => {
     params: params,
   });
 };
+
+// @Tags start task
+// @Summary 重启服务
+// @Security ApiKeyAuth
+// @Produce  application/json
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"重启成功"}"
+// @Router /system/reloadSystem [post]
+export const reloadSystem = () => {
+  return service({
+    url: "/system/reloadSystem",
+    method: "post",
+    data: {},
+  });
+};
