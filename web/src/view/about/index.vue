@@ -74,7 +74,7 @@ export default {
 import draggableVue from "./draggable.vue";
 import pkg from "~/package.json";
 import { Commits } from "@/api/github";
-import { onMounted, ref, h } from "vue";
+import { onMounted, ref } from "vue";
 import { Like, BankCardOne } from "@icon-park/vue-next";
 import { useI18n } from "vue-i18n";
 import { useBtnAuth } from "@/utils/btnAuth";
@@ -105,7 +105,11 @@ const changeShake = () => {
 
 onMounted(() => {
   Commits(page.value).then((resp) => {
-    commits.value = resp.data.map((i) => ({ name: i.commit.author.name, date: i.commit.author.date, message: i.commit.message }));
+    commits.value = resp.data.map((i) => ({
+      name: i.commit.author.name,
+      date: i.commit.author.date,
+      message: i.commit.message,
+    }));
   });
 });
 
@@ -117,7 +121,11 @@ const commitHistory = () => {
     isShow.value = true;
     commits.value = [
       ...commits.value,
-      ...resp.data.map((i) => ({ name: i.commit.author.name, date: i.commit.author.date, message: i.commit.message })),
+      ...resp.data.map((i) => ({
+        name: i.commit.author.name,
+        date: i.commit.author.date,
+        message: i.commit.message,
+      })),
     ];
   });
 };

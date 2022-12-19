@@ -36,36 +36,38 @@ captcha:
   img-width: 240
   img-height: 80
 casbin:
-  model-path: ./resource/rbac_model.conf
+  model-path: ./config/rbac_model.conf
 cors:
   mode: whitelist
   whitelist:
-  - allow-origin: example1.com
-    allow-methods: GET, POST, PUT, DELETE
-    allow-headers: content-type
-    expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
-      Content-Type
-    allow-credentials: true
-  - allow-origin: example2.com
-    allow-methods: GET, POST, PUT, DELETE
-    allow-headers: content-type
-    expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
-      Content-Type
-    allow-credentials: true
+    - allow-origin: example1.com
+      allow-methods: GET, POST, PUT, DELETE
+      allow-headers: content-type
+      expose-headers:
+        Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
+        Content-Type
+      allow-credentials: true
+    - allow-origin: example2.com
+      allow-methods: GET, POST, PUT, DELETE
+      allow-headers: content-type
+      expose-headers:
+        Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
+        Content-Type
+      allow-credentials: true
 db-list:
-- disable: false
-  type: ""
-  alias-name: ""
-  path: ""
-  port: ""
-  config: ""
-  db-name: ""
-  username: ""
-  password: ""
-  max-idle-conns: 10
-  max-open-conns: 100
-  log-mode: ""
-  log-zap: false
+  - disable: false
+    type: ""
+    alias-name: ""
+    path: ""
+    port: ""
+    config: ""
+    db-name: ""
+    username: ""
+    password: ""
+    max-idle-conns: 10
+    max-open-conns: 100
+    log-mode: ""
+    log-zap: false
 email:
   to: 978561120@qq.com
   port: 465
@@ -142,22 +144,22 @@ tencent-cos:
   path-prefix: server
 timer:
   start: true
-  spec: '@monthly'
+  spec: "@monthly"
   detail:
-  - tableName: sys_operation_records
-    compareField: created_at
-    interval: 2160h
-  - tableName: jwt_blacklists
-    compareField: created_at
-    interval: 2160h
+    - tableName: sys_operation_records
+      compareField: created_at
+      interval: 2160h
+    - tableName: jwt_blacklists
+      compareField: created_at
+      interval: 2160h
   tasks:
-  - taskName: server1
-    output: server run
-    interval: 1h
+    - taskName: server1
+      output: server run
+      interval: 1h
 zap:
   level: info
   format: console
-  prefix: '[server]-'
+  prefix: "[server]-"
   director: log
   show-line: true
   encode-level: LowercaseColorLevelEncoder
