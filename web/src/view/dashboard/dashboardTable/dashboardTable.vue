@@ -7,8 +7,8 @@
           <div class="flex-1 flex key-box">
             <span class="key" :class="key < 3 && 'top'">{{ key + 1 }}</span>
           </div>
-          <div class="flex-5 flex message">{{ item.message }}</div>
-          <div class="flex-3 flex form">{{ item.from }}</div>
+          <div class="flex-5 flex message" :title="item.message">{{ item.message }}</div>
+          <div class="flex-3 flex form" :title="item.from">{{ item.from }}</div>
         </div>
       </el-scrollbar>
     </div>
@@ -38,9 +38,11 @@ const scrollChange = (event) => {
 
 const loadCommits = () => {
   Commits(page.value).then(({ data }) => {
+    // console.log(data);
+    const line = [];
     data.forEach((element) => {
       if (element.commit.message) {
-        dataTimeline.value.push({
+        line.push({
           from: formatTimeToStr(element.commit.author.date, "yyyy-MM-dd hh:mm:ss"),
           title: element.commit.author.name,
           showDayAndMonth: true,
@@ -48,6 +50,8 @@ const loadCommits = () => {
         });
       }
     });
+    dataTimeline.value = line;
+    // console.log(line);
   });
 };
 
