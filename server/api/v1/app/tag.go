@@ -12,23 +12,23 @@ import (
 	"go.uber.org/zap"
 )
 
-type AppTabApi struct{}
+type TagApi struct{}
 
-var appTabService = service.ServiceGroupApp.AppServiceGroup.AppTabService
+var appTabService = service.ServiceGroupApp.AppServiceGroup.TagService
 
-// CreateAppTab 创建AppTab
-// @Tags AppTab
-// @Summary 创建AppTab
+// CreateTag 创建Tag
+// @Tags Tag
+// @Summary 创建Tag
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body app.AppTab true "创建AppTab"
+// @Param data body app.Tag true "创建Tag"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /appTab/createAppTab [post]
-func (appTabApi *AppTabApi) CreateAppTab(c *gin.Context) {
-	var appTab app.AppTab
+// @Router /appTab/createTag [post]
+func (TagApi *TagApi) CreateTag(c *gin.Context) {
+	var appTab app.Tag
 	_ = c.ShouldBindJSON(&appTab)
-	if err := appTabService.CreateAppTab(appTab); err != nil {
+	if err := appTabService.CreateTag(appTab); err != nil {
 		global.GVA_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
 	} else {
@@ -36,19 +36,19 @@ func (appTabApi *AppTabApi) CreateAppTab(c *gin.Context) {
 	}
 }
 
-// DeleteAppTab 删除AppTab
-// @Tags AppTab
-// @Summary 删除AppTab
+// DeleteTag 删除Tag
+// @Tags Tag
+// @Summary 删除Tag
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body app.AppTab true "删除AppTab"
+// @Param data body app.Tag true "删除Tag"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /appTab/deleteAppTab [delete]
-func (appTabApi *AppTabApi) DeleteAppTab(c *gin.Context) {
-	var appTab app.AppTab
+// @Router /appTab/deleteTag [delete]
+func (TagApi *TagApi) DeleteTag(c *gin.Context) {
+	var appTab app.Tag
 	_ = c.ShouldBindJSON(&appTab)
-	if err := appTabService.DeleteAppTab(appTab); err != nil {
+	if err := appTabService.DeleteTag(appTab); err != nil {
 		global.GVA_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败", c)
 	} else {
@@ -56,19 +56,19 @@ func (appTabApi *AppTabApi) DeleteAppTab(c *gin.Context) {
 	}
 }
 
-// DeleteAppTabByIds 批量删除AppTab
-// @Tags AppTab
-// @Summary 批量删除AppTab
+// DeleteTagByIds 批量删除Tag
+// @Tags Tag
+// @Summary 批量删除Tag
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.IdsReq true "批量删除AppTab"
+// @Param data body request.IdsReq true "批量删除Tag"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"批量删除成功"}"
-// @Router /appTab/deleteAppTabByIds [delete]
-func (appTabApi *AppTabApi) DeleteAppTabByIds(c *gin.Context) {
+// @Router /appTab/deleteTagByIds [delete]
+func (TagApi *TagApi) DeleteTagByIds(c *gin.Context) {
 	var IDS request.IdsReq
 	_ = c.ShouldBindJSON(&IDS)
-	if err := appTabService.DeleteAppTabByIds(IDS); err != nil {
+	if err := appTabService.DeleteTagByIds(IDS); err != nil {
 		global.GVA_LOG.Error("批量删除失败!", zap.Error(err))
 		response.FailWithMessage("批量删除失败", c)
 	} else {
@@ -76,20 +76,20 @@ func (appTabApi *AppTabApi) DeleteAppTabByIds(c *gin.Context) {
 	}
 }
 
-// UpdateAppTab 更新AppTab
-// @Tags AppTab
-// @Summary 更新AppTab
+// UpdateTag 更新Tag
+// @Tags Tag
+// @Summary 更新Tag
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body app.AppTab true "更新AppTab"
+// @Param data body app.Tag true "更新Tag"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
-// @Router /appTab/updateAppTab [put]
-func (appTabApi *AppTabApi) UpdateAppTab(c *gin.Context) {
-	var appTab app.AppTab
+// @Router /appTab/updateTag [put]
+func (TagApi *TagApi) UpdateTag(c *gin.Context) {
+	var appTab app.Tag
 	_ = c.ShouldBindJSON(&appTab)
 	// log.Println(appTab)
-	if err := appTabService.UpdateAppTab(appTab); err != nil {
+	if err := appTabService.UpdateTag(appTab); err != nil {
 		global.GVA_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败", c)
 	} else {
@@ -97,19 +97,19 @@ func (appTabApi *AppTabApi) UpdateAppTab(c *gin.Context) {
 	}
 }
 
-// FindAppTab 用id查询AppTab
-// @Tags AppTab
-// @Summary 用id查询AppTab
+// FindTag 用id查询Tag
+// @Tags Tag
+// @Summary 用id查询Tag
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query app.AppTab true "用id查询AppTab"
+// @Param data query app.Tag true "用id查询Tag"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
-// @Router /appTab/findAppTab [get]
-func (appTabApi *AppTabApi) FindAppTab(c *gin.Context) {
-	var appTab app.AppTab
+// @Router /appTab/findTag [get]
+func (TagApi *TagApi) FindTag(c *gin.Context) {
+	var appTab app.Tag
 	_ = c.ShouldBindQuery(&appTab)
-	if reappTab, err := appTabService.GetAppTab(appTab.ID); err != nil {
+	if reappTab, err := appTabService.GetTag(appTab.ID); err != nil {
 		global.GVA_LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
 	} else {
@@ -117,20 +117,20 @@ func (appTabApi *AppTabApi) FindAppTab(c *gin.Context) {
 	}
 }
 
-// GetAppTabList 分页获取AppTab列表
-// @Tags AppTab
-// @Summary 分页获取AppTab列表
+// GetTagList 分页获取Tag列表
+// @Tags Tag
+// @Summary 分页获取Tag列表
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query appReq.AppTabSearch true "分页获取AppTab列表"
+// @Param data query appReq.TagSearch true "分页获取Tag列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /appTab/getAppTabList [get]
-func (appTabApi *AppTabApi) GetAppTabList(c *gin.Context) {
-	var pageInfo appReq.AppTabSearch
+// @Router /appTab/getTagList [get]
+func (TagApi *TagApi) GetTagList(c *gin.Context) {
+	var pageInfo appReq.TagSearch
 	_ = c.ShouldBindQuery(&pageInfo)
 	// log.Println(pageInfo.Name)
-	if list, total, err := appTabService.GetAppTabInfoList(pageInfo); err != nil {
+	if list, total, err := appTabService.GetTagInfoList(pageInfo); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {

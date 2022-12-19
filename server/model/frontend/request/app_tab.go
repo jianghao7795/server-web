@@ -5,7 +5,7 @@ import (
 	"server/model/common/request"
 )
 
-type AppTabSearch struct {
-	app.AppTab
+type TagSearch struct {
+	app.Tag
 	request.PageInfo
 }

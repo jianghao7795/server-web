@@ -16,7 +16,7 @@ type FrontendTagApi struct{}
 var frontendService = service.ServiceGroupApp.FrontendServiceGroup
 
 func (appTabApi *FrontendTagApi) GetAppTabList(c *gin.Context) {
-	var pageInfo appReq.AppTabSearch
+	var pageInfo appReq.TagSearch
 	_ = c.ShouldBindQuery(&pageInfo)
 	// log.Println(pageInfo.Name)
 	if list, err := frontendService.FrontendTag.GetTagList(c); err != nil {
