@@ -16,12 +16,12 @@ func (s *TagRouter) InitTagRouter(Router *gin.RouterGroup) {
 	var tagApi = v1.ApiGroupApp.AppApiGroup.TagApi
 	{
 		tagRouter.POST("createTag", tagApi.CreateTag)             // 新建Tag
-		tagRouter.DELETE("deleteTag", tagApi.DeleteTag)           // 删除Tag
+		tagRouter.DELETE("deleteTag/:id", tagApi.DeleteTag)       // 删除Tag
 		tagRouter.DELETE("deleteTagByIds", tagApi.DeleteTagByIds) // 批量删除Tag
 		tagRouter.PUT("updateTag", tagApi.UpdateTag)              // 更新Tag
 	}
 	{
-		tagRouterWithoutRecord.GET("findTag", tagApi.FindTag)       // 根据ID获取Tag
+		tagRouterWithoutRecord.GET("findTag/:id", tagApi.FindTag)   // 根据ID获取Tag
 		tagRouterWithoutRecord.GET("getTagList", tagApi.GetTagList) // 获取Tag列表
 	}
 }

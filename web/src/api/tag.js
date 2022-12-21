@@ -24,11 +24,10 @@ export const createTag = (data) => {
 // @Param data body model.Tag true "删除Tag"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /tag/deleteTag [delete]
-export const deleteTag = (data) => {
+export const deleteTag = (params) => {
   return service({
-    url: "/tag/deleteTag",
+    url: `/tag/deleteTag/${params.ID}`,
     method: "delete",
-    data,
   });
 };
 
@@ -74,9 +73,8 @@ export const updateTag = (data) => {
 // @Router /tag/findTag [get]
 export const findTag = (params) => {
   return service({
-    url: "/tag/findTag",
+    url: `/tag/findTag/${params.ID}`,
     method: "get",
-    params,
   });
 };
 

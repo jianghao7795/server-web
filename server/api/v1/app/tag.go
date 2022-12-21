@@ -10,6 +10,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+
+	"strconv"
 )
 
 type TagApi struct{}
@@ -46,9 +48,9 @@ func (TagApi *TagApi) CreateTag(c *gin.Context) {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /appTab/deleteTag [delete]
 func (TagApi *TagApi) DeleteTag(c *gin.Context) {
-	var appTab app.Tag
-	_ = c.ShouldBindJSON(&appTab)
-	if err := appTabService.DeleteTag(appTab); err != nil {
+	idString := c.Param("id")
+	id, _ := strconv.Atoi(idString)
+	if err := appTabService.DeleteTag(uint(id)); err != nil {
 		global.GVA_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败", c)
 	} else {
@@ -107,9 +109,9 @@ func (TagApi *TagApi) UpdateTag(c *gin.Context) {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
 // @Router /appTab/findTag [get]
 func (TagApi *TagApi) FindTag(c *gin.Context) {
-	var appTab app.Tag
-	_ = c.ShouldBindQuery(&appTab)
-	if reappTab, err := appTabService.GetTag(appTab.ID); err != nil {
+	idString := c.Param("id")
+	id, _ := strconv.Atoi(idString)
+	if reappTab, err := appTabService.GetTag(uint(id)); err != nil {
 		global.GVA_LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
 	} else {

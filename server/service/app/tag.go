@@ -20,8 +20,8 @@ func (tagService *TagService) CreateTag(tag app.Tag) (err error) {
 
 // DeleteTag 删除Tag记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (tagService *TagService) DeleteTag(tag app.Tag) (err error) {
-	err = global.GVA_DB.Delete(&tag).Error
+func (tagService *TagService) DeleteTag(id uint) (err error) {
+	err = global.GVA_DB.Delete(&app.Tag{}, id).Error
 	return err
 }
 
