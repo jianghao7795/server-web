@@ -139,7 +139,7 @@ export default { name: "Article" };
 import { formatDate } from "@/utils/format";
 import { ElMessage } from "element-plus";
 import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle, uploadFile, deleteArticleByIds } from "@/api/article";
-import { getAppTabList } from "@/api/appTab";
+import { getTagList } from "@/api/tag";
 import { ref, onBeforeMount, reactive } from "vue";
 // import { useDebounceFn } from "@vueuse/core";
 import MdEditor from "md-editor-v3";
@@ -223,7 +223,7 @@ const onUploadImg = async (files, callback) => {
 
 onBeforeMount(() => {
   getTableData();
-  getAppTabList({ page: 1, pageSize: 999 }).then((resp) => {
+  getTagList({ page: 1, pageSize: 999 }).then((resp) => {
     if (resp.code === 0) {
       tags.value = resp.data.list;
     }
