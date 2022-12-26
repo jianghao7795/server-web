@@ -159,7 +159,7 @@ func (s *SystemApiApi) GetApiById(c *gin.Context) {
 // @Produce application/json
 // @Param data body system.SysApi true "api路径, api中文描述, api组, 方法"
 // @Success 200 {object} response.Response{msg=string} "修改基础api"
-// @Router /api/updateApi [post]
+// @Router /api/updateApi [put]
 func (s *SystemApiApi) UpdateApi(c *gin.Context) {
 	var api system.SysApi
 	_ = c.ShouldBindJSON(&api)

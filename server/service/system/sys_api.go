@@ -142,12 +142,13 @@ func (apiService *ApiService) UpdateApi(api system.SysApi) (err error) {
 	if err != nil {
 		return err
 	} else {
-		err = CasbinServiceApp.UpdateCasbinApi(oldA.Path, api.Path, oldA.Method, api.Method)
-		if err != nil {
-			return err
-		} else {
-			err = global.GVA_DB.Save(&api).Error
-		}
+		err = global.GVA_DB.Save(&api).Error
+		// err = CasbinServiceApp.UpdateCasbinApi(oldA.Path, api.Path, oldA.Method, api.Method)
+		// if err != nil {
+		// 	return err
+		// } else {
+
+		// }
 	}
 	return err
 }

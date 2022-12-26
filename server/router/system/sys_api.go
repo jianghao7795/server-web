@@ -16,12 +16,12 @@ func (s *ApiRouter) InitApiRouter(Router *gin.RouterGroup) {
 	{
 		apiRouter.POST("createApi", apiRouterApi.CreateApi)               // 创建Api
 		apiRouter.DELETE("deleteApi/:id", apiRouterApi.DeleteApi)         // 删除Api
-		apiRouter.GET("getApiById/:id", apiRouterApi.GetApiById)          // 获取单条Api消息
 		apiRouter.PUT("updateApi/:id", apiRouterApi.UpdateApi)            // 更新api
 		apiRouter.DELETE("deleteApisByIds", apiRouterApi.DeleteApisByIds) // 删除选中api
 	}
 	{
-		apiRouterWithoutRecord.GET("getAllApis", apiRouterApi.GetAllApis) // 获取所有api
-		apiRouterWithoutRecord.GET("getApiList", apiRouterApi.GetApiList) // 获取Api列表
+		apiRouterWithoutRecord.GET("getApiById/:id", apiRouterApi.GetApiById) // 获取单条Api消息
+		apiRouterWithoutRecord.GET("getAllApis", apiRouterApi.GetAllApis)     // 获取所有api
+		apiRouterWithoutRecord.GET("getApiList", apiRouterApi.GetApiList)     // 获取Api列表
 	}
 }
