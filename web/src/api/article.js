@@ -8,11 +8,10 @@ export const createArticle = (data) => {
   });
 };
 
-export const deleteArticle = (data) => {
+export const deleteArticle = (params) => {
   return service({
-    url: "/article/deleteArticle",
+    url: `/article/deleteArticle/${params.ID}`,
     method: "delete",
-    data,
   });
 };
 
@@ -26,7 +25,7 @@ export const deleteArticleByIds = (data) => {
 
 export const updateArticle = (data) => {
   return service({
-    url: "/article/updateArticle",
+    url: `/article/updateArticle/${data.ID}`,
     method: "put",
     data,
   });
@@ -34,9 +33,8 @@ export const updateArticle = (data) => {
 
 export const findArticle = (params) => {
   return service({
-    url: "/article/findArticle",
+    url: `/article/findArticle/${params.ID}`,
     method: "get",
-    params,
   });
 };
 

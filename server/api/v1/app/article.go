@@ -7,6 +7,7 @@ import (
 	"server/model/common/request"
 	"server/model/common/response"
 	"server/service"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -38,10 +39,9 @@ func (articleApi *ArticleApi) CreateArticle(c *gin.Context) {
 
 // delete id
 func (*ArticleApi) DeleteArticle(c *gin.Context) {
-	var article app.Article
-	_ = c.ShouldBindJSON(&article)
-
-	if err := articleService.DeleteArticle(article); err != nil {
+	ids := c.Param("id")
+	id, _ := strconv.Atoi(ids)
+	if err := articleService.DeleteArticle(uint(id)); err != nil {
 		global.GVA_LOG.Error("删除失败", zap.Error(err))
 		response.FailWithMessage("删除失败", c)
 	} else {
@@ -65,6 +65,9 @@ func (appTabApi *ArticleApi) DeleteArticleByIds(c *gin.Context) {
 func (*ArticleApi) UpdateArticle(c *gin.Context) {
 	var article app.Article
 	_ = c.ShouldBindJSON(&article)
+	ids := c.Param("id")
+	id, _ := strconv.Atoi(ids)
+	article.ID = uint(id)
 	if err := articleService.UpdateArticle(article); err != nil {
 		global.GVA_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败", c)
@@ -75,9 +78,9 @@ func (*ArticleApi) UpdateArticle(c *gin.Context) {
 
 // get info
 func (*ArticleApi) FindArticle(c *gin.Context) {
-	var article app.Article
-	_ = c.ShouldBindQuery(&article)
-	if rearticle, err := articleService.GetArticle(article.ID); err != nil {
+	ids := c.Param("id")
+	id, _ := strconv.Atoi(ids)
+	if rearticle, err := articleService.GetArticle(uint(id)); err != nil {
 		global.GVA_LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
 	} else {

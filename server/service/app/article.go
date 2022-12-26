@@ -17,8 +17,8 @@ func (articleSearch *ArticleService) CreateArticle(article app.Article) (err err
 }
 
 // delete
-func (articleSearch *ArticleService) DeleteArticle(article app.Article) (err error) {
-	err = global.GVA_DB.Delete(&article).Error
+func (articleSearch *ArticleService) DeleteArticle(id uint) (err error) {
+	err = global.GVA_DB.Delete(&app.Article{}, id).Error
 	return
 }
 
@@ -67,7 +67,7 @@ func (articleSearch *ArticleService) GetArticleInfoList(info appReq.ArticleSearc
 		// log.Println(info.TagId)
 		dbTag := global.GVA_DB.Model(&app.ArticleTag{})
 		var articleTag []app.ArticleTag
-		err = dbTag.Where("app_tab_id = ?", info.TagId).Find(&articleTag).Error
+		err = dbTag.Where("tag_id = ?", info.TagId).Find(&articleTag).Error
 		if err != nil {
 			return
 		}
@@ -89,6 +89,7 @@ func (articleSearch *ArticleService) GetArticleInfoList(info appReq.ArticleSearc
 	if err != nil {
 		return
 	}
+	//
 	err = db.Limit(limit).Offset(offset).Order("id desc").Preload("Tags").Find(&articles).Error
 	return articles, total, err
 }
