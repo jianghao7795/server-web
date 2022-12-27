@@ -5,7 +5,7 @@
       <div class="gva-btn-list">
         <upload-common v-model:imageCommon="imageCommon" class="upload-btn" @on-success="getTableData" />
         <upload-image v-model:imageUrl="imageUrl" :file-size="512" :max-w-h="1080" class="upload-btn" @on-success="getTableData" />
-        <el-form ref="searchForm" :inline="true" :model="search">
+        <el-form ref="searchForm" :inline="true" :model="search" @keyup.enter.native="getTableData">
           <el-form-item label="">
             <el-input v-model="search.keyword" class="keyword" placeholder="请输入文件名或备注" />
           </el-form-item>

@@ -4,7 +4,7 @@
       title="在资源权限中将此角色的资源权限清空 或者不包含创建者的角色 即可屏蔽此客户资源的显示"
     /> -->
     <div class="gva-search-box">
-      <el-form :inline="true" ref="searchForm" :model="searchInfo">
+      <el-form :inline="true" ref="searchForm" :model="searchInfo" @keyup.enter.native="onSubmit">
         <el-form-item label="姓名">
           <el-input placeholder="请输入" v-model="searchInfo.customerName"></el-input>
         </el-form-item>

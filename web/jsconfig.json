@@ -4,6 +4,7 @@
     "jsx": "preserve",
     "experimentalDecorators": true,
     "baseUrl": "./",
+    "allowJs": true,
     "paths": {
       "@/*": ["./src/*"]
     }

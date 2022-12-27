@@ -1,5 +1,16 @@
 <template>
   <div>
+    <div class="gva-search-box">
+      <el-form :inline="true" :model="searchInfo" ref="searchForm" class="demo-form-inline" @keyup.enter.native="onSubmit">
+        <el-form-item label="用户名">
+          <el-input v-model="searchInfo.name"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button size="small" type="primary" icon="search" @click="onSubmit">查询</el-button>
+          <el-button size="small" icon="refresh" @click="onReset">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <!-- <warning-bar title="注：右上角头像下拉可切换角色" /> -->
     <div class="gva-table-box">
       <div class="gva-btn-list">
@@ -161,16 +172,16 @@ export default {
 
 <script setup>
 import { getUserList, setUserAuthorities, register, deleteUser } from "@/api/user";
-
 import { getAuthorityList } from "@/api/authority";
 import CustomPic from "@/components/customPic/index.vue";
 import ChooseImg from "@/components/chooseImg/index.vue";
 // import warningBar from "@/components/warningBar/warningBar.vue";
 import { setUserInfo, resetPassword } from "@/api/user.js";
-
 import { nextTick, ref, watch, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
+
 const path = ref(import.meta.env.VITE_BASE_API);
+const searchInfo = ref({});
 // 初始化相关
 const setAuthorityOptions = (AuthorityData, optionsData) => {
   AuthorityData &&
@@ -208,9 +219,23 @@ const handleCurrentChange = (val) => {
   getTableData();
 };
 
+const onSubmit = () => {
+  page.value = 1;
+  pageSize.value = 10;
+  if (searchInfo.value.status === "") {
+    searchInfo.value.status = null;
+  }
+  getTableData();
+};
+
+const onReset = () => {
+  searchInfo.value = {};
+  getTableData();
+};
+
 // 查询
 const getTableData = async () => {
-  const table = await getUserList({ page: page.value, pageSize: pageSize.value });
+  const table = await getUserList({ page: page.value, pageSize: pageSize.value, ...searchInfo.value });
   if (table.code === 0) {
     tableData.value = table.data.list;
     total.value = table.data.total;

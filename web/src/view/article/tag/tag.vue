@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="gva-search-box">
-      <el-form :inline="true" :model="searchInfo" ref="searchForm" class="demo-form-inline">
+      <el-form :inline="true" :model="searchInfo" ref="searchForm" class="demo-form-inline" @keyup.enter.native="onSubmit">
         <el-form-item label="名称">
           <el-input v-model="searchInfo.name"></el-input>
         </el-form-item>

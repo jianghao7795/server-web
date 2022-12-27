@@ -157,12 +157,13 @@ const linkRouter = (name = "") => {
 
 const handleEnter = (e) => {
   e.preventDefault();
-  const name = searchRouter.value[Object.keys(mouseoverdown.value)[0]].value;
-
-  router.push({ name });
-  props.changeShowSearchStatus(false);
-  searchRouter.value = [];
-  serarchValue.value = "";
+  if (props.show) {
+    const name = searchRouter.value[Object.keys(mouseoverdown.value)[0]].value;
+    router.push({ name });
+    props.changeShowSearchStatus(false);
+    searchRouter.value = [];
+    serarchValue.value = "";
+  }
 };
 
 /* key up */
