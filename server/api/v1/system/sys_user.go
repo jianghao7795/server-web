@@ -161,21 +161,22 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 // @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取用户列表,返回包括列表,总数,页码,每页数量"
 // @Router /user/getUserList [post]
 func (b *BaseApi) GetUserList(c *gin.Context) {
-	var pageInfo request.PageInfo
-	_ = c.ShouldBindQuery(&pageInfo)
-	if err := utils.Verify(pageInfo, utils.PageInfoVerify); err != nil {
+	var searchInfo systemReq.SearchInfo
+	_ = c.ShouldBindQuery(&searchInfo)
+	if err := utils.Verify(searchInfo, utils.PageInfoVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	if list, total, err := userService.GetUserInfoList(pageInfo); err != nil {
+	// log.Println("1111111111", searchInfo.Username)
+	if list, total, err := userService.GetUserInfoList(searchInfo); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.PageResult{
 			List:     list,
 			Total:    total,
-			Page:     pageInfo.Page,
-			PageSize: pageInfo.PageSize,
+			Page:     searchInfo.Page,
+			PageSize: searchInfo.PageSize,
 		}, "获取成功", c)
 	}
 }

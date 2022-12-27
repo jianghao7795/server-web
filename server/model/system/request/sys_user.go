@@ -1,6 +1,9 @@
 package request
 
-import model "server/model/system"
+import (
+	"server/model/common/request"
+	model "server/model/system"
+)
 
 // User register structure
 type Register struct {
@@ -46,4 +49,9 @@ type ChangeUserInfo struct {
 	Email        string               `json:"email"  gorm:"comment:用户邮箱"`                                                           // 用户邮箱
 	HeaderImg    string               `json:"headerImg" gorm:"default:https://qmplusimg.henrongyi.top/gva_header.jpg;comment:用户头像"` // 用户头像
 	Authorities  []model.SysAuthority `json:"-" gorm:"many2many:sys_user_authority;"`
+}
+
+type SearchInfo struct {
+	request.PageInfo
+	Username string `json:"username" form:"username"`
 }

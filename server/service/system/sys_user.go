@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"server/global"
-	"server/model/common/request"
 	"server/model/system"
+	"server/model/system/request"
 	"server/utils"
 
 	uuid "github.com/satori/go.uuid"
@@ -76,7 +76,7 @@ func (userService *UserService) ChangePassword(u *system.SysUser, newPassword st
 //@param: info request.PageInfo
 //@return: err error, list interface{}, total int64
 
-func (userService *UserService) GetUserInfoList(info request.PageInfo) (list interface{}, total int64, err error) {
+func (userService *UserService) GetUserInfoList(info request.SearchInfo) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.GVA_DB.Model(&system.SysUser{})
@@ -84,6 +84,9 @@ func (userService *UserService) GetUserInfoList(info request.PageInfo) (list int
 	err = db.Count(&total).Error
 	if err != nil {
 		return
+	}
+	if info.Username != "" {
+		db = db.Where("username = ?", info.Username)
 	}
 	err = db.Limit(limit).Offset(offset).Preload("Authorities").Preload("Authority").Find(&userList).Error
 	return userList, total, err

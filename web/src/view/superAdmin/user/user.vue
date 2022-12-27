@@ -3,7 +3,7 @@
     <div class="gva-search-box">
       <el-form :inline="true" :model="searchInfo" ref="searchForm" class="demo-form-inline" @keyup.enter.native="onSubmit">
         <el-form-item label="用户名">
-          <el-input v-model="searchInfo.name"></el-input>
+          <el-input v-model="searchInfo.username"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button size="small" type="primary" icon="search" @click="onSubmit">查询</el-button>
