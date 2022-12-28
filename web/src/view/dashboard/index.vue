@@ -151,6 +151,7 @@ const swiperExample = ref([
     label: "Default",
     options: {
       autoplay: {
+        // 自动播放
         delay: 3000,
         stopOnLastSlide: false,
         disableOnInteraction: false, // 设置为false和自动播放将在用户交互后不会被禁用（Swipes），互动后每次都会重新启动它
@@ -161,20 +162,22 @@ const swiperExample = ref([
   {
     id: 1,
     label: "Navigation",
-    // autoplay: true,
+    autoplay: true,
     options: {
+      loop: true,
       navigation: true,
-      // autoplay: {
-      //   delay: 300,
-      //   stopOnLastSlide: false,
-      //   disableOnInteraction: true,
-      // },
+      autoplay: {
+        delay: 3000,
+        stopOnLastSlide: false,
+        disableOnInteraction: true,
+      },
     },
   },
   {
     id: 2,
     label: "Pagination",
     options: {
+      loop: true,
       pagination: {
         clickable: true,
       },
@@ -184,6 +187,7 @@ const swiperExample = ref([
     id: 3,
     label: "Pagination dynamic",
     options: {
+      loop: true,
       pagination: { dynamicBullets: true },
     },
   },
@@ -192,6 +196,7 @@ const swiperExample = ref([
     label: "Pagination progress",
     options: {
       navigation: true,
+      loop: true,
       pagination: {
         type: "progressbar",
       },
@@ -202,6 +207,7 @@ const swiperExample = ref([
     label: "Pagination fraction",
     options: {
       navigation: true,
+      loop: true,
       pagination: {
         type: "fraction",
       },
@@ -216,6 +222,7 @@ const swiperExample = ref([
       },
       slidesPerView: 3,
       spaceBetween: 30,
+      loop: true,
     },
   },
   {

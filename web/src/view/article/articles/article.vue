@@ -19,7 +19,7 @@
     <div class="gva-table-box">
       <div class="gva-btn-list">
         <el-button type="primary" size="small" icon="plus" @click="openDialog">新增</el-button>
-        <el-popconfirm title="确定要删除吗?" @confirm="onDelete" placement="top" width="200">
+        <el-popconfirm title="确定要删除吗?" @confirm="onDelete" placement="top" :width="250">
           <template #reference>
             <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length">删除</el-button>
           </template>
@@ -55,7 +55,7 @@
         <el-table-column align="left" label="操作">
           <template #default="scope">
             <el-button link type="primary" icon="edit" size="small" class="table-button" @click="updateArticleFunc(scope.row)">编辑</el-button>
-            <el-popconfirm title="确认删除？" placement="top" v-on:confirm="deleteRow(scope.row)">
+            <el-popconfirm title="确认删除？" width="200" placement="top" v-on:confirm="deleteRow(scope.row)">
               <template #reference><el-button type="primary" link icon="delete" size="small">删除</el-button></template>
             </el-popconfirm>
           </template>
@@ -300,7 +300,8 @@ const openDialog = () => {
 
 const closeDialog = () => {
   if (type.value === "create") {
-    ruleFormRef.resetFields();
+    // console.log(ruleFormRef);
+    ruleFormRef.value.resetFields();
   }
   dialogFormVisible.value = false;
   formData.value = {

@@ -408,7 +408,7 @@ const openDialog = () => {
 // 关闭弹窗
 const closeDialog = () => {
   dialogFormVisible.value = false;
-  console.log(dialogFormVisible.value);
+  // console.log(dialogFormVisible.value);
   setTimeout(() => {
     formData.value = {
       articleId: undefined,
