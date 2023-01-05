@@ -53,15 +53,19 @@ func Routers() *gin.Engine {
 	{
 		// 健康监测
 		PublicGroup.GET("/health", func(c *gin.Context) {
-			c.JSON(200, "ok")
+			c.JSON(200, map[string]string{
+				"data": "ok",
+			})
 		})
 	}
 	{
 		systemRouter.InitBaseRouter(PublicGroup) // 注册基础功能路由 不做鉴权
 		systemRouter.InitInitRouter(PublicGroup) // 自动初始化相关
+		// 前台的API
+		frontendRouter.InitFrontendRouter(PublicGroup)
 	}
 	PrivateGroup := Router.Group("")
-	frontendRouter.InitFrontendRouter(PrivateGroup)                        // 前台的API
+
 	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler()) // casbin的拦截规则
 	{
 		systemRouter.InitApiRouter(PrivateGroup)                 // 注册功能api路由
