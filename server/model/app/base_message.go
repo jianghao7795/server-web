@@ -16,6 +16,7 @@ type BaseMessage struct {
 	Copyright    string `json:"copyright" form:"copyright" gorm:"column:copyright;comment:版权信息;size:255"`
 	Link         string `json:"link" form:"link" gorm:"column:link;comment:链接;size:50;"`
 	RecordInfo   string `json:"record_info" form:"record_info" gorm:"column:record_info;comment:备案信息;size:255"`
+	UserId       uint   `json:"user_id" form:"user_id" gorm:"column:user_id;comment:用户"`
 }
 
 func (BaseMessage) TableName() string {

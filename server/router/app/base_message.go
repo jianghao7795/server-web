@@ -28,6 +28,6 @@ func (r *BaseMessageRouter) InitBaseMessageRouter(c *gin.RouterGroup) {
 		baseMessageRouter.POST("upload_file", uploadFileApi.UploadFile)
 	}
 	{
-		baseMessageRouterWithoutRecord.GET("getBaseMessage", baseMessageApi.FindBaseMessage)
+		baseMessageRouterWithoutRecord.GET("getBaseMessage/:id", baseMessageApi.FindBaseMessage)
 	}
 }

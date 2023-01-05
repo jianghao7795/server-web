@@ -12,6 +12,7 @@ import (
 	"server/model/app"
 	"server/model/common/response"
 	"server/service"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -56,7 +57,9 @@ func (baseMessageApi *BaseMessageApi) UpdateBaseMessage(c *gin.Context) {
  * @return {*}
  */
 func (BaseMessageApi *BaseMessageApi) FindBaseMessage(c *gin.Context) {
-	if responseBaseMessage, err := baseMessageService.FindBaseMessage(); err != nil {
+	id := c.Param("id")
+	ids, _ := strconv.Atoi(id)
+	if responseBaseMessage, err := baseMessageService.FindBaseMessage(uint(ids)); err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// respBaseMessage := baseMessageNotFound{message: "not found"}
 			// log.Println("err: ", err)

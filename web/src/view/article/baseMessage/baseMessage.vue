@@ -110,7 +110,7 @@ const rules = ref({
 });
 
 onMounted(() => {
-  getBaseMessage().then((resp) => {
+  getBaseMessage({ id: userStore.userInfo.ID }).then((resp) => {
     if (resp?.code === 0 && !resp?.data?.error) {
       formData.value = resp.data.baseMessage || {};
       if (resp.data.baseMessage.head_img) {
@@ -165,7 +165,7 @@ const handleRemove = (file) => {
 const handleSubmit = () => {
   loading.value = true;
   if (formData.value.ID) {
-    updateBaseMessage(formData.value).then((resp) => {
+    updateBaseMessage({ ...formData.value, user_id: userStore.userInfo.ID }).then((resp) => {
       loading.value = false;
       if (resp?.code === 0) {
         ElMessage({
@@ -175,7 +175,7 @@ const handleSubmit = () => {
       }
     });
   } else {
-    createBaseMessage(formData.value).then((resp) => {
+    createBaseMessage({ ...formData.value, user_id: userStore.userInfo.ID }).then((resp) => {
       loading.value = false;
       if (resp?.code === 0) {
         ElMessage({

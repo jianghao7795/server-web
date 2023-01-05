@@ -9,9 +9,9 @@ import service from "@/utils/request";
  * @description: 获取basemessage
  * @return {*}
  */
-export const getBaseMessage = () => {
+export const getBaseMessage = (params) => {
   return service({
-    url: "/base_message/getBaseMessage",
+    url: `/base_message/getBaseMessage/${params.id}`,
     method: "get",
   });
 };

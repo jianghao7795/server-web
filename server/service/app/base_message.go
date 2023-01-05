@@ -37,8 +37,8 @@ func (*BaseMessageService) UpdateBaseMessage(baseMessage app.BaseMessage) (err e
  * @description: 获取baseMessage
  * @return {*}
  */
-func (*BaseMessageService) FindBaseMessage() (app.BaseMessage, error) {
+func (*BaseMessageService) FindBaseMessage(id uint) (app.BaseMessage, error) {
 	var base app.BaseMessage
-	err := global.GVA_DB.Order("id desc").First(&base).Error
+	err := global.GVA_DB.Where("user_id = ?", id).First(&base).Error
 	return base, err
 }
