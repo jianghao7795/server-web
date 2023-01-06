@@ -37,6 +37,7 @@ func (baseMessageApi *BaseMessageApi) CreateBaseMessage(c *gin.Context) {
 
 /**
  * @description: update base message
+ * @param {*gin.Context} c
  * @return {*}
  */
 
@@ -52,7 +53,7 @@ func (baseMessageApi *BaseMessageApi) UpdateBaseMessage(c *gin.Context) {
 }
 
 /**
- * @description: 查找最后一条数据
+ * @description: 查找用户数据
  * @param {*gin.Context} c
  * @return {*}
  */
@@ -64,8 +65,7 @@ func (BaseMessageApi *BaseMessageApi) FindBaseMessage(c *gin.Context) {
 			// respBaseMessage := baseMessageNotFound{message: "not found"}
 			// log.Println("err: ", err)
 			str := "not found"
-			// respBaseMessage := baseMessageNotFound{message: str}
-			// respBaseMessage.message = str
+			global.GVA_LOG.Error("查询失败!", zap.Error(errors.New(str)))
 			response.OkWithData(gin.H{"error": str}, c)
 		} else {
 			global.GVA_LOG.Error("查询失败!", zap.Error(err))
