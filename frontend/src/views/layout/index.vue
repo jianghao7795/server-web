@@ -14,10 +14,10 @@
             </div>
           </template>
           <template #header>
-            <div class="headerStyleLine"><b>瓦都尅</b></div>
+            <div class="headerStyleLine"><b>吴昊</b></div>
           </template>
-          <div v-if="fullPath === '/'" style="height: 300px; text-align: center">
-            <h1>瓦都尅</h1>
+          <div style="height: 300px; text-align: center">
+            <h1>吴昊</h1>
             <hr class="small" />
             <span class="subheading">愈有知，愈无知。</span>
           </div>
@@ -46,10 +46,10 @@ import {
   NLayoutFooter,
   NLayoutHeader,
 } from "naive-ui";
-import { computed } from "vue";
+// import { computed } from "vue";
 const route = useRoute();
 const router = useRouter();
-const fullPath = computed<string>(() => route.fullPath);
+// const fullPath = computed<string>(() => route.fullPath);
 
 const changePath = (url: string) => {
   router.push(url);
