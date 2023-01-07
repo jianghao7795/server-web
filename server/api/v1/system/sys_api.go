@@ -2,6 +2,7 @@ package system
 
 import (
 	"fmt"
+	"log"
 	"server/global"
 	"server/model/common/request"
 	"server/model/common/response"
@@ -76,36 +77,38 @@ func (s *SystemApiApi) DeleteApi(c *gin.Context) {
 func (s *SystemApiApi) GetApiList(c *gin.Context) {
 	var pageInfo systemReq.SearchApiParams
 	// _ = c.ShouldBindQuery(&pageInfo)
-	var path = c.Query("path")
-	var description = c.Query("description")
-	var page = c.DefaultQuery("page", "1")
-	var pageSize = c.DefaultQuery("pageSize", "10")
-	var apiGroup = c.Query("apiGroup")
-	var method = c.Query("method")
+	// var path = c.Query("path")
+	// var description = c.Query("description")
+	// var page = c.DefaultQuery("page", "1")
+	// var pageSize = c.DefaultQuery("pageSize", "10")
+	// var apiGroup = c.Query("apiGroup")
+	// var method = c.Query("method")
 	var ascDesc = c.DefaultQuery("desc", "false")
-	var order = c.Query("orderKey")
+	// var order = c.Query("orderKey")
 	var boolItem = false
+	_ = c.BindQuery(&pageInfo)
+	log.Println(pageInfo)
 	if ascDesc == "true" {
 		boolItem = true
 	}
-	pageInfo.Page, _ = strconv.Atoi(page)
-	pageInfo.PageSize, _ = strconv.Atoi(pageSize)
-	if path != "" {
-		pageInfo.Path = path
-	}
-	if description != "" {
-		pageInfo.Description = description
-	}
-	if apiGroup != "" {
-		pageInfo.ApiGroup = apiGroup
-	}
-	if method != "" {
-		pageInfo.Method = method
-	}
-	if order != "" {
-		pageInfo.OrderKey = order
-	}
-	fmt.Println("ApiGroup.desc: ", pageInfo.Desc)
+	// pageInfo.Page, _ = strconv.Atoi(page)
+	// pageInfo.PageSize, _ = strconv.Atoi(pageSize)
+	// if path != "" {
+	// 	pageInfo.Path = path
+	// }
+	// if description != "" {
+	// 	pageInfo.Description = description
+	// }
+	// if apiGroup != "" {
+	// 	pageInfo.ApiGroup = apiGroup
+	// }
+	// if method != "" {
+	// 	pageInfo.Method = method
+	// }
+	// if order != "" {
+	// 	pageInfo.OrderKey = order
+	// }
+	// fmt.Println("ApiGroup.desc: ", pageInfo.Desc)
 	if err := utils.Verify(pageInfo.PageInfo, utils.PageInfoVerify); err != nil {
 		fmt.Println(err)
 		response.FailWithMessage(err.Error(), c)
