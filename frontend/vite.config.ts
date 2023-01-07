@@ -37,6 +37,7 @@ export default defineConfig({
   server: {
     // 如果使用docker-compose开发模式，设置为false
     port: 3500,
+    host: '0.0.0.0',
     proxy: {
       // 把key的路径代理到target位置
       // detail: https://cli.vuejs.org/config/#devserver-proxy
