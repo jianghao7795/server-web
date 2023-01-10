@@ -1,9 +1,9 @@
-import { findSysDictionary } from '@/api/sysDictionary';
+import { findSysDictionary } from "@/api/sysDictionary";
 
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { defineStore } from "pinia";
+import { ref } from "vue";
 
-export const useDictionaryStore = defineStore('dictionary', () => {
+export const useDictionaryStore = defineStore("dictionary", () => {
   const dictionaryMap = ref({});
 
   const setDictionaryMap = (dictionaryRes) => {

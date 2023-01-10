@@ -6,8 +6,8 @@
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 
-@import '@/style/basics.scss';
-@import '@/style/iconfont.css';
+@import "@/style/basics.scss";
+@import "@/style/iconfont.css";
 
 html {
   line-height: 1.15;
@@ -212,9 +212,9 @@ select {
    */
 
 button,
-[type='button'],
-[type='reset'],
-[type='submit'] {
+[type="button"],
+[type="reset"],
+[type="submit"] {
   appearance: button;
 }
 
@@ -223,9 +223,9 @@ button,
    */
 
 button::-moz-focus-inner,
-[type='button']::-moz-focus-inner,
-[type='reset']::-moz-focus-inner,
-[type='submit']::-moz-focus-inner {
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
@@ -235,9 +235,9 @@ button::-moz-focus-inner,
    */
 
 button:-moz-focusring,
-[type='button']:-moz-focusring,
-[type='reset']:-moz-focusring,
-[type='submit']:-moz-focusring {
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
 
@@ -292,8 +292,8 @@ textarea {
    * 2. Remove the padding in IE 10.
    */
 
-[type='checkbox'],
-[type='radio'] {
+[type="checkbox"],
+[type="radio"] {
   box-sizing: border-box;
   /* 1 */
   padding: 0;
@@ -304,8 +304,8 @@ textarea {
    * Correct the cursor style of increment and decrement buttons in Chrome.
    */
 
-[type='number']::-webkit-inner-spin-button,
-[type='number']::-webkit-outer-spin-button {
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
 
@@ -314,7 +314,7 @@ textarea {
    * 2. Correct the outline style in Safari.
    */
 
-[type='search'] {
+[type="search"] {
   appearance: textfield;
   /* 1 */
   outline-offset: -2px;
@@ -325,7 +325,7 @@ textarea {
    * Remove the inner padding in Chrome and Safari on macOS.
    */
 
-[type='search']::-webkit-search-decoration {
+[type="search"]::-webkit-search-decoration {
   appearance: none;
 }
 
@@ -403,7 +403,7 @@ table,
 th,
 td {
   border: none;
-  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   font-size: 14px;
   margin: 0px;
   padding: 0px;
@@ -475,8 +475,8 @@ input::-moz-placeholder {
   color: #ccc;
 }
 
-input[type='submit'],
-input[type='button'] {
+input[type="submit"],
+input[type="button"] {
   cursor: pointer;
 }
 
@@ -587,7 +587,6 @@ li {
   }
 
   .aside {
-
     // .el-menu-item {
     //   >div {
     //     padding: 0 15px !important;
@@ -604,7 +603,6 @@ li {
         }
 
         .is-active {
-
           // 关闭三级菜单二级菜单样式
           ul {
             border: none;
@@ -806,7 +804,7 @@ li {
 
 .admin-box:after,
 .admin-box:before {
-  content: '';
+  content: "";
   display: block;
   clear: both;
 }
@@ -842,7 +840,6 @@ li {
 }
 
 .el-pagination {
-
   .btn-prev,
   .btn-next {
     border: 1px solid #ddd;
@@ -865,7 +862,7 @@ li {
 .el-row {
   padding: 10px 0;
 
-  .el-col>label {
+  .el-col > label {
     line-height: 30px;
     text-align: right;
     width: 80%;
@@ -937,7 +934,7 @@ li {
           border-left: 1px solid $border-color;
           border-right: 1px solid $border-color;
 
-          +.el-tabs__item {
+          + .el-tabs__item {
             border-left: 0px solid $border-color;
           }
         }
@@ -970,7 +967,7 @@ li {
   // }
   .cell {
     button:last-child::after {
-      content: '' !important;
+      content: "" !important;
       position: absolute !important;
       width: 0px !important;
     }
@@ -979,7 +976,7 @@ li {
 
 .clear:after,
 .clear:before {
-  content: '';
+  content: "";
   display: block;
   clear: both;
 }
@@ -1039,7 +1036,7 @@ $mainHight: 100vh;
   z-index: 999;
   min-width: auto;
 
-  >.el-row {
+  > .el-row {
     padding: 0;
 
     .el-col-lg-14 {
@@ -1136,7 +1133,6 @@ $mainHight: 100vh;
       }
 
       li {
-
         .el-tooltip,
         .el-sub-menu__title {
           padding: 0px 15px !important;
@@ -1352,7 +1348,7 @@ $mainHight: 100vh;
   margin-bottom: 12px;
   display: flex;
 
-  .el-button+.el-button {
+  .el-button + .el-button {
     margin-left: 12px;
   }
 }
