@@ -74,7 +74,7 @@ func (a *AuthorityApi) CopyAuthority(c *gin.Context) {
 // @Produce application/json
 // @Param data body system.SysAuthority true "删除角色"
 // @Success 200 {object} response.Response{msg=string} "删除角色"
-// @Router /authority/deleteAuthority [post]
+// @Router /authority/deleteAuthority [delete]
 func (a *AuthorityApi) DeleteAuthority(c *gin.Context) {
 	var authority system.SysAuthority
 	_ = c.ShouldBindJSON(&authority)

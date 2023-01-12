@@ -16,6 +16,8 @@ export default {
 
 <script setup>
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
+// import address from "address";
+// console.log(address.ip());
 </script>
 
 <style lang="scss">

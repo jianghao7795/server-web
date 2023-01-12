@@ -59,7 +59,7 @@ service.interceptors.request.use(
         ...config.headers,
       };
     }
-    console.log(config.headers);
+    // console.log(config.headers);
     return config;
   },
   (error) => {

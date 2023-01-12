@@ -18,7 +18,7 @@ export const getAuthorityList = (data) => {
 export const deleteAuthority = (data) => {
   return service({
     url: "/authority/deleteAuthority",
-    method: "post",
+    method: "delete",
     data,
   });
 };
