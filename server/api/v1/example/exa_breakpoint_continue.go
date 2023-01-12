@@ -2,7 +2,7 @@ package example
 
 import (
 	"fmt"
-	"io/ioutil"
+	ioutil "io"
 	"mime/multipart"
 	"strconv"
 

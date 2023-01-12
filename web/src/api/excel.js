@@ -1,27 +1,27 @@
-import service from '@/utils/request';
-import { ElMessage } from 'element-plus';
+import service from "@/utils/request";
+import { ElMessage } from "element-plus";
 
 const handleFileError = (res, fileName) => {
-  if (typeof res.data !== 'undefined') {
-    if (res.data.type === 'application/json') {
+  if (typeof res.data !== "undefined") {
+    if (res.data.type === "application/json") {
       const reader = new FileReader();
       reader.onload = function () {
         const message = JSON.parse(reader.result).msg;
         ElMessage({
           showClose: true,
           message: message,
-          type: 'error',
+          type: "error",
         });
       };
       reader.readAsText(new Blob([res.data]));
     }
   } else {
     var downloadUrl = window.URL.createObjectURL(new Blob([res]));
-    var a = document.createElement('a');
-    a.style.display = 'none';
+    var a = document.createElement("a");
+    a.style.display = "none";
     a.href = downloadUrl;
     a.download = fileName;
-    var event = new MouseEvent('click');
+    var event = new MouseEvent("click");
     a.dispatchEvent(event);
   }
 };
@@ -36,13 +36,13 @@ const handleFileError = (res, fileName) => {
 // @Router /excel/exportExcel [post]
 export const exportExcel = (tableData, fileName) => {
   service({
-    url: '/excel/exportExcel',
-    method: 'post',
+    url: "/excel/exportExcel",
+    method: "post",
     data: {
       fileName: fileName,
       infoList: tableData,
     },
-    responseType: 'blob',
+    responseType: "blob",
   }).then((res) => {
     handleFileError(res, fileName);
   });
@@ -58,8 +58,8 @@ export const exportExcel = (tableData, fileName) => {
 // @Router /excel/importExcel [post]
 export const loadExcelData = () => {
   return service({
-    url: '/excel/loadExcel',
-    method: 'get',
+    url: "/excel/loadExcel",
+    method: "get",
   });
 };
 
@@ -71,15 +71,14 @@ export const loadExcelData = () => {
 // @Param fileName query fileName true "模板名称"
 // @Success 200
 // @Router /excel/downloadTemplate [get]
-export const downloadTemplate = (fileName) => {
-  return service({
-    url: '/excel/downloadTemplate',
-    method: 'get',
+export const downloadTemplate = async (fileName) => {
+  const res = await service({
+    url: "/excel/downloadTemplate",
+    method: "get",
     params: {
       fileName: fileName,
     },
-    responseType: 'blob',
-  }).then((res) => {
-    handleFileError(res, fileName);
+    responseType: "blob", // 返回blob 默认为json
   });
+  handleFileError(res, fileName);
 };

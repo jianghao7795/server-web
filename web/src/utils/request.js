@@ -39,18 +39,27 @@ service.interceptors.request.use(
     if (config.headers["Content-Type"]) {
       config.headers = {
         ...config.headers,
+        Accept: "application/json",
+        // "Content-Type": "application/json; charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,GET,DELETE,PATCH,POST",
+        "Access-Control-Allow-Credentials": "true",
         "x-token": userStore.token,
         "x-user-id": userStore.userInfo.ID,
       };
     } else {
       config.headers = {
-        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,GET,DELETE,PATCH,POST",
+        "Access-Control-Allow-Credentials": "true",
         "x-token": userStore.token,
         "x-user-id": userStore.userInfo.ID,
         ...config.headers,
       };
     }
-
+    console.log(config.headers);
     return config;
   },
   (error) => {

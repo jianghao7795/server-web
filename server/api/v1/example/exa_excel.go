@@ -108,6 +108,6 @@ func (e *ExcelApi) DownloadTemplate(c *gin.Context) {
 		response.FailWithMessage("不支持下载文件夹", c)
 		return
 	}
-	c.Writer.Header().Add("success", "true")
+	c.Writer.Header().Add("success", "true") // 增加返回头 信息
 	c.File(filePath)
 }

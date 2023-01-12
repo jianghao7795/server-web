@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"plugin"
@@ -45,13 +44,14 @@ func LoadPlugin(path string) error {
 		return err
 	}
 	if fileInfo.IsDir() {
-		fileSlice, err := ioutil.ReadDir(path)
+		fileSlice, err := os.ReadDir(path)
 		if err != nil {
 			return err
 		}
 		for _, ff := range fileSlice {
+			dff, _ := ff.Info()
 			if !ff.IsDir() && filepath.Ext(ff.Name()) == ".so" {
-				if err = loadPlugin(path, ff); err != nil {
+				if err = loadPlugin(path, dff); err != nil {
 					return err
 				}
 			} else if ff.IsDir() {

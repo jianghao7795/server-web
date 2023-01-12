@@ -125,7 +125,7 @@ const userStore = useUserStore();
 const formatted = useDateFormat(useNow(), "YYYY-MM-DD HH:mm:ss");
 const period = ref("");
 const userNumber = ref(0);
-console.log("上午好");
+// console.log("上午好");
 
 onMounted(() => {
   const nowHours = useNow().value.getHours();
