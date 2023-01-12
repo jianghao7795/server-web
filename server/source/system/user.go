@@ -46,10 +46,10 @@ func (i *initUser) InitializeData(ctx context.Context) (next context.Context, er
 		return ctx, system.ErrMissingDBContext
 	}
 	entities := []sysModel.SysUser{
-		{UUID: uuid.NewV4(), Username: "admin", Password: "e10adc3949ba59abbe56e057f20f883e", NickName: "超级管理员", HeaderImg: "https://qmplusimg.henrongyi.top/gva_header.jpg", AuthorityId: "888", Phone: "17611111111", Email: "333333333@qq.com"},
+		{UUID: uuid.NewV4(), Username: "admin", Password: "e10adc3949ba59abbe56e057f20f883e", NickName: "超级管理员", HeaderImg: "https://qmplusimg.henrongyi.top/header.jpg", AuthorityId: "888", Phone: "17611111111", Email: "333333333@qq.com"},
 		{UUID: uuid.NewV4(), Username: "a303176530", Password: "3ec063004a6f31642261936a379fde3d", NickName: "QMPlusUser", HeaderImg: "https:///qmplusimg.henrongyi.top/1572075907logo.png", AuthorityId: "9528", Phone: "17611111111", Email: "333333333@qq.com"},
 	}
-	if err = global.GVA_DB.Create(&entities).Error; err != nil {
+	if err = global.DB.Create(&entities).Error; err != nil {
 		return ctx, errors.Wrap(err, sysModel.SysUser{}.TableName()+"表数据初始化失败!")
 	}
 	type myString string

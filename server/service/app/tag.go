@@ -14,21 +14,21 @@ type TagService struct {
 // CreateTag 创建Tag记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (tagService *TagService) CreateTag(tag app.Tag) (err error) {
-	err = global.GVA_DB.Create(&tag).Error
+	err = global.DB.Create(&tag).Error
 	return err
 }
 
 // DeleteTag 删除Tag记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (tagService *TagService) DeleteTag(id uint) (err error) {
-	err = global.GVA_DB.Delete(&app.Tag{}, id).Error
+	err = global.DB.Delete(&app.Tag{}, id).Error
 	return err
 }
 
 // DeleteTagByIds 批量删除Tag记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (tagService *TagService) DeleteTagByIds(ids request.IdsReq) (err error) {
-	err = global.GVA_DB.Delete(&[]app.Tag{}, "id in ?", ids.Ids).Error
+	err = global.DB.Delete(&[]app.Tag{}, "id in ?", ids.Ids).Error
 	return err
 }
 
@@ -37,19 +37,19 @@ func (tagService *TagService) DeleteTagByIds(ids request.IdsReq) (err error) {
 func (tagService *TagService) UpdateTag(tag app.Tag) (err error) {
 	var tagNew app.Tag
 	// var count int64
-	err = global.GVA_DB.Where("id = ?", tag.ID).First(&tagNew).Error
+	err = global.DB.Where("id = ?", tag.ID).First(&tagNew).Error
 	if err != nil {
 		// log.Println(err)
 		return err
 	}
-	err = global.GVA_DB.Save(&tag).Error
+	err = global.DB.Save(&tag).Error
 	return err
 }
 
 // GetTag 根据id获取Tag记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (tagService *TagService) GetTag(id uint) (tag app.Tag, err error) {
-	err = global.GVA_DB.Where("id = ?", id).First(&tag).Error
+	err = global.DB.Where("id = ?", id).First(&tag).Error
 	return
 }
 
@@ -59,7 +59,7 @@ func (tagService *TagService) GetTagInfoList(info appReq.TagSearch) (list interf
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
-	db := global.GVA_DB.Model(&app.Tag{})
+	db := global.DB.Model(&app.Tag{})
 	var tags []app.Tag
 	if info.Name != "" {
 		db = db.Where("name like ?", strings.Join([]string{"%", info.Name, "%"}, ""))

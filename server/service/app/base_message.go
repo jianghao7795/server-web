@@ -13,7 +13,7 @@ type BaseMessageService struct{}
  * @return {*}
  */
 func (*BaseMessageService) CreateBaseMessage(baseMessage app.BaseMessage) (err error) {
-	err = global.GVA_DB.Create(&baseMessage).Error
+	err = global.DB.Create(&baseMessage).Error
 	return
 }
 
@@ -24,12 +24,12 @@ func (*BaseMessageService) CreateBaseMessage(baseMessage app.BaseMessage) (err e
  */
 func (*BaseMessageService) UpdateBaseMessage(baseMessage app.BaseMessage) (err error) {
 	var base app.BaseMessage
-	err = global.GVA_DB.Where("id = ?", baseMessage.ID).First(&base).Error
+	err = global.DB.Where("id = ?", baseMessage.ID).First(&base).Error
 	baseMessage.CreatedAt = base.CreatedAt
 	if err != nil {
 		return
 	}
-	err = global.GVA_DB.Save(baseMessage).Error
+	err = global.DB.Save(baseMessage).Error
 	return
 }
 
@@ -39,6 +39,6 @@ func (*BaseMessageService) UpdateBaseMessage(baseMessage app.BaseMessage) (err e
  */
 func (*BaseMessageService) FindBaseMessage(id uint) (app.BaseMessage, error) {
 	var base app.BaseMessage
-	err := global.GVA_DB.Where("user_id = ?", id).First(&base).Error
+	err := global.DB.Where("user_id = ?", id).First(&base).Error
 	return base, err
 }

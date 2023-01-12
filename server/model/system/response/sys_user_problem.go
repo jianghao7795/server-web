@@ -3,7 +3,7 @@ package response
 import "server/global"
 
 type SysUserProblemSetting struct {
-	global.GVA_MODEL
+	global.MODEL
 	SysUserId uint   `json:"sys_user_id"`
 	Problem   string `json:"problem"`
 	// Answer    string `json:"answer"`

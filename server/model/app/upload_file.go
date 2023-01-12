@@ -10,7 +10,7 @@ package app
 import "server/global"
 
 type FileUploadAndDownload struct {
-	global.GVA_MODEL
+	global.MODEL
 	Name string `json:"name" form:"name" gorm:"comment:文件名"` // 文件名
 	Url  string `json:"url" form:"url" gorm:"comment:文件地址"`  // 文件地址
 	Tag  string `json:"tag" form:"tag" gorm:"comment:文件标签"`  // 文件标签

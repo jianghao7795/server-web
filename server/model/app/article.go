@@ -6,7 +6,7 @@ import (
 )
 
 type Article struct {
-	global.GVA_MODEL
+	global.MODEL
 	// TagId   int    `json:"tag_id" form:"tag_id" gorm:"column:tag_id;comment:标签ID;"`
 	Title   string         `json:"title" form:"title" gorm:"column:title;comment:文章标题;size:191;"`
 	Desc    string         `json:"desc" form:"desc" gorm:"column:desc;comment:文章简述;"`

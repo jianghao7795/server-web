@@ -29,20 +29,20 @@ import (
 // @name x-token
 // @BasePath /
 func main() {
-	global.GVA_VP = core.Viper()       // 初始化Viper 配置
-	global.GVA_LOG = core.Zap()        // 初始化zap日志库
-	zap.ReplaceGlobals(global.GVA_LOG) // 部署到全局
-	global.GVA_DB = initialize.Gorm()  // gorm连接数据库
-	initialize.Timer()                 //定时清除数据库数据
-	// conn, err := global.GVA_Timer.FindCron("ClearDB")
+	global.VP = core.Viper()       // 初始化Viper 配置
+	global.LOG = core.Zap()        // 初始化zap日志库
+	zap.ReplaceGlobals(global.LOG) // 部署到全局
+	global.DB = initialize.Gorm()  // gorm连接数据库
+	initialize.Timer()             //定时清除数据库数据
+	// conn, err := global.Timer.FindCron("ClearDB")
 	// log.Println(conn, err)
 	initialize.Tasks() //定时 执行任务
 	// initialize.DBList()
 	utilsInit.TransInit("zh")
-	if global.GVA_DB != nil {
-		// initialize.RegisterTables(global.GVA_DB) // 初始化表
+	if global.DB != nil {
+		// initialize.RegisterTables(global.DB) // 初始化表
 		// 程序结束前关闭数据库链接
-		db, _ := global.GVA_DB.DB()
+		db, _ := global.DB.DB()
 		defer db.Close()
 	}
 	core.RunWindowsServer()

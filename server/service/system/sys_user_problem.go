@@ -10,14 +10,14 @@ import (
 type Problem struct{}
 
 func (*Problem) GetUserProblemList(info *system.SysUserProblem) (list interface{}, err error) {
-	db := global.GVA_DB.Model(&system.SysUserProblem{})
+	db := global.DB.Model(&system.SysUserProblem{})
 	var problemList []response.SysUserProblem
 	err = db.Where("sys_user_id = ?", info.SysUserId).Find(&problemList).Error
 	return problemList, err
 }
 
 func (*Problem) GetUserProblemSettingList(info *system.SysUserProblem) (list interface{}, err error) {
-	db := global.GVA_DB.Model(&system.SysUserProblem{})
+	db := global.DB.Model(&system.SysUserProblem{})
 	var problemList []response.SysUserProblemSetting
 	err = db.Where("sys_user_id = ?", info.SysUserId).Find(&problemList).Error
 	return problemList, err
@@ -31,7 +31,7 @@ func (*Problem) SetUserProblemSetting(problem []system.SysUserProblem) (string, 
 	var messageString string = ""
 	for index, item := range problem {
 		if item.ID == 0 {
-			db := global.GVA_DB.Model(&system.SysUserProblem{})
+			db := global.DB.Model(&system.SysUserProblem{})
 			err := db.Create(&item).Error
 			if err != nil {
 				return "", err
@@ -39,7 +39,7 @@ func (*Problem) SetUserProblemSetting(problem []system.SysUserProblem) (string, 
 			messageString += "[" + strconv.Itoa(index) + "]" + "新建成功 "
 		} else {
 			// log.Println(item)
-			db := global.GVA_DB.Model(&system.SysUserProblem{})
+			db := global.DB.Model(&system.SysUserProblem{})
 			var dataProblemFirst system.SysUserProblem
 			err := db.Where("id = ?", item.ID).First(&dataProblemFirst).Error
 
@@ -65,7 +65,7 @@ func (*Problem) HasSetting(uid int) (bool, error) {
 	if uid == 0 {
 		return false, nil
 	}
-	db := global.GVA_DB.Model(&system.SysUserProblem{})
+	db := global.DB.Model(&system.SysUserProblem{})
 	var total int64
 	err := db.Where("sys_user_id = ?", uid).Order("id desc").Count(&total).Error
 	if err != nil {
@@ -75,7 +75,7 @@ func (*Problem) HasSetting(uid int) (bool, error) {
 }
 
 func (*Problem) VerifyAnswer(info *system.SysUserProblem) (bool, error) {
-	db := global.GVA_DB.Model(&system.SysUserProblem{})
+	db := global.DB.Model(&system.SysUserProblem{})
 	var findProblem system.SysUserProblem
 	err := db.Where("id = ?", info.ID).First(&findProblem).Error
 	if err != nil {

@@ -22,13 +22,13 @@ func (*UserProblem) GetProblemSetting(c *gin.Context) {
 	SysUserProblemId, err := strconv.Atoi(SysUserId)
 	search.SysUserId = SysUserProblemId
 	if err != nil {
-		global.GVA_LOG.Error("传参错误!", zap.Error(err))
+		global.LOG.Error("传参错误!", zap.Error(err))
 		response.FailWithMessage("传错参数,请传user id", c)
 		return
 	}
 	list, err := userProblem.GetUserProblemSettingList(&search)
 	if err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 		return
 	}
@@ -47,18 +47,18 @@ func (*UserProblem) UpdateProblemSetting(c *gin.Context) {
 	if err != nil {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			global.GVA_LOG.Error("传参错误!", zap.Error(err))
+			global.LOG.Error("传参错误!", zap.Error(err))
 			response.FailWithDetailed(err.Error(), "传错参数", c)
 			return
 		}
-		global.GVA_LOG.Error("传参错误!", zap.Error(err))
+		global.LOG.Error("传参错误!", zap.Error(err))
 
 		response.FailWithDetailed(errs.Translate(global.Validate), "传错参数", c)
 		return
 	}
 	message, err := userProblem.SetUserProblemSetting(dataProblem.Data)
 	if err != nil {
-		global.GVA_LOG.Error("传参错误!", zap.Error(err))
+		global.LOG.Error("传参错误!", zap.Error(err))
 		response.FailWithDetailed(err, "传错参数", c)
 		return
 	}
@@ -70,7 +70,7 @@ func (*UserProblem) HasSetting(c *gin.Context) {
 	SysUserProblemId, _ := strconv.Atoi(SysUserId)
 	isSetting, err := userProblem.HasSetting(SysUserProblemId)
 	if err != nil {
-		global.GVA_LOG.Error("传参错误!", zap.Error(err))
+		global.LOG.Error("传参错误!", zap.Error(err))
 		response.FailWithDetailed(err, "传错参数", c)
 		return
 	}
@@ -87,17 +87,17 @@ func (*UserProblem) VerifyAnswer(c *gin.Context) {
 	if err != nil {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			global.GVA_LOG.Error("传参错误!", zap.Error(err))
+			global.LOG.Error("传参错误!", zap.Error(err))
 			response.FailWithDetailed(err.Error(), "传错参数", c)
 			return
 		}
-		global.GVA_LOG.Error("传参错误!", zap.Error(err))
+		global.LOG.Error("传参错误!", zap.Error(err))
 		response.FailWithDetailed(errs.Translate(global.Validate), "传错参数", c)
 		return
 	}
 	ispassed, err := userProblem.VerifyAnswer(&dataProblem.Data)
 	if err != nil {
-		global.GVA_LOG.Error("未查到此问题!", zap.Error(err))
+		global.LOG.Error("未查到此问题!", zap.Error(err))
 		response.FailWithDetailed(err, "未查到此问题", c)
 		return
 	}

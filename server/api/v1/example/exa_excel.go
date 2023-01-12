@@ -34,10 +34,10 @@ func (e *ExcelApi) ExportExcel(c *gin.Context) {
 		response.FailWithMessage("包含非法字符", c)
 		return
 	}
-	filePath := global.GVA_CONFIG.Excel.Dir + excelInfo.FileName
+	filePath := global.CONFIG.Excel.Dir + excelInfo.FileName
 	err := excelService.ParseInfoList2Excel(excelInfo.InfoList, filePath)
 	if err != nil {
-		global.GVA_LOG.Error("转换Excel失败!", zap.Error(err))
+		global.LOG.Error("转换Excel失败!", zap.Error(err))
 		response.FailWithMessage("转换Excel失败", c)
 		return
 	}
@@ -56,11 +56,11 @@ func (e *ExcelApi) ExportExcel(c *gin.Context) {
 func (e *ExcelApi) ImportExcel(c *gin.Context) {
 	_, header, err := c.Request.FormFile("file")
 	if err != nil {
-		global.GVA_LOG.Error("接收文件失败!", zap.Error(err))
+		global.LOG.Error("接收文件失败!", zap.Error(err))
 		response.FailWithMessage("接收文件失败", c)
 		return
 	}
-	_ = c.SaveUploadedFile(header, global.GVA_CONFIG.Excel.Dir+"ExcelImport.xlsx")
+	_ = c.SaveUploadedFile(header, global.CONFIG.Excel.Dir+"ExcelImport.xlsx")
 	response.OkWithMessage("导入成功", c)
 }
 
@@ -73,7 +73,7 @@ func (e *ExcelApi) ImportExcel(c *gin.Context) {
 func (e *ExcelApi) LoadExcel(c *gin.Context) {
 	menus, err := excelService.ParseExcel2InfoList()
 	if err != nil {
-		global.GVA_LOG.Error("加载数据失败!", zap.Error(err))
+		global.LOG.Error("加载数据失败!", zap.Error(err))
 		response.FailWithMessage("加载数据失败", c)
 		return
 	}
@@ -95,16 +95,16 @@ func (e *ExcelApi) LoadExcel(c *gin.Context) {
 // @Router /excel/downloadTemplate [get]
 func (e *ExcelApi) DownloadTemplate(c *gin.Context) {
 	fileName := c.Query("fileName")
-	filePath := global.GVA_CONFIG.Excel.Dir + fileName
+	filePath := global.CONFIG.Excel.Dir + fileName
 
 	fi, err := os.Stat(filePath)
 	if err != nil {
-		global.GVA_LOG.Error("文件不存在!", zap.Error(err))
+		global.LOG.Error("文件不存在!", zap.Error(err))
 		response.FailWithMessage("文件不存在", c)
 		return
 	}
 	if fi.IsDir() {
-		global.GVA_LOG.Error("不支持下载文件夹!", zap.Error(err))
+		global.LOG.Error("不支持下载文件夹!", zap.Error(err))
 		response.FailWithMessage("不支持下载文件夹", c)
 		return
 	}

@@ -20,7 +20,7 @@ type autoCodePgsql struct{}
 func (a *autoCodePgsql) GetDB() (data []response.Db, err error) {
 	var entities []response.Db
 	sql := `SELECT datname as database FROM pg_database WHERE datistemplate = false`
-	err = global.GVA_DB.Raw(sql).Scan(&entities).Error
+	err = global.DB.Raw(sql).Scan(&entities).Error
 	return entities, err
 }
 
@@ -30,7 +30,7 @@ func (a *autoCodePgsql) GetDB() (data []response.Db, err error) {
 func (a *autoCodePgsql) GetTables(dbName string) (data []response.Table, err error) {
 	var entities []response.Table
 	sql := `select table_name as table_name from information_schema.tables where table_catalog = ? and table_schema = ?`
-	db, _err := gorm.Open(postgres.Open(global.GVA_CONFIG.Pgsql.LinkDsn(dbName)), &gorm.Config{Logger: logger.Default.LogMode(logger.Info)})
+	db, _err := gorm.Open(postgres.Open(global.CONFIG.Pgsql.LinkDsn(dbName)), &gorm.Config{Logger: logger.Default.LogMode(logger.Info)})
 	if _err != nil {
 		return nil, errors.Wrapf(err, "[pgsql] 连接 数据库(%s)的表失败!", dbName)
 	}
@@ -78,7 +78,7 @@ func (a *autoCodePgsql) GetColumn(tableName string, dbName string) (data []respo
 		  and table_name = '?';
 	`
 	var entities []response.Column
-	db, _err := gorm.Open(postgres.Open(global.GVA_CONFIG.Pgsql.LinkDsn(dbName)), &gorm.Config{Logger: logger.Default.LogMode(logger.Info)})
+	db, _err := gorm.Open(postgres.Open(global.CONFIG.Pgsql.LinkDsn(dbName)), &gorm.Config{Logger: logger.Default.LogMode(logger.Info)})
 	if _err != nil {
 		return nil, errors.Wrapf(err, "[pgsql] 连接 数据库(%s)的表(%s)失败!", dbName, tableName)
 	}

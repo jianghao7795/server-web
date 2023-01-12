@@ -16,35 +16,35 @@ type CommentService struct {
 // CreateComment 创建Comment记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (commentService *CommentService) CreateComment(comment comment.Comment) (err error) {
-	err = global.GVA_DB.Create(&comment).Error
+	err = global.DB.Create(&comment).Error
 	return err
 }
 
 // DeleteComment 删除Comment记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (commentService *CommentService) DeleteComment(comment comment.Comment) (err error) {
-	err = global.GVA_DB.Delete(&comment).Error
+	err = global.DB.Delete(&comment).Error
 	return err
 }
 
 // DeleteCommentByIds 批量删除Comment记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (commentService *CommentService) DeleteCommentByIds(ids request.IdsReq) (err error) {
-	err = global.GVA_DB.Delete(&[]comment.Comment{}, "id in ?", ids.Ids).Error
+	err = global.DB.Delete(&[]comment.Comment{}, "id in ?", ids.Ids).Error
 	return err
 }
 
 // UpdateComment 更新Comment记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (commentService *CommentService) UpdateComment(comment comment.Comment) (err error) {
-	err = global.GVA_DB.Save(&comment).Error
+	err = global.DB.Save(&comment).Error
 	return err
 }
 
 // GetComment 根据id获取Comment记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (commentService *CommentService) GetComment(id uint) (comment comment.Comment, err error) {
-	err = global.GVA_DB.Preload("Article").Where("id = ?", id).First(&comment).Error
+	err = global.DB.Preload("Article").Where("id = ?", id).First(&comment).Error
 	return
 }
 
@@ -54,7 +54,7 @@ func (commentService *CommentService) GetCommentInfoList(info commentReq.Comment
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
-	db := global.GVA_DB.Model(&comment.Comment{}).Preload("Article", func(db *gorm.DB) *gorm.DB {
+	db := global.DB.Model(&comment.Comment{}).Preload("Article", func(db *gorm.DB) *gorm.DB {
 		return db.Preload("User")
 	}).Preload("Praise")
 	if info.ArticleId != 0 {
@@ -79,7 +79,7 @@ func (commentService *CommentService) GetCommentInfoList(info commentReq.Comment
 func (commentService *CommentService) GetCommentTreeList(info commentReq.CommentSearch) (list []comment.Comment, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
-	db := global.GVA_DB.Model(&comment.Comment{})
+	db := global.DB.Model(&comment.Comment{})
 	err = db.Where("parent_id = ?", 0).Count(&total).Error
 	if err != nil {
 		return
@@ -100,7 +100,7 @@ func (commentService *CommentService) GetCommentTreeList(info commentReq.Comment
 }
 
 func (commentService *CommentService) findChildrenComment(comment *comment.Comment) (err error) {
-	err = global.GVA_DB.Where("parent_id = ?", comment.ID).Find(&comment.Children).Error
+	err = global.DB.Where("parent_id = ?", comment.ID).Find(&comment.Children).Error
 	if len(comment.Children) > 0 {
 		for k := range comment.Children {
 			err = commentService.findChildrenComment(&comment.Children[k])
@@ -111,7 +111,7 @@ func (commentService *CommentService) findChildrenComment(comment *comment.Comme
 
 // LikeIt 点赞一条记录
 func (*CommentService) PutLikeItOrDislike(info comment.Praise) (praise comment.Praise, err error) {
-	db := global.GVA_DB.Model(&comment.Praise{})
+	db := global.DB.Model(&comment.Praise{})
 
 	if info.ID == 0 {
 		var praise comment.Praise

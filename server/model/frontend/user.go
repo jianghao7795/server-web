@@ -3,7 +3,7 @@ package frontend
 import "server/global"
 
 type User struct {
-	global.GVA_MODEL
+	global.MODEL
 	Username  string `json:"username" form:"username"`
 	NickName  string `json:"nick_name" form:"nick_name"`
 	HeaderImg string `json:"header_img" form:"header_img"`

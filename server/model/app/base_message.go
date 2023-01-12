@@ -9,7 +9,7 @@ package app
 import "server/global"
 
 type BaseMessage struct {
-	global.GVA_MODEL
+	global.MODEL
 	Title        string `json:"title" form:"title" gorm:"column:title;comment:网站标题;size:50;"`
 	Introduction string `json:"introduction" form:"introduction" gorm:"column:introduction;comment:网站简介;size:255"`
 	HeadImg      string `json:"head_img" form:"head_img" gorm:"column:head_img;comment:网站头像;size:255;"`

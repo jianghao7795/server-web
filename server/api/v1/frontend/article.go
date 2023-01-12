@@ -15,7 +15,7 @@ import (
 type FrontendArticleApi struct{}
 
 func (s *FrontendArticleApi) GetArticleList(c *gin.Context) {
-	// log.Println(global.GVA_CONFIG.Cache)
+	// log.Println(global.CONFIG.Cache)
 	var pageInfo request.ArticleSearch
 	_ = c.ShouldBindQuery(&pageInfo)
 	if pageInfo.Page == 0 {
@@ -27,7 +27,7 @@ func (s *FrontendArticleApi) GetArticleList(c *gin.Context) {
 	}
 
 	if list, err := frontendService.FrontendArticle.GetArticleList(pageInfo, c); err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.PageResult{
@@ -52,7 +52,7 @@ func (s *FrontendArticleApi) GetAricleDetail(c *gin.Context) {
 		return
 	}
 	if err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 
 	} else {

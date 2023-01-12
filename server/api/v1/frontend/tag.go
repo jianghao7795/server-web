@@ -20,7 +20,7 @@ func (appTabApi *FrontendTagApi) GetAppTabList(c *gin.Context) {
 	_ = c.ShouldBindQuery(&pageInfo)
 	// log.Println(pageInfo.Name)
 	if list, err := frontendService.FrontendTag.GetTagList(c); err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.PageResult{
@@ -41,7 +41,7 @@ func (appTabApi *FrontendTagApi) GetTagList(c *gin.Context) {
 	}
 	// log.Println(pageInfo.Name)
 	if tagArticles, err := frontendService.FrontendTag.GetTagArticle(tagId, c); err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithData(gin.H{"tag": tagArticles}, c)

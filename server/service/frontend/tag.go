@@ -16,15 +16,15 @@ type FrontendTag struct{}
 
 func (s *FrontendTag) GetTagList(c *gin.Context) (list []frontend.AppTab, err error) {
 	var tagListStr string
-	tagListStr, err = global.GVA_REDIS.Get(c, "tag-list").Result()
+	tagListStr, err = global.REDIS.Get(c, "tag-list").Result()
 	if err == redis.Nil {
-		db := global.GVA_DB.Model(&frontend.AppTab{})
+		db := global.DB.Model(&frontend.AppTab{})
 		err = db.Order("id desc").Find(&list).Error
 		if err != nil {
 			return list, err
 		}
 
-		err := global.GVA_REDIS.Set(c, "tag-list", list, 1*time.Hour).Err()
+		err := global.REDIS.Set(c, "tag-list", list, 1*time.Hour).Err()
 		if err != nil {
 			return list, errors.New("redis 存储失败， 请查看redis服务 配置")
 		}
@@ -42,14 +42,14 @@ func (s *FrontendTag) GetTagList(c *gin.Context) (list []frontend.AppTab, err er
 
 func (s *FrontendTag) GetTagArticle(tagId int, c *gin.Context) (tagArticle frontend.AppTab, err error) {
 	tagArticleStr := ""
-	tagArticleStr, err = global.GVA_REDIS.Get(c, "tag-"+strconv.Itoa(tagId)).Result()
+	tagArticleStr, err = global.REDIS.Get(c, "tag-"+strconv.Itoa(tagId)).Result()
 	if err == redis.Nil {
-		db := global.GVA_DB.Model(&frontend.AppTab{})
+		db := global.DB.Model(&frontend.AppTab{})
 		err = db.Where("id = ?", tagId).Order("id desc").Preload("Articles").First(&tagArticle).Error
 		if err != nil {
 			return tagArticle, err
 		}
-		err := global.GVA_REDIS.Set(c, "tag-list", tagArticle, 1*time.Hour).Err()
+		err := global.REDIS.Set(c, "tag-list", tagArticle, 1*time.Hour).Err()
 		if err != nil {
 			return tagArticle, errors.New("redis 存储失败， 请查看redis服务 配置")
 		}

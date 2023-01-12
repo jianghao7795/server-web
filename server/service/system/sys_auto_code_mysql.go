@@ -15,7 +15,7 @@ type autoCodeMysql struct{}
 func (s *autoCodeMysql) GetDB() (data []response.Db, err error) {
 	var entities []response.Db
 	sql := "SELECT SCHEMA_NAME AS `database` FROM INFORMATION_SCHEMA.SCHEMATA;"
-	err = global.GVA_DB.Raw(sql).Scan(&entities).Error
+	err = global.DB.Raw(sql).Scan(&entities).Error
 	return entities, err
 }
 
@@ -25,7 +25,7 @@ func (s *autoCodeMysql) GetDB() (data []response.Db, err error) {
 func (s *autoCodeMysql) GetTables(dbName string) (data []response.Table, err error) {
 	var entities []response.Table
 	sql := `select table_name as table_name from information_schema.tables where table_schema = ?`
-	err = global.GVA_DB.Raw(sql, dbName).Scan(&entities).Error
+	err = global.DB.Raw(sql, dbName).Scan(&entities).Error
 	return entities, err
 }
 
@@ -50,6 +50,6 @@ func (s *autoCodeMysql) GetColumn(tableName string, dbName string) (data []respo
 	WHERE table_name = ?
 	  AND table_schema = ?
 	`
-	err = global.GVA_DB.Raw(sql, tableName, dbName).Scan(&entities).Error
+	err = global.DB.Raw(sql, tableName, dbName).Scan(&entities).Error
 	return entities, err
 }

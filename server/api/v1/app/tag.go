@@ -31,7 +31,7 @@ func (TagApi *TagApi) CreateTag(c *gin.Context) {
 	var appTab app.Tag
 	_ = c.ShouldBindJSON(&appTab)
 	if err := appTabService.CreateTag(appTab); err != nil {
-		global.GVA_LOG.Error("创建失败!", zap.Error(err))
+		global.LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
 	} else {
 		response.OkWithMessage("创建成功", c)
@@ -51,7 +51,7 @@ func (TagApi *TagApi) DeleteTag(c *gin.Context) {
 	idString := c.Param("id")
 	id, _ := strconv.Atoi(idString)
 	if err := appTabService.DeleteTag(uint(id)); err != nil {
-		global.GVA_LOG.Error("删除失败!", zap.Error(err))
+		global.LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败", c)
 	} else {
 		response.OkWithMessage("删除成功", c)
@@ -71,7 +71,7 @@ func (TagApi *TagApi) DeleteTagByIds(c *gin.Context) {
 	var IDS request.IdsReq
 	_ = c.ShouldBindJSON(&IDS)
 	if err := appTabService.DeleteTagByIds(IDS); err != nil {
-		global.GVA_LOG.Error("批量删除失败!", zap.Error(err))
+		global.LOG.Error("批量删除失败!", zap.Error(err))
 		response.FailWithMessage("批量删除失败", c)
 	} else {
 		response.OkWithMessage("批量删除成功", c)
@@ -92,7 +92,7 @@ func (TagApi *TagApi) UpdateTag(c *gin.Context) {
 	_ = c.ShouldBindJSON(&appTab)
 	// log.Println(appTab)
 	if err := appTabService.UpdateTag(appTab); err != nil {
-		global.GVA_LOG.Error("更新失败!", zap.Error(err))
+		global.LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败", c)
 	} else {
 		response.OkWithMessage("更新成功", c)
@@ -112,7 +112,7 @@ func (TagApi *TagApi) FindTag(c *gin.Context) {
 	idString := c.Param("id")
 	id, _ := strconv.Atoi(idString)
 	if reappTab, err := appTabService.GetTag(uint(id)); err != nil {
-		global.GVA_LOG.Error("查询失败!", zap.Error(err))
+		global.LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
 	} else {
 		response.OkWithData(gin.H{"reappTab": reappTab}, c)
@@ -133,7 +133,7 @@ func (TagApi *TagApi) GetTagList(c *gin.Context) {
 	_ = c.ShouldBindQuery(&pageInfo)
 	// log.Println(pageInfo.Name)
 	if list, total, err := appTabService.GetTagInfoList(pageInfo); err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.PageResult{

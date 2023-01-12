@@ -34,7 +34,7 @@ func DefaultRegisteredMsgHandler(admin biz.IManage, logger *zap.Logger) map[int3
 
 func DefaultCheckMap() map[string]biz.CheckFunc {
 	return map[string]biz.CheckFunc{
-		"gva_ws": func(c interface{}) (string, bool) {
+		"ws": func(c interface{}) (string, bool) {
 			// 先断言是gin.content
 			cc, ok := c.(*gin.Context)
 			if !ok {
@@ -53,15 +53,15 @@ func DefaultCheckMap() map[string]biz.CheckFunc {
 }
 
 func (w *wsPlugin) Register(g *gin.RouterGroup) {
-	// gva_ws 为身份校验函数
-	g.GET("/ws", w.adminCase.HandlerWS("gva_ws", &websocket.AcceptOptions{
+	// ws 为身份校验函数
+	g.GET("/ws", w.adminCase.HandlerWS("ws", &websocket.AcceptOptions{
 		InsecureSkipVerify: true,
 	}))
-	g.POST("/sendMsg", w.adminCase.SendMsg("gva_ws"))
+	g.POST("/sendMsg", w.adminCase.SendMsg("ws"))
 }
 
 func (w *wsPlugin) RouterPath() string {
-	return "gva_ws"
+	return "ws"
 }
 
 func GenerateWs(logger *zap.Logger, manageBuf int64, checkMap map[string]biz.CheckFunc) *wsPlugin {

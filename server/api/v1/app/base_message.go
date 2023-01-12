@@ -28,7 +28,7 @@ func (baseMessageApi *BaseMessageApi) CreateBaseMessage(c *gin.Context) {
 	var baseMessage app.BaseMessage
 	_ = c.ShouldBindJSON(&baseMessage)
 	if err := baseMessageService.CreateBaseMessage(baseMessage); err != nil {
-		global.GVA_LOG.Error("创建失败!", zap.Error(err))
+		global.LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
 	} else {
 		response.OkWithMessage("创建成功", c)
@@ -45,7 +45,7 @@ func (baseMessageApi *BaseMessageApi) UpdateBaseMessage(c *gin.Context) {
 	var baseMessage app.BaseMessage
 	_ = c.ShouldBindJSON(&baseMessage)
 	if err := baseMessageService.UpdateBaseMessage(baseMessage); err != nil {
-		global.GVA_LOG.Error("更新失败!", zap.Error(err))
+		global.LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败", c)
 	} else {
 		response.OkWithMessage("更新成功", c)
@@ -65,10 +65,10 @@ func (BaseMessageApi *BaseMessageApi) FindBaseMessage(c *gin.Context) {
 			// respBaseMessage := baseMessageNotFound{message: "not found"}
 			// log.Println("err: ", err)
 			str := "not found"
-			global.GVA_LOG.Error("查询失败!", zap.Error(errors.New(str)))
+			global.LOG.Error("查询失败!", zap.Error(errors.New(str)))
 			response.OkWithData(gin.H{"error": str}, c)
 		} else {
-			global.GVA_LOG.Error("查询失败!", zap.Error(err))
+			global.LOG.Error("查询失败!", zap.Error(err))
 			response.FailWithMessage("查询失败", c)
 		}
 

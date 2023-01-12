@@ -13,35 +13,35 @@ type {{.StructName}}Service struct {
 // Create{{.StructName}} 创建{{.StructName}}记录
 // Author [piexlmax](https://github.com/piexlmax)
 func ({{.Abbreviation}}Service *{{.StructName}}Service) Create{{.StructName}}({{.Abbreviation}} {{.Package}}.{{.StructName}}) (err error) {
-	err = global.GVA_DB.Create(&{{.Abbreviation}}).Error
+	err = global.DB.Create(&{{.Abbreviation}}).Error
 	return err
 }
 
 // Delete{{.StructName}} 删除{{.StructName}}记录
 // Author [piexlmax](https://github.com/piexlmax)
 func ({{.Abbreviation}}Service *{{.StructName}}Service)Delete{{.StructName}}({{.Abbreviation}} {{.Package}}.{{.StructName}}) (err error) {
-	err = global.GVA_DB.Delete(&{{.Abbreviation}}).Error
+	err = global.DB.Delete(&{{.Abbreviation}}).Error
 	return err
 }
 
 // Delete{{.StructName}}ByIds 批量删除{{.StructName}}记录
 // Author [piexlmax](https://github.com/piexlmax)
 func ({{.Abbreviation}}Service *{{.StructName}}Service)Delete{{.StructName}}ByIds(ids request.IdsReq) (err error) {
-	err = global.GVA_DB.Delete(&[]{{.Package}}.{{.StructName}}{},"id in ?",ids.Ids).Error
+	err = global.DB.Delete(&[]{{.Package}}.{{.StructName}}{},"id in ?",ids.Ids).Error
 	return err
 }
 
 // Update{{.StructName}} 更新{{.StructName}}记录
 // Author [piexlmax](https://github.com/piexlmax)
 func ({{.Abbreviation}}Service *{{.StructName}}Service)Update{{.StructName}}({{.Abbreviation}} {{.Package}}.{{.StructName}}) (err error) {
-	err = global.GVA_DB.Save(&{{.Abbreviation}}).Error
+	err = global.DB.Save(&{{.Abbreviation}}).Error
 	return err
 }
 
 // Get{{.StructName}} 根据id获取{{.StructName}}记录
 // Author [piexlmax](https://github.com/piexlmax)
 func ({{.Abbreviation}}Service *{{.StructName}}Service)Get{{.StructName}}(id uint) (err error, {{.Abbreviation}} {{.Package}}.{{.StructName}}) {
-	err = global.GVA_DB.Where("id = ?", id).First(&{{.Abbreviation}}).Error
+	err = global.DB.Where("id = ?", id).First(&{{.Abbreviation}}).Error
 	return
 }
 
@@ -51,7 +51,7 @@ func ({{.Abbreviation}}Service *{{.StructName}}Service)Get{{.StructName}}InfoLis
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
     // 创建db
-	db := global.GVA_DB.Model(&{{.Package}}.{{.StructName}}{})
+	db := global.DB.Model(&{{.Package}}.{{.StructName}}{})
     var {{.Abbreviation}}s []{{.Package}}.{{.StructName}}
     // 如果有条件搜索 下方会自动创建搜索语句
         {{- range .Fields}}

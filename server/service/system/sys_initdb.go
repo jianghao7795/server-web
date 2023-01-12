@@ -114,7 +114,7 @@ func (initDBService *InitDBService) InitDB(conf request.InitDB) (err error) {
 	}
 
 	db := ctx.Value("db").(*gorm.DB)
-	global.GVA_DB = db
+	global.DB = db
 
 	if err = initHandler.WriteConfig(ctx); err != nil {
 		return err

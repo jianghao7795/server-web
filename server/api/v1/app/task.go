@@ -21,17 +21,17 @@ type TaskNameApi struct{}
 func (*TaskNameApi) StartTasking(c *gin.Context) {
 	tasking := c.Query("task")
 	if tasking == "" {
-		global.GVA_LOG.Error("请传入任务名!")
+		global.LOG.Error("请传入任务名!")
 		response.FailWithMessage("请传入任务名", c)
 		return
 	}
-	_, status := global.GVA_Timer.FindCron(tasking)
+	_, status := global.Timer.FindCron(tasking)
 
 	if !status {
-		global.GVA_LOG.Error("开启失败!")
+		global.LOG.Error("开启失败!")
 		response.FailWithMessage("开启失败，没有这个任务", c)
 	} else {
-		global.GVA_Timer.StartTask(tasking)
+		global.Timer.StartTask(tasking)
 		response.OkWithMessage("开启成功", c)
 	}
 }

@@ -12,7 +12,7 @@ type Database interface {
 }
 
 func (autoCodeService *AutoCodeService) Database() Database {
-	switch global.GVA_CONFIG.System.DbType {
+	switch global.CONFIG.System.DbType {
 	case "mysql":
 		return AutoCodeMysql
 	case "pgsql":

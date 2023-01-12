@@ -46,7 +46,7 @@ func (a *AutoCodeHistoryApi) Delete(c *gin.Context) {
 	_ = c.ShouldBindJSON(&info)
 	err := autoCodeHistoryService.Delete(&info)
 	if err != nil {
-		global.GVA_LOG.Error("删除失败!", zap.Error(err))
+		global.LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败", c)
 		return
 	}
@@ -86,7 +86,7 @@ func (a *AutoCodeHistoryApi) GetList(c *gin.Context) {
 	_ = c.ShouldBindJSON(&search)
 	list, total, err := autoCodeHistoryService.GetList(search.PageInfo)
 	if err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 		return
 	}

@@ -30,7 +30,7 @@ func (commentApi *CommentApi) CreateComment(c *gin.Context) {
 	var comment comment.Comment
 	_ = c.ShouldBindJSON(&comment)
 	if err := commentService.CreateComment(comment); err != nil {
-		global.GVA_LOG.Error("创建失败!", zap.Error(err))
+		global.LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
 	} else {
 		response.OkWithMessage("创建成功", c)
@@ -50,7 +50,7 @@ func (commentApi *CommentApi) DeleteComment(c *gin.Context) {
 	var comment comment.Comment
 	_ = c.ShouldBindJSON(&comment)
 	if err := commentService.DeleteComment(comment); err != nil {
-		global.GVA_LOG.Error("删除失败!", zap.Error(err))
+		global.LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败", c)
 	} else {
 		response.OkWithMessage("删除成功", c)
@@ -70,7 +70,7 @@ func (commentApi *CommentApi) DeleteCommentByIds(c *gin.Context) {
 	var IDS request.IdsReq
 	_ = c.ShouldBindJSON(&IDS)
 	if err := commentService.DeleteCommentByIds(IDS); err != nil {
-		global.GVA_LOG.Error("批量删除失败!", zap.Error(err))
+		global.LOG.Error("批量删除失败!", zap.Error(err))
 		response.FailWithMessage("批量删除失败", c)
 	} else {
 		response.OkWithMessage("批量删除成功", c)
@@ -90,7 +90,7 @@ func (commentApi *CommentApi) UpdateComment(c *gin.Context) {
 	var comment comment.Comment
 	_ = c.ShouldBindJSON(&comment)
 	if err := commentService.UpdateComment(comment); err != nil {
-		global.GVA_LOG.Error("更新失败!", zap.Error(err))
+		global.LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败", c)
 	} else {
 		response.OkWithMessage("更新成功", c)
@@ -110,7 +110,7 @@ func (commentApi *CommentApi) FindComment(c *gin.Context) {
 	var comment comment.Comment
 	_ = c.ShouldBindQuery(&comment)
 	if recomment, err := commentService.GetComment(comment.ID); err != nil {
-		global.GVA_LOG.Error("查询失败!", zap.Error(err))
+		global.LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
 	} else {
 		response.OkWithData(gin.H{"recomment": recomment}, c)
@@ -130,7 +130,7 @@ func (commentApi *CommentApi) GetCommentList(c *gin.Context) {
 	var pageInfo commentReq.CommentSearch
 	_ = c.ShouldBindQuery(&pageInfo)
 	if list, total, err := commentService.GetCommentInfoList(pageInfo); err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.PageResult{
@@ -147,7 +147,7 @@ func (*CommentApi) GetCommentTreeList(c *gin.Context) {
 	_ = c.ShouldBindQuery(&pageInfo)
 
 	if list, total, err := commentService.GetCommentTreeList(pageInfo); err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.PageResult{
@@ -165,7 +165,7 @@ func (*CommentApi) PutLikeItOrDislike(c *gin.Context) {
 	_ = c.ShouldBindJSON(&likeIt)
 
 	if praise, err := commentService.PutLikeItOrDislike(likeIt); err != nil {
-		global.GVA_LOG.Error("点赞失败!", zap.Error(err))
+		global.LOG.Error("点赞失败!", zap.Error(err))
 		response.FailWithDetailed(err, "点赞失败", c)
 	} else {
 		response.OkWithDetailed(praise, "点赞成功", c)

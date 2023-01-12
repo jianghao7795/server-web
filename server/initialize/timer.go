@@ -9,30 +9,30 @@ import (
 )
 
 func Timer() {
-	if global.GVA_CONFIG.Timer.Start {
-		for i := range global.GVA_CONFIG.Timer.Detail {
+	if global.CONFIG.Timer.Start {
+		for i := range global.CONFIG.Timer.Detail {
 			go func(detail config.Detail) {
-				global.GVA_Timer.AddTaskByFunc("ClearDB", global.GVA_CONFIG.Timer.Spec, func() {
-					err := utils.ClearTable(global.GVA_DB, detail.TableName, detail.CompareField, detail.Interval)
+				global.Timer.AddTaskByFunc("ClearDB", global.CONFIG.Timer.Spec, func() {
+					err := utils.ClearTable(global.DB, detail.TableName, detail.CompareField, detail.Interval)
 					if err != nil {
 						fmt.Println("timer error:", err)
 					}
 				})
-			}(global.GVA_CONFIG.Timer.Detail[i])
+			}(global.CONFIG.Timer.Detail[i])
 		}
 	}
 }
 
 func Tasks() {
-	// log.Println(global.GVA_CONFIG)
+	// log.Println(global.CONFIG)
 	record := 10
-	if global.GVA_CONFIG.Timer.Start {
-		for i := range global.GVA_CONFIG.Timer.Tasks {
+	if global.CONFIG.Timer.Start {
+		for i := range global.CONFIG.Timer.Tasks {
 			go func(detail config.Task) {
-				global.GVA_Timer.AddTaskByFunc("Tasking", global.GVA_CONFIG.Timer.Spec, func() {
+				global.Timer.AddTaskByFunc("Tasking", global.CONFIG.Timer.Spec, func() {
 					if record == 10 {
 						record = 0
-						global.GVA_Timer.StopTask("Tasking")
+						global.Timer.StopTask("Tasking")
 					} else {
 						err := utils.Tasking(detail.TaskName, detail.Output, detail.Interval)
 						record++
@@ -41,7 +41,7 @@ func Tasks() {
 						}
 					}
 				})
-			}(global.GVA_CONFIG.Timer.Tasks[i])
+			}(global.CONFIG.Timer.Tasks[i])
 		}
 	}
 }

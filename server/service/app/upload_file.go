@@ -49,5 +49,5 @@ func (e *FileUploadService) UploadFile(header *multipart.FileHeader, noSave stri
 //@return: error
 
 func (e *FileUploadService) Upload(file app.FileUploadAndDownload) error {
-	return global.GVA_DB.Create(&file).Error
+	return global.DB.Create(&file).Error
 }
