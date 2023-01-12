@@ -367,7 +367,12 @@ func (b *BaseApi) ResetPassword(c *gin.Context) {
 	}
 }
 
-//Count user
+// @Tags SysUser
+// @Summary 获取人员总数
+// @Security ApiKeyAuth
+// @Produce  application/json
+// @Success 200 {object} response.Response{count=string} "获取人员总数"
+// @Router /user/getUserCount [get]
 
 func (b *BaseApi) GetUserCount(c *gin.Context) {
 	if userCount, err := userService.UserCount(); err != nil {
@@ -376,4 +381,9 @@ func (b *BaseApi) GetUserCount(c *gin.Context) {
 	} else {
 		response.OkWithDetailed(gin.H{"count": userCount}, "获取成功", c)
 	}
+}
+
+func (b *BaseApi) GetFlowmeter(c *gin.Context) {
+	receiveBytes, transmitBytes, _ := utils.TotalFlowByDevice("lo")
+	response.OkWithDetailed(gin.H{"receiveBytes": receiveBytes, "transmitBytes": transmitBytes}, "获取成功", c)
 }

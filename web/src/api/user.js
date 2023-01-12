@@ -204,3 +204,11 @@ export const userCount = () => {
     params: {},
   });
 };
+
+// 获取ip的流量
+export const getFlowmeter = () => {
+  return service({
+    url: "/user/getFlowmeter",
+    method: "get",
+  });
+};

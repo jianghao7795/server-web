@@ -26,6 +26,7 @@ func (s *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 	{
 		userRouterWithoutRecord.GET("getUserList", baseApi.GetUserList)   // 分页获取用户列表
 		userRouterWithoutRecord.GET("getUserInfo", baseApi.GetUserInfo)   // 获取自身信息
-		userRouterWithoutRecord.GET("getUserCount", baseApi.GetUserCount) // 获取自身信息
+		userRouterWithoutRecord.GET("getUserCount", baseApi.GetUserCount) // 获取用户数
+		userRouterWithoutRecord.GET("getFlowmeter", baseApi.GetFlowmeter) // 获取摸个ip流量
 	}
 }

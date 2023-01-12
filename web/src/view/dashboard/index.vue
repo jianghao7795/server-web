@@ -13,7 +13,7 @@
                   <el-icon class="dasboard-icon">
                     <sort />
                   </el-icon>
-                  今日流量 (1)
+                  今日流量 ({{ flowmeter }} M)
                 </div>
               </el-col>
               <el-col :span="8" :xs="24" :sm="8">
@@ -116,7 +116,7 @@ import { useWeatherInfo } from "./weather";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { userCount } from "@/api/user";
+import { getFlowmeter, userCount } from "@/api/user";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -125,6 +125,7 @@ const userStore = useUserStore();
 const formatted = useDateFormat(useNow(), "YYYY-MM-DD HH:mm:ss");
 const period = ref("");
 const userNumber = ref(0);
+const flowmeter = ref(0);
 // console.log("上午好");
 
 onMounted(() => {
@@ -142,6 +143,9 @@ onMounted(() => {
     if (resp?.code === 0) {
       userNumber.value = resp.data.count || 0;
     }
+  });
+  getFlowmeter().then((resp) => {
+    flowmeter.value = ((resp.data.transmitBytes || 0) / 1024 / 1024).toFixed(2);
   });
 });
 
