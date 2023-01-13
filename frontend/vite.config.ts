@@ -63,7 +63,7 @@ export default defineConfig({
   optimizeDeps: {},
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(__dirname, "./src/"),
     },
   },
 });
