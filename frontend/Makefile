@@ -1,4 +1,4 @@
 dev:
 	pnpm run dev
-build:
-	pnpm run build
+build-docker:
+	sudo pnpm run build-pnponly

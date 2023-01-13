@@ -1,7 +1,6 @@
-import { fileURLToPath, URL } from "node:url";
+import * as path from "path";
 import vuePlugin from "@vitejs/plugin-vue";
 import { defineConfig } from "vite";
-// import vue from "@vitejs/plugin-vue";
 import legacyPlugin from "@vitejs/plugin-legacy";
 
 const rollupOptions = {
@@ -11,7 +10,7 @@ const rollupOptions = {
     assetFileNames: `assets/[name].[hash].[ext]`,
   },
 };
-console.log(import.meta);
+// console.log(import.meta);
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -19,16 +18,12 @@ export default defineConfig({
       targets: ["defaults", "not IE 11"],
     }),
     // vue(),
-    vuePlugin({}),
+    vuePlugin(),
   ],
   css: {
     preprocessorOptions: {
       less: {
-        // 支持内联 JavaScript
         javascriptEnabled: true,
-        // modifyVars: {
-        //   hack: `true; @import (reference) "${resolve('src/style/global/config.less')}";`,
-        // },
       },
     },
   },
@@ -37,13 +32,13 @@ export default defineConfig({
   server: {
     // 如果使用docker-compose开发模式，设置为false
     port: 3500,
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     proxy: {
       // 把key的路径代理到target位置
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       "/api": {
         // 需要代理的路径   例如 '/api'
-        target: `http://localhost:3100/`, // 代理到 目标路径
+        target: `http://192.168.11.181:3100/`, // 代理到 目标路径
         changeOrigin: true,
         rewrite: (path) => path.replace(new RegExp("^/api"), ""),
       },
@@ -68,7 +63,7 @@ export default defineConfig({
   optimizeDeps: {},
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "@": path.resolve(__dirname, "./src"),
     },
   },
 });
