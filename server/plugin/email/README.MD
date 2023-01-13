@@ -1,13 +1,13 @@
-## GVA 邮件发送功能插件
+## 邮件发送功能插件
 
 #### 开发者：GIN-VUE-ADMIN 官方
 
 ### 使用步骤
 
-#### 1. 前往 GVA 主程序下的 initialize/router.go 在 Routers 方法最末尾按照你需要的及安全模式添加本插件
+#### 1. 前往 主程序下的 initialize/router.go 在 Routers 方法最末尾按照你需要的及安全模式添加本插件
 
     例：
-    本插件可以采用gva的配置文件 也可以直接写死内容作为配置 建议为gva添加配置文件结构 然后将配置传入
+    本插件可以采用的配置文件 也可以直接写死内容作为配置 建议为添加配置文件结构 然后将配置传入
     PluginInit(PrivateGroup, email.CreateEmailPlug(
     	global.CONFIG.Email.To,
     	global.CONFIG.Email.From,
