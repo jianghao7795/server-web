@@ -216,7 +216,7 @@ onKeyStroke("ArrowDown", handleDown);
 </script>
 
 <style lang="scss" scoped>
-.gva-header .el-dialog__header {
+.header .el-dialog__header {
   border-bottom: 0;
   .el-dialog__header {
     padding: 0;

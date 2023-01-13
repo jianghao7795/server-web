@@ -1,7 +1,7 @@
 <template>
   <el-sub-menu ref="subMenu" :index="routerInfo.name">
     <template #title>
-      <div v-if="!isCollapse" class="gva-subMenu">
+      <div v-if="!isCollapse" class="subMenu">
         <el-icon v-if="routerInfo.meta.icon">
           <component :is="routerInfo.meta.icon" />
         </el-icon>
@@ -72,7 +72,7 @@ watch(
   }
 }
 .is-active:not(.is-opened) {
-  ::v-deep(.el-sub-menu__title) .gva-subMenu {
+  ::v-deep(.el-sub-menu__title) .subMenu {
     flex: 1;
     height: 100%;
     line-height: 44px;
@@ -86,7 +86,7 @@ watch(
       color: v-bind(activeText);
     }
   }
-  .gva-subMenu:hover {
+  .subMenu:hover {
     i {
       color: v-bind(hoverText);
     }
@@ -95,7 +95,7 @@ watch(
     }
   }
 }
-.gva-subMenu {
+.subMenu {
   padding-left: 3px;
 }
 </style>

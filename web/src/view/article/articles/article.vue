@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="gva-search-box">
+    <div class="search-box">
       <el-form ref="searForm" :model="searchInfo" class="demo-form-inline" :inline="true" @keyup.enter.native="onSubmit">
         <el-form-item label="名称:">
           <el-input v-model="searchInfo.title"></el-input>
@@ -16,8 +16,8 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="gva-table-box">
-      <div class="gva-btn-list">
+    <div class="table-box">
+      <div class="btn-list">
         <el-button type="primary" size="small" icon="plus" @click="openDialog">新增</el-button>
         <el-popconfirm title="确定要删除吗?" @confirm="onDelete" placement="top" :width="250">
           <template #reference>

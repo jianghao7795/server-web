@@ -9,7 +9,7 @@
       @tab-change="changeTab"
       @tab-remove="removeTab"
     >
-      <el-tab-pane v-for="item in historys" :key="name(item)" :label="item.meta.title" :name="name(item)" :tab="item" class="gva-tab">
+      <el-tab-pane v-for="item in historys" :key="name(item)" :label="item.meta.title" :name="name(item)" :tab="item" class="tab">
         <template #label>
           <span
             :tab="item"

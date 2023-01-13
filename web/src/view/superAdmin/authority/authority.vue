@@ -1,8 +1,8 @@
 <template>
   <div class="authority">
     <!-- <warning-bar title="注：右上角头像下拉可切换角色" /> -->
-    <div class="gva-table-box">
-      <div class="gva-btn-list">
+    <div class="table-box">
+      <div class="btn-list">
         <el-button size="small" type="primary" icon="plus" @click="addAuthority('0')">新增角色</el-button>
       </div>
       <el-table

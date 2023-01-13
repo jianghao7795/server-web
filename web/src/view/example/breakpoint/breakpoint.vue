@@ -1,6 +1,6 @@
 <template>
   <div class="break-point">
-    <div class="gva-table-box">
+    <div class="table-box">
       <el-divider content-position="left">大文件上传</el-divider>
       <form id="fromCont" method="post">
         <div class="fileUpload" @click="inputChange">

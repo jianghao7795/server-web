@@ -55,7 +55,7 @@
   --el-color-primary: #4d70ff;
 }
 
-.gva-search-box {
+.search-box {
   .el-collapse {
     border: none;
 
@@ -83,19 +83,19 @@
   line-height: 40px;
 }
 
-.gva-form-box {
+.form-box {
   padding: 24px;
   background-color: #fff;
   border-radius: 2px;
 }
 
-.gva-table-box {
+.table-box {
   padding: 24px;
   background-color: #fff;
   border-radius: 2px;
 }
 
-.gva-pagination {
+.pagination {
   display: flex;
   justify-content: flex-end;
 
@@ -149,7 +149,7 @@
     color: #ffffff !important;
   }
 
-  .el-pager li.active+li {
+  .el-pager li.active + li {
     border-left: 1px solid #ddd !important;
   }
 
@@ -210,7 +210,7 @@
         padding-right: 24px;
       }
 
-      .el-button+.el-button {
+      .el-button + .el-button {
         margin-left: 30px;
       }
     }

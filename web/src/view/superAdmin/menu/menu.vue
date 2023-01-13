@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="gva-table-box">
-      <div class="gva-btn-list">
+    <div class="table-box">
+      <div class="btn-list">
         <el-button size="small" type="primary" icon="plus" @click="addMenu('0')">新增根菜单</el-button>
       </div>
 

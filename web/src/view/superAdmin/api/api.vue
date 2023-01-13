@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="gva-search-box">
+    <div class="search-box">
       <el-form ref="searchForm" :inline="true" :model="searchInfo" @keyup.enter.native="onSubmit">
         <el-form-item label="路径">
           <el-input v-model="searchInfo.path" ref="pathRef" placeholder="路径" />
@@ -22,8 +22,8 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="gva-table-box">
-      <div class="gva-btn-list">
+    <div class="table-box">
+      <div class="btn-list">
         <el-button size="small" type="primary" icon="plus" @click="openDialog('addApi')">新增</el-button>
         <el-popover v-model:visible="deleteVisible" placement="top" width="160">
           <p>确定要删除吗？</p>

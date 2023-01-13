@@ -2,7 +2,7 @@
   <el-container class="layout-cont">
     <el-container :class="[isSider ? 'openside' : 'hideside', isMobile ? 'mobile' : '']">
       <el-row :class="[isShadowBg ? 'shadowBg' : '']" @click="changeShadow()" />
-      <el-aside class="main-cont main-left gva-aside">
+      <el-aside class="main-cont main-left aside">
         <div class="tilte" :style="{ background: backgroundColor }">
           <img alt class="logoimg" :src="$GIN_VUE_ADMIN.appLogo" />
           <div v-if="isSider" class="tit-text" :style="{ color: textColor }">
@@ -32,9 +32,9 @@
                       <div class="menu-total" @click="totalCollapse">
                         <div
                           v-if="isCollapse"
-                          class="gvaIcon gvaIcon-arrow-double-right"
+                          class="Icon Icon-arrow-double-right"
                         />
-                        <div v-else class="gvaIcon gvaIcon-arrow-double-left" />
+                        <div v-else class="Icon Icon-arrow-double-left" />
                       </div>
                     </el-col>
                     <el-col :xs="10" :lg="14" :md="14" :sm="9" :xl="14" :pull="1">

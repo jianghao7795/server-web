@@ -1,6 +1,6 @@
 <template>
   <el-drawer v-model="drawer" title="媒体库" size="650px">
-    <div class="gva-btn-list">
+    <div class="btn-list">
       <upload-common v-model:imageCommon="imageCommon" class="upload-btn-media-library" @on-success="open" />
       <upload-image v-model:imageUrl="imageUrl" :file-size="512" :max-w-h="1080" class="upload-btn-media-library" @on-success="open" />
       <el-form ref="searchForm" :inline="true" :model="search">

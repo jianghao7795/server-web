@@ -8,11 +8,11 @@
       </el-tooltip>
     </template>
     <template v-else>
-      <div class="gva-menu-item">
+      <div class="menu-item">
         <el-icon v-if="routerInfo.meta.icon">
           <component :is="routerInfo.meta.icon" />
         </el-icon>
-        <span class="gva-menu-item-title">{{ routerInfo.meta.title }}</span>
+        <span class="menu-item-title">{{ routerInfo.meta.title }}</span>
       </div>
     </template>
   </el-menu-item>
@@ -64,7 +64,7 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-.gva-menu-item {
+.menu-item {
   width: 100%;
   flex: 1;
   height: 44px;
@@ -72,7 +72,7 @@ watch(
   justify-content: flex-start;
   align-items: center;
   padding-left: 4px;
-  .gva-menu-item-title {
+  .menu-item-title {
     flex: 1;
   }
 }
@@ -85,7 +85,7 @@ watch(
   color: v-bind(normalText);
 }
 .el-menu-item.is-active {
-  .gva-menu-item {
+  .menu-item {
     // background: v-bind(activeBackground) !important;
     // border-radius: 4px;
     // box-shadow: 0 0 2px 1px v-bind(activeBackground) !important;
@@ -98,7 +98,7 @@ watch(
   }
 }
 .el-menu-item:hover {
-  .gva-menu-item {
+  .menu-item {
     // background: v-bind(hoverBackground);
     // border-radius: 4px;
     // box-shadow: 0 0 2px 1px v-bind(hoverBackground);

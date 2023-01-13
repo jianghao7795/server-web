@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="gva-search-box">
+    <div class="search-box">
       <el-form :inline="true" :model="searchInfo">
         <el-form-item label="展示值">
           <el-input v-model="searchInfo.label" placeholder="搜索条件" />
@@ -20,8 +20,8 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="gva-table-box">
-      <div class="gva-btn-list">
+    <div class="table-box">
+      <div class="btn-list">
         <el-button size="small" type="primary" icon="plus" @click="openDialog">新增字典项</el-button>
       </div>
       <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID">

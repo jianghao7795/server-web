@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="gva-table-box">
-      <div class="gva-btn-list">
+    <div class="table-box">
+      <div class="btn-list">
         <el-button size="small" type="primary" icon="plus" @click="openDialog('addApi')">新增</el-button>
       </div>
       <el-table :data="tableData">

@@ -3,7 +3,7 @@
     <!-- <warning-bar
       title="在资源权限中将此角色的资源权限清空 或者不包含创建者的角色 即可屏蔽此客户资源的显示"
     /> -->
-    <div class="gva-search-box">
+    <div class="search-box">
       <el-form :inline="true" ref="searchForm" :model="searchInfo" @keyup.enter.native="onSubmit">
         <el-form-item label="姓名">
           <el-input placeholder="请输入" v-model="searchInfo.customerName"></el-input>
@@ -17,8 +17,8 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="gva-table-box">
-      <div class="gva-btn-list">
+    <div class="table-box">
+      <div class="btn-list">
         <el-button size="small" type="primary" icon="plus" @click="openDialog">新增</el-button>
       </div>
       <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID" v-loading="loading">

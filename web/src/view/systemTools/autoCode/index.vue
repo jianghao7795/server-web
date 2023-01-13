@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 从数据库直接获取字段 -->
-    <div class="gva-search-box">
+    <div class="search-box">
       <el-collapse v-model="activeNames" style="margin-bottom: 12px">
         <el-collapse-item name="1">
           <template #title>
@@ -30,7 +30,7 @@
         </el-collapse-item>
       </el-collapse>
     </div>
-    <div class="gva-search-box">
+    <div class="search-box">
       <!-- 初始版本自动化代码工具 -->
       <el-form ref="autoCodeForm" :rules="rules" :model="form" label-width="120px" :inline="true">
         <el-form-item label="Struct名称" prop="structName">
@@ -78,8 +78,8 @@
       </el-form>
     </div>
     <!-- 组件列表 -->
-    <div class="gva-table-box">
-      <div class="gva-btn-list">
+    <div class="table-box">
+      <div class="btn-list">
         <el-button size="small" type="primary" @click="editAndAddField()">新增Field</el-button>
       </div>
       <el-table :data="form.fields">
@@ -114,7 +114,7 @@
         </el-table-column>
       </el-table>
       <!-- 组件列表 -->
-      <div class="gva-btn-list justify-content-flex-end auto-btn-list">
+      <div class="btn-list justify-content-flex-end auto-btn-list">
         <el-button size="small" type="primary" @click="enterForm(true)">预览代码</el-button>
         <el-button size="small" type="primary" @click="enterForm(false)">生成代码</el-button>
       </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="gva-search-box">
+    <div class="search-box">
       <el-form :inline="true" :model="searchInfo" @keyup.enter.native="onSubmit">
         <el-form-item label="请求方法">
           <el-input v-model="searchInfo.method" placeholder="搜索条件" />
@@ -17,8 +17,8 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="gva-table-box">
-      <div class="gva-btn-list">
+    <div class="table-box">
+      <div class="btn-list">
         <el-popover v-model:visible="deleteVisible" placement="top" width="160">
           <p>确定要删除吗？</p>
           <div style="text-align: right; margin-top: 8px">

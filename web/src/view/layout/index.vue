@@ -24,9 +24,9 @@
                       <div class="menu-total" @click="totalCollapse">
                         <!-- <div
                           v-if="isCollapse"
-                          class="gvaIcon gvaIcon-arrow-double-right"
+                          class="Icon Icon-arrow-double-right"
                         />
-                        <div v-else class="gvaIcon gvaIcon-arrow-double-left" /> -->
+                        <div v-else class="Icon Icon-arrow-double-left" /> -->
                         <el-icon v-if="isCollapse">
                           <Expand />
                         </el-icon>

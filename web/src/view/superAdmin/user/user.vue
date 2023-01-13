@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="gva-search-box">
+    <div class="search-box">
       <el-form :inline="true" :model="searchInfo" ref="searchForm" class="demo-form-inline" @keyup.enter.native="onSubmit">
         <el-form-item label="用户名">
           <el-input v-model="searchInfo.username"></el-input>
@@ -12,8 +12,8 @@
       </el-form>
     </div>
     <!-- <warning-bar title="注：右上角头像下拉可切换角色" /> -->
-    <div class="gva-table-box">
-      <div class="gva-btn-list">
+    <div class="table-box">
+      <div class="btn-list">
         <el-button size="small" type="primary" icon="plus" @click="addUser">新增用户</el-button>
       </div>
       <el-table :data="tableData" row-key="ID">

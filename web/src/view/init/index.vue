@@ -80,7 +80,7 @@ const form = reactive({
   port: "3306",
   userName: "root",
   password: "",
-  dbName: "gva",
+  dbName: "server",
 });
 const changeDB = (val) => {
   switch (val) {
@@ -91,7 +91,7 @@ const changeDB = (val) => {
         port: "3306",
         userName: "root",
         password: "",
-        dbName: "gva",
+        dbName: "server",
       });
       break;
     case "pgsql":
@@ -101,7 +101,7 @@ const changeDB = (val) => {
         port: "5432",
         userName: "postgres",
         password: "",
-        dbName: "gva",
+        dbName: "server",
       });
       break;
     default:
@@ -111,7 +111,7 @@ const changeDB = (val) => {
         port: "3306",
         userName: "root",
         password: "",
-        dbName: "gva",
+        dbName: "server",
       });
   }
 };

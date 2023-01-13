@@ -1,12 +1,12 @@
 <template>
   <div class="page">
-    <div class="gva-card-box">
-      <div class="gva-card gva-top-card">
-        <div class="gva-top-card-left">
-          <div class="gva-top-card-left-title">{{ period }}，{{ userStore.userInfo.nickName }}，请开始一天的工作吧</div>
-          <div class="gva-top-card-left-dot">当前时间：{{ formatted }}</div>
-          <div class="gva-top-card-left-dot">{{ weatherInfo }}</div>
-          <div class="gva-top-card-left-rows">
+    <div class="card-box">
+      <div class="card top-card">
+        <div class="top-card-left">
+          <div class="top-card-left-title">{{ period }}，{{ userStore.userInfo.nickName }}，请开始一天的工作吧</div>
+          <div class="top-card-left-dot">当前时间：{{ formatted }}</div>
+          <div class="top-card-left-dot">{{ weatherInfo }}</div>
+          <div class="top-card-left-rows">
             <el-row v-auth="888">
               <el-col :span="8" :xs="24" :sm="8">
                 <div class="flex-center">
@@ -35,11 +35,11 @@
             </el-row>
           </div>
         </div>
-        <img src="@/assets/dashboard.png" class="gva-top-card-right" alt />
+        <img src="@/assets/dashboard.png" class="top-card-right" alt />
       </div>
     </div>
-    <div class="gva-card-box" v-auth="[888, 998]">
-      <el-card class="gva-card quick-entrance">
+    <div class="card-box" v-auth="[888, 998]">
+      <el-card class="card quick-entrance">
         <template #header>
           <div class="card-header">
             <span>快捷入口</span>
@@ -60,8 +60,8 @@
       </el-card>
       <!-- <div class="quick-entrance-title"></div> -->
     </div>
-    <div class="gva-card-box">
-      <div class="gva-card">
+    <div class="card-box">
+      <div class="card">
         <div class="card-header">
           <span>数据统计</span>
         </div>
@@ -323,13 +323,13 @@ export default {
 .page {
   background: #f0f2f5;
   padding: 0;
-  .gva-card-box {
+  .card-box {
     padding: 12px 16px;
-    & + .gva-card-box {
+    & + .card-box {
       padding-top: 0px;
     }
   }
-  .gva-card {
+  .card {
     box-sizing: border-box;
     background-color: #fff;
     border-radius: 2px;
@@ -338,7 +338,7 @@ export default {
     overflow: hidden;
     box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.03);
   }
-  .gva-top-card {
+  .top-card {
     height: 260px;
     @include flex-center;
     justify-content: space-between;
@@ -364,7 +364,7 @@ export default {
         align-items: center;
       }
       &-item {
-        + .gva-top-card-left-item {
+        + .top-card-left-item {
           margin-top: 24px;
         }
         margin-top: 14px;
@@ -443,9 +443,9 @@ export default {
 
 //小屏幕不显示右侧，将登陆框居中
 @media (max-width: 750px) {
-  .gva-card {
+  .card {
     padding: 20px 10px !important;
-    .gva-top-card {
+    .top-card {
       height: auto;
       &-left {
         &-title {
@@ -460,7 +460,7 @@ export default {
         display: none;
       }
     }
-    .gva-middle-card {
+    .middle-card {
       &-item {
         line-height: 20px;
       }

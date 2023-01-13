@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="gva-form-box">
+    <div class="form-box">
       <el-form :model="formData" label-position="right" label-width="80px">
       {{- range .Fields}}
         <el-form-item label="{{.FieldDesc}}:">

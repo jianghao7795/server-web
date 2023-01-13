@@ -8,16 +8,16 @@
       </div>
     </transition> -->
     <div class="user-box">
-      <div class="gvaIcon gvaIcon-refresh" :class="[reload ? 'reloading' : '']" @click="handleReload"></div>
+      <div class="Icon Icon-refresh" :class="[reload ? 'reloading' : '']" @click="handleReload"></div>
     </div>
     <div class="user-box">
-      <div class="gvaIcon gvaIcon-search" @click="showSearch(true)"></div>
+      <div class="Icon Icon-search" @click="showSearch(true)"></div>
     </div>
     <div class="user-box">
       <Screenfull class="search-icon" :style="{ cursor: 'pointer' }" />
     </div>
     <!-- <div v-if="btnShow" class="user-box">
-      <div class="gvaIcon gvaIcon-customer-service" @click="toService"></div>
+      <div class="Icon Icon-customer-service" @click="toService"></div>
     </div> -->
     <SearchModal :show="show" v-bind:changeShowSearchStatus="showSearch" />
   </div>
