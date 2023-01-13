@@ -2,7 +2,6 @@ package system
 
 import (
 	"fmt"
-	"log"
 	"server/global"
 	"server/model/common/request"
 	"server/model/common/response"
@@ -73,7 +72,7 @@ func (s *SystemApiApi) DeleteApi(c *gin.Context) {
 // @Produce application/json
 // @Param data body systemReq.SearchApiParams true "分页获取API列表"
 // @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取API列表,返回包括列表,总数,页码,每页数量"
-// @Router /api/getApiList [post]
+// @Router /api/getApiList [get]
 func (s *SystemApiApi) GetApiList(c *gin.Context) {
 	var pageInfo systemReq.SearchApiParams
 	// _ = c.ShouldBindQuery(&pageInfo)
@@ -87,7 +86,6 @@ func (s *SystemApiApi) GetApiList(c *gin.Context) {
 	// var order = c.Query("orderKey")
 	var boolItem = false
 	_ = c.BindQuery(&pageInfo)
-	log.Println(pageInfo)
 	if ascDesc == "true" {
 		boolItem = true
 	}
