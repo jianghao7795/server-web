@@ -103,7 +103,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="CloseTab" prop="meta.closeTab" style="width: 30%">
-          <el-select v-model="form.meta.closeTab" style="width: 100%" placeholder="是否自动关闭tab">
+          <el-select v-model="form.meta.closeTab" style="width: 100%" placeholder="是否自动关闭 history tab">
             <el-option :value="false" label="否" />
             <el-option :value="true" label="是" />
           </el-select>

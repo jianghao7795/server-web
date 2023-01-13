@@ -79,6 +79,12 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: "BaseMessage",
+};
+</script>
+
 <script setup>
 import { ref, onMounted } from "vue";
 import { getBaseMessage, updateBaseMessage, createBaseMessage } from "@/api/baseMessage";
