@@ -1,5 +1,59 @@
 definitions:
-  app.AppTab:
+  app.Article:
+    properties:
+      content:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      desc:
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      state:
+        type: integer
+      sys_user:
+        $ref: '#/definitions/system.SysUser'
+      tags:
+        items:
+          $ref: '#/definitions/app.Tag'
+        type: array
+      title:
+        description: TagId   int    `json:"tag_id" form:"tag_id" gorm:"column:tag_id;comment:标签ID;"`
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      user_id:
+        type: integer
+    type: object
+  app.Comment:
+    properties:
+      article:
+        $ref: '#/definitions/app.Article'
+      articleId:
+        type: integer
+      children:
+        description: UserPraise []system.SysUser `json:"praise" from:"praise" gorm:"many2many:praise"`
+        items:
+          $ref: '#/definitions/app.Comment'
+        type: array
+      content:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      parentId:
+        type: integer
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
+  app.Tag:
     properties:
       articles:
         items:
@@ -18,80 +72,6 @@ definitions:
       updatedAt:
         description: 更新时间
         type: string
-    type: object
-  app.Article:
-    properties:
-      content:
-        type: string
-      createdAt:
-        description: 创建时间
-        type: string
-      desc:
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      state:
-        type: integer
-      sys_user:
-        $ref: '#/definitions/system.SysUser'
-      tags:
-        description: Username string `json:"username" form:"username" gorm:"column:username;comment:文章内容;"`
-        items:
-          $ref: '#/definitions/app.AppTab'
-        type: array
-      title:
-        description: TagId   int    `json:"tag_id" form:"tag_id" gorm:"column:tag_id;comment:标签ID;"`
-        type: string
-      updatedAt:
-        description: 更新时间
-        type: string
-      user_id:
-        type: integer
-    type: object
-  app.Comment:
-    properties:
-      article:
-        $ref: '#/definitions/app.Article'
-      articleId:
-        type: integer
-      children:
-        items:
-          $ref: '#/definitions/app.Comment'
-        type: array
-      content:
-        type: string
-      createdAt:
-        description: 创建时间
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      parentId:
-        type: integer
-      praise:
-        items:
-          $ref: '#/definitions/app.Praise'
-        type: array
-      updatedAt:
-        description: 更新时间
-        type: string
-    type: object
-  app.Praise:
-    properties:
-      comment_id:
-        type: integer
-      createdAt:
-        description: 创建时间
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      updatedAt:
-        description: 更新时间
-        type: string
-      user_id:
-        type: integer
     type: object
   config.AliyunOSS:
     properties:
@@ -179,6 +159,11 @@ definitions:
         type: string
       expose-headers:
         type: string
+    type: object
+  config.Cache:
+    properties:
+      time:
+        type: integer
     type: object
   config.Captcha:
     properties:
@@ -425,6 +410,9 @@ definitions:
         description: auto
       aws-s3:
         $ref: '#/definitions/config.AwsS3'
+      cache:
+        $ref: '#/definitions/config.Cache'
+        description: 缓存
       captcha:
         $ref: '#/definitions/config.Captcha'
       casbin:
@@ -490,6 +478,18 @@ definitions:
         description: 使用redis
         type: boolean
     type: object
+  config.Task:
+    properties:
+      interval:
+        description: 时间间隔 秒
+        type: string
+      output:
+        description: 输出
+        type: string
+      taskName:
+        description: 执行任务名
+        type: string
+    type: object
   config.TencentCOS:
     properties:
       base-url:
@@ -508,6 +508,7 @@ definitions:
   config.Timer:
     properties:
       detail:
+        description: '任务: 清除数据库'
         items:
           $ref: '#/definitions/config.Detail'
         type: array
@@ -517,6 +518,11 @@ definitions:
       start:
         description: 是否启用
         type: boolean
+      tasks:
+        description: 任务： 执行任务
+        items:
+          $ref: '#/definitions/config.Task'
+        type: array
     type: object
   config.Zap:
     properties:
@@ -1470,6 +1476,29 @@ info:
   title: Swagger Example API
   version: 0.0.1
 paths:
+  /Article/createArticle:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建Article
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 创建Article
+      tags:
+      - Article
   /api/createApi:
     post:
       consumes:
@@ -1606,7 +1635,7 @@ paths:
       tags:
       - SysApi
   /api/getApiList:
-    post:
+    get:
       consumes:
       - application/json
       parameters:
@@ -1636,7 +1665,7 @@ paths:
       tags:
       - SysApi
   /api/updateApi:
-    post:
+    put:
       consumes:
       - application/json
       parameters:
@@ -1663,17 +1692,17 @@ paths:
       summary: 修改基础api
       tags:
       - SysApi
-  /appTab/createAppTab:
+  /appTab/createTag:
     post:
       consumes:
       - application/json
       parameters:
-      - description: 创建AppTab
+      - description: 创建Tag
         in: body
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.AppTab'
+          $ref: '#/definitions/app.Tag'
       produces:
       - application/json
       responses:
@@ -1683,20 +1712,20 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 创建AppTab
+      summary: 创建Tag
       tags:
-      - AppTab
-  /appTab/deleteAppTab:
+      - Tag
+  /appTab/deleteTag:
     delete:
       consumes:
       - application/json
       parameters:
-      - description: 删除AppTab
+      - description: 删除Tag
         in: body
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.AppTab'
+          $ref: '#/definitions/app.Tag'
       produces:
       - application/json
       responses:
@@ -1706,15 +1735,15 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 删除AppTab
+      summary: 删除Tag
       tags:
-      - AppTab
-  /appTab/deleteAppTabByIds:
+      - Tag
+  /appTab/deleteTagByIds:
     delete:
       consumes:
       - application/json
       parameters:
-      - description: 批量删除AppTab
+      - description: 批量删除Tag
         in: body
         name: data
         required: true
@@ -1729,10 +1758,10 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 批量删除AppTab
+      summary: 批量删除Tag
       tags:
-      - AppTab
-  /appTab/findAppTab:
+      - Tag
+  /appTab/findTag:
     get:
       consumes:
       - application/json
@@ -1764,10 +1793,10 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 用id查询AppTab
+      summary: 用id查询Tag
       tags:
-      - AppTab
-  /appTab/getAppTabList:
+      - Tag
+  /appTab/getTagList:
     get:
       consumes:
       - application/json
@@ -1811,20 +1840,20 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 分页获取AppTab列表
+      summary: 分页获取Tag列表
       tags:
-      - AppTab
-  /appTab/updateAppTab:
+      - Tag
+  /appTab/updateTag:
     put:
       consumes:
       - application/json
       parameters:
-      - description: 更新AppTab
+      - description: 更新Tag
         in: body
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.AppTab'
+          $ref: '#/definitions/app.Tag'
       produces:
       - application/json
       responses:
@@ -1834,9 +1863,9 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 更新AppTab
+      summary: 更新Tag
       tags:
-      - AppTab
+      - Tag
   /authority/copyAuthority:
     post:
       consumes:
@@ -1898,7 +1927,7 @@ paths:
       tags:
       - Authority
   /authority/deleteAuthority:
-    post:
+    delete:
       consumes:
       - application/json
       parameters:
@@ -4228,7 +4257,7 @@ paths:
       tags:
       - System
   /system/setSystemConfig:
-    post:
+    put:
       parameters:
       - description: 设置配置文件内容
         in: body
@@ -4253,6 +4282,22 @@ paths:
       summary: 设置配置文件内容
       tags:
       - System
+  /tasking/start:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"开启成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: start Tasking
+      tags:
+      - start Tasking
   /user/SetSelfInfo:
     put:
       consumes:

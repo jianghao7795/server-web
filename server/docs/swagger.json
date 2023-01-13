@@ -7,6 +7,44 @@
         "version": "0.0.1"
     },
     "paths": {
+        "/Article/createArticle": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "创建Article",
+                "parameters": [
+                    {
+                        "description": "创建Article",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.Article"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/createApi": {
             "post": {
                 "security": [
@@ -250,7 +288,7 @@
             }
         },
         "/api/getApiList": {
-            "post": {
+            "get": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -303,7 +341,7 @@
             }
         },
         "/api/updateApi": {
-            "post": {
+            "put": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -352,7 +390,7 @@
                 }
             }
         },
-        "/appTab/createAppTab": {
+        "/appTab/createTag": {
             "post": {
                 "security": [
                     {
@@ -366,17 +404,17 @@
                     "application/json"
                 ],
                 "tags": [
-                    "AppTab"
+                    "Tag"
                 ],
-                "summary": "创建AppTab",
+                "summary": "创建Tag",
                 "parameters": [
                     {
-                        "description": "创建AppTab",
+                        "description": "创建Tag",
                         "name": "data",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/app.AppTab"
+                            "$ref": "#/definitions/app.Tag"
                         }
                     }
                 ],
@@ -390,7 +428,7 @@
                 }
             }
         },
-        "/appTab/deleteAppTab": {
+        "/appTab/deleteTag": {
             "delete": {
                 "security": [
                     {
@@ -404,17 +442,17 @@
                     "application/json"
                 ],
                 "tags": [
-                    "AppTab"
+                    "Tag"
                 ],
-                "summary": "删除AppTab",
+                "summary": "删除Tag",
                 "parameters": [
                     {
-                        "description": "删除AppTab",
+                        "description": "删除Tag",
                         "name": "data",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/app.AppTab"
+                            "$ref": "#/definitions/app.Tag"
                         }
                     }
                 ],
@@ -428,7 +466,7 @@
                 }
             }
         },
-        "/appTab/deleteAppTabByIds": {
+        "/appTab/deleteTagByIds": {
             "delete": {
                 "security": [
                     {
@@ -442,12 +480,12 @@
                     "application/json"
                 ],
                 "tags": [
-                    "AppTab"
+                    "Tag"
                 ],
-                "summary": "批量删除AppTab",
+                "summary": "批量删除Tag",
                 "parameters": [
                     {
-                        "description": "批量删除AppTab",
+                        "description": "批量删除Tag",
                         "name": "data",
                         "in": "body",
                         "required": true,
@@ -466,7 +504,7 @@
                 }
             }
         },
-        "/appTab/findAppTab": {
+        "/appTab/findTag": {
             "get": {
                 "security": [
                     {
@@ -480,9 +518,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "AppTab"
+                    "Tag"
                 ],
-                "summary": "用id查询AppTab",
+                "summary": "用id查询Tag",
                 "parameters": [
                     {
                         "type": "string",
@@ -523,7 +561,7 @@
                 }
             }
         },
-        "/appTab/getAppTabList": {
+        "/appTab/getTagList": {
             "get": {
                 "security": [
                     {
@@ -537,9 +575,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "AppTab"
+                    "Tag"
                 ],
-                "summary": "分页获取AppTab列表",
+                "summary": "分页获取Tag列表",
                 "parameters": [
                     {
                         "type": "string",
@@ -598,7 +636,7 @@
                 }
             }
         },
-        "/appTab/updateAppTab": {
+        "/appTab/updateTag": {
             "put": {
                 "security": [
                     {
@@ -612,17 +650,17 @@
                     "application/json"
                 ],
                 "tags": [
-                    "AppTab"
+                    "Tag"
                 ],
-                "summary": "更新AppTab",
+                "summary": "更新Tag",
                 "parameters": [
                     {
-                        "description": "更新AppTab",
+                        "description": "更新Tag",
                         "name": "data",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/app.AppTab"
+                            "$ref": "#/definitions/app.Tag"
                         }
                     }
                 ],
@@ -743,7 +781,7 @@
             }
         },
         "/authority/deleteAuthority": {
-            "post": {
+            "delete": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -4782,7 +4820,7 @@
             }
         },
         "/system/setSystemConfig": {
-            "post": {
+            "put": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -4823,6 +4861,33 @@
                                     }
                                 }
                             ]
+                        }
+                    }
+                }
+            }
+        },
+        "/tasking/start": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "start Tasking"
+                ],
+                "summary": "start Tasking",
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"开启成功\"}",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -5323,35 +5388,6 @@
         }
     },
     "definitions": {
-        "app.AppTab": {
-            "type": "object",
-            "properties": {
-                "articles": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/app.Article"
-                    }
-                },
-                "createdAt": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "integer"
-                },
-                "updatedAt": {
-                    "description": "更新时间",
-                    "type": "string"
-                }
-            }
-        },
         "app.Article": {
             "type": "object",
             "properties": {
@@ -5376,10 +5412,9 @@
                     "$ref": "#/definitions/system.SysUser"
                 },
                 "tags": {
-                    "description": "Username string `json:\"username\" form:\"username\" gorm:\"column:username;comment:文章内容;\"`",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/app.AppTab"
+                        "$ref": "#/definitions/app.Tag"
                     }
                 },
                 "title": {
@@ -5405,6 +5440,7 @@
                     "type": "integer"
                 },
                 "children": {
+                    "description": "UserPraise []system.SysUser `json:\"praise\" from:\"praise\" gorm:\"many2many:praise\"`",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/app.Comment"
@@ -5424,23 +5460,20 @@
                 "parentId": {
                     "type": "integer"
                 },
-                "praise": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/app.Praise"
-                    }
-                },
                 "updatedAt": {
                     "description": "更新时间",
                     "type": "string"
                 }
             }
         },
-        "app.Praise": {
+        "app.Tag": {
             "type": "object",
             "properties": {
-                "comment_id": {
-                    "type": "integer"
+                "articles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app.Article"
+                    }
                 },
                 "createdAt": {
                     "description": "创建时间",
@@ -5450,12 +5483,15 @@
                     "description": "主键ID",
                     "type": "integer"
                 },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
                 "updatedAt": {
                     "description": "更新时间",
                     "type": "string"
-                },
-                "user_id": {
-                    "type": "integer"
                 }
             }
         },
@@ -5589,6 +5625,14 @@
                 },
                 "expose-headers": {
                     "type": "string"
+                }
+            }
+        },
+        "config.Cache": {
+            "type": "object",
+            "properties": {
+                "time": {
+                    "type": "integer"
                 }
             }
         },
@@ -5936,6 +5980,10 @@
                 "aws-s3": {
                     "$ref": "#/definitions/config.AwsS3"
                 },
+                "cache": {
+                    "description": "缓存",
+                    "$ref": "#/definitions/config.Cache"
+                },
                 "captcha": {
                     "$ref": "#/definitions/config.Captcha"
                 },
@@ -6030,6 +6078,23 @@
                 }
             }
         },
+        "config.Task": {
+            "type": "object",
+            "properties": {
+                "interval": {
+                    "description": "时间间隔 秒",
+                    "type": "string"
+                },
+                "output": {
+                    "description": "输出",
+                    "type": "string"
+                },
+                "taskName": {
+                    "description": "执行任务名",
+                    "type": "string"
+                }
+            }
+        },
         "config.TencentCOS": {
             "type": "object",
             "properties": {
@@ -6057,6 +6122,7 @@
             "type": "object",
             "properties": {
                 "detail": {
+                    "description": "任务: 清除数据库",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/config.Detail"
@@ -6069,6 +6135,13 @@
                 "start": {
                     "description": "是否启用",
                     "type": "boolean"
+                },
+                "tasks": {
+                    "description": "任务： 执行任务",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/config.Task"
+                    }
                 }
             }
         },

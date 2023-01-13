@@ -16,6 +16,44 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/Article/createArticle": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "创建Article",
+                "parameters": [
+                    {
+                        "description": "创建Article",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.Article"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/createApi": {
             "post": {
                 "security": [
@@ -259,7 +297,7 @@ const docTemplate = `{
             }
         },
         "/api/getApiList": {
-            "post": {
+            "get": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -312,7 +350,7 @@ const docTemplate = `{
             }
         },
         "/api/updateApi": {
-            "post": {
+            "put": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -361,7 +399,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/appTab/createAppTab": {
+        "/appTab/createTag": {
             "post": {
                 "security": [
                     {
@@ -375,17 +413,17 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "AppTab"
+                    "Tag"
                 ],
-                "summary": "创建AppTab",
+                "summary": "创建Tag",
                 "parameters": [
                     {
-                        "description": "创建AppTab",
+                        "description": "创建Tag",
                         "name": "data",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/app.AppTab"
+                            "$ref": "#/definitions/app.Tag"
                         }
                     }
                 ],
@@ -399,7 +437,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/appTab/deleteAppTab": {
+        "/appTab/deleteTag": {
             "delete": {
                 "security": [
                     {
@@ -413,17 +451,17 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "AppTab"
+                    "Tag"
                 ],
-                "summary": "删除AppTab",
+                "summary": "删除Tag",
                 "parameters": [
                     {
-                        "description": "删除AppTab",
+                        "description": "删除Tag",
                         "name": "data",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/app.AppTab"
+                            "$ref": "#/definitions/app.Tag"
                         }
                     }
                 ],
@@ -437,7 +475,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/appTab/deleteAppTabByIds": {
+        "/appTab/deleteTagByIds": {
             "delete": {
                 "security": [
                     {
@@ -451,12 +489,12 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "AppTab"
+                    "Tag"
                 ],
-                "summary": "批量删除AppTab",
+                "summary": "批量删除Tag",
                 "parameters": [
                     {
-                        "description": "批量删除AppTab",
+                        "description": "批量删除Tag",
                         "name": "data",
                         "in": "body",
                         "required": true,
@@ -475,7 +513,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/appTab/findAppTab": {
+        "/appTab/findTag": {
             "get": {
                 "security": [
                     {
@@ -489,9 +527,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "AppTab"
+                    "Tag"
                 ],
-                "summary": "用id查询AppTab",
+                "summary": "用id查询Tag",
                 "parameters": [
                     {
                         "type": "string",
@@ -532,7 +570,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/appTab/getAppTabList": {
+        "/appTab/getTagList": {
             "get": {
                 "security": [
                     {
@@ -546,9 +584,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "AppTab"
+                    "Tag"
                 ],
-                "summary": "分页获取AppTab列表",
+                "summary": "分页获取Tag列表",
                 "parameters": [
                     {
                         "type": "string",
@@ -607,7 +645,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/appTab/updateAppTab": {
+        "/appTab/updateTag": {
             "put": {
                 "security": [
                     {
@@ -621,17 +659,17 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "AppTab"
+                    "Tag"
                 ],
-                "summary": "更新AppTab",
+                "summary": "更新Tag",
                 "parameters": [
                     {
-                        "description": "更新AppTab",
+                        "description": "更新Tag",
                         "name": "data",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/app.AppTab"
+                            "$ref": "#/definitions/app.Tag"
                         }
                     }
                 ],
@@ -752,7 +790,7 @@ const docTemplate = `{
             }
         },
         "/authority/deleteAuthority": {
-            "post": {
+            "delete": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -4791,7 +4829,7 @@ const docTemplate = `{
             }
         },
         "/system/setSystemConfig": {
-            "post": {
+            "put": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -4832,6 +4870,33 @@ const docTemplate = `{
                                     }
                                 }
                             ]
+                        }
+                    }
+                }
+            }
+        },
+        "/tasking/start": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "start Tasking"
+                ],
+                "summary": "start Tasking",
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"开启成功\"}",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -5332,35 +5397,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "app.AppTab": {
-            "type": "object",
-            "properties": {
-                "articles": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/app.Article"
-                    }
-                },
-                "createdAt": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "integer"
-                },
-                "updatedAt": {
-                    "description": "更新时间",
-                    "type": "string"
-                }
-            }
-        },
         "app.Article": {
             "type": "object",
             "properties": {
@@ -5385,10 +5421,9 @@ const docTemplate = `{
                     "$ref": "#/definitions/system.SysUser"
                 },
                 "tags": {
-                    "description": "Username string ` + "`" + `json:\"username\" form:\"username\" gorm:\"column:username;comment:文章内容;\"` + "`" + `",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/app.AppTab"
+                        "$ref": "#/definitions/app.Tag"
                     }
                 },
                 "title": {
@@ -5414,6 +5449,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "children": {
+                    "description": "UserPraise []system.SysUser ` + "`" + `json:\"praise\" from:\"praise\" gorm:\"many2many:praise\"` + "`" + `",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/app.Comment"
@@ -5433,23 +5469,20 @@ const docTemplate = `{
                 "parentId": {
                     "type": "integer"
                 },
-                "praise": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/app.Praise"
-                    }
-                },
                 "updatedAt": {
                     "description": "更新时间",
                     "type": "string"
                 }
             }
         },
-        "app.Praise": {
+        "app.Tag": {
             "type": "object",
             "properties": {
-                "comment_id": {
-                    "type": "integer"
+                "articles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app.Article"
+                    }
                 },
                 "createdAt": {
                     "description": "创建时间",
@@ -5459,12 +5492,15 @@ const docTemplate = `{
                     "description": "主键ID",
                     "type": "integer"
                 },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
                 "updatedAt": {
                     "description": "更新时间",
                     "type": "string"
-                },
-                "user_id": {
-                    "type": "integer"
                 }
             }
         },
@@ -5598,6 +5634,14 @@ const docTemplate = `{
                 },
                 "expose-headers": {
                     "type": "string"
+                }
+            }
+        },
+        "config.Cache": {
+            "type": "object",
+            "properties": {
+                "time": {
+                    "type": "integer"
                 }
             }
         },
@@ -5945,6 +5989,10 @@ const docTemplate = `{
                 "aws-s3": {
                     "$ref": "#/definitions/config.AwsS3"
                 },
+                "cache": {
+                    "description": "缓存",
+                    "$ref": "#/definitions/config.Cache"
+                },
                 "captcha": {
                     "$ref": "#/definitions/config.Captcha"
                 },
@@ -6039,6 +6087,23 @@ const docTemplate = `{
                 }
             }
         },
+        "config.Task": {
+            "type": "object",
+            "properties": {
+                "interval": {
+                    "description": "时间间隔 秒",
+                    "type": "string"
+                },
+                "output": {
+                    "description": "输出",
+                    "type": "string"
+                },
+                "taskName": {
+                    "description": "执行任务名",
+                    "type": "string"
+                }
+            }
+        },
         "config.TencentCOS": {
             "type": "object",
             "properties": {
@@ -6066,6 +6131,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "detail": {
+                    "description": "任务: 清除数据库",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/config.Detail"
@@ -6078,6 +6144,13 @@ const docTemplate = `{
                 "start": {
                     "description": "是否启用",
                     "type": "boolean"
+                },
+                "tasks": {
+                    "description": "任务： 执行任务",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/config.Task"
+                    }
                 }
             }
         },

@@ -15,7 +15,6 @@ type TaskNameApi struct{}
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body comment.Comment true "start Tasking"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"开启成功"}"
 // @Router /tasking/start [get]
 func (*TaskNameApi) StartTasking(c *gin.Context) {
