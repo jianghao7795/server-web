@@ -47,4 +47,8 @@ declare namespace API {
     pageSize?: number;
     title?: string;
   };
+
+  export type SearchTag ={
+    name?:string;
+  }
 }

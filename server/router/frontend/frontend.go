@@ -12,8 +12,8 @@ func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
 	frontend := Router.Group("frontend")
 	var frontendTagApi = v1.ApiGroupApp.FrontendApiGroup.FrontendTagApi
 	{
-		frontend.GET("getTagList", frontendTagApi.GetAppTabList)
-		frontend.GET("getTagArticleList/:id", frontendTagApi.GetTagList)
+		frontend.GET("getTagList", frontendTagApi.GetTagList)
+		frontend.GET("getTagArticleList/:id", frontendTagApi.GetTag)
 	}
 	var frontendArticleApi = v1.ApiGroupApp.FrontendApiGroup
 	{
