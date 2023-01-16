@@ -18,6 +18,7 @@ func (s *FrontendArticleApi) GetArticleList(c *gin.Context) {
 	// log.Println(global.CONFIG.Cache)
 	var pageInfo request.ArticleSearch
 	_ = c.ShouldBindQuery(&pageInfo)
+	// log.Println(pageInfo.IsImportant)
 	if pageInfo.Page == 0 {
 		pageInfo.Page = 1
 	}

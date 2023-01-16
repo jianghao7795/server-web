@@ -46,6 +46,7 @@ declare namespace API {
     page?: number;
     pageSize?: number;
     title?: string;
+    is_important?: number;
   };
 
   export type SearchTag = {

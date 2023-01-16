@@ -58,7 +58,7 @@ const page = ref<number>(1);
 const articleLength = computed(() => data.value.length);
 
 onMounted(async () => {
-  const response = await getArticleList({ page: 1, is_important: 1 });
+  const response = await getArticleList({ page: 1 });
   if (response.code === 0) {
     data.value = response.data?.list as API.Article[];
   }
