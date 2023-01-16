@@ -48,7 +48,7 @@ declare namespace API {
     title?: string;
   };
 
-  export type SearchTag ={
-    name?:string;
-  }
+  export type SearchTag = {
+    name?: string;
+  };
 }

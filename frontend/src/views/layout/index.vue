@@ -6,15 +6,23 @@
           <template #header-extra>
             <div class="headerStyleLine">
               <NSpace>
-                <a @click="changePath('/')"><b>首页</b></a>
-                <a @click="changePath('/articles')"><b>文章</b></a>
-                <a @click="changePath('/tags')"><b>标签</b></a>
-                <a @click="changePath('/about')"><b>关于</b></a>
+                <a @click="changePath('/')">
+                  <span :class="underLineLable('/')"><b>首页</b></span>
+                </a>
+                <a @click="changePath('/articles')">
+                  <span :class="underLineLable('/articles')"><b>文章</b></span>
+                </a>
+                <a @click="changePath('/tags')">
+                  <span :class="underLineLable('/tags')"><b>标签</b></span>
+                </a>
+                <a @click="changePath('/about')">
+                  <span :class="underLineLable('/about')"><b>关于</b></span>
+                </a>
               </NSpace>
             </div>
           </template>
           <template #header>
-            <div class="headerStyleLine"><b>吴昊</b></div>
+            <div class="headerStyleLine"><b @click="changePath('/')">吴昊</b></div>
           </template>
           <div style="height: 300px; text-align: center">
             <h1>吴昊</h1>
@@ -38,19 +46,18 @@
 
 <script setup lang="ts">
 import { RouterView, useRouter, useRoute } from "vue-router";
-import {
-  NCard,
-  NSpace,
-  NLayout,
-  NLayoutContent,
-  NLayoutFooter,
-  NLayoutHeader,
-} from "naive-ui";
+import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader } from "naive-ui";
 // import { computed } from "vue";
 const route = useRoute();
 const router = useRouter();
 // const fullPath = computed<string>(() => route.fullPath);
-
+const underLineLable = (url: string): string => {
+  if (route.path === url) {
+    return "underLine";
+  } else {
+    return "";
+  }
+};
 const changePath = (url: string) => {
   router.push(url);
 };

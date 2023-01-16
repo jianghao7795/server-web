@@ -14,17 +14,18 @@ import (
 
 type FrontendTag struct{}
 
-func (s *FrontendTag) GetTagList(c *gin.Context) (list []frontend.AppTab, err error) {
+func (s *FrontendTag) GetTagList(c *gin.Context) (list []frontend.Tag, err error) {
 	var tagListStr string
 	tagListStr, err = global.REDIS.Get(c, "tag-list").Result()
+	var cacheTime = global.CONFIG.Cache.Time
 	if err == redis.Nil {
-		db := global.DB.Model(&frontend.AppTab{})
+		db := global.DB.Model(&frontend.Tag{})
 		err = db.Order("id desc").Find(&list).Error
 		if err != nil {
 			return list, err
 		}
-
-		err := global.REDIS.Set(c, "tag-list", list, 1*time.Hour).Err()
+		strList, _ := json.Marshal(list)
+		err := global.REDIS.Set(c, "tag-list", strList, time.Duration(cacheTime)*time.Second).Err()
 		if err != nil {
 			return list, errors.New("redis 存储失败， 请查看redis服务 配置")
 		}
@@ -40,11 +41,11 @@ func (s *FrontendTag) GetTagList(c *gin.Context) (list []frontend.AppTab, err er
 	return list, err
 }
 
-func (s *FrontendTag) GetTagArticle(tagId int, c *gin.Context) (tagArticle frontend.AppTab, err error) {
+func (s *FrontendTag) GetTagArticle(tagId int, c *gin.Context) (tagArticle frontend.Tag, err error) {
 	tagArticleStr := ""
 	tagArticleStr, err = global.REDIS.Get(c, "tag-"+strconv.Itoa(tagId)).Result()
 	if err == redis.Nil {
-		db := global.DB.Model(&frontend.AppTab{})
+		db := global.DB.Model(&frontend.Tag{})
 		err = db.Where("id = ?", tagId).Order("id desc").Preload("Articles").First(&tagArticle).Error
 		if err != nil {
 			return tagArticle, err

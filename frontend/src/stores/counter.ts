@@ -12,7 +12,7 @@ export const useCounterStore = defineStore({
   actions: {
     async increment() {
       this.counter++;
-      await this.list.push({ a: 1 });
+      this.list.push({ a: 1 });
     },
   },
 });

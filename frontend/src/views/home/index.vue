@@ -10,19 +10,14 @@
           </template>
           <template #description>
             <div>
-              简述: <b>{{ item.desc }}</b>
+              简述:
+              <b>{{ item.desc }}</b>
             </div>
           </template>
           <!-- <md-editor v-model="item.content" preview-only /> -->
           <template #footer>
             <n-space size="small" style="margin-top: 4px">
-              <n-tag
-                :bordered="false"
-                type="info"
-                size="small"
-                v-for="i in item.tags"
-                :key="i.ID"
-              >
+              <n-tag :bordered="false" type="info" size="small" v-for="i in item.tags" :key="i.ID">
                 {{ i.name }}
               </n-tag>
             </n-space>
