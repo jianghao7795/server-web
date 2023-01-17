@@ -1,5 +1,6 @@
 <template>
   <div class="view-content">
+    <h1>标签</h1>
     <n-space>
       <n-button strong secondary round v-for="(item, index) in tagList" :key="item.ID" :type="colorIndex(index)">{{ item.name }}</n-button>
     </n-space>

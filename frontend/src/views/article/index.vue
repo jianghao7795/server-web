@@ -1,7 +1,7 @@
 <template>
   <div class="article-list">
     <n-list hoverable clickable>
-      <n-list-item v-for="item in data" :key="item.ID">
+      <n-list-item v-for="item in data" :key="item.ID" @click="changeUrl(item.ID)">
         <n-thing content-style="margin-top: 10px;">
           <template #header>
             <div>
@@ -49,13 +49,17 @@ import { NList, NThing, NListItem, NSpace, NTag, NButton } from "naive-ui";
 import { ref, onMounted, computed } from "vue";
 import { getArticleList } from "@/services/article";
 import type { API } from "@/type/article";
-// import MdEditor from "md-editor-v3";
-// import "md-editor-v3/lib/style.css";
-import { Right, Left } from "@icon-park/vue-next";
+import { Right } from "@icon-park/vue-next";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const data = ref<API.Article[]>([]);
 const page = ref<number>(1);
 const articleLength = computed(() => data.value.length);
+
+const changeUrl = (id: number) => {
+  router.push(`/articles/${id}`);
+};
 
 onMounted(async () => {
   const response = await getArticleList({ page: 1 });
