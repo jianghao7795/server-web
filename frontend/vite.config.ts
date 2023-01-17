@@ -15,10 +15,12 @@ const rollupOptions = {
 export default defineConfig({
   plugins: [
     legacyPlugin({
-      targets: ["defaults", "not IE 11"],
+      // targets: ["defaults", "not IE 11"],
+      targets: ["Android > 39", "Chrome >= 60", "Safari >= 10.1", "iOS >= 10.3", "Firefox >= 54", "Edge >= 15"],
+      renderLegacyChunks: false,
     }),
     // vue(),
-    vuePlugin(),
+    vuePlugin({}),
   ],
   css: {
     preprocessorOptions: {
