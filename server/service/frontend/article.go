@@ -83,9 +83,9 @@ func (s *FrontendArticle) GetAricleDetail(articleId int, c *gin.Context) (articl
 		articleString, _ := json.Marshal(articleDetail)
 		err := global.REDIS.Set(c, "article"+strconv.Itoa(articleId), articleString, time.Duration(cacheTime)*time.Second).Err()
 		if err != nil {
-			global.LOG.Error("Redis 存储失败!", zap.Error(nil))
+			global.LOG.Error("Redis 存储失败!", zap.Error(err))
 		}
-		return articleDetail, nil
+		return articleDetail, err
 	} else if err != nil {
 		return
 	} else {

@@ -11,3 +11,9 @@ export const getArticleList = (params?: API.SearchArticle) => {
     params: params,
   });
 };
+
+export const getArticleDetail = (id: string) => {
+  return http.get<API.Response<API.Article>>(`/frontend/getArticle/${id}`, {
+    method: "get",
+  });
+};

@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
-import {
-  NNotificationProvider,
-  NMessageProvider,
-  useMessage,
-  useNotification,
-} from "naive-ui";
+import { NNotificationProvider, NMessageProvider } from "naive-ui";
 
 // window.$message = useMessage();
 // window.$notification = useNotification();

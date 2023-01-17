@@ -11,12 +11,7 @@ import { NSpace, NButton } from "naive-ui";
 import { getTagList } from "@/services/tag";
 import { onMounted, ref } from "vue";
 import type { API } from "@/type/article";
-
-const colorItem = ["default", "primary", "info", "success", "warning", "error"];
-
-const colorIndex = (index: number): "default" | "primary" | "info" | "success" | "warning" | "error" => {
-  return colorItem[index % 6] as "default" | "primary" | "info" | "success" | "warning" | "error";
-};
+import { colorIndex } from "@/common/article";
 
 const tagList = ref<API.Tag[]>([]);
 onMounted(async () => {

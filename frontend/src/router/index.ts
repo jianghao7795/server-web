@@ -4,6 +4,7 @@ import Layout from "@/views/layout/index.vue";
 import About from "@/views/about/index.vue";
 import Tag from "@/views/tag/index.vue";
 import Article from "@/views/article/index.vue";
+import ArticleDetail from "@/views/article/detail.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
           path: "/articles",
           name: "article",
           component: Article,
+        },
+        {
+          path: "/articles/:id",
+          name: "id",
+          component: ArticleDetail,
         },
       ],
     },
