@@ -18,26 +18,41 @@ const router = createRouter({
           path: "/",
           name: "index",
           component: HomeView,
+          meta: {
+            title: "首页",
+          },
         },
         {
           path: "/about",
           name: "about",
           component: About,
+          meta: {
+            title: "关于",
+          },
         },
         {
           path: "/tags",
           name: "tag",
           component: Tag,
+          meta: {
+            title: "标签",
+          },
         },
         {
           path: "/articles",
           name: "article",
           component: Article,
+          meta: {
+            title: "文章",
+          },
         },
         {
           path: "/articles/:id",
           name: "id",
           component: ArticleDetail,
+          meta: {
+            title: "文章详情",
+          },
         },
       ],
     },
@@ -50,6 +65,11 @@ const router = createRouter({
     //   component: () => import('../views/AboutView.vue'),
     // },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  window.document.title = to.meta.title as string;
+  next();
 });
 
 export default router;
