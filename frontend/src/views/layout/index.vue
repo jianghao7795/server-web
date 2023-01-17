@@ -84,6 +84,7 @@ const changePath = (url: string) => {
   text-align: center;
   height: 40px;
   flex: 0 0 auto;
+  line-height: 40px;
 }
 
 hr.small {
