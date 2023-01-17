@@ -69,7 +69,16 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   window.document.title = to.meta.title as string;
+  window.$loadingBar.start();
   next();
+});
+
+router.afterEach(() => {
+  window.$loadingBar.finish();
+});
+
+router.onError(() => {
+  window.$loadingBar.error();
 });
 
 export default router;
