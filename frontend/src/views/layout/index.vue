@@ -31,10 +31,10 @@
           </div>
         </n-card>
       </n-layout-header>
-      <n-layout-content position="static">
+      <n-layout-content position="static" class="middle-view">
         <RouterView />
       </n-layout-content>
-      <n-layout-footer position="absolute">
+      <n-layout-footer position="static">
         <!-- style="width: 100%; height: 100px; position: absolute; bottom: 0px; left: 0px" -->
         <footer class="footerStyle">
           <span>Copyright ©2022</span>
@@ -110,5 +110,9 @@ hr {
 }
 a::before {
   cursor: pointer;
+}
+
+.middle-view {
+  min-height: calc(100% - 470px);
 }
 </style>
