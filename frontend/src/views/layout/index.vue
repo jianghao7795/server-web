@@ -30,7 +30,7 @@
               ref="searchInputRef"
               v-model:value="searchInput"
               @blur="mouseOverTitle(false)"
-              style="max-width: 30%, margin: '15px 0'"
+              style="max-width: 30%; margin: '15px 0'"
               placeholder="搜索文章"
               type="text"
               @keyup.enter="submit"
