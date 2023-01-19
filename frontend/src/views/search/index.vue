@@ -1,6 +1,6 @@
 <template>
   <div class="article-list">
-    <n-list hoverable clickable>
+    <n-list hoverable clickable v-if="data.length !== 0">
       <n-list-item v-for="item in data" :key="item.ID" @click="changeUrl(item.ID)">
         <n-thing content-style="margin-top: 10px;">
           <template #header>
@@ -25,6 +25,11 @@
         </n-thing>
       </n-list-item>
     </n-list>
+    <n-empty size="large" v-else>
+      <template #extra>
+        <n-button size="small" type="primary" @click="changeLookOther">看看别的</n-button>
+      </template>
+    </n-empty>
     <div class="pageNext">
       <n-space justify="space-between">
         <n-button v-show="page !== 1" icon-placement="left">
@@ -46,19 +51,20 @@
 
 <script lang="ts">
 export default {
-  name: "Article",
+  name: "Search",
 };
 </script>
 
 <script setup lang="ts">
-import { NList, NThing, NListItem, NSpace, NTag, NButton } from "naive-ui";
+import { NList, NThing, NListItem, NSpace, NTag, NButton, NEmpty } from "naive-ui";
 import { ref, onMounted, computed } from "vue";
-import { getArticleList } from "@/services/article";
+import { getArticleSearch } from "@/services/article";
 import type { API } from "@/type/article";
 import { Right } from "@icon-park/vue-next";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
 const data = ref<API.Article[]>([]);
 const page = ref<number>(1);
 const articleLength = computed(() => data.value.length);
@@ -67,8 +73,13 @@ const changeUrl = (id: number) => {
   router.push(`/articles/${id}`);
 };
 
+const changeLookOther = () => {
+  router.push("/tags");
+};
+
 onMounted(async () => {
-  const response = await getArticleList({ page: 1 });
+  const searchValue = route.params;
+  const response = await getArticleSearch({ page: 1, ...searchValue });
   if (response.code === 0) {
     data.value = response.data?.list as API.Article[];
   }

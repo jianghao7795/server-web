@@ -44,6 +44,12 @@
   </div>
 </template>
 
+<script lang="ts">
+export default {
+  name: "Home",
+};
+</script>
+
 <script setup lang="ts">
 import { NList, NThing, NListItem, NSpace, NTag, NButton } from "naive-ui";
 import { ref, onMounted, computed } from "vue";

@@ -5,4 +5,10 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: "About",
+};
+</script>
+
 <script lang="ts" setup></script>

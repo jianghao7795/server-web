@@ -40,7 +40,7 @@ func (s *FrontendArticleApi) GetArticleList(c *gin.Context) {
 	}
 }
 
-func (s *FrontendArticleApi) GetAricleDetail(c *gin.Context) {
+func (s *FrontendArticleApi) GetArticleDetail(c *gin.Context) {
 	id := c.Param("id")
 	aritcleId, err := strconv.Atoi(id)
 	if err != nil {
@@ -58,5 +58,22 @@ func (s *FrontendArticleApi) GetAricleDetail(c *gin.Context) {
 
 	} else {
 		response.OkWithData(gin.H{"article": articleDetail}, c)
+	}
+}
+
+func (s *FrontendArticleApi) GetSearchArticle(c *gin.Context) {
+	var searchValue request.ArticleSearch
+	searchValue.Name = c.Param("name")
+	searchValue.Value = c.Param("value")
+	if list, err := frontendService.GetSearchArticle(searchValue); err != nil {
+		global.LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+	} else {
+		response.OkWithDetailed(response.PageResult{
+			List: list,
+			// Total:    total,
+			// Page:     pageInfo.Page,
+			// PageSize: pageInfo.PageSize,
+		}, "获取成功", c)
 	}
 }

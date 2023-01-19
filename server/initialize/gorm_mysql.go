@@ -31,6 +31,7 @@ func GormMysql() *gorm.DB {
 		sqlDB.SetMaxIdleConns(m.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(m.MaxOpenConns)
 		// db = db.Debug() // 线上注释
+		// log.Println("debug", m.Debug)
 		if m.Debug {
 			db = db.Debug()
 		}

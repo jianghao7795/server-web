@@ -17,6 +17,12 @@
   </div>
 </template>
 
+<script lang="ts">
+export default {
+  name: "ArticleDetail",
+};
+</script>
+
 <script lang="ts" setup>
 import { NSpace, NTag, NDivider } from "naive-ui";
 import { ref, onMounted } from "vue";

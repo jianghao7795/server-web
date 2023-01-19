@@ -37,16 +37,23 @@
       <n-layout-footer position="static">
         <!-- style="width: 100%; height: 100px; position: absolute; bottom: 0px; left: 0px" -->
         <footer class="footerStyle">
-          <span>Copyright ©2022</span>
+          <span>Copyright ©{{ dayjs().format("YYYY") }}</span>
         </footer>
       </n-layout-footer>
     </n-layout>
   </div>
 </template>
 
+<script lang="ts">
+export default {
+  name: "Layout",
+};
+</script>
+
 <script setup lang="ts">
 import { RouterView, useRouter, useRoute } from "vue-router";
 import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader } from "naive-ui";
+import dayjs from "dayjs";
 // import { computed } from "vue";
 const route = useRoute();
 const router = useRouter();

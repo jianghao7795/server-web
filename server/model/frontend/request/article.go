@@ -8,4 +8,6 @@ import (
 type ArticleSearch struct {
 	app.Article
 	request.PageInfo
+	Name  string `json:"name" form:"name"`
+	Value string `json:"value" form:"value"`
 }

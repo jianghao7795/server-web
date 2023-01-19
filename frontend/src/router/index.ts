@@ -1,10 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/home/index.vue";
-import Layout from "@/views/layout/index.vue";
-import About from "@/views/about/index.vue";
-import Tag from "@/views/tag/index.vue";
-import Article from "@/views/article/index.vue";
-import ArticleDetail from "@/views/article/detail.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,12 +6,12 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: Layout,
+      component: () => import("@/views/layout/index.vue"),
       children: [
         {
           path: "/",
           name: "index",
-          component: HomeView,
+          component: () => import("@/views/home/index.vue"),
           meta: {
             title: "首页",
           },
@@ -25,7 +19,7 @@ const router = createRouter({
         {
           path: "/about",
           name: "about",
-          component: About,
+          component: () => import("@/views/about/index.vue"),
           meta: {
             title: "关于",
           },
@@ -33,7 +27,7 @@ const router = createRouter({
         {
           path: "/tags",
           name: "tag",
-          component: Tag,
+          component: () => import("@/views/tag/index.vue"),
           meta: {
             title: "标签",
           },
@@ -41,7 +35,7 @@ const router = createRouter({
         {
           path: "/articles",
           name: "article",
-          component: Article,
+          component: () => import("@/views/article/index.vue"),
           meta: {
             title: "文章",
           },
@@ -49,9 +43,17 @@ const router = createRouter({
         {
           path: "/articles/:id",
           name: "id",
-          component: ArticleDetail,
+          component: () => import("@/views/article/detail.vue"),
           meta: {
             title: "文章详情",
+          },
+        },
+        {
+          path: "/search/:name/:value",
+          name: "search",
+          component: () => import("@/views/search/index.vue"),
+          meta: {
+            title: "搜索结果",
           },
         },
       ],

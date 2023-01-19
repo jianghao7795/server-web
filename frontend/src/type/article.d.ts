@@ -47,6 +47,8 @@ declare namespace API {
     pageSize?: number;
     title?: string;
     is_important?: number;
+    name?: "tag" | "article";
+    value?: string;
   };
 
   export type SearchTag = {

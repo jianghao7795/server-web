@@ -3,6 +3,7 @@ package frontend
 import (
 	"encoding/json"
 	"errors"
+	"log"
 	"server/global"
 	"server/model/frontend"
 	frontendReq "server/model/frontend/request"
@@ -63,11 +64,6 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *gin.
 		}
 	}
 	return list, err
-	// limit := info.PageSize
-	// offset := info.PageSize * (info.Page - 1)
-	// db := global.DB.Model(&frontend.Article{})
-	// err = db.Limit(limit).Offset(offset).Order("id desc").Preload("Tags").Preload("User").Find(&list).Error
-	// return list, err
 }
 
 func (s *FrontendArticle) GetAricleDetail(articleId int, c *gin.Context) (articleDetail frontend.Article, err error) {
@@ -93,6 +89,30 @@ func (s *FrontendArticle) GetAricleDetail(articleId int, c *gin.Context) (articl
 			err = json.Unmarshal([]byte(articleDetailStr), &articleDetail)
 			return articleDetail, err
 		}
+	}
+
+	return
+}
+
+func (s *FrontendArticle) GetSearchArticle(info frontendReq.ArticleSearch) (list []frontend.Article, err error) {
+	db := global.DB.Model(&frontend.Article{})
+
+	// log.Println("Name: ", info.Name)
+	// Preload("Tags", func(dbg *gorm.DB) *gorm.DB {
+	// 	return dbg.Where("name = ?", info.Value)
+	// })
+	if info.Name == "tag" {
+		dbTag := global.DB.Model(&frontend.Tag{})
+		var tagIdList []int
+		var articleIdList []int
+		dbTag.Select("id").Where("name = ?", info.Value).Find(&tagIdList)
+		global.DB.Raw("SELECT article_id from article_tag where tag_id in (?)", tagIdList).Find(&articleIdList)
+		log.Println(tagIdList, articleIdList)
+		err = db.Where("id in (?)", articleIdList).Preload("Tags").Preload("User").Order("id desc").Find(&list).Error
+	}
+
+	if info.Name == "article" {
+		err = db.Where("title like ?", strings.Join([]string{"%", info.Title, "%"}, "")).Preload("Tags").Preload("User").Order("id desc").Find(&list).Error
 	}
 
 	return
