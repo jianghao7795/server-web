@@ -25,7 +25,17 @@
             <div class="headerStyleLine"><b @click="changePath('/')">吴昊</b></div>
           </template>
           <div style="height: 300px; text-align: center">
-            <h1>吴昊</h1>
+            <span class="small-h1" v-if="!isMouseOver || route.path.includes('/search/article')" @mouseover="mouseOverTitle(true)"><b>吴昊</b></span>
+            <NInput
+              ref="searchInputRef"
+              v-model:value="searchInput"
+              @blur="mouseOverTitle(false)"
+              style="max-width: 30%, margin: '15px 0'"
+              placeholder="搜索文章"
+              type="text"
+              @keyup.enter="submit"
+              v-else
+            />
             <hr class="small" />
             <span class="subheading">愈有知，愈无知。</span>
           </div>
@@ -52,12 +62,15 @@ export default {
 
 <script setup lang="ts">
 import { RouterView, useRouter, useRoute } from "vue-router";
-import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader } from "naive-ui";
+import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader, NInput } from "naive-ui";
 import dayjs from "dayjs";
-// import { computed } from "vue";
+import { ref, nextTick } from "vue";
 const route = useRoute();
 const router = useRouter();
-// const fullPath = computed<string>(() => route.fullPath);
+const searchInput = ref("");
+const searchInputRef = ref<HTMLInputElement>();
+
+const isMouseOver = ref(false);
 const underLineLable = (url: string): string => {
   if (route.path === url) {
     return "underLine";
@@ -67,6 +80,24 @@ const underLineLable = (url: string): string => {
 };
 const changePath = (url: string) => {
   router.push(url);
+};
+
+const mouseOverTitle = async (isStatus: boolean) => {
+  isMouseOver.value = isStatus;
+  if (!isStatus) {
+    await nextTick();
+    searchInputRef.value?.focus();
+  }
+};
+
+const submit = () => {
+  if (searchInput.value === "") {
+    window.$message.warning("请输入");
+    return;
+  }
+  router.push(`/search/article/${searchInput.value}`);
+  isMouseOver.value = false;
+  searchInput.value = "";
 };
 </script>
 
@@ -102,6 +133,10 @@ hr.small {
 }
 .small {
   font-size: 85%;
+}
+
+.small-h1 {
+  font-size: 21px;
 }
 hr {
   border: 0;
