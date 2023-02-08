@@ -19,6 +19,7 @@ func (s *ArticltRouter) InitArticleRouter(Router *gin.RouterGroup) {
 		articleRouter.DELETE("deleteArticle/:id", articleApi.DeleteArticle)       // 删除article
 		articleRouter.DELETE("deleteArticleByIds", articleApi.DeleteArticleByIds) // 批量删除article
 		articleRouter.PUT("updateArticle/:id", articleApi.UpdateArticle)          // 更新article
+		articleRouter.PUT("putArticleByIds", articleApi.PutArticleByIds)          // 批量更新 是否首页显示article
 	}
 	{
 		articleRouterWithoutRecord.GET("findArticle/:id", articleApi.FindArticle)   // 根据ID获取article

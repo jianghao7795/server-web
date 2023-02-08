@@ -80,6 +80,9 @@ func (articleSearch *ArticleService) GetArticleInfoList(info appReq.ArticleSearc
 	if info.Title != "" {
 		db = db.Where("title like ?", strings.Join([]string{"%", info.Title, "%"}, ""))
 	}
+	if info.IsImportant != 0 {
+		db = db.Where("is_important = ?", info.IsImportant)
+	}
 	// db.SetupJoinTable(&articles, "article_tag")
 	// if info.TagId != 0 {
 	// 	db = db.Where("tag_id = ?", info.TagId)
@@ -92,4 +95,10 @@ func (articleSearch *ArticleService) GetArticleInfoList(info appReq.ArticleSearc
 	//
 	err = db.Limit(limit).Offset(offset).Order("id desc").Preload("Tags").Find(&articles).Error
 	return articles, total, err
+}
+
+// 批量更新
+func (articleSearch *ArticleService) PutArticleByIds(ids request.IdsReq) (err error) {
+	err = global.DB.Model(&app.Article{}).Where("id in ?", ids.Ids).Update("is_important", 2).Error
+	return
 }

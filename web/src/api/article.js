@@ -57,3 +57,12 @@ export const uploadFile = (params) => {
     },
   });
 };
+
+//批量更新 是否首页显示
+export const putArticleByIds = (data) => {
+  return service({
+    url: "/article/putArticleByIds",
+    method: "put",
+    data: data,
+  });
+};

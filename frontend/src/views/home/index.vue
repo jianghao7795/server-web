@@ -1,6 +1,6 @@
 <template>
   <div class="article-list">
-    <n-list hoverable clickable>
+    <n-list hoverable clickable v-if="data.length !== 0">
       <n-list-item v-for="item in data" :key="item.ID" @click="changeUrl(item.ID)">
         <n-thing content-style="margin-top: 10px;">
           <template #header>
@@ -25,6 +25,11 @@
         </n-thing>
       </n-list-item>
     </n-list>
+    <n-empty size="large" description="首页暂无" v-else>
+      <template #extra>
+        <n-button size="small" type="primary" @click="changeLookOther">看看别的文章</n-button>
+      </template>
+    </n-empty>
     <div class="pageNext">
       <n-space justify="space-between">
         <n-button v-show="page !== 1" icon-placement="left">
@@ -51,7 +56,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { NList, NThing, NListItem, NSpace, NTag, NButton } from "naive-ui";
+import { NList, NThing, NListItem, NSpace, NTag, NButton, NEmpty } from "naive-ui";
 import { ref, onMounted, computed } from "vue";
 import { getArticleList } from "@/services/article";
 import type { API } from "@/type/article";
@@ -75,6 +80,10 @@ onMounted(async () => {
     data.value = response.data?.list as API.Article[];
   }
 });
+
+const changeLookOther = () => {
+  router.push("/articles");
+};
 </script>
 
 <style scoped lang="less">

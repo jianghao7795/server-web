@@ -10,6 +10,12 @@
             <el-option v-for="item in tags" :key="item.ID" :label="item.name" :value="item.ID"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="首页是否显示:">
+          <el-select v-model="searchInfo.is_important" clearable>
+            <el-option value="1" label="显示"></el-option>
+            <el-option value="2" label="隐藏"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button size="small" type="primary" icon="search" @click="onSubmit">查询</el-button>
           <el-button size="small" icon="refresh" @click="reset">重置</el-button>
@@ -22,6 +28,11 @@
         <el-popconfirm title="确定要删除吗?" @confirm="onDelete" placement="top" :width="250">
           <template #reference>
             <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length">删除</el-button>
+          </template>
+        </el-popconfirm>
+        <el-popconfirm title="确定不显示首页?" @confirm="OnCancelView" placement="top" :width="250">
+          <template #reference>
+            <el-button icon="hide" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length">取消首页显示</el-button>
           </template>
         </el-popconfirm>
       </div>
@@ -41,7 +52,16 @@
           <template #default="{ row }">
             <div class="centerBg">
               <el-space>
-                <el-tag v-for="item in row.tags" :key="item.id">{{ item.name }}</el-tag>
+                <el-tag v-for="item in row.tags" :key="item.ID" :type="colorIndex(item.ID)">{{ item.name }}</el-tag>
+              </el-space>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="首页显示" prop="is_important">
+          <template #default="{ row }">
+            <div class="centerBg">
+              <el-space>
+                <el-tag :type="row.is_important === 1 ? 'success' : 'error'">{{ row.is_important === 1 ? "显示" : "隐藏" }}</el-tag>
               </el-space>
             </div>
           </template>
@@ -123,7 +143,7 @@
         <el-form-item label="首页显示:" prop="is_important">
           <el-radio-group v-model="formData.is_important">
             <el-radio-button :label="1">显示</el-radio-button>
-            <el-radio-button :label="0">隐藏</el-radio-button>
+            <el-radio-button :label="2">隐藏</el-radio-button>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -144,9 +164,19 @@ export default { name: "Article" };
 <script setup>
 import { formatDate } from "@/utils/format";
 import { ElMessage } from "element-plus";
-import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle, uploadFile, deleteArticleByIds } from "@/api/article";
+import {
+  getArticleList,
+  deleteArticle,
+  findArticle,
+  createArticle,
+  updateArticle,
+  uploadFile,
+  deleteArticleByIds,
+  putArticleByIds,
+} from "@/api/article";
 import { getTagList } from "@/api/tag";
 import { ref, onBeforeMount, reactive } from "vue";
+import { colorIndex } from "@/utils/util";
 // import { useDebounceFn } from "@vueuse/core";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
@@ -157,6 +187,7 @@ const formData = ref({
   desc: "",
   content: "",
   state: 1,
+  is_important: undefined,
 });
 
 const ruleFormRef = ref(null); // form ref
@@ -278,6 +309,28 @@ const onDelete = async () => {
     if (tableData.value.length === ids.length && page.value > 1) {
       page.value--;
     }
+    // deleteVisible.value = false;
+    getTableData();
+  }
+};
+
+// 多选取消首页显示
+const OnCancelView = async () => {
+  if (multipleSelection.value.length === 0) {
+    ElMessage({
+      type: "warning",
+      message: "请选择",
+    });
+    return;
+  }
+
+  const ids = multipleSelection.value.map((i) => i.ID);
+  const resp = await putArticleByIds({ ids });
+  if (resp.code === 0) {
+    ElMessage({
+      type: "success",
+      message: "首页显示取消成功",
+    });
     // deleteVisible.value = false;
     getTableData();
   }

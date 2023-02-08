@@ -314,3 +314,9 @@ export function filterEnum(
   if (type == "tag") return filterData?.tagType ? filterData.tagType : "";
   return filterData ? filterData[label] : "--";
 }
+
+export const colorItem = ["success", "info", "warning", "danger", ""];
+
+export const colorIndex = (index: number): "success" | "info" | "warning" | "danger" | "" => {
+  return colorItem[index % 5] as "success" | "info" | "warning" | "danger" | "";
+};
