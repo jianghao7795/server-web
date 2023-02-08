@@ -17,7 +17,7 @@
           <!-- <md-editor v-model="item.content" preview-only /> -->
           <template #footer>
             <n-space size="small" style="margin-top: 4px">
-              <n-tag :bordered="false" type="info" size="small" v-for="i in item.tags" :key="i.ID">
+              <n-tag :bordered="false" size="small" v-for="i in item.tags" :key="i.ID" :type="colorIndex(i.ID)">
                 {{ i.name }}
               </n-tag>
             </n-space>
@@ -57,6 +57,7 @@ import { getArticleList } from "@/services/article";
 import type { API } from "@/type/article";
 import { Right } from "@icon-park/vue-next";
 import { useRouter } from "vue-router";
+import { colorIndex } from "@/common/article";
 
 const router = useRouter();
 const data = ref<API.Article[]>([]);

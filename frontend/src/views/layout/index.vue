@@ -155,6 +155,6 @@ a::before {
 }
 
 .middle-view {
-  min-height: calc(100% - 470px);
+  min-height: calc(100% - 443px);
 }
 </style>

@@ -25,7 +25,7 @@
         </n-thing>
       </n-list-item>
     </n-list>
-    <n-empty size="large" v-else>
+    <n-empty size="large" description="你什么也没找到" v-else>
       <template #extra>
         <n-button size="small" type="primary" @click="changeLookOther">看看别的</n-button>
       </template>
