@@ -57,7 +57,7 @@ export default {
 
 <script setup lang="ts">
 import { NList, NThing, NListItem, NSpace, NTag, NButton, NEmpty } from "naive-ui";
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { getArticleSearch } from "@/services/article";
 import type { API } from "@/type/article";
 import { Right } from "@icon-park/vue-next";
@@ -68,6 +68,7 @@ const route = useRoute();
 const data = ref<API.Article[]>([]);
 const page = ref<number>(1);
 const articleLength = computed(() => data.value.length);
+const searchValue = computed(() => route.params);
 
 const changeUrl = (id: number) => {
   router.push(`/articles/${id}`);
@@ -80,6 +81,14 @@ const changeLookOther = () => {
 onMounted(async () => {
   const searchValue = route.params;
   const response = await getArticleSearch({ page: 1, ...searchValue });
+  if (response?.code === 0) {
+    data.value = response.data?.list as API.Article[];
+  }
+});
+
+watch<any>(searchValue, async (value: { value: string }) => {
+  // console.log(value, oldValue);
+  const response = await getArticleSearch({ page: 1, ...value });
   if (response?.code === 0) {
     data.value = response.data?.list as API.Article[];
   }

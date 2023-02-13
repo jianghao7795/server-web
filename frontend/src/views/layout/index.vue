@@ -25,11 +25,22 @@
             <div class="headerStyleLine"><b @click="changePath('/')">吴昊</b></div>
           </template>
           <div style="height: 300px; text-align: center">
-            <span class="small-h1" v-if="!isMouseOver || route.path.includes('/search/article')" @mouseover="mouseOverTitle(true)"><b>吴昊</b></span>
+            <span v-if="!isMouseOver">
+              <span class="small-h1">
+                <b>吴昊</b>
+              </span>
+              <Search
+                @click="
+                  () => {
+                    isMouseOver = true;
+                  }
+                "
+              />
+            </span>
             <NInput
+              :autofocus="true"
               ref="searchInputRef"
               v-model:value="searchInput"
-              @blur="mouseOverTitle(false)"
               style="max-width: 30%; margin: '15px 0'"
               placeholder="搜索文章"
               type="text"
@@ -63,11 +74,12 @@ export default {
 <script setup lang="ts">
 import { RouterView, useRouter, useRoute } from "vue-router";
 import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader, NInput } from "naive-ui";
+import { Search } from "@icon-park/vue-next";
 import dayjs from "dayjs";
-import { ref, nextTick } from "vue";
+import { ref } from "vue";
 const route = useRoute();
 const router = useRouter();
-const searchInput = ref("");
+const searchInput = ref<string>("");
 const searchInputRef = ref<HTMLInputElement>();
 
 const isMouseOver = ref(false);
@@ -82,13 +94,13 @@ const changePath = (url: string) => {
   router.push(url);
 };
 
-const mouseOverTitle = async (isStatus: boolean) => {
-  isMouseOver.value = isStatus;
-  if (!isStatus) {
-    await nextTick();
-    searchInputRef.value?.focus();
-  }
-};
+// const mouseOverTitle = async (isStatus: boolean) => {
+//   isMouseOver.value = isStatus;
+//   if (!isStatus) {
+//     await nextTick();
+//     searchInputRef.value?.focus();
+//   }
+// };
 
 const submit = () => {
   if (searchInput.value === "") {
@@ -137,6 +149,7 @@ hr.small {
 
 .small-h1 {
   font-size: 21px;
+  margin-right: 5px;
 }
 hr {
   border: 0;
