@@ -45,7 +45,7 @@ service.interceptors.response.use(
     }
   },
   (error: AxiosError) => {
-    console.log(error);
+    // console.log(error);
     // 处理 HTTP 网络错误
     let message = "";
     // HTTP 状态码
@@ -69,7 +69,9 @@ service.interceptors.response.use(
     }
 
     //Message.error(message)
-    return Promise.reject(error);
+    // console.log(message);
+    window.$notification.error({ content: `错误 ${status}: ${message}`, meta: error.response?.statusText, duration: 10000, keepAliveOnHover: true });
+    return;
   },
 );
 

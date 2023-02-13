@@ -20,7 +20,7 @@ export const getArticleDetail = (id: string) => {
 
 // 搜索文章的 tag 或 title
 export const getArticleSearch = (params: API.SearchArticle) => {
-  return http.get<API.Response<API.Article>>(`/frontend/geSsearchArticle/${params.name}/${params.value}`, {
+  return http.get<API.Response<API.Article>>(`/frontend/getSearchArticle/${params.name}/${params.value}`, {
     method: "get",
   });
 };

@@ -19,6 +19,6 @@ func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
 	{
 		frontend.GET("getArticleList", frontendArticleApi.GetArticleList)
 		frontend.GET("getArticle/:id", frontendArticleApi.GetArticleDetail)
-		frontend.GET("/geSsearchArticle/:name/:value", frontendArticleApi.GetSearchArticle)
+		frontend.GET("/getSearchArticle/:name/:value", frontendArticleApi.GetSearchArticle)
 	}
 }

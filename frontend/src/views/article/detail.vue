@@ -46,7 +46,7 @@ onMounted(async () => {
   const params = route.params;
   // console.log(route.params, params);
   const resp = await getArticleDetail(params.id as string);
-  detail.value = resp.data?.article as API.Article;
+  detail.value = resp?.data?.article as API.Article;
   //   console.log(resp);
 });
 </script>

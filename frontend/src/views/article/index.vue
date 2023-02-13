@@ -69,9 +69,13 @@ const changeUrl = (id: number) => {
 };
 
 onMounted(async () => {
-  const response = await getArticleList({ page: 1 });
-  if (response.code === 0) {
-    data.value = response.data?.list as API.Article[];
+  try {
+    const response = await getArticleList({ page: 1 });
+    if (response?.code === 0) {
+      data.value = (response.data?.list as API.Article[]) || [];
+    }
+  } catch (e) {
+    console.log(e);
   }
 });
 </script>
