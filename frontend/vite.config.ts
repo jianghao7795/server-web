@@ -12,6 +12,8 @@ const rollupOptions = {
 };
 // console.log(import.meta);
 // https://vitejs.dev/config/
+
+// const host = import.meta;
 export default defineConfig({
   plugins: [
     legacyPlugin({
