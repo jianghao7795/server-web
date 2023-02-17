@@ -35,10 +35,10 @@ func (h PgsqlInitHandler) WriteConfig(ctx context.Context) error {
 	global.CONFIG.Pgsql = c
 	cs := utils.StructToMap(global.CONFIG)
 	for k, v := range cs {
-		global.VP.Set(k, v)
+		global.VIP.Set(k, v)
 	}
-	global.VP.Set("jwt.signing-key", uuid.NewV4().String())
-	return global.VP.WriteConfig()
+	global.VIP.Set("jwt.signing-key", uuid.NewV4().String())
+	return global.VIP.WriteConfig()
 }
 
 // EnsureDB 创建数据库并初始化 pg

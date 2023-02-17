@@ -29,7 +29,7 @@ import (
 // @name x-token
 // @BasePath /
 func main() {
-	global.VP = core.Viper()       // 初始化Viper 配置
+	global.VIP = core.Viper()      // 初始化Viper 配置
 	global.LOG = core.Zap()        // 初始化zap日志库
 	zap.ReplaceGlobals(global.LOG) // 部署到全局
 	global.DB = initialize.Gorm()  // gorm连接数据库

@@ -31,9 +31,9 @@ func (systemConfigService *SystemConfigService) GetSystemConfig() (conf config.S
 func (systemConfigService *SystemConfigService) SetSystemConfig(system system.System) (err error) {
 	cs := utils.StructToMap(system.Config)
 	for k, v := range cs {
-		global.VP.Set(k, v)
+		global.VIP.Set(k, v)
 	}
-	err = global.VP.WriteConfig()
+	err = global.VIP.WriteConfig()
 	return err
 }
 

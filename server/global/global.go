@@ -20,7 +20,7 @@ var (
 	DBList map[string]*gorm.DB
 	REDIS  *redis.Client
 	CONFIG config.Server
-	VP     *viper.Viper // 读取配置文件
+	VIP    *viper.Viper // 读取配置文件
 	// LOG    *oplogging.Logger
 	LOG                 *zap.Logger         // 日志
 	Timer               timer.Timer         = timer.NewTimerTask()
