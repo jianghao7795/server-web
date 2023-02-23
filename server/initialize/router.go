@@ -53,8 +53,11 @@ func Routers() *gin.Engine {
 	{
 		// 健康监测
 		PublicGroup.GET("/health", func(c *gin.Context) {
+			type About struct {
+				AboutMe string `json:"aboutMe"` // json 是返回json数据
+			}
 			c.JSON(200, gin.H{
-				"data": map[string]string{"aboutMe": "OK"},
+				"data": About{AboutMe: "OK"},
 				"code": 0,
 				"msg":  "success",
 			})
