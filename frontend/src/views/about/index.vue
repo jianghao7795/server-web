@@ -1,14 +1,21 @@
 <template>
   <div class="view-content">
     <h1 class="view-center">关于我</h1>
-    <p>我就是菜鸟中的菜鸟</p>
+    <p>{{ aboutMeMessage?.aboutMe }}</p>
   </div>
 </template>
 
-<script>
-export default {
-  name: "About",
-};
-</script>
+<script lang="ts" setup name="About">
+import { aboutMe } from "@/services/about";
+import { onMounted, ref } from "vue";
 
-<script lang="ts" setup></script>
+const aboutMeMessage = ref<API.AboutMe>();
+
+onMounted(async () => {
+  const resp = await aboutMe();
+  // console.log(resp);
+  if (resp?.code === 0) {
+    aboutMeMessage.value = resp.data;
+  }
+});
+</script>

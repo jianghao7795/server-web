@@ -9,7 +9,7 @@ export interface Result<T = any> {
 }
 
 const service: AxiosInstance = axios.create({
-  baseURL: "/api",
+  baseURL: "/frontend",
   timeout: 0,
 });
 
@@ -67,9 +67,6 @@ service.interceptors.response.use(
       default:
         message = "网络连接故障";
     }
-
-    //Message.error(message)
-    // console.log(message);
     window.$notification.error({ content: `错误 ${status}: ${message}`, meta: error.response?.statusText, duration: 10000, keepAliveOnHover: true });
     return;
   },

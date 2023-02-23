@@ -16,7 +16,6 @@ const rollupOptions = {
 // mode 什么环境
 export default defineConfig(({ mode }: { mode: string }) => {
   const env = loadEnv(mode, process.cwd());
-  // console.log(env.VITE_CLI_PORT, typeof env.VITE_CLI_PORT);
   return {
     plugins: [
       legacyPlugin({
@@ -47,7 +46,8 @@ export default defineConfig(({ mode }: { mode: string }) => {
           // 需要代理的路径   例如 '/api'
           target: `${env.VITE_BASE_PATH}:${env.VITE_SERVER_PORT}`, // 代理到 目标路径
           changeOrigin: true,
-          rewrite: (path) => path.replace(new RegExp("^/api"), ""),
+          // ewrite: (path) => path.replace(new RegExp("^/api"), "/frontend"),
+          // rewrite: (path) => path.replace("", ""),
         },
         // "/api": {
         //   target: "http://localhsot:3100", // 目标服务器 代理的地址

@@ -49,23 +49,29 @@ func Routers() *gin.Engine {
 
 	// Router.Use(middleware.GinRecovery(true)) // recover掉项目可能出现的panic，并使用zap记录相关日志
 
-	PublicGroup := Router.Group("")
+	PublicGroup := Router.Group("frontend")
 	{
 		// 健康监测
 		PublicGroup.GET("/health", func(c *gin.Context) {
-			c.JSON(200, map[string]string{
-				"data": "ok",
+			c.JSON(200, gin.H{
+				"data": map[string]string{"aboutMe": "OK"},
+				"code": 0,
+				"msg":  "success",
 			})
 		})
 	}
 	{
-		systemRouter.InitBaseRouter(PublicGroup) // 注册基础功能路由 不做鉴权
-		systemRouter.InitInitRouter(PublicGroup) // 自动初始化相关
 		// 前台的API
 		frontendRouter.InitFrontendRouter(PublicGroup)
 	}
-	PrivateGroup := Router.Group("")
-
+	// 后台
+	PrivateGroup := Router.Group("backend")
+	// 后台登录、初始化
+	{
+		systemRouter.InitBaseRouter(PrivateGroup) // 注册基础功能路由 不做鉴权
+		systemRouter.InitInitRouter(PrivateGroup) // 自动初始化相关
+	}
+	// 页面管理
 	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler()) // casbin的拦截规则
 	{
 		systemRouter.InitApiRouter(PrivateGroup)                 // 注册功能api路由

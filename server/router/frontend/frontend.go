@@ -9,7 +9,7 @@ import (
 type FrontendRouter struct{}
 
 func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
-	frontend := Router.Group("frontend")
+	frontend := Router.Group("")
 	var frontendTagApi = v1.ApiGroupApp.FrontendApiGroup.FrontendTagApi
 	{
 		frontend.GET("getTagList", frontendTagApi.GetTagList)

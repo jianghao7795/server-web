@@ -1,6 +1,5 @@
-import type { MessageApiInjection, NotificationApiInjection } from "naive-ui";
-
 declare namespace API {
+  import type { MessageApiInjection, NotificationApiInjection } from "naive-ui";
   export type Article = {
     ID: number;
     UpdatedAt: string;
@@ -42,6 +41,12 @@ declare namespace API {
     msg: string;
   };
 
+  export type ResponseAbout<T> = {
+    code: 0 | 7;
+    data?: T;
+    msg: string;
+  };
+
   export type SearchArticle = {
     page?: number;
     pageSize?: number;
@@ -53,5 +58,9 @@ declare namespace API {
 
   export type SearchTag = {
     name?: string;
+  };
+
+  export type AboutMe = {
+    aboutMe: string;
   };
 }
