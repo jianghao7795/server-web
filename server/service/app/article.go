@@ -64,7 +64,6 @@ func (articleSearch *ArticleService) GetArticleInfoList(info appReq.ArticleSearc
 	var articles []app.Article
 	aritlceList := make([]int64, 0)
 	if info.TagId != "" {
-		// log.Println(info.TagId)
 		dbTag := global.DB.Model(&app.ArticleTag{})
 		var articleTag []app.ArticleTag
 		err = dbTag.Where("tag_id = ?", info.TagId).Find(&articleTag).Error

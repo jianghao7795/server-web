@@ -59,7 +59,6 @@ service.interceptors.request.use(
         ...config.headers,
       };
     }
-    // console.log(config.headers);
     return config;
   },
   (error) => {
@@ -76,7 +75,6 @@ service.interceptors.request.use(
 // http response 拦截器
 service.interceptors.response.use(
   (response) => {
-    // console.log(router.currentRoute.value);
     const userStore = useUserStore();
     closeLoading();
     if (response.headers["new-token"]) {
@@ -93,7 +91,6 @@ service.interceptors.response.use(
         message: response.data.data.msg || response.data.msg || decodeURI(response.headers.msg),
         type: "error",
       });
-      // console.log(router);
       if (response.data.data && response.data.data.reload) {
         userStore.token = "";
         localStorage.clear();

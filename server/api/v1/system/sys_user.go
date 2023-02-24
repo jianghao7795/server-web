@@ -167,7 +167,6 @@ func (b *BaseApi) GetUserList(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	// log.Println("1111111111", searchInfo.Username)
 	if list, total, err := userService.GetUserInfoList(searchInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)

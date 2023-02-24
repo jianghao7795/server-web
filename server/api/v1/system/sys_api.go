@@ -52,7 +52,6 @@ func (s *SystemApiApi) DeleteApi(c *gin.Context) {
 	var api system.SysApi
 	id, _ := strconv.Atoi(c.Param("id"))
 	api.ID = uint(id)
-	// log.Println("api: ", api.ID)
 	if err := utils.Verify(api.MODEL, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

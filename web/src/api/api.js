@@ -13,7 +13,6 @@ import { stringify } from "qs";
 //	pageSize int
 // }
 export const getApiList = (data) => {
-  // console.log(data)
   return service({
     url: `/api/getApiList?${stringify(data)}`,
     method: "get",

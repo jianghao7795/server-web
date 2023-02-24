@@ -24,7 +24,6 @@ func Timer() {
 }
 
 func Tasks() {
-	// log.Println(global.CONFIG)
 	record := 10
 	if global.CONFIG.Timer.Start {
 		for i := range global.CONFIG.Timer.Tasks {

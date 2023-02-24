@@ -63,7 +63,6 @@ func (BaseMessageApi *BaseMessageApi) FindBaseMessage(c *gin.Context) {
 	if responseBaseMessage, err := baseMessageService.FindBaseMessage(uint(ids)); err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// respBaseMessage := baseMessageNotFound{message: "not found"}
-			// log.Println("err: ", err)
 			str := "not found"
 			global.LOG.Error("查询失败!", zap.Error(errors.New(str)))
 			response.OkWithData(gin.H{"error": str}, c)

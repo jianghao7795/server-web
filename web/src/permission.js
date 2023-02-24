@@ -79,7 +79,6 @@ router.beforeEach(async (to, from, next) => {
     }
     // 不在白名单中并且未登陆的时候
     if (!token) {
-      // console.log(document.location);
       next({
         name: "Login",
         query: {

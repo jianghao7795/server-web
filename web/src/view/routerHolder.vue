@@ -20,5 +20,4 @@ export default {
 <script setup>
 import { useRouterStore } from "@/pinia/modules/router";
 const routerStore = useRouterStore();
-console.log(routerStore);
 </script>

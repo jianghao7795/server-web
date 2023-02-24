@@ -17,7 +17,6 @@ import (
 type SystemConfigService struct{}
 
 func (systemConfigService *SystemConfigService) GetSystemConfig() (conf config.Server, err error) {
-	// log.Println(global.CONFIG.Timer.Tasks)
 	return global.CONFIG, nil
 }
 

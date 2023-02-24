@@ -18,7 +18,6 @@ var frontendService = service.ServiceGroupApp.FrontendServiceGroup
 func (appTabApi *FrontendTagApi) GetTagList(c *gin.Context) {
 	var pageInfo appReq.TagSearch
 	_ = c.ShouldBindQuery(&pageInfo)
-	// log.Println(pageInfo.Name)
 	if list, err := frontendService.FrontendTag.GetTagList(c); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
@@ -39,7 +38,6 @@ func (appTabApi *FrontendTagApi) GetTag(c *gin.Context) {
 		response.FailWithMessage("获取Ids失败", c)
 		return
 	}
-	// log.Println(pageInfo.Name)
 	if tagArticles, err := frontendService.FrontendTag.GetTagArticle(tagId, c); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)

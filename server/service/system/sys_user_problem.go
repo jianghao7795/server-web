@@ -38,7 +38,6 @@ func (*Problem) SetUserProblemSetting(problem []system.SysUserProblem) (string, 
 			}
 			messageString += "[" + strconv.Itoa(index) + "]" + "新建成功 "
 		} else {
-			// log.Println(item)
 			db := global.DB.Model(&system.SysUserProblem{})
 			var dataProblemFirst system.SysUserProblem
 			err := db.Where("id = ?", item.ID).First(&dataProblemFirst).Error
@@ -49,7 +48,6 @@ func (*Problem) SetUserProblemSetting(problem []system.SysUserProblem) (string, 
 			dataProblemFirst.Answer = item.Answer
 			dataProblemFirst.Problem = item.Problem
 			dataProblemFirst.SysUserId = item.SysUserId
-			// log.Println(dataProblemFirst)
 			err = db.Save(&dataProblemFirst).Error
 			if err != nil {
 				return "", err

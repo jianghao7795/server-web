@@ -3,7 +3,6 @@ package frontend
 import (
 	"encoding/json"
 	"errors"
-	"log"
 	"server/global"
 	"server/model/frontend"
 	frontendReq "server/model/frontend/request"
@@ -27,8 +26,6 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *gin.
 		articleStr, err = global.REDIS.Get(c, "article-list").Result()
 	}
 
-	// log.Println("redis cache time", cacheTime)
-	// log.Println(articleStr)
 	if err == redis.Nil {
 		limit := info.PageSize
 		offset := info.PageSize * (info.Page - 1)
@@ -57,7 +54,6 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *gin.
 	} else if err != nil {
 		return list, err
 	} else {
-		// log.Println(d)
 		if articleStr != "" {
 			err = json.Unmarshal([]byte(articleStr), &list)
 			return list, err
@@ -96,8 +92,6 @@ func (s *FrontendArticle) GetAricleDetail(articleId int, c *gin.Context) (articl
 
 func (s *FrontendArticle) GetSearchArticle(info frontendReq.ArticleSearch) (list []frontend.Article, err error) {
 	db := global.DB.Model(&frontend.Article{})
-
-	// log.Println("Name: ", info.Name)
 	// Preload("Tags", func(dbg *gorm.DB) *gorm.DB {
 	// 	return dbg.Where("name = ?", info.Value)
 	// })
@@ -107,7 +101,6 @@ func (s *FrontendArticle) GetSearchArticle(info frontendReq.ArticleSearch) (list
 		var articleIdList []int
 		dbTag.Select("id").Where("name = ?", info.Value).Find(&tagIdList)
 		global.DB.Raw("SELECT article_id from article_tag where tag_id in (?)", tagIdList).Find(&articleIdList)
-		log.Println(tagIdList, articleIdList)
 		err = db.Where("id in (?)", articleIdList).Preload("Tags").Preload("User").Order("id desc").Find(&list).Error
 	}
 

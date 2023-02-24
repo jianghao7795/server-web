@@ -17,7 +17,6 @@ import vuePlugin from "@vitejs/plugin-vue";
 
 export default defineConfig(({ command, mode }) => {
   // mode development and production
-  // console.log(command, mode);
   if (command === "serve") {
     // return {
     //   // dev 独有配置

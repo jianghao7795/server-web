@@ -62,7 +62,6 @@ func (u *FileUploadAndDownloadApi) EditFileName(c *gin.Context) {
 func (u *FileUploadAndDownloadApi) DeleteFile(c *gin.Context) {
 	var file example.ExaFileUploadAndDownload
 	id := c.Param("id")
-	// log.Println("id-------", id)
 	ids, _ := strconv.Atoi(id)
 	file.ID = uint(ids)
 	if err := fileUploadAndDownloadService.DeleteFile(file); err != nil {

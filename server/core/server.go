@@ -34,7 +34,6 @@ func RunWindowsServer() {
 	// In order to ensure that the text order output can be deleted
 	// time.Sleep(10 * time.Microsecond)
 	global.LOG.Info("server run success on ", zap.String("address", address))
-
 	fmt.Println(`欢迎使用 API接口`)
 	global.LOG.Error(s.ListenAndServe().Error())
 }

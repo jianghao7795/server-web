@@ -40,7 +40,6 @@ func Viper(path ...string) *viper.Viper {
 	}
 
 	v := viper.New()
-	// log.Println("--------------------------------------------", config, "record")
 	v.SetConfigFile(config)
 	v.SetConfigType("yaml")
 	err := v.ReadInConfig()
@@ -59,7 +58,6 @@ func Viper(path ...string) *viper.Viper {
 		fmt.Println(err)
 	}
 
-	// log.Println("config", global.CONFIG.Cache.Time)
 	// root 适配性
 	// 根据root位置去找到对应迁移位置,保证root路径有效
 	global.CONFIG.AutoCode.Root, _ = filepath.Abs("..")

@@ -90,7 +90,6 @@ func (TagApi *TagApi) DeleteTagByIds(c *gin.Context) {
 func (TagApi *TagApi) UpdateTag(c *gin.Context) {
 	var appTab app.Tag
 	_ = c.ShouldBindJSON(&appTab)
-	// log.Println(appTab)
 	if err := appTabService.UpdateTag(appTab); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败", c)
@@ -131,7 +130,6 @@ func (TagApi *TagApi) FindTag(c *gin.Context) {
 func (TagApi *TagApi) GetTagList(c *gin.Context) {
 	var pageInfo appReq.TagSearch
 	_ = c.ShouldBindQuery(&pageInfo)
-	// log.Println(pageInfo.Name)
 	if list, total, err := appTabService.GetTagInfoList(pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)

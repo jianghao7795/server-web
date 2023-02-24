@@ -23,7 +23,6 @@ func CasbinHandler() gin.HandlerFunc {
 		e := casbinService.Casbin()
 		// 判断策略中是否存在
 		success, _ := e.Enforce(sub, obj, act)
-		// log.Println(obj, act, sub, e)
 		// if global.CONFIG.System.Env == "develop" || success {
 		if success {
 			c.Next()

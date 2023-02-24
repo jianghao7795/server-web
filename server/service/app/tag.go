@@ -39,7 +39,6 @@ func (tagService *TagService) UpdateTag(tag app.Tag) (err error) {
 	// var count int64
 	err = global.DB.Where("id = ?", tag.ID).First(&tagNew).Error
 	if err != nil {
-		// log.Println(err)
 		return err
 	}
 	err = global.DB.Save(&tag).Error

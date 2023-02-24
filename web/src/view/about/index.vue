@@ -80,13 +80,10 @@ import { useI18n } from "vue-i18n";
 import { useBtnAuth } from "@/utils/btnAuth";
 // import dayjs from "dayjs";
 // import H from "./Tabs/h.vue";
-// console.log(dayjs().format("YYYY-MM-DD HH:mm:ss"));
 
 const btnAuth = useBtnAuth();
-// console.log(btnAuth);
 
 const { t } = useI18n();
-// console.log(t("menus.home"));
 
 const isShake = ref(false);
 
