@@ -19,7 +19,6 @@ export default {
 import { NSpace, NButton } from "naive-ui";
 import { getTagList } from "@/services/tag";
 import { onMounted, ref } from "vue";
-import type { API } from "@/type/article";
 import { colorIndex } from "@/common/article";
 import { useRouter } from "vue-router";
 

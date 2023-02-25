@@ -54,7 +54,6 @@ export default {
 import { NList, NThing, NListItem, NSpace, NTag, NButton } from "naive-ui";
 import { ref, onMounted, computed } from "vue";
 import { getArticleList } from "@/services/article";
-import type { API } from "@/type/article";
 import { Right } from "@icon-park/vue-next";
 import { useRouter } from "vue-router";
 import { colorIndex } from "@/common/article";

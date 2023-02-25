@@ -28,7 +28,6 @@ import { NSpace, NTag, NDivider } from "naive-ui";
 import { ref, onMounted } from "vue";
 import { getArticleDetail } from "@/services/article";
 import { useRoute } from "vue-router";
-import type { API } from "@/type/article";
 import { colorIndex } from "@/common/article";
 import dayjs from "dayjs";
 import MdEditor from "md-editor-v3";
