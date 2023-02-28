@@ -1,4 +1,4 @@
-import service from '@/utils/request';
+import service from "@/utils/request";
 // @Tags jwt
 // @Summary jwt加入黑名单
 // @Security ApiKeyAuth
@@ -8,7 +8,7 @@ import service from '@/utils/request';
 // @Router /jwt/jsonInBlacklist [post]
 export const jsonInBlacklist = () => {
   return service({
-    url: '/jwt/jsonInBlacklist',
-    method: 'post',
+    url: "/jwt/jsonInBlacklist",
+    method: "post",
   });
 };

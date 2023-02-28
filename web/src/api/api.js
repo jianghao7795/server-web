@@ -7,15 +7,12 @@ import { stringify } from "qs";
 // @Produce application/json
 // @Param data body modelInterface.PageInfo true "分页获取用户列表"
 // @Success 200 {string} json "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /api/getApiList [post]
-// {
-//  page     int
-//	pageSize int
-// }
-export const getApiList = (data) => {
+// @Router /api/getApiList [get]
+export const getApiList = (params) => {
   return service({
-    url: `/api/getApiList?${stringify(data)}`,
+    url: `/api/getApiList`,
     method: "get",
+    params,
   });
 };
 
@@ -88,12 +85,11 @@ export const setAuthApi = (data) => {
 // @accept application/json
 // @Produce application/json
 // @Success 200 {string} json "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /api/getAllApis [post]
-export const getAllApis = (data) => {
+// @Router /api/getAllApis [get]
+export const getAllApis = () => {
   return service({
     url: "/api/getAllApis",
     method: "get",
-    data,
   });
 };
 
@@ -104,12 +100,11 @@ export const getAllApis = (data) => {
 // @Produce application/json
 // @Param data body dbModel.Api true "删除api"
 // @Success 200 {string} json "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /api/deleteApi [post]
+// @Router /api/deleteApi [delete]
 export const deleteApi = (data) => {
   return service({
     url: `/api/deleteApi/${data.ID}`,
     method: "delete",
-    data,
   });
 };
 

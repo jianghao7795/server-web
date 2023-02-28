@@ -14,7 +14,7 @@ export const login = (data) => {
 // @Summary 获取验证码
 // @Produce  application/json
 // @Param data body {username:"string",password:"string"}
-// @Router /base/captcha [post]
+// @Router /base/captcha [get]
 export const captcha = () => {
   return service({
     url: "/base/captcha",
@@ -53,7 +53,7 @@ export const changePassword = (data) => {
 // @Produce application/json
 // @Param data body modelInterface.PageInfo true "分页获取用户列表"
 // @Success 200 {string} json "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /user/getUserList [post]
+// @Router /user/getUserList [get]
 export const getUserList = (data) => {
   return service({
     url: "/user/getUserList",

@@ -31,7 +31,7 @@ service.interceptors.request.use(
 /* 响应拦截器 */
 service.interceptors.response.use(
   (response: AxiosResponse<Result>) => {
-    // console.log(response);
+    console.log(response);
     const { code, msg } = response.data;
 
     // 根据自定义错误码判断请求是否成功
@@ -41,6 +41,7 @@ service.interceptors.response.use(
     } else {
       // 处理业务错误。
       // Message.error(message)
+      window.$notification.error({ duration: 10000, keepAliveOnHover: true, content: `返回错误: ${msg}`, meta: 200 });
       return Promise.reject(new Error(msg));
     }
   },

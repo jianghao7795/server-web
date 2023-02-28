@@ -17,7 +17,7 @@
           <!-- <md-editor v-model="item.content" preview-only /> -->
           <template #footer>
             <n-space size="small" style="margin-top: 4px">
-              <n-tag :bordered="false" type="info" size="small" v-for="i in item.tags" :key="i.ID">
+              <n-tag :bordered="false" size="small" v-for="i in item.tags" :type="colorIndex(i.ID)" :key="i.ID">
                 {{ i.name }}
               </n-tag>
             </n-space>
@@ -61,6 +61,7 @@ import { ref, onMounted, computed, watch } from "vue";
 import { getArticleSearch } from "@/services/article";
 import { Right } from "@icon-park/vue-next";
 import { useRouter, useRoute } from "vue-router";
+import { colorIndex } from "@/common/article";
 
 const router = useRouter();
 const route = useRoute();

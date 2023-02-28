@@ -36,7 +36,7 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *gin.
 		if info.Title != "" {
 			db = db.Where("title like ?", strings.Join([]string{"%", info.Title, "%"}, ""))
 		}
-		err = db.Limit(limit).Offset(offset).Order("id desc").Preload("Tags").Preload("User").Find(&list).Error
+		err = db.Limit(limit).Offset(offset).Order("id desc").Preload("Tags").Find(&list).Error
 		if err != nil {
 			return list, err
 		}
@@ -68,7 +68,7 @@ func (s *FrontendArticle) GetAricleDetail(articleId int, c *gin.Context) (articl
 	articleDetailStr, err = global.REDIS.Get(c, "article"+strconv.Itoa(articleId)).Result()
 	if err == redis.Nil {
 		db := global.DB.Model(&frontend.Article{})
-		err = db.Where("id = ?", articleId).Preload("Tags").Preload("User").First(&articleDetail).Error
+		err = db.Where("id = ?", articleId).Preload("Tags").First(&articleDetail).Error
 		if err != nil {
 			return articleDetail, err
 		}
@@ -95,13 +95,26 @@ func (s *FrontendArticle) GetSearchArticle(info frontendReq.ArticleSearch) (list
 	// Preload("Tags", func(dbg *gorm.DB) *gorm.DB {
 	// 	return dbg.Where("name = ?", info.Value)
 	// })
+	// 	type User struct {
+	//     gorm.Model
+	//     Name      string
+	//     Phone     string
+	//     Languages []*Language `gorm:"many2many:user_languages;"`
+	// }
+
+	// // Language 一种语言属于多个用户，使用 `user_languages` 作为连接表
+	// type Language struct {
+	//     gorm.Model
+	//     Name  string
+	//     Users []*User `gorm:"many2many:user_languages;"`
+	// }
+
 	if info.Name == "tag" {
-		dbTag := global.DB.Model(&frontend.Tag{})
-		var tagIdList []int
-		var articleIdList []int
-		dbTag.Select("id").Where("name = ?", info.Value).Find(&tagIdList)
-		global.DB.Raw("SELECT article_id from article_tag where tag_id in (?)", tagIdList).Find(&articleIdList)
-		err = db.Where("id in (?)", articleIdList).Preload("Tags").Preload("User").Order("id desc").Find(&list).Error
+		// 多对多关联 Association
+		var id uint
+		global.DB.Model(&frontend.Tag{}).Select("id").Where("name = ?", info.Value).First(&id)
+		dbTag := &frontend.Tag{MODEL: global.MODEL{ID: id}}
+		err = global.DB.Model(dbTag).Preload("Tags").Association("Articles").Find(&list)
 	}
 
 	if info.Name == "article" {

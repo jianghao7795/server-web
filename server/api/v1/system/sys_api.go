@@ -181,7 +181,7 @@ func (s *SystemApiApi) UpdateApi(c *gin.Context) {
 // @accept application/json
 // @Produce application/json
 // @Success 200 {object} response.Response{data=systemRes.SysAPIListResponse,msg=string} "获取所有的Api 不分页,返回包括api列表"
-// @Router /api/getAllApis [post]
+// @Router /api/getAllApis [get]
 func (s *SystemApiApi) GetAllApis(c *gin.Context) {
 	if apis, err := apiService.GetAllApis(); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
