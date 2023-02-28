@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import { emitter } from "./common";
 
 /* 服务器返回数据的的类型，根据接口文档确定 */
 export interface Result<T = any> {
@@ -20,6 +21,7 @@ service.interceptors.request.use(
     // if (user.token) {
     //   config.headers.Authorization = `Bearer ${token}`;
     // }
+    emitter.emit("showLoading");
     return config;
   },
   (error: AxiosError) => {
@@ -31,9 +33,9 @@ service.interceptors.request.use(
 /* 响应拦截器 */
 service.interceptors.response.use(
   (response: AxiosResponse<Result>) => {
-    console.log(response);
+    // console.log(response);
     const { code, msg } = response.data;
-
+    emitter.emit("closeLoading");
     // 根据自定义错误码判断请求是否成功
     if (code === 0) {
       // 将组件用的数据返回
@@ -46,6 +48,7 @@ service.interceptors.response.use(
     }
   },
   (error: AxiosError) => {
+    emitter.emit("closeLoading");
     // console.log(error);
     // 处理 HTTP 网络错误
     let message = "";

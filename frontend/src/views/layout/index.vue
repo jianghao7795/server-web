@@ -18,6 +18,14 @@
                 <a @click="changePath('/about')">
                   <span :class="underLineLable('/about')"><b>关于</b></span>
                 </a>
+                <n-switch v-bind:on-update:value="changeTheme" size="medium" :rail-style="railStyle">
+                  <template #checked-icon>
+                    <NIcon :component="Sun" />
+                  </template>
+                  <template #unchecked-icon>
+                    <NIcon :component="SunOne" />
+                  </template>
+                </n-switch>
               </NSpace>
             </div>
           </template>
@@ -38,6 +46,7 @@
               />
             </span>
             <NInput
+              v-else
               :autofocus="true"
               ref="searchInputRef"
               v-model:value="searchInput"
@@ -45,7 +54,6 @@
               placeholder="搜索文章"
               type="text"
               @keyup.enter="submit"
-              v-else
             />
             <hr class="small" />
             <span class="subheading">愈有知，愈无知。</span>
@@ -53,12 +61,20 @@
         </n-card>
       </n-layout-header>
       <n-layout-content position="static" class="middle-view">
-        <RouterView />
+        <NSpin :show="loadingFlag">
+          <RouterView v-slot="{ Component, route }">
+            <transition mode="out-in" name="el-fade-in-linear" type="transition" :appear="true">
+              <keep-alive>
+                <component :is="Component" :key="route.name" />
+              </keep-alive>
+            </transition>
+          </RouterView>
+        </NSpin>
       </n-layout-content>
       <n-layout-footer position="static">
         <!-- style="width: 100%; height: 100px; position: absolute; bottom: 0px; left: 0px" -->
         <footer class="footerStyle">
-          <span>Copyright ©{{ dayjs().format("YYYY") }}</span>
+          <span>Copyright © {{ dayjs().format("YYYY") }}</span>
         </footer>
       </n-layout-footer>
     </n-layout>
@@ -72,17 +88,55 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { KeepAlive, Transition, onMounted, ref, type CSSProperties } from "vue";
 import { RouterView, useRouter, useRoute } from "vue-router";
-import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader, NInput } from "naive-ui";
-import { Search } from "@icon-park/vue-next";
+import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader, NInput, NSpin, NIcon, NSwitch } from "naive-ui";
+import { Search, Sun, SunOne } from "@icon-park/vue-next";
 import dayjs from "dayjs";
-import { ref } from "vue";
+import { emitter } from "@/utils/common";
+
 const route = useRoute();
 const router = useRouter();
 const searchInput = ref<string>("");
 const searchInputRef = ref<HTMLInputElement>();
 
+const loadingFlag = ref<boolean>(false);
+
 const isMouseOver = ref(false);
+
+const railStyle = ({ focused, checked }: { focused: boolean; checked: boolean }) => {
+  const style: CSSProperties = {};
+  if (checked) {
+    style.background = "#222";
+    if (focused) {
+      style.boxShadow = "0 0 0 2px #d0305040";
+    }
+  } else {
+    style.background = "#eee";
+    if (focused) {
+      style.boxShadow = "0 0 0 2px #2080f040";
+    }
+  }
+  return style;
+};
+
+const changeTheme = (e: boolean) => {
+  if (e) {
+    emitter.emit("darkMode");
+  } else {
+    emitter.emit("lightMode");
+  }
+};
+
+onMounted(() => {
+  emitter.on("showLoading", () => {
+    loadingFlag.value = true;
+  });
+  emitter.on("closeLoading", () => {
+    loadingFlag.value = false;
+  });
+});
+
 const underLineLable = (url: string): string => {
   if (route.path === url) {
     return "underLine";

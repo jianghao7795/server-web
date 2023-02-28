@@ -1,9 +1,32 @@
 <script setup lang="ts">
-import { h, defineComponent } from "vue";
+import { h, defineComponent, ref, onMounted } from "vue";
 import { RouterView } from "vue-router";
-import { NNotificationProvider, NMessageProvider, NLoadingBarProvider, useLoadingBar, useMessage, useNotification } from "naive-ui";
+import {
+  NNotificationProvider,
+  NMessageProvider,
+  NLoadingBarProvider,
+  useLoadingBar,
+  useMessage,
+  useNotification,
+  NConfigProvider,
+  darkTheme,
+} from "naive-ui";
+import type { GlobalTheme } from "naive-ui";
+import { emitter } from "./utils/common";
 // window.$message = useMessage();
 // window.$notification = useNotification();
+
+const theme = ref<GlobalTheme | null>(null);
+
+onMounted(() => {
+  emitter.on("darkMode", () => {
+    theme.value = darkTheme;
+  });
+
+  emitter.on("lightMode", () => {
+    theme.value = null;
+  });
+});
 
 function registerNaiveTools() {
   window.$loadingBar = useLoadingBar();
@@ -24,13 +47,15 @@ const NaiveProviderContent = defineComponent({
 
 <template>
   <NLoadingBarProvider :loading-bar-style="{ loading: { height: '4px', background: '#1e80ff' } }">
-    <div>
-      <NNotificationProvider>
-        <NMessageProvider>
-          <router-view />
-          <NaiveProviderContent />
-        </NMessageProvider>
-      </NNotificationProvider>
-    </div>
+    <NConfigProvider :theme="theme">
+      <div>
+        <NNotificationProvider>
+          <NMessageProvider>
+            <router-view />
+            <NaiveProviderContent />
+          </NMessageProvider>
+        </NNotificationProvider>
+      </div>
+    </NConfigProvider>
   </NLoadingBarProvider>
 </template>
