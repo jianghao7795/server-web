@@ -12,7 +12,13 @@
       <!-- <div>作者：{{ detail?.user?.nick_name }}</div> -->
       <div>日期：{{ changeDate(detail?.CreatedAt) }}</div>
       <n-divider />
-      <MdEditor :style="{ width: '100%' }" :model-value="detail?.content" :pageFullscreen="true" :previewOnly="true"></MdEditor>
+      <MdEditor
+        :style="{ width: '100%' }"
+        :model-value="detail?.content"
+        :theme="theme ? 'dark' : 'light'"
+        :pageFullscreen="true"
+        :previewOnly="true"
+      ></MdEditor>
     </div>
   </div>
 </template>
@@ -25,7 +31,7 @@ export default {
 
 <script lang="ts" setup>
 import { NSpace, NTag, NDivider } from "naive-ui";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject, watch } from "vue";
 import { getArticleDetail } from "@/services/article";
 import { useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
@@ -35,6 +41,7 @@ import "md-editor-v3/lib/style.css";
 
 const detail = ref<API.Article>();
 const route = useRoute();
+const theme = inject("theme");
 // const router = useRouter();
 
 const changeDate = (timeData?: string): string => {

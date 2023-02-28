@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { h, defineComponent, ref, onMounted } from "vue";
+import { h, defineComponent, ref, onMounted, provide } from "vue";
 import { RouterView } from "vue-router";
 import {
   NNotificationProvider,
@@ -26,6 +26,8 @@ onMounted(() => {
   emitter.on("lightMode", () => {
     theme.value = null;
   });
+
+  provide("theme", theme);
 });
 
 function registerNaiveTools() {

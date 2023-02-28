@@ -104,18 +104,12 @@ const loadingFlag = ref<boolean>(false);
 
 const isMouseOver = ref(false);
 
-const railStyle = ({ focused, checked }: { focused: boolean; checked: boolean }) => {
+const railStyle = ({ checked }: { checked: boolean }) => {
   const style: CSSProperties = {};
   if (checked) {
     style.background = "#222";
-    if (focused) {
-      style.boxShadow = "0 0 0 2px #d0305040";
-    }
   } else {
     style.background = "#eee";
-    if (focused) {
-      style.boxShadow = "0 0 0 2px #2080f040";
-    }
   }
   return style;
 };
