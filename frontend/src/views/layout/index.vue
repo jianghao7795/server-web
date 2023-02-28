@@ -169,7 +169,6 @@ const submit = () => {
 
 <style scoped lang="less">
 .headerStyleLine {
-  color: #fff;
   font-size: 15px;
 }
 
@@ -179,7 +178,6 @@ const submit = () => {
   width: 100%;
   background-size: cover;
   background-attachment: scroll;
-  color: #fff;
   z-index: 1;
   margin-bottom: 20px;
 }
@@ -195,7 +193,6 @@ hr.small {
   max-width: 150px;
   margin: 15px auto;
   border-width: 4px;
-  border-color: white;
 }
 .small {
   font-size: 85%;
@@ -207,7 +204,6 @@ hr.small {
 }
 hr {
   border: 0;
-  border-top: 1px solid #eee;
 }
 
 .subheading {

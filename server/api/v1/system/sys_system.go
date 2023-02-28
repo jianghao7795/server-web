@@ -18,7 +18,7 @@ type SystemApi struct{}
 // @Security ApiKeyAuth
 // @Produce  application/json
 // @Success 200 {object} response.Response{data=systemRes.SysConfigResponse,msg=string} "获取配置文件内容,返回包括系统配置"
-// @Router /system/getSystemConfig [post]
+// @Router /system/getSystemConfig [get]
 func (s *SystemApi) GetSystemConfig(c *gin.Context) {
 	if config, err := systemConfigService.GetSystemConfig(); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
