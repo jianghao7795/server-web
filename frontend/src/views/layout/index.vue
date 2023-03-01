@@ -12,7 +12,7 @@
                   size="small"
                   :bar-width="28"
                   justify-content="space-evenly"
-                  :tab-style="{ margin: '0 5px' }"
+                  :tab-style="{ margin: '0 5px', fontWeight: 'bold' }"
                   :on-update:value="(e: string) => changePath(e)"
                 >
                   <n-tab-pane name="/" tab="首页"></n-tab-pane>
