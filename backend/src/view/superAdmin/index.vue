@@ -12,10 +12,10 @@
 
 <script>
 export default {
-  name: 'SuperAdmin'
-}
+  name: "SuperAdmin",
+};
 </script>
 <script setup>
-import { useRouterStore } from '@/pinia/modules/router'
-const routerStore = useRouterStore()
+import { useRouterStore } from "@/pinia/modules/router";
+const routerStore = useRouterStore();
 </script>

@@ -6,18 +6,20 @@
           <template #header-extra>
             <div class="headerStyleLine">
               <NSpace>
-                <a @click="changePath('/')">
-                  <span :class="underLineLable('/')"><b>首页</b></span>
-                </a>
-                <a @click="changePath('/articles')">
-                  <span :class="underLineLable('/articles')"><b>文章</b></span>
-                </a>
-                <a @click="changePath('/tags')">
-                  <span :class="underLineLable('/tags')"><b>标签</b></span>
-                </a>
-                <a @click="changePath('/about')">
-                  <span :class="underLineLable('/about')"><b>关于</b></span>
-                </a>
+                <n-tabs
+                  type="bar"
+                  animated
+                  size="small"
+                  :bar-width="28"
+                  justify-content="space-evenly"
+                  :tab-style="{ margin: '0 5px' }"
+                  :on-update:value="(e: string) => changePath(e)"
+                >
+                  <n-tab-pane name="/" tab="首页"></n-tab-pane>
+                  <n-tab-pane name="/articles" tab="文章"></n-tab-pane>
+                  <n-tab-pane name="/tags" tab="标签"></n-tab-pane>
+                  <n-tab-pane name="/about" tab="关于"></n-tab-pane>
+                </n-tabs>
                 <n-switch v-bind:on-update:value="changeTheme" size="medium" :rail-style="railStyle">
                   <template #checked-icon>
                     <NIcon :component="Sun" />
@@ -90,7 +92,7 @@ export default {
 <script setup lang="ts">
 import { KeepAlive, Transition, onMounted, ref, type CSSProperties } from "vue";
 import { RouterView, useRouter, useRoute } from "vue-router";
-import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader, NInput, NSpin, NIcon, NSwitch } from "naive-ui";
+import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader, NInput, NSpin, NIcon, NSwitch, NTabs, NTabPane } from "naive-ui";
 import { Search, Sun, SunOne } from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import { emitter } from "@/utils/common";
@@ -131,24 +133,9 @@ onMounted(() => {
   });
 });
 
-const underLineLable = (url: string): string => {
-  if (route.path === url) {
-    return "underLine";
-  } else {
-    return "";
-  }
-};
 const changePath = (url: string) => {
   router.push(url);
 };
-
-// const mouseOverTitle = async (isStatus: boolean) => {
-//   isMouseOver.value = isStatus;
-//   if (!isStatus) {
-//     await nextTick();
-//     searchInputRef.value?.focus();
-//   }
-// };
 
 const submit = () => {
   if (searchInput.value === "") {
