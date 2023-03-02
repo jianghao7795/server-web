@@ -89,7 +89,7 @@ watch(
     // background: v-bind(activeBackground);
     // border-radius: 4px;
     // box-shadow: 0 0 2px 1px v-bind(activeBackground);
-    color: v-bind(activeBackground);
+    color: v-bind(activeText);
     // i {
     //   color: v-bind(activeText);
     // }
@@ -103,7 +103,7 @@ watch(
     // background: v-bind(hoverBackground);
     // border-radius: 4px;
     // box-shadow: 0 0 2px 1px v-bind(hoverBackground);
-    color: v-bind(hoverBackground);
+    color: v-bind(hoverText);
     // color: v-bind(hoverText);
     // i {
     //   color: v-bind(hoverText);
