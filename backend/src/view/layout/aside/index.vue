@@ -45,7 +45,7 @@ const getTheme = () => {
       theme.value = {
         background: "#fff",
         activeBackground: "#4D70FF",
-        activeText: "#fff",
+        activeText: "green",
         normalText: "#333",
         hoverBackground: "rgba(64, 158, 255, 0.08)",
         hoverText: "#333",
@@ -57,7 +57,7 @@ const getTheme = () => {
         activeBackground: "#337ecc",
         activeText: "#409eff",
         normalText: "#fff",
-        // hoverBackground: "rgba(64, 158, 255, 0.08)",
+        hoverBackground: "rgba(64, 158, 255, 0.08)",
         hoverBackground: "#f1e05a",
         hoverText: "#f1e05a",
       };

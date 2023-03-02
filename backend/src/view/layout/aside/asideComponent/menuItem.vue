@@ -86,15 +86,16 @@ watch(
 }
 .el-menu-item.is-active {
   .menu-item {
-    // background: v-bind(activeBackground) !important;
+    // background: v-bind(activeBackground);
     // border-radius: 4px;
-    // box-shadow: 0 0 2px 1px v-bind(activeBackground) !important;
-    i {
-      color: v-bind(activeText);
-    }
-    span {
-      color: v-bind(activeText);
-    }
+    // box-shadow: 0 0 2px 1px v-bind(activeBackground);
+    color: v-bind(activeBackground);
+    // i {
+    //   color: v-bind(activeText);
+    // }
+    // span {
+    //   color: v-bind(activeText);
+    // }
   }
 }
 .el-menu-item:hover {
@@ -102,13 +103,14 @@ watch(
     // background: v-bind(hoverBackground);
     // border-radius: 4px;
     // box-shadow: 0 0 2px 1px v-bind(hoverBackground);
+    color: v-bind(hoverBackground);
     // color: v-bind(hoverText);
-    i {
-      color: v-bind(hoverText);
-    }
-    span {
-      color: v-bind(hoverText);
-    }
+    // i {
+    //   color: v-bind(hoverText);
+    // }
+    // span {
+    //   color: v-bind(hoverText);
+    // }
   }
 }
 </style>

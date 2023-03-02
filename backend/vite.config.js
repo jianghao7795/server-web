@@ -82,8 +82,8 @@ export default defineConfig(({ command, mode }) => {
           // 需要代理的路径   例如 '/api'
           target: `${process.env.VITE_BASE_PATH}:${process.env.VITE_SERVER_PORT}/`, // 代理到 目标路径
           changeOrigin: true,
-          logLevel: "debug",
-          rewrite: (path) => path.replace(new RegExp("^" + process.env.VITE_BASE_API), "/backend"),
+          // logLevel: "debug",
+          // rewrite: (path) => path.replace(new RegExp("^" + process.env.VITE_BASE_API), "/backend"),
         },
         // "uploads/": {
         //   // 需要代理的路径   例如 '/api'
