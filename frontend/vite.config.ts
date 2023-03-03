@@ -46,7 +46,8 @@ export default defineConfig(({ mode }: { mode: string }) => {
           // 需要代理的路径   例如 '/api'
           target: `${env.VITE_BASE_PATH}:${env.VITE_SERVER_PORT}`, // 代理到 目标路径
           changeOrigin: true,
-          rewrite: (path) => path.replace(new RegExp("^/frontend"), "/frontend"),
+          secure: true,
+          rewrite: (path) => path.replace(new RegExp(`^${env.VITE_BASE_API}`), "/frontend"),
           // rewrite: (path) => path.replace("", ""),
         },
         // "/api": {
