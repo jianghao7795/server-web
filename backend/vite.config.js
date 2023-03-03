@@ -55,7 +55,7 @@ export default defineConfig(({ command, mode }) => {
   const alias = {
     "@": path.resolve(__dirname, "./src"),
     "~": path.resolve(process.cwd()),
-    vue$: "vue/dist/vue.runtime.esm-bundler.js",
+    // vue$: "vue/dist/vue.runtime.esm-bundler.js",
   };
 
   const esbuild = {};
@@ -76,6 +76,12 @@ export default defineConfig(({ command, mode }) => {
       hmr: true,
       port: process.env.VITE_CLI_PORT,
       proxy: {
+        "/backend/uploads": {
+          // 需要代理的路径   例如 '/api'
+          target: `${process.env.VITE_BASE_PATH}:${process.env.VITE_SERVER_PORT}/`, // 代理到 目标路径
+          changeOrigin: true,
+          rewrite: (path) => path.replace(new RegExp("^/backend/uploads"), "/uploads/"),
+        },
         // 把key的路径代理到target位置
         // detail: https://cli.vuejs.org/config/#devserver-proxy
         [process.env.VITE_BASE_API]: {
@@ -83,14 +89,8 @@ export default defineConfig(({ command, mode }) => {
           target: `${process.env.VITE_BASE_PATH}:${process.env.VITE_SERVER_PORT}/`, // 代理到 目标路径
           changeOrigin: true,
           // logLevel: "debug",
-          // rewrite: (path) => path.replace(new RegExp("^" + process.env.VITE_BASE_API), "/backend"),
+          rewrite: (path) => path.replace(new RegExp("^" + process.env.VITE_BASE_API), "/backend"),
         },
-        // "uploads/": {
-        //   // 需要代理的路径   例如 '/api'
-        //   target: `${process.env.VITE_BASE_PATH}:${process.env.VITE_SERVER_PORT}/`, // 代理到 目标路径
-        //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(new RegExp("^" + process.env.VITE_BASE_API), "/api/"),
-        // },
       },
     },
     build: {
@@ -105,7 +105,7 @@ export default defineConfig(({ command, mode }) => {
     optimizeDeps,
     plugins: [
       legacyPlugin({
-        targets: ["Android > 39", "Chrome >= 60", "Safari >= 10.1", "iOS >= 10.3", "Firefox >= 54", "Edge >= 15"],
+        // targets: ["Android > 39", "Chrome >= 60", "Safari >= 10.1", "iOS >= 10.3", "Firefox >= 54", "Edge >= 15"],
       }),
       vuePlugin({}),
       // vueJsx(),

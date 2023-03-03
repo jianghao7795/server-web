@@ -8,26 +8,28 @@ const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
   timeout: 99999,
 });
-let acitveAxios = 0;
-let timer;
+// let acitveAxios = 0;
+// let timer;
 const showLoading = () => {
-  acitveAxios++;
-  if (timer) {
-    clearTimeout(timer);
-  }
-  timer = setTimeout(() => {
-    if (acitveAxios > 0) {
-      emitter.emit("showLoading");
-    }
-  }, 400);
+  emitter.emit("showLoading");
+  // acitveAxios++;
+  // if (timer) {
+  //   clearTimeout(timer);
+  // }
+  // timer = setTimeout(() => {
+  //   if (acitveAxios > 0) {
+
+  //   }
+  // }, 400);
 };
 
 const closeLoading = () => {
-  acitveAxios--;
-  if (acitveAxios <= 0) {
-    clearTimeout(timer);
-    emitter.emit("closeLoading");
-  }
+  emitter.emit("closeLoading");
+  // acitveAxios--;
+  // if (acitveAxios <= 0) {
+  //   clearTimeout(timer);
+
+  // }
 };
 // http request 拦截器
 service.interceptors.request.use(
