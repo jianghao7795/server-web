@@ -68,7 +68,6 @@ const route = useRoute();
 const data = ref<API.Article[]>([]);
 const page = ref<number>(1);
 const articleLength = computed(() => data.value.length);
-const searchValue = computed(() => route.params);
 
 const changeUrl = (id: number) => {
   router.push(`/articles/${id}`);
@@ -79,20 +78,21 @@ const changeLookOther = () => {
 };
 
 onMounted(async () => {
-  const searchValue = route.params;
-  const response = await getArticleSearch({ page: 1, ...searchValue });
+  const response = await getArticleSearch({ page: 1, ...route.params });
   if (response?.code === 0) {
-    data.value = response.data?.list as API.Article[];
+    data.value = (response.data?.list as API.Article[]) || [];
   }
 });
 
-watch<any>(searchValue, async (value: { value: string }) => {
-  // console.log(value, oldValue);
-  const response = await getArticleSearch({ page: 1, ...value });
-  if (response?.code === 0) {
-    data.value = response.data?.list as API.Article[];
-  }
-});
+watch(
+  () => route.params.value,
+  async (changeValue) => {
+    const response = await getArticleSearch({ page: 1, ...route.params, value: changeValue as string });
+    if (response?.code === 0) {
+      data.value = (response.data?.list as API.Article[]) || [];
+    }
+  },
+);
 </script>
 
 <style scoped lang="less">

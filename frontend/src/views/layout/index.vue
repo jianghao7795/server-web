@@ -9,6 +9,7 @@
                 <n-tabs
                   type="bar"
                   animated
+                  :value="viewPage"
                   size="small"
                   :bar-width="28"
                   justify-content="space-evenly"
@@ -90,7 +91,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { KeepAlive, Transition, onMounted, ref, type CSSProperties } from "vue";
+import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch } from "vue";
 import { RouterView, useRouter, useRoute } from "vue-router";
 import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader, NInput, NSpin, NIcon, NSwitch, NTabs, NTabPane } from "naive-ui";
 import { Search, Sun, SunOne } from "@icon-park/vue-next";
@@ -104,7 +105,8 @@ const searchInputRef = ref<HTMLInputElement>();
 
 const loadingFlag = ref<boolean>(false);
 
-const isMouseOver = ref(false);
+const isMouseOver = ref<boolean>(false);
+const viewPage = ref<string>(route.fullPath);
 
 const railStyle = ({ checked }: { checked: boolean }) => {
   const style: CSSProperties = {};
@@ -123,6 +125,13 @@ const changeTheme = (e: boolean) => {
     emitter.emit("lightMode");
   }
 };
+
+watch(
+  () => route.fullPath,
+  (value) => {
+    viewPage.value = value;
+  },
+);
 
 onMounted(() => {
   emitter.on("showLoading", () => {

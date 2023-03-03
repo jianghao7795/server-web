@@ -118,7 +118,7 @@ func (s *FrontendArticle) GetSearchArticle(info frontendReq.ArticleSearch) (list
 	}
 
 	if info.Name == "article" {
-		err = db.Where("title like ?", strings.Join([]string{"%", info.Value, "%"}, "")).Preload("Tags").Preload("User").Order("id desc").Find(&list).Error
+		err = db.Where("title like ?", strings.Join([]string{"%", info.Value, "%"}, "")).Preload("Tags").Order("id desc").Find(&list).Error
 	}
 
 	return
