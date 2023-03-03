@@ -76,12 +76,12 @@ export default defineConfig(({ command, mode }) => {
       hmr: true,
       port: process.env.VITE_CLI_PORT,
       proxy: {
-        "/backend/uploads": {
+        "/backend/uploads/": {
           // 需要代理的路径   例如 '/api'
           target: `${process.env.VITE_BASE_PATH}:${process.env.VITE_SERVER_PORT}/`, // 代理到 目标路径
           changeOrigin: true,
           secure: true,
-          rewrite: (path) => path.replace(new RegExp("^/backend/uploads"), "/uploads/"),
+          rewrite: (path) => path.replace(new RegExp("^/backend/uploads/"), "/uploads/"),
         },
         // 把key的路径代理到target位置
         // detail: https://cli.vuejs.org/config/#devserver-proxy
@@ -101,12 +101,14 @@ export default defineConfig(({ command, mode }) => {
       sourcemap: false, // 是否产出soucemap.json
       outDir: "dist", // 产出目录
       rollupOptions,
+      chunkSizeWarningLimit: 1200,
     },
     esbuild,
     optimizeDeps,
     plugins: [
       legacyPlugin({
-        // targets: ["Android > 39", "Chrome >= 60", "Safari >= 10.1", "iOS >= 10.3", "Firefox >= 54", "Edge >= 15"],
+        targets: ["Android > 39", "Chrome >= 60", "Safari >= 10.1", "iOS >= 10.3", "Firefox >= 54", "Edge >= 15"],
+        renderLegacyChunks: false,
       }),
       vuePlugin({}),
       // vueJsx(),
