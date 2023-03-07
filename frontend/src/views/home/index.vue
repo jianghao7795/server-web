@@ -60,7 +60,7 @@ import { NList, NThing, NListItem, NSpace, NTag, NButton, NEmpty } from "naive-u
 import { ref, onMounted, computed } from "vue";
 import { getArticleList } from "@/services/article";
 import { Right } from "@icon-park/vue-next";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { colorIndex } from "@/common/article";
 
 const router = useRouter();
