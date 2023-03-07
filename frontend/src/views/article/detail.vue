@@ -1,20 +1,20 @@
 <template>
   <div class="view-content">
     <div class="view-margin">
-      <h1 class="view-center">{{ detail?.title }}</h1>
-      <h3>简介：{{ detail?.title }}</h3>
+      <h1 class="view-center">{{ articleStore.detail?.title }}</h1>
+      <h3>简介：{{ articleStore.detail?.title }}</h3>
       <h4>
         <NSpace style="width: 80%">
           标签：
-          <n-tag size="small" round v-for="(item, index) in detail?.tags" :type="colorIndex(index)">{{ item.name }}</n-tag>
+          <n-tag size="small" round v-for="(item, index) in articleStore.detail?.tags" :type="colorIndex(index)">{{ item.name }}</n-tag>
         </NSpace>
       </h4>
       <!-- <div>作者：{{ detail?.user?.nick_name }}</div> -->
-      <div>日期：{{ changeDate(detail?.CreatedAt) }}</div>
+      <div>日期：{{ changeDate(articleStore.detail?.CreatedAt) }}</div>
       <n-divider />
       <MdEditor
         :style="{ width: '100%' }"
-        :model-value="detail?.content"
+        :model-value="articleStore.detail?.content"
         :theme="theme ? 'dark' : 'light'"
         :pageFullscreen="true"
         :previewOnly="true"
@@ -38,11 +38,11 @@ import { colorIndex } from "@/common/article";
 import dayjs from "dayjs";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
+import { useArticleStore } from "@/stores/article";
 
-const detail = ref<API.Article>();
 const route = useRoute();
 const theme = inject("theme");
-// const router = useRouter();
+const articleStore = useArticleStore();
 
 const changeDate = (timeData?: string): string => {
   return !!timeData ? dayjs(timeData).format("YYYY-MM-DD") : "";
@@ -50,9 +50,8 @@ const changeDate = (timeData?: string): string => {
 
 onMounted(async () => {
   const params = route.params;
+  articleStore.getDetail({ id: params.id as string });
   // console.log(route.params, params);
-  const resp = await getArticleDetail(params.id as string);
-  detail.value = resp?.data?.article as API.Article;
   //   console.log(resp);
 });
 </script>

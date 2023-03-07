@@ -12,7 +12,7 @@ export const getArticleList = (params?: API.SearchArticle) => {
 };
 
 export const getArticleDetail = (id: string) => {
-  return http.get<API.Response<API.Article>>(`/getArticle/${id}`, {
+  return http.get<API.Response<API.Article | undefined>>(`/getArticle/${id}`, {
     method: "get",
   });
 };

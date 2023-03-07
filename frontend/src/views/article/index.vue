@@ -1,7 +1,7 @@
 <template>
   <div class="article-list">
     <n-list hoverable clickable>
-      <n-list-item v-for="item in data" :key="item.ID" @click="changeUrl(item.ID)">
+      <n-list-item v-for="item in article.list" :key="item.ID" @click="changeUrl(item.ID)">
         <n-thing content-style="margin-top: 10px;">
           <template #header>
             <div>
@@ -27,7 +27,7 @@
     </n-list>
     <div class="pageNext">
       <n-space justify="space-between">
-        <n-button v-show="page !== 1" icon-placement="left">
+        <n-button v-show="page !== 1" icon-placement="left" @click="() => changePage(false)">
           <template #icon>
             <right theme="outline" size="24" fill="#333" />
           </template>
@@ -53,11 +53,12 @@ export default {
 <script setup lang="ts">
 import { NList, NThing, NListItem, NSpace, NTag, NButton } from "naive-ui";
 import { ref, onMounted, computed } from "vue";
-import { getArticleList } from "@/services/article";
 import { Right } from "@icon-park/vue-next";
 import { useRouter } from "vue-router";
 import { colorIndex } from "@/common/article";
+import { useArticleStore } from "@/stores/article";
 
+const article = useArticleStore();
 const router = useRouter();
 const data = ref<API.Article[]>([]);
 const page = ref<number>(1);
@@ -67,12 +68,18 @@ const changeUrl = (id: number) => {
   router.push(`/articles/${id}`);
 };
 
+const changePage = (isPage: boolean) => {
+  if (isPage) {
+    page.value = page.value + 1;
+  } else {
+    page.value = page.value - 1;
+  }
+  article.getList({ is_important: 1, page: page.value, pageSize: 10 });
+};
+
 onMounted(async () => {
   try {
-    const response = await getArticleList({ page: 1 });
-    if (response?.code === 0) {
-      data.value = (response.data?.list as API.Article[]) || [];
-    }
+    await article.getList({ is_important: 1, page: page.value, pageSize: 10 });
   } catch (e) {
     console.log(e);
   }

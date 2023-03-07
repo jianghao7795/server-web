@@ -1,5 +1,4 @@
 declare namespace API {
-  import type { MessageApiInjection, NotificationApiInjection } from "naive-ui";
   export type Article = {
     ID: number;
     UpdatedAt: string;
@@ -35,8 +34,9 @@ declare namespace API {
 
   export type Response<T> = {
     code: 0 | 7;
-    data?: {
-      [i: string]: T[] | T;
+    data: {
+      article: T | undefined;
+      list: T[] | undefined;
     };
     msg: string;
   };
