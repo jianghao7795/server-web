@@ -62,7 +62,7 @@ import { getArticleList } from "@/services/article";
 import { Right } from "@icon-park/vue-next";
 import { useRoute, useRouter } from "vue-router";
 import { colorIndex } from "@/common/article";
-const route = useRoute();
+
 const router = useRouter();
 
 const data = ref<API.Article[]>([]);

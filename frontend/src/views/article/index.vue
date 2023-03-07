@@ -74,12 +74,12 @@ const changePage = (isPage: boolean) => {
   } else {
     page.value = page.value - 1;
   }
-  article.getList({ is_important: 1, page: page.value, pageSize: 10 });
+  article.getList({ page: page.value, pageSize: 10 });
 };
 
 onMounted(async () => {
   try {
-    await article.getList({ is_important: 1, page: page.value, pageSize: 10 });
+    await article.getList({ page: page.value, pageSize: 10 });
   } catch (e) {
     console.log(e);
   }
