@@ -18,8 +18,7 @@ export const setAuthorityBtnApi = (data) => {
 
 export const canRemoveAuthorityBtnApi = (params) => {
   return service({
-    url: "/authorityBtn/canRemoveAuthorityBtn",
+    url: `/authorityBtn/canRemoveAuthorityBtn/${params.id}`,
     method: "delete",
-    params,
   });
 };
