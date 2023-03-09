@@ -5,7 +5,7 @@
  * @LastEditTime: 2022-10-27 10:27:59
  */
 /*
- * gin-vue-admin web框架组
+ * web框架组
  *
  * */
 // 加载网站配置文件夹

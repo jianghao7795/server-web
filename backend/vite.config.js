@@ -53,7 +53,7 @@ export default defineConfig(({ command, mode }) => {
   const optimizeDeps = {};
 
   const alias = {
-    "@": path.resolve(__dirname, "./src"),
+    "@": path.resolve(__dirname, "./src/"),
     "~": path.resolve(process.cwd()),
     // vue$: "vue/dist/vue.runtime.esm-bundler.js",
   };

@@ -7,7 +7,7 @@
 
 const { exec } = require("child_process");
 
-const url = "https://www.gin-vue-admin.com";
+const url = "https://www.vue-admin.com";
 let cmd = "";
 switch (process.platform) {
   case "win32":
