@@ -1,9 +1,3 @@
-/*
- * @Author: jianghao
- * @Date: 2022-10-17 14:22:51
- * @LastEditors: jianghao
- * @LastEditTime: 2022-10-18 17:41:39
- */
 package app
 
 import (

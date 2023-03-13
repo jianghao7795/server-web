@@ -31,8 +31,7 @@ export default {
 
 <script lang="ts" setup>
 import { NSpace, NTag, NDivider } from "naive-ui";
-import { ref, onMounted, inject, watch } from "vue";
-import { getArticleDetail } from "@/services/article";
+import { onMounted, inject } from "vue";
 import { useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
 import dayjs from "dayjs";

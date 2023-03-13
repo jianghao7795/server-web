@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { h, defineComponent, ref, onMounted, provide } from "vue";
 import { RouterView } from "vue-router";
 import {

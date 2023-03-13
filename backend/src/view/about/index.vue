@@ -9,7 +9,7 @@
               <!-- changeVNode() -->
             </div>
           </template>
-          <el-descriptions direction="vertical" :column="3" size="default" border class="margin-top">
+          <el-descriptions :column="3" border class="margin-top" direction="vertical" size="default">
             <el-descriptions-item label="项目名称">
               <el-tag type="success">{{ pkg.name }}</el-tag>
             </el-descriptions-item>
@@ -17,25 +17,25 @@
               <el-tag type="success">{{ pkg.version }}</el-tag>
             </el-descriptions-item>
             <el-descriptions-item label="Github地址">
-              <a style="color: #606266" href="https://github.com/JiangHaoCode/server-web" target="_blank">Github地址</a>
+              <a href="https://github.com/JiangHaoCode/server-web" style="color: #606266" target="_blank">Github地址</a>
             </el-descriptions-item>
           </el-descriptions>
         </el-card>
       </el-col>
       <el-col :span="24">
-        <draggableVue />
+        <draggable-vue />
       </el-col>
       <el-col :span="24">
-        <el-card style="margin-top: 20px" class="box-card">
+        <el-card class="box-card" style="margin-top: 20px">
           <template #header>
             <div class="card-header">
               <span style="margin-right: 40px">提交记录 {{ t("menus.home") }}</span>
-              <div @click="changeShake()" :class="isShake ? 'swing' : ''" class="sncok">
+              <div :class="isShake ? 'swing' : ''" class="sncok" @click="changeShake()">
                 <span class="iconfont icon-aixin1"></span>
               </div>
-              <div @click="changeShake()" class="animate__animated sncok" :class="isShake ? 'animate__shakeX' : ''">
-                <like theme="filled" size="16" fill="#f00" strokeLinejoin="miter" />
-                <bank-card-one theme="outline" size="16" fill="#333" strokeLinejoin="miter" />
+              <div :class="isShake ? 'animate__shakeX' : ''" class="animate__animated sncok" @click="changeShake()">
+                <like fill="#f00" size="16" strokeLinejoin="miter" theme="filled" />
+                <bank-card-one fill="#333" size="16" strokeLinejoin="miter" theme="outline" />
               </div>
               <!-- prop	description	type	default	note
 theme	Theme of the icons.	'outline' | 'filled' | 'two-tone' | 'multi-color'	'outline'
@@ -49,15 +49,17 @@ strokeWidth	the stroke-width prop of svg element	number	4
             </div>
           </template>
           <el-timeline>
-            <el-timeline-item placement="top" v-for="(activity, index) in commits" :key="index" :timestamp="activity.date">
+            <el-timeline-item v-for="(activity, index) in commits" :key="index" :timestamp="activity.date" placement="top">
               <el-card>
                 <h4>{{ activity.name }}</h4>
                 <p>{{ activity.message }}</p>
               </el-card>
             </el-timeline-item>
           </el-timeline>
-          <el-icon class="is-loading" v-if="isLoading"><Loading></Loading></el-icon>
-          <el-button link type="primary" v-show="!isShow" size="default" @click="commitHistory">Loading More</el-button>
+          <el-icon v-if="isLoading" class="is-loading">
+            <Loading></Loading>
+          </el-icon>
+          <el-button v-show="!isShow" link size="default" type="primary" @click="commitHistory">Loading More</el-button>
         </el-card>
       </el-col>
     </el-row>
@@ -222,6 +224,7 @@ const commitHistory = () => {
   margin-left: 50%;
   transform: translateX(-50%);
 }
+
 h4 {
   margin: 1.3em 0;
 }
