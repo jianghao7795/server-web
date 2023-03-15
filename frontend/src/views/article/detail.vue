@@ -6,19 +6,15 @@
       <h4>
         <NSpace style="width: 80%">
           标签：
-          <n-tag size="small" round v-for="(item, index) in articleStore.detail?.tags" :type="colorIndex(index)">{{ item.name }}</n-tag>
+          <n-tag size="small" round v-for="(item, index) in articleStore.detail?.tags" :type="colorIndex(index)">{{
+            item.name }}</n-tag>
         </NSpace>
       </h4>
       <!-- <div>作者：{{ detail?.user?.nick_name }}</div> -->
       <div>日期：{{ changeDate(articleStore.detail?.CreatedAt) }}</div>
       <n-divider />
-      <MdEditor
-        :style="{ width: '100%' }"
-        :model-value="articleStore.detail?.content"
-        :theme="theme ? 'dark' : 'light'"
-        :pageFullscreen="true"
-        :previewOnly="true"
-      ></MdEditor>
+      <MdEditor :style="{ width: '100%' }" :model-value="articleStore.detail?.content" :theme="theme ? 'dark' : 'light'"
+        :pageFullscreen="true" :previewOnly="true"></MdEditor>
     </div>
   </div>
 </template>

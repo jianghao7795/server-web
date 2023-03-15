@@ -13,7 +13,7 @@ import zhCn from "element-plus/es/locale/lang/zh-cn";
 // 引入封装的router
 import router from "@/router/index";
 import "@/permission";
-import run from "@/core/vue-admin.js";
+import run from "@/core/vue-admin";
 import auth from "@/directive/auth";
 import { store } from "@/pinia";
 import App from "./App.vue";

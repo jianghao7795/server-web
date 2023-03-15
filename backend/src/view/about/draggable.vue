@@ -50,7 +50,7 @@ onMounted(() => {
 
 <template>
   <el-card style="margin-top: 20px" class="box-card">
-    <div class="drag-container">
+  <div class="drag-container">
       <!-- grid列表拖拽 -->
       <el-row :gutter="25">
         <el-col :xs="25" :sm="8" :md="8" :lg="8">
@@ -60,9 +60,10 @@ onMounted(() => {
                 <span>grid列表拖拽</span>
               </div>
             </template>
-            <draggable v-model="gridLists" class="grid-container" item-key="grid" animation="300" chosenClass="chosen" forceFallback="true">
-              <template #item="{ element }">
-                <div :class="'item' + ' ' + 'item-' + element.num">
+          <draggable v-model="gridLists" class="grid-container" item-key="grid" animation="300" chosenClass="chosen"
+            forceFallback="true">
+            <template #item="{ element }">
+              <div :class="'item' + ' ' + 'item-' + element.num">
                   {{ element.num }}
                 </div>
               </template>
@@ -77,7 +78,8 @@ onMounted(() => {
               </div>
             </template>
             <!-- 单列拖拽 -->
-            <draggable v-model="lists" item-key="name" @change="change" chosen-class="chosen" force-fallback="true" animation="300">
+            <draggable v-model="lists" item-key="name" @change="change" chosen-class="chosen" force-fallback="true"
+              animation="300">
               <template #item="{ element }">
                 <div class="item-single">{{ element.name }}</div>
               </template>
@@ -93,12 +95,12 @@ onMounted(() => {
             </template>
             <!-- 拖拽实现元素位置切换 -->
             <!-- <draggable v-model="cutLists" @start="drag = true" @end="drag = false" item-key="name" :animation="300">
-              <template #item="{ element }">
-                <div class="item-cut">
-                  <p>{{ element.name }}</p>
-                </div>
-              </template>
-            </draggable> -->
+                                                                                    <template #item="{ element }">
+                                                                                      <div class="item-cut">
+                                                                                        <p>{{ element.name }}</p>
+                                                                                      </div>
+                                                                                    </template>
+                                                                                  </draggable> -->
             <div class="cut-container">
               <div class="item-cut" v-for="(item, index) in cutLists" :key="index">
                 <p>{{ item.name }}</p>
@@ -108,10 +110,10 @@ onMounted(() => {
         </el-col>
       </el-row>
       <!-- <div class="cut-container">
-                <div class="item-cut" v-for="(item, index) in cutLists" :key="index">
-                  <p>{{ item.name }}</p>
-                </div>
-              </div> -->
+                                                                                      <div class="item-cut" v-for="(item, index) in cutLists" :key="index">
+                                                                                        <p>{{ item.name }}</p>
+                                                                                      </div>
+                                                                                    </div> -->
     </div>
   </el-card>
 </template>
@@ -148,6 +150,7 @@ onMounted(() => {
   line-height: 100px;
   border: 1px solid #e5e4e9;
   cursor: move;
+
   @media screen and (max-width: 750px) {
     line-height: 90px;
   }

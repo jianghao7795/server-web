@@ -1,7 +1,9 @@
 <template>
   <div class="view-content">
     <h1 class="view-center">关于我</h1>
-    <div><Image /></div>
+    <div>
+      <Image />
+    </div>
     <p>{{ aboutMeMessage?.aboutMe }}</p>
   </div>
 </template>
