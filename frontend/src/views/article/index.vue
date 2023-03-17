@@ -51,7 +51,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { NList, NThing, NListItem, NSpace, NTag, NButton } from "naive-ui";
+// import { NList, NThing, NListItem, NSpace, NTag, NButton } from "naive-ui";
 import { ref, onMounted, computed } from "vue";
 import { Right } from "@icon-park/vue-next";
 import { useRouter } from "vue-router";
@@ -90,6 +90,7 @@ onMounted(async () => {
 .article-list {
   margin: auto 25%;
 }
+
 .pageNext {
   margin: 15px 0 45px 0;
 }

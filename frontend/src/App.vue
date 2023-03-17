@@ -2,13 +2,13 @@
 import { h, defineComponent, ref, onMounted, provide } from "vue";
 import { RouterView } from "vue-router";
 import {
-  NNotificationProvider,
-  NMessageProvider,
-  NLoadingBarProvider,
+  // NNotificationProvider,
+  // NMessageProvider,
+  // NLoadingBarProvider,
   useLoadingBar,
   useMessage,
   useNotification,
-  NConfigProvider,
+  // NConfigProvider,
   darkTheme,
 } from "naive-ui";
 import type { GlobalTheme } from "naive-ui";

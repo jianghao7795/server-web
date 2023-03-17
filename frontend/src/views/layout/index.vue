@@ -6,16 +6,8 @@
           <template #header-extra>
             <div class="headerStyleLine">
               <NSpace>
-                <n-tabs
-                  type="bar"
-                  animated
-                  :value="viewPage"
-                  size="small"
-                  :bar-width="28"
-                  justify-content="space-evenly"
-                  :tab-style="{ margin: '0 5px', fontWeight: 'bold' }"
-                  :on-update:value="(e: string) => changePath(e)"
-                >
+                <n-tabs type="bar" animated :value="viewPage" size="small" :bar-width="28" justify-content="space-evenly"
+                  :tab-style="{ margin: '0 5px', fontWeight: 'bold' }" :on-update:value="(e: string) => changePath(e)">
                   <n-tab-pane name="/" tab="首页"></n-tab-pane>
                   <n-tab-pane name="/articles" tab="文章"></n-tab-pane>
                   <n-tab-pane name="/tags" tab="标签"></n-tab-pane>
@@ -40,24 +32,14 @@
               <span class="small-h1">
                 <b>吴昊</b>
               </span>
-              <Search
-                @click="
-                  () => {
-                    isMouseOver = true;
-                  }
-                "
-              />
+              <Search @click="
+                () => {
+                  isMouseOver = true;
+                }
+              " />
             </span>
-            <NInput
-              v-else
-              :autofocus="true"
-              ref="searchInputRef"
-              v-model:value="searchInput"
-              style="max-width: 30%; margin: '15px 0'"
-              placeholder="搜索文章"
-              type="text"
-              @keyup.enter="submit"
-            />
+            <NInput v-else :autofocus="true" ref="searchInputRef" v-model:value="searchInput"
+              style="max-width: 30%; margin: '15px 0'" placeholder="搜索文章" type="text" @keyup.enter="submit" />
             <hr class="small" />
             <span class="subheading">愈有知，愈无知。</span>
           </div>
@@ -93,7 +75,7 @@ export default {
 <script setup lang="ts">
 import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch } from "vue";
 import { RouterView, useRouter, useRoute } from "vue-router";
-import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader, NInput, NSpin, NIcon, NSwitch, NTabs, NTabPane } from "naive-ui";
+// import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader, NInput, NSpin, NIcon, NSwitch, NTabs, NTabPane } from "naive-ui";
 import { Search, Sun, SunOne } from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import { emitter } from "@/utils/common";
@@ -184,6 +166,7 @@ hr.small {
   margin: 15px auto;
   border-width: 4px;
 }
+
 .small {
   font-size: 85%;
 }
@@ -192,6 +175,7 @@ hr.small {
   font-size: 21px;
   margin-right: 5px;
 }
+
 hr {
   border: 0;
 }
@@ -203,6 +187,7 @@ hr {
   font-weight: 300;
   margin: 10px 0 0;
 }
+
 a::before {
   cursor: pointer;
 }

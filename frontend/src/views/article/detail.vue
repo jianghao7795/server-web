@@ -26,7 +26,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { NSpace, NTag, NDivider } from "naive-ui";
+// import { NSpace, NTag, NDivider } from "naive-ui";
 import { onMounted, inject } from "vue";
 import { useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";

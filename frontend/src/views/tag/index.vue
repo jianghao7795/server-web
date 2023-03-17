@@ -2,7 +2,8 @@
   <div class="view-content">
     <h1>标签</h1>
     <n-space>
-      <n-button strong secondary round v-for="(item, index) in tagList" :key="item.ID" :type="colorIndex(index)" @click="searchArticle(item.name)">
+      <n-button strong secondary round v-for="(item, index) in tagList" :key="item.ID" :type="colorIndex(index)"
+        @click="searchArticle(item.name)">
         {{ item.name }}
       </n-button>
     </n-space>
@@ -16,7 +17,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { NSpace, NButton } from "naive-ui";
+// import { NSpace, NButton } from "naive-ui";
 import { getTagList } from "@/services/tag";
 import { onMounted, ref } from "vue";
 import { colorIndex } from "@/common/article";

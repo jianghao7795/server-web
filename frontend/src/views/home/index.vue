@@ -56,7 +56,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { NList, NThing, NListItem, NSpace, NTag, NButton, NEmpty } from "naive-ui";
+// import { NList, NThing, NListItem, NSpace, NTag, NButton, NEmpty } from "naive-ui";
 import { ref, onMounted, computed } from "vue";
 import { getArticleList } from "@/services/article";
 import { Right } from "@icon-park/vue-next";
@@ -89,6 +89,7 @@ const changeLookOther = () => {
 .article-list {
   margin: auto 25%;
 }
+
 .pageNext {
   margin: 15px 0 45px 0;
 }

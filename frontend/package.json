@@ -11,6 +11,7 @@
   "dependencies": {
     "@icon-park/vue-next": "^1.4.2",
     "@vueuse/core": "^9.1.0",
+    "ant-design-vue": "^3.2.15",
     "axios": "^0.27.2",
     "dayjs": "^1.11.7",
     "md-editor-v3": "^2.3.0",
@@ -18,6 +19,7 @@
     "naive-ui": "^2.32.1",
     "pinia": "^2.0.16",
     "terser": "^5.15.1",
+    "unplugin-vue-components": "^0.24.1",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2"
   },

@@ -2,6 +2,8 @@ import * as path from "path";
 import vuePlugin from "@vitejs/plugin-vue";
 import { defineConfig, loadEnv } from "vite";
 import legacyPlugin from "@vitejs/plugin-legacy";
+import { AntDesignVueResolver, NaiveUiResolver } from "unplugin-vue-components/resolvers";
+import Components from "unplugin-vue-components/vite";
 
 const rollupOptions = {
   output: {
@@ -25,6 +27,9 @@ export default defineConfig(({ mode }: { mode: string }) => {
       }),
       // vue(),
       vuePlugin({}),
+      Components({
+        resolvers: [NaiveUiResolver(), AntDesignVueResolver()],
+      }),
     ],
     css: {
       preprocessorOptions: {
