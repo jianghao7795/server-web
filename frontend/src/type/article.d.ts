@@ -34,10 +34,7 @@ declare namespace API {
 
   export type Response<T> = {
     code: 0 | 7;
-    data: {
-      article: T | undefined;
-      list: T[] | undefined;
-    };
+    data: T;
     msg: string;
   };
 

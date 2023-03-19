@@ -28,64 +28,26 @@
         <a>Han Solo</a>
       </template>
       <template #avatar>
-        <a-avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+        <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
       </template>
       <template #content>
         <p>
-          We supply a series of design principles, practical patterns and high quality design
-          resources (Sketch and Axure).
+          {{ comment.content }}
         </p>
       </template>
-      <a-comment>
-        <template #actions>
-          <span>Reply to</span>
-        </template>
+      <a-comment v-for="item in comment.children" :key="item.ID">
         <template #author>
           <a>Han Solo</a>
         </template>
         <template #avatar>
-          <a-avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+          <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
         </template>
         <template #content>
           <p>
-            We supply a series of design principles, practical patterns and high quality design
-            resources (Sketch and Axure).
+            {{ item.content }}
           </p>
         </template>
-        <a-comment>
-          <template #actions>
-            <span>Reply to</span>
-          </template>
-          <template #author>
-            <a>Han Solo</a>
-          </template>
-          <template #avatar>
-            <a-avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
-          </template>
-          <template #content>
-            <p>
-              We supply a series of design principles, practical patterns and high quality design
-              resources (Sketch and Axure).
-            </p>
-          </template>
-        </a-comment>
-        <a-comment>
-          <template #actions>
-            <span>Reply to</span>
-          </template>
-          <template #author>
-            <a>Han Solo</a>
-          </template>
-          <template #avatar>
-            <a-avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
-          </template>
-          <template #content>
-            <p>
-              We supply a series of design principles, practical patterns and high quality design
-              resources (Sketch and Axure).
-            </p>
-          </template>
-        </a-comment>
+
       </a-comment>
     </a-comment>
   </div>
@@ -99,17 +61,20 @@ export default {
 
 <script lang="ts" setup>
 // import { NSpace, NTag, NDivider } from "naive-ui";
-import { onMounted, inject } from "vue";
+import { onMounted, inject, ref } from "vue";
 import { useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
 import dayjs from "dayjs";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 import { useArticleStore } from "@/stores/article";
+import { getArticleComment } from "@/services/comment"
 
 const route = useRoute();
 const theme = inject("theme");
 const articleStore = useArticleStore();
+
+const comment = ref<Comment.comment>({ content: '', children: [] })
 
 const changeDate = (timeData?: string): string => {
   return !!timeData ? dayjs(timeData).format("YYYY-MM-DD") : "";
@@ -118,6 +83,8 @@ const changeDate = (timeData?: string): string => {
 onMounted(async () => {
   const params = route.params;
   articleStore.getDetail({ id: params.id as string });
+  const resp = await getArticleComment({ articleId: params.id as string })
+  comment.value = resp.data
   // console.log(route.params, params);
   //   console.log(resp);
 });
