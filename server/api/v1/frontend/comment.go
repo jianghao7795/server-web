@@ -4,6 +4,7 @@ import (
 	"log"
 	"server/global"
 	"server/model/common/response"
+	"server/model/frontend"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -22,4 +23,16 @@ func (s *CommentApi) GetCommentByArticleId(c *gin.Context) {
 	} else {
 		response.OkWithDetailed(articleComment, "获取成功", c)
 	}
+}
+
+func (s *CommentApi) CreatedComment(c *gin.Context) {
+	var comment frontend.Comment
+	_ = c.ShouldBindJSON(&comment)
+	if err := frontendService.Comment.CreatedComment(comment); err != nil {
+		global.LOG.Error("创建失败!", zap.Error(err))
+		response.FailWithMessage("创建失败", c)
+	} else {
+		response.OkWithMessage("创建成功", c)
+	}
+
 }

@@ -16,18 +16,17 @@
       <MdEditor :style="{ width: '100%' }" :model-value="articleStore.detail?.content" :theme="theme ? 'dark' : 'light'"
         :pageFullscreen="true" :previewOnly="true"></MdEditor>
     </div>
-    <div>
-      <n-input placeholder="评论" type="textarea" size="small" :autosize="true" :on-focus="focusInput"
-        :on-blur="focusInput">
+    <div @click="() => focusInput(true)">
+      <n-input placeholder="评论" type="textarea" size="small" :autosize="true" v-model:value="inputRef">
       </n-input>
       <div class="comment-line" v-show="isComment">
-        <div>11</div>
+        <div></div>
         <div>
-          <NButton type="primary">发表评论</NButton>
+          <NButton type="primary" @click="submit">发表评论</NButton>
         </div>
       </div>
     </div>
-    <a-comment>
+    <a-comment v-for="items in comment" :key="items.ID">
       <template #actions>
         <div key="comment-nested-reply-to">回复</div>
         <n-input />
@@ -40,10 +39,10 @@
       </template>
       <template #content>
         <p>
-          {{ comment.content }}
+          {{ items.content }}
         </p>
       </template>
-      <a-comment v-for="item in comment.children" :key="item.ID">
+      <a-comment v-for="item in items.children" :key="item.ID">
         <template #author>
           <a>Han Solo</a>
         </template>
@@ -76,21 +75,34 @@ import dayjs from "dayjs";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 import { useArticleStore } from "@/stores/article";
-import { getArticleComment } from "@/services/comment"
+import { getArticleComment, createdComment } from "@/services/comment";
+import { useMessage } from 'naive-ui';
+
+const message = useMessage();
 
 const route = useRoute();
 const theme = inject("theme");
 const articleStore = useArticleStore();
 const isComment = ref<boolean>(false);
 
-const comment = ref<Comment.comment>({ content: '', children: [] })
+const comment = ref<Comment.comment[]>([])
+const inputRef = ref<string>('')
 
-const focusInput = (e: FocusEvent) => {
-  if (e.type === 'blur') {
-    isComment.value = false;
-  } else {
-    isComment.value = true;
+const focusInput = (isFouse: boolean) => {
+  isComment.value = isFouse;
+}
+
+const submit = async () => {
+  if (inputRef.value === '') {
+    message.warning("请输入评论")
+    return;
   }
+  // console.log(inputRef.value);
+  // setTimeout(() => {
+  //   inputRef.value = '';
+  //   focusInput(false);
+  // }, 3000);
+  const resp = await createdComment({ content: inputRef.value, articleId: Number(route.params.id).valueOf(), parentId: 0 })
 }
 
 const changeDate = (timeData?: string): string => {
