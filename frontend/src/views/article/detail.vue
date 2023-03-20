@@ -1,7 +1,7 @@
 <template>
   <div class="view-content">
     <div class="view-margin">
-      <h1 class="view-center">{{ articleStore.detail?.title }}</h1>
+      <h1 class="view-center"><b>{{ articleStore.detail?.title }}</b></h1>
       <h3>简介：{{ articleStore.detail?.title }}</h3>
       <h4>
         <NSpace style="width: 80%">
@@ -16,13 +16,21 @@
       <MdEditor :style="{ width: '100%' }" :model-value="articleStore.detail?.content" :theme="theme ? 'dark' : 'light'"
         :pageFullscreen="true" :previewOnly="true"></MdEditor>
     </div>
-    <n-input placeholder="评论" type="textarea" size="small" :autosize="{
-      minRows: 3,
-      maxRows: 5
-    }" />
+    <div>
+      <n-input placeholder="评论" type="textarea" size="small" :autosize="true" :on-focus="focusInput"
+        :on-blur="focusInput">
+      </n-input>
+      <div class="comment-line" v-show="isComment">
+        <div>11</div>
+        <div>
+          <NButton type="primary">发表评论</NButton>
+        </div>
+      </div>
+    </div>
     <a-comment>
       <template #actions>
-        <span key="comment-nested-reply-to">Reply to</span>
+        <div key="comment-nested-reply-to">回复</div>
+        <n-input />
       </template>
       <template #author>
         <a>Han Solo</a>
@@ -73,8 +81,17 @@ import { getArticleComment } from "@/services/comment"
 const route = useRoute();
 const theme = inject("theme");
 const articleStore = useArticleStore();
+const isComment = ref<boolean>(false);
 
 const comment = ref<Comment.comment>({ content: '', children: [] })
+
+const focusInput = (e: FocusEvent) => {
+  if (e.type === 'blur') {
+    isComment.value = false;
+  } else {
+    isComment.value = true;
+  }
+}
 
 const changeDate = (timeData?: string): string => {
   return !!timeData ? dayjs(timeData).format("YYYY-MM-DD") : "";
@@ -89,3 +106,12 @@ onMounted(async () => {
   //   console.log(resp);
 });
 </script>
+
+<style scoped lang="less">
+.comment-line {
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+</style>
