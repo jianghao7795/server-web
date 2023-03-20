@@ -89,7 +89,7 @@ watch(
   async (changeValue) => {
     const response = await getArticleSearch({ page: 1, ...route.params, value: changeValue as string });
     if (response?.code === 0) {
-      data.value = (response.data?.list as API.Article[]) || [];
+      data.value = response.data?.list || [];
     }
   },
 );

@@ -27,7 +27,7 @@ const router = useRouter();
 const tagList = ref<API.Tag[]>([]);
 onMounted(async () => {
   const resp = await getTagList();
-  tagList.value = resp?.data?.list as API.Tag[];
+  tagList.value = resp?.data?.list;
 });
 
 const searchArticle = (name: string) => {
