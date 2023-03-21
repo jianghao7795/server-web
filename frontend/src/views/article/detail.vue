@@ -22,14 +22,20 @@
       <div class="comment-line" v-show="isComment">
         <div></div>
         <div>
-          <NButton type="primary" @click="submit">发表评论</NButton>
+          <NButton type="primary" @click="submit(0, comment)">发表评论</NButton>
         </div>
       </div>
     </div>
     <a-comment v-for="items in comment" :key="items.ID">
       <template #actions>
-        <div key="comment-nested-reply-to">回复</div>
-        <n-input />
+        <a key="comment-nested-reply-to" v-if="!isCommentChildren[items.ID as number]"
+          @click="() => isCommentChildren[items.ID as number] = true">回复</a>
+        <n-input-group v-else>
+          <n-input v-model:value="inputChildren" placeholder="评论" />
+          <n-button type="primary" ghost @click="submit(items.ID as number, items.children as Comment.comment[])">
+            回复
+          </n-button>
+        </n-input-group>
       </template>
       <template #author>
         <a>Han Solo</a>
@@ -84,25 +90,37 @@ const route = useRoute();
 const theme = inject("theme");
 const articleStore = useArticleStore();
 const isComment = ref<boolean>(false);
+const isCommentChildren = ref<{ [id: number]: boolean }>({})
 
 const comment = ref<Comment.comment[]>([])
 const inputRef = ref<string>('')
+const inputChildren = ref<string>('')
 
 const focusInput = (isFouse: boolean) => {
   isComment.value = isFouse;
 }
 
-const submit = async () => {
-  if (inputRef.value === '') {
-    message.warning("请输入评论")
-    return;
-  }
+const submit = async (parentId: number, children: Comment.comment[]) => {
+  // if (inputRef.value === '') {
+  //   message.warning("请输入评论");
+  //   return;
+  // }
   // console.log(inputRef.value);
   // setTimeout(() => {
   //   inputRef.value = '';
   //   focusInput(false);
   // }, 3000);
-  const resp = await createdComment({ content: inputRef.value, articleId: Number(route.params.id).valueOf(), parentId: 0 })
+  const resp = await createdComment({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId })
+  if (resp?.code === 0) {
+    message.success('评论成功');
+    setTimeout(() => {
+      isComment.value = false;
+      isCommentChildren.value[parentId] = false;
+      children.unshift({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId: 0 });
+      inputRef.value = '';
+      inputChildren.value = '';
+    }, 1000);
+  }
 }
 
 const changeDate = (timeData?: string): string => {

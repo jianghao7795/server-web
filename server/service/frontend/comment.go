@@ -16,7 +16,7 @@ func (commentService *Comment) GetCommentByArticleId(articleId int) (list []fron
 	}
 
 	var commentList []frontend.Comment
-	err = db.Where("parent_id = ?", 0).Preload("Article").Find(&commentList).Error
+	err = db.Where("parent_id = ?", 0).Preload("Article").Order("id desc").Find(&commentList).Error
 	// err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Find(&commentList).Error
 	if len(commentList) > 0 {
 		for comment := range commentList {
@@ -28,7 +28,7 @@ func (commentService *Comment) GetCommentByArticleId(articleId int) (list []fron
 }
 
 func (commentService *Comment) findChildrenComment(comment *frontend.Comment) (err error) {
-	err = global.DB.Where("parent_id = ?", comment.ID).Find(&comment.Children).Error
+	err = global.DB.Where("parent_id = ?", comment.ID).Order("id desc").Find(&comment.Children).Error
 	if len(comment.Children) > 0 {
 		for k := range comment.Children {
 			err = commentService.findChildrenComment(&comment.Children[k])
