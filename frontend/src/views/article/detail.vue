@@ -1,6 +1,6 @@
 <template>
   <div class="view-content">
-    <div class="view-margin">
+    <div class="view-margin view-dark">
       <h1 class="view-center"><b>{{ articleStore.detail?.title }}</b></h1>
       <h3>简介：{{ articleStore.detail?.title }}</h3>
       <h4>
@@ -73,7 +73,6 @@ export default {
 </script>
 
 <script lang="ts" setup>
-// import { NSpace, NTag, NDivider } from "naive-ui";
 import { onMounted, inject, ref } from "vue";
 import { useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";

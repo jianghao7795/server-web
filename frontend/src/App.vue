@@ -1,22 +1,17 @@
 <script lang="ts" setup>
-import { h, defineComponent, ref, onMounted, provide } from "vue";
+import { h, defineComponent, ref, onMounted, provide, computed } from "vue";
 import { RouterView } from "vue-router";
 import {
-  // NNotificationProvider,
-  // NMessageProvider,
-  // NLoadingBarProvider,
   useLoadingBar,
   useMessage,
   useNotification,
-  // NConfigProvider,
   darkTheme,
 } from "naive-ui";
 import type { GlobalTheme } from "naive-ui";
 import { emitter } from "./utils/common";
-// window.$message = useMessage();
-// window.$notification = useNotification();
 
 const theme = ref<GlobalTheme | null>(null);
+const color = computed(() => theme.value ? '#000' : '#fff');
 
 onMounted(() => {
   emitter.on("darkMode", () => {
@@ -50,7 +45,7 @@ const NaiveProviderContent = defineComponent({
 <template>
   <NLoadingBarProvider :loading-bar-style="{ loading: { height: '4px', background: '#1e80ff' } }">
     <NConfigProvider :theme="theme">
-      <div>
+      <div class="view-dark">
         <NNotificationProvider>
           <NMessageProvider>
             <router-view />
@@ -61,3 +56,11 @@ const NaiveProviderContent = defineComponent({
     </NConfigProvider>
   </NLoadingBarProvider>
 </template>
+
+<style lang="less">
+.view-dark {
+  h1 h2 h3 h4 h5 {
+    color: v-bind(color);
+  }
+}
+</style>
