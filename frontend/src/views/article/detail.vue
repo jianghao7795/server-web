@@ -28,11 +28,11 @@
     </div>
     <a-comment v-for="items in comment" :key="items.ID">
       <template #actions>
-        <a key="comment-nested-reply-to" v-if="!isCommentChildren[items.ID as number]"
+        <a key="comment-nested-reply-to" v-if="!isCommentChildren[items.ID]"
           @click="() => isCommentChildren[items.ID as number] = true">回复</a>
         <n-input-group v-else>
           <n-input v-model:value="inputChildren" placeholder="评论" />
-          <n-button type="primary" ghost @click="submit(items.ID as number, items.children as Comment.comment[])">
+          <n-button type="primary" ghost @click="submit(items.ID, items.children)">
             回复
           </n-button>
         </n-input-group>
@@ -100,22 +100,26 @@ const focusInput = (isFouse: boolean) => {
 }
 
 const submit = async (parentId: number, children: Comment.comment[]) => {
-  // if (inputRef.value === '') {
-  //   message.warning("请输入评论");
-  //   return;
-  // }
+  if (parentId === 0 && inputRef.value === '') {
+    message.warning("请输入评论");
+    return;
+  }
+  if (parentId !== 0 && inputChildren.value === '') {
+    message.warning("请输入评论");
+    return;
+  }
   // console.log(inputRef.value);
   // setTimeout(() => {
   //   inputRef.value = '';
   //   focusInput(false);
   // }, 3000);
-  const resp = await createdComment({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId })
+  const resp = await createdComment({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId } as Comment.comment)
   if (resp?.code === 0) {
     message.success('评论成功');
     setTimeout(() => {
       isComment.value = false;
       isCommentChildren.value[parentId] = false;
-      children.unshift({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId: 0 });
+      children.unshift({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId: 0 } as Comment.comment);
       inputRef.value = '';
       inputChildren.value = '';
     }, 1000);
