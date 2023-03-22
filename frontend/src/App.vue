@@ -11,7 +11,8 @@ import type { GlobalTheme } from "naive-ui";
 import { emitter } from "./utils/common";
 
 const theme = ref<GlobalTheme | null>(null);
-const color = computed(() => theme.value ? '#000' : '#fff');
+const color = computed(() => theme.value === null ? '#000' : '#fff');
+const colorComment = computed(() => theme.value === null ? '#999' : '#aaa');
 
 onMounted(() => {
   emitter.on("darkMode", () => {
@@ -45,7 +46,7 @@ const NaiveProviderContent = defineComponent({
 <template>
   <NLoadingBarProvider :loading-bar-style="{ loading: { height: '4px', background: '#1e80ff' } }">
     <NConfigProvider :theme="theme">
-      <div class="view-dark">
+      <div class="view-dark view-comment">
         <NNotificationProvider>
           <NMessageProvider>
             <router-view />
@@ -59,8 +60,20 @@ const NaiveProviderContent = defineComponent({
 
 <style lang="less">
 .view-dark {
-  h1 h2 h3 h4 h5 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: v-bind(color);
+  }
+}
+
+.view-comment {
+  .ant-comment-content-author-name>* {
+    color: v-bind(colorComment)
   }
 }
 </style>

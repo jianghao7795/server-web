@@ -1,6 +1,6 @@
 <template>
   <div class="view-content">
-    <div class="view-margin view-dark">
+    <div class="view-margin">
       <h1 class="view-center"><b>{{ articleStore.detail?.title }}</b></h1>
       <h3>简介：{{ articleStore.detail?.title }}</h3>
       <h4>
