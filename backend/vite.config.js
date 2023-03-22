@@ -7,9 +7,9 @@ import * as path from "path";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
 import vuePlugin from "@vitejs/plugin-vue";
-// import Components from "unplugin-vue-components/vite";
+import Components from "unplugin-vue-components/vite";
 // import importElementPlus from "vite-plugin-element-plus";
-// import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 // import WindiCSS from "vite-plugin-windicss";
 // import vueJsx from '@vitejs/plugin-vue-jsx';
 // import { isAsyncFunction } from 'util/types';
@@ -113,9 +113,9 @@ export default defineConfig(({ command, mode }) => {
       vuePlugin({}),
       // vueJsx(),
       [Banner(`\n Build based on server-web \n Time : ${timestamp}`)],
-      // Components({
-      //   resolvers: [ElementPlusResolver()],
-      // }),
+      Components({
+        resolvers: [ElementPlusResolver()],
+      }),
       // importElementPlus(),
       // WindiCSS(),
     ],

@@ -3,17 +3,8 @@
     <div class="search-box">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline" @keyup.enter.native="onSubmit">
         <el-form-item label="文章：">
-          <el-select
-            v-model="searchInfo.articleId"
-            :multiple="false"
-            filterable
-            remote
-            clearable
-            reserve-keyword
-            placeholder="请输入"
-            :remote-method="searchArticle"
-            :loading="loading"
-          >
+          <el-select v-model="searchInfo.articleId" :multiple="false" filterable remote clearable reserve-keyword
+            placeholder="请输入" :remote-method="searchArticle" :loading="loading">
             <el-option v-for="item in options" :key="item.ID" :label="item.title" :value="item.ID" />
           </el-select>
         </el-form-item>
@@ -36,21 +27,15 @@
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
-            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length" @click="deleteVisible = true">
+            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length"
+              @click="deleteVisible = true">
               删除
             </el-button>
           </template>
         </el-popover>
       </div>
-      <el-table
-        :highlight-current-row="true"
-        ref="multipleTable"
-        style="width: 100%"
-        tooltip-effect="dark"
-        :data="tableData"
-        row-key="ID"
-        @selection-change="handleSelectionChange"
-      >
+      <el-table :highlight-current-row="true" ref="multipleTable" style="width: 100%" tooltip-effect="dark"
+        :data="tableData" row-key="ID" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
         <el-table-column header-align="center" align="center" prop="ID" label="ID" width="100"></el-table-column>
         <el-table-column align="left" label="文章" prop="articleId" width="120">
@@ -62,7 +47,7 @@
             {{ scope.row?.article?.sys_user?.nickName }}
           </template>
         </el-table-column>
-        <!-- <el-table-column align="left" label="赞数" prop="praise" width="200">
+        <el-table-column align="left" label="赞数" prop="praise" width="200">
           <template #header>
             <div style="padding-left: 10px">
               <Like theme="filled" size="16" fill="#f00" />
@@ -72,64 +57,44 @@
           </template>
           <template #default="scope">
             <div :class="likeItStatus[scope.$index] ? 'pointer-style' : ''">
-              <div
-                v-if="viewPraise(scope.row.praise)"
-                style="display: inline-block; width: 40px; text-align: center"
+              <div v-if="viewPraise(scope.row.praise)" style="display: inline-block; width: 40px; text-align: center"
                 :class="likeItStatus[scope.$index] ? 'animate__animated animate__heartBeat' : ''"
-                @click="changeLikeItStatus(scope.row, scope.$index)"
-              >
+                @click="changeLikeItStatus(scope.row, scope.$index)">
                 <Like theme="filled" size="16" fill="#f00" />
               </div>
 
-              <div
-                @click="changeLikeItStatus(scope.row, scope.$index)"
-                style="display: inline-block; width: 40px; text-align: center"
-                v-else
-                :class="likeItStatus[scope.$index] ? 'animate__animated animate__fadeOut' : ''"
-              >
+              <div @click="changeLikeItStatus(scope.row, scope.$index)"
+                style="display: inline-block; width: 40px; text-align: center" v-else
+                :class="likeItStatus[scope.$index] ? 'animate__animated animate__fadeOut' : ''">
                 <Like theme="outline" size="16" />
               </div>
               {{ scope.row.praise?.length }}
             </div>
           </template>
-        </el-table-column> -->
+        </el-table-column>
         <el-table-column align="left" label="评论时间" width="180">
           <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
         </el-table-column>
         <el-table-column align="left" label="操作">
           <template #default="scope">
-            <el-button link icon="edit" type="primary" size="small" class="table-button" @click="updateCommentFunc(scope.row)">编辑</el-button>
+            <el-button link icon="edit" type="primary" size="small" class="table-button"
+              @click="updateCommentFunc(scope.row)">编辑</el-button>
             <el-button link icon="delete" type="primary" size="small" @click="deleteRow(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination
-          layout="total, sizes, prev, pager, next, jumper"
-          :current-page="page"
-          :page-size="pageSize"
-          :page-sizes="[10, 30, 50, 100]"
-          :total="total"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
+        <el-pagination background layout="total, sizes, prev, pager, next, jumper" :current-page="page"
+          :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" @current-change="handleCurrentChange"
+          @size-change="handleSizeChange" />
       </div>
     </div>
-    <el-dialog :model-value="dialogFormVisible" :before-close="closeDialog" :title="!formData.articleId ? '创建评论' : '更新评论'">
+    <el-dialog :model-value="dialogFormVisible" :before-close="closeDialog"
+      :title="!formData.articleId ? '创建评论' : '更新评论'">
       <el-form :model="formData" label-position="right" label-width="80px">
         <el-form-item label="文章:">
-          <el-select
-            v-model="formData.articleId"
-            :multiple="false"
-            filterable
-            remote
-            clearable
-            style="width: 100%"
-            reserve-keyword
-            placeholder="请输入"
-            :remote-method="searchArticle"
-            :loading="searchLoading"
-          >
+          <el-select v-model="formData.articleId" :multiple="false" filterable remote clearable style="width: 100%"
+            reserve-keyword placeholder="请输入" :remote-method="searchArticle" :loading="searchLoading">
             <el-option v-for="item in options" :key="item.ID" :label="item.title" :value="item.ID"></el-option>
           </el-select>
         </el-form-item>
@@ -158,8 +123,6 @@ export default {
 
 <script setup>
 import { createComment, deleteComment, deleteCommentByIds, updateComment, findComment, getCommentTreeList, pariseComment } from "@/api/comment";
-
-// 全量引入格式化工具 请按需保留
 import { formatDate } from "@/utils/format";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { ref, onMounted } from "vue";
