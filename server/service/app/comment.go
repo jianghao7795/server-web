@@ -1,7 +1,6 @@
 package app
 
 import (
-	"log"
 	"server/global"
 	comment "server/model/app"
 	commentReq "server/model/app/request"
@@ -55,7 +54,6 @@ func (commentService *CommentService) GetCommentInfoList(info commentReq.Comment
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
-	log.Println("info", info)
 	db := global.DB.Model(&comment.Comment{}).Preload("Article", func(db *gorm.DB) *gorm.DB {
 		return db.Preload("User")
 	}).Preload("Praise")
@@ -94,7 +92,9 @@ func (commentService *CommentService) GetCommentTreeList(info commentReq.Comment
 	}
 
 	var commentList []comment.Comment
-	err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Preload("Article").Find(&commentList).Error
+	err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Preload("Article", func(db *gorm.DB) *gorm.DB {
+		return db.Preload("User")
+	}).Find(&commentList).Error
 	// err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Find(&commentList).Error
 	if len(commentList) > 0 {
 		for comment := range commentList {

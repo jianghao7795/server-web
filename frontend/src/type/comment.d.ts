@@ -7,6 +7,8 @@ declare namespace Comment {
     article: API.Article;
     parentId: number;
     content: string;
+    user_id: number;
+    user_name: string;
     children: comment[];
   }
 }

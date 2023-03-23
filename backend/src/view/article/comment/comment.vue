@@ -41,18 +41,19 @@
         <el-table-column align="left" label="文章" prop="articleId" width="120">
           <template #default="scope">{{ scope.row?.article?.title }}</template>
         </el-table-column>
-        <el-table-column align="left" label="内容" prop="content" width="120" />
-        <el-table-column align="left" label="文章作者" prop="userId" width="120">
+        <el-table-column align="left" label="内容" prop="content" />
+        <el-table-column align="left" label="文章作者" width="120">
           <template #default="scope">
             {{ scope.row?.article?.sys_user?.nickName }}
           </template>
         </el-table-column>
-        <el-table-column align="left" label="赞数" prop="praise" width="200">
+        <el-table-column align="left" label="评论人" prop="user_name" width="120"></el-table-column>
+        <!-- <el-table-column align="left" label="赞数" prop="praise" width="200">
           <template #header>
             <div style="padding-left: 10px">
-              <Like theme="filled" size="16" fill="#f00" />
+              <good-two theme="outline" size="16" fill="#333" :strokeWidth="3" />
               /
-              <Like theme="outline" size="16"></Like>
+              <good-two theme="multi-color" size="16" :fill="['#333', '#ff2f8d', '#FFF', '#f84369']" :strokeWidth="3" />
             </div>
           </template>
           <template #default="scope">
@@ -60,18 +61,19 @@
               <div v-if="viewPraise(scope.row.praise)" style="display: inline-block; width: 40px; text-align: center"
                 :class="likeItStatus[scope.$index] ? 'animate__animated animate__heartBeat' : ''"
                 @click="changeLikeItStatus(scope.row, scope.$index)">
-                <Like theme="filled" size="16" fill="#f00" />
+                <good-two theme="multi-color" size="16" fill="#333" :strokeWidth="3"
+                  :fill="['#333', '#ff2f8d', '#FFF', '#f84369']" />
               </div>
 
               <div @click="changeLikeItStatus(scope.row, scope.$index)"
                 style="display: inline-block; width: 40px; text-align: center" v-else
                 :class="likeItStatus[scope.$index] ? 'animate__animated animate__fadeOut' : ''">
-                <Like theme="outline" size="16" />
+                <good-two theme="outline" size="16" :strokeWidth="3" />
               </div>
               {{ scope.row.praise?.length }}
             </div>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column align="left" label="评论时间" width="180">
           <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
         </el-table-column>
@@ -128,7 +130,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { ref, onMounted } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 import { getArticleList } from "@/api/article";
-import { Like } from "@icon-park/vue-next";
+// import { GoodTwo } from "@icon-park/vue-next";
 import { useUserStore } from "@/pinia/modules/user";
 // import { getUserList } from "@/api/user";
 

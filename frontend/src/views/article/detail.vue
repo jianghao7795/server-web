@@ -38,7 +38,7 @@
         </n-input-group>
       </template>
       <template #author>
-        <a>Han Solo</a>
+        <a>{{ items.user_name }}</a>
       </template>
       <template #avatar>
         <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
@@ -50,7 +50,7 @@
       </template>
       <a-comment v-for="item in items.children" :key="item.ID">
         <template #author>
-          <a>Han Solo</a>
+          <a>{{ item.user_name }}</a>
         </template>
         <template #avatar>
           <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
@@ -113,13 +113,13 @@ const submit = async (parentId: number, children: Comment.comment[]) => {
   //   inputRef.value = '';
   //   focusInput(false);
   // }, 3000);
-  const resp = await createdComment({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId } as Comment.comment)
+  const resp = await createdComment({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId, user_id: 0, user_name: '测试' } as Comment.comment)
   if (resp?.code === 0) {
     message.success('评论成功');
     setTimeout(() => {
       isComment.value = false;
       isCommentChildren.value[parentId] = false;
-      children.unshift({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId: 0 } as Comment.comment);
+      children.unshift({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId: 0, user_id: 0, user_name: '测试' } as Comment.comment);
       inputRef.value = '';
       inputChildren.value = '';
     }, 1000);
