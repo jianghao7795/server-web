@@ -28,11 +28,11 @@ func (s *CommentApi) GetCommentByArticleId(c *gin.Context) {
 func (s *CommentApi) CreatedComment(c *gin.Context) {
 	var comment frontend.Comment
 	_ = c.ShouldBindJSON(&comment)
-	if err := frontendService.Comment.CreatedComment(comment); err != nil {
+	if id, err := frontendService.Comment.CreatedComment(comment); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
 	} else {
-		response.OkWithMessage("创建成功", c)
+		response.OkWithId("创建成功", id, c)
 	}
 
 }

@@ -9,5 +9,5 @@ export const getArticleComment = (params: { articleId: string }) => {
 };
 
 export const createdComment = (data: Comment.comment) => {
-  return http.post<API.Response<{ code: number; msg?: string }>>(`/createdComment`, data);
+  return http.post<API.Response<{ id: number }>>(`/createdComment`, data);
 };

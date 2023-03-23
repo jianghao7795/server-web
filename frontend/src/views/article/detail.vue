@@ -117,9 +117,13 @@ const submit = async (parentId: number, children: Comment.comment[]) => {
   if (resp?.code === 0) {
     message.success('评论成功');
     setTimeout(() => {
+      let child = undefined
+      if (parentId === 0) {
+        child = [];
+      }
       isComment.value = false;
       isCommentChildren.value[parentId] = false;
-      children.unshift({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId: 0, user_id: 0, user_name: '测试' } as Comment.comment);
+      children.unshift({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId, user_id: 0, user_name: '测试', ID: resp.data.id, children: child } as Comment.comment);
       inputRef.value = '';
       inputChildren.value = '';
     }, 1000);
