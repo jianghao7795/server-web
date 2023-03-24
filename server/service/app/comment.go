@@ -94,7 +94,7 @@ func (commentService *CommentService) GetCommentTreeList(info commentReq.Comment
 	var commentList []comment.Comment
 	err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Preload("Article", func(db *gorm.DB) *gorm.DB {
 		return db.Preload("User")
-	}).Find(&commentList).Error
+	}).Order("id desc").Find(&commentList).Error
 	// err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Find(&commentList).Error
 	if len(commentList) > 0 {
 		for comment := range commentList {

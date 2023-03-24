@@ -38,7 +38,7 @@
         :data="tableData" row-key="ID" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
         <el-table-column header-align="center" align="center" prop="ID" label="ID" width="100"></el-table-column>
-        <el-table-column align="left" label="文章" prop="articleId" width="120">
+        <el-table-column align="left" label="文章" prop="articleId" width="220">
           <template #default="scope">{{ scope.row?.article?.title }}</template>
         </el-table-column>
         <el-table-column align="left" label="内容" prop="content" />
