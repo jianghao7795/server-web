@@ -1,5 +1,5 @@
 import { getArticleList, getArticleDetail } from "@/services/article";
-import { defineStore, type PiniaCustomProperties } from "pinia";
+import { defineStore } from "pinia";
 
 // export const mainStore = defineStore('main', {
 //     /**

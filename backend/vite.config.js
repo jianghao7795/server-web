@@ -106,6 +106,9 @@ export default defineConfig(({ command, mode }) => {
     esbuild,
     optimizeDeps,
     plugins: [
+      Components({
+        resolvers: [ElementPlusResolver()],
+      }),
       legacyPlugin({
         targets: ["Android > 39", "Chrome >= 60", "Safari >= 10.1", "iOS >= 10.3", "Firefox >= 54", "Edge >= 15"],
         renderLegacyChunks: false,
@@ -113,9 +116,7 @@ export default defineConfig(({ command, mode }) => {
       vuePlugin({}),
       // vueJsx(),
       [Banner(`\n Build based on server-web \n Time : ${timestamp}`)],
-      Components({
-        resolvers: [ElementPlusResolver()],
-      }),
+
       // importElementPlus(),
       // WindiCSS(),
     ],
