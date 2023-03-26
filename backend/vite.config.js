@@ -107,7 +107,7 @@ export default defineConfig(({ command, mode }) => {
     optimizeDeps,
     plugins: [
       Components({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [ElementPlusResolver({ importStyle: "css" })],
       }),
       legacyPlugin({
         targets: ["Android > 39", "Chrome >= 60", "Safari >= 10.1", "iOS >= 10.3", "Firefox >= 54", "Edge >= 15"],

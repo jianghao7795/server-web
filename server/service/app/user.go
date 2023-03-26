@@ -1,10 +1,13 @@
 package app
 
 import (
+	"errors"
 	"server/global"
 	"server/model/app"
 	appReq "server/model/app/request"
 	"server/model/common/request"
+
+	"gorm.io/gorm"
 )
 
 type UserService struct {
@@ -19,8 +22,8 @@ func (userService *UserService) CreateUser(user app.User) (err error) {
 
 // DeleteUser 删除User记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (userService *UserService) DeleteUser(user app.User) (err error) {
-	err = global.DB.Delete(&user).Error
+func (userService *UserService) DeleteUser(ID int) (err error) {
+	err = global.DB.Where("id = ?", ID).Delete(&app.User{}).Error
 	return err
 }
 
@@ -60,4 +63,10 @@ func (userService *UserService) GetUserInfoList(info appReq.UserSearch) (list in
 	}
 	err = db.Limit(limit).Offset(offset).Find(&users).Error
 	return users, total, err
+}
+
+func (userService *UserService) FindIsUser(id uint) bool {
+	var user app.User
+	err := global.DB.Where("id = ?", id).First(&user).Error
+	return errors.Is(err, gorm.ErrRecordNotFound)
 }

@@ -1,12 +1,14 @@
 package app
 
 import (
+	"errors"
 	"server/global"
 	"server/model/app"
 	appReq "server/model/app/request"
 	"server/model/common/request"
 	"server/model/common/response"
 	"server/service"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -47,9 +49,9 @@ func (userApi *UserApi) CreateUser(c *gin.Context) {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /user/deleteUser [delete]
 func (userApi *UserApi) DeleteUser(c *gin.Context) {
-	var user app.User
-	_ = c.ShouldBindJSON(&user)
-	if err := userService.DeleteUser(user); err != nil {
+	id := c.Param("id")
+	IDS, _ := strconv.Atoi(id)
+	if err := userService.DeleteUser(IDS); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败", c)
 	} else {
@@ -88,7 +90,15 @@ func (userApi *UserApi) DeleteUserByIds(c *gin.Context) {
 // @Router /user/updateUser [put]
 func (userApi *UserApi) UpdateUser(c *gin.Context) {
 	var user app.User
+	ID := c.Param("id")
+	IDS, _ := strconv.Atoi(ID)
+	notFound := userService.FindIsUser(uint(IDS))
+	if notFound {
+		global.LOG.Error("未找到，该用户!", zap.Error(errors.New("未找到，该用户")))
+		response.FailWithMessage("未找到，该用户", c)
+	}
 	_ = c.ShouldBindJSON(&user)
+	user.ID = uint(IDS)
 	if err := userService.UpdateUser(user); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败", c)
@@ -107,9 +117,9 @@ func (userApi *UserApi) UpdateUser(c *gin.Context) {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
 // @Router /user/findUser [get]
 func (userApi *UserApi) FindUser(c *gin.Context) {
-	var user app.User
-	_ = c.ShouldBindQuery(&user)
-	if reuser, err := userService.GetUser(user.ID); err != nil {
+	ID := c.Param("id")
+	IDS, _ := strconv.Atoi(ID)
+	if reuser, err := userService.GetUser(uint(IDS)); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
 	} else {
