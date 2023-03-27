@@ -6,14 +6,27 @@
           <template #header-extra>
             <div class="headerStyleLine">
               <NSpace>
-                <n-tabs type="bar" animated :value="viewPage" size="small" :bar-width="28" justify-content="space-evenly"
-                  :tab-style="{ margin: '0 5px', fontWeight: 'bold' }" :on-update:value="(e: string) => changePath(e)">
+                <n-tabs
+                  type="bar"
+                  animated
+                  :value="viewPage"
+                  size="small"
+                  :bar-width="28"
+                  justify-content="space-evenly"
+                  :tab-style="{ margin: '0 5px', fontWeight: 'bold' }"
+                  :on-update:value="(e: string) => changePath(e)"
+                >
                   <n-tab-pane name="/" tab="首页"></n-tab-pane>
                   <n-tab-pane name="/articles" tab="文章"></n-tab-pane>
                   <n-tab-pane name="/tags" tab="标签"></n-tab-pane>
                   <n-tab-pane name="/about" tab="关于"></n-tab-pane>
                 </n-tabs>
-                <n-switch v-bind:on-update:value="changeTheme" size="medium" :rail-style="railStyle">
+                <n-switch
+                  v-model:value="darkTheme"
+                  v-bind:on-update:value="changeTheme"
+                  size="medium"
+                  :rail-style="railStyle"
+                >
                   <template #checked-icon>
                     <NIcon :component="Sun" />
                   </template>
@@ -25,21 +38,33 @@
             </div>
           </template>
           <template #header>
-            <div class="headerStyleLine"><b @click="changePath('/')">吴昊</b></div>
+            <div class="headerStyleLine">
+              <b @click="changePath('/')">吴昊</b>
+            </div>
           </template>
           <div style="height: 300px; text-align: center">
             <span v-if="!isMouseOver">
               <span class="small-h1">
                 <b>吴昊</b>
               </span>
-              <Search @click="
-                () => {
-                  isMouseOver = true;
-                }
-              " />
+              <Search
+                @click="
+                  () => {
+                    isMouseOver = true;
+                  }
+                "
+              />
             </span>
-            <NInput v-else :autofocus="true" ref="searchInputRef" v-model:value="searchInput"
-              style="max-width: 30%; margin: '15px 0'" placeholder="搜索文章" type="text" @keyup.enter="submit" />
+            <NInput
+              v-else
+              :autofocus="true"
+              ref="searchInputRef"
+              v-model:value="searchInput"
+              style="max-width: 30%; margin: '15px 0'"
+              placeholder="搜索文章"
+              type="text"
+              @keyup.enter="submit"
+            />
             <hr class="small" />
             <span class="subheading">愈有知，愈无知。</span>
           </div>
@@ -73,7 +98,8 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch } from "vue";
+import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch, inject, type Ref, computed } from "vue";
+import type { GlobalTheme } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
 // import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader, NInput, NSpin, NIcon, NSwitch, NTabs, NTabPane } from "naive-ui";
 import { Search, Sun, SunOne } from "@icon-park/vue-next";
@@ -84,11 +110,12 @@ const route = useRoute();
 const router = useRouter();
 const searchInput = ref<string>("");
 const searchInputRef = ref<HTMLInputElement>();
-
 const loadingFlag = ref<boolean>(false);
-
 const isMouseOver = ref<boolean>(false);
 const viewPage = ref<string>(route.fullPath);
+
+const theme = inject<Ref<GlobalTheme | null>>("theme");
+const darkTheme = computed(() => !(theme?.value === null));
 
 const railStyle = ({ checked }: { checked: boolean }) => {
   const style: CSSProperties = {};

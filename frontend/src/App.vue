@@ -1,20 +1,21 @@
 <script lang="ts" setup>
 import { h, defineComponent, ref, onMounted, provide, computed } from "vue";
 import { RouterView } from "vue-router";
-import {
-  useLoadingBar,
-  useMessage,
-  useNotification,
-  darkTheme,
-} from "naive-ui";
+import { useLoadingBar, useMessage, useNotification, darkTheme } from "naive-ui";
 import type { GlobalTheme } from "naive-ui";
 import { emitter } from "./utils/common";
 
 const theme = ref<GlobalTheme | null>(null);
-const color = computed(() => theme.value === null ? '#000' : '#fff');
-const colorComment = computed(() => theme.value === null ? '#999' : '#aaa');
+const color = computed(() => (theme.value === null ? "#000" : "#fff"));
+const colorComment = computed(() => (theme.value === null ? "#999" : "#aaa"));
 
 onMounted(() => {
+  const isDarkTheme = window.matchMedia("(prefers-color-scheme: light)"); // 是深色
+  if (isDarkTheme.matches) {
+    theme.value = darkTheme;
+  } else {
+    theme.value = null;
+  }
   emitter.on("darkMode", () => {
     theme.value = darkTheme;
   });
@@ -60,7 +61,6 @@ const NaiveProviderContent = defineComponent({
 
 <style lang="less">
 .view-dark {
-
   h1,
   h2,
   h3,
@@ -72,8 +72,8 @@ const NaiveProviderContent = defineComponent({
 }
 
 .view-comment {
-  .ant-comment-content-author-name>* {
-    color: v-bind(colorComment)
+  .ant-comment-content-author-name > * {
+    color: v-bind(colorComment);
   }
 }
 </style>

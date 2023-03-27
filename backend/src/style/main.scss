@@ -737,8 +737,8 @@ li {
       .cell {
         color: rgba($color: #000000, $alpha: 0.85);
         font-size: 14px;
-        line-height: 40px;
-        min-height: 40px;
+        // line-height: 40px;
+        // min-height: 40px;
       }
     }
 
@@ -746,8 +746,8 @@ li {
       padding: 6px 0;
 
       .cell {
-        min-height: 40px;
-        //line-height: 40px;
+        // min-height: 40px;
+        // line-height: 40px;
         color: rgba($color: #000000, $alpha: 0.65);
       }
     }
