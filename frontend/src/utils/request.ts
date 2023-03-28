@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { emitter } from "./common";
+import { useUserStore } from "@/stores/user";
 
 /* 服务器返回数据的的类型，根据接口文档确定 */
 export interface Result<T = any> {
@@ -17,10 +18,11 @@ const service: AxiosInstance = axios.create({
 /* 请求拦截器 */
 service.interceptors.request.use(
   (config: AxiosRequestConfig) => {
+    const userStore = useUserStore();
     //  伪代码
-    // if (user.token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+    if (userStore.getToken) {
+      config.headers = { ...config.headers, Authorization: `Bearer ${userStore.getToken}` };
+    }
     emitter.emit("showLoading");
     return config;
   },
@@ -71,7 +73,12 @@ service.interceptors.response.use(
       default:
         message = "网络连接故障";
     }
-    window.$notification.error({ content: `错误 ${status}: ${message}`, meta: error.response?.statusText, duration: 10000, keepAliveOnHover: true });
+    window.$notification.error({
+      content: `错误 ${status}: ${message}`,
+      meta: error.response?.statusText,
+      duration: 10000,
+      keepAliveOnHover: true,
+    });
     return;
   },
 );
@@ -82,11 +89,11 @@ export const http = {
     return service.get(url, config);
   },
 
-  post<T = any>(url: string, data?: object, config?: AxiosRequestConfig): Promise<T> {
+  post<T = any, R = any>(url: string, data?: R, config?: AxiosRequestConfig): Promise<T> {
     return service.post(url, data, config);
   },
 
-  put<T = any>(url: string, data?: object, config?: AxiosRequestConfig): Promise<T> {
+  put<T = any, R = any>(url: string, data?: R, config?: AxiosRequestConfig): Promise<T> {
     return service.put(url, data, config);
   },
 

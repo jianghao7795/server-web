@@ -10,7 +10,7 @@ const color = computed(() => (theme.value === null ? "#000" : "#fff"));
 const colorComment = computed(() => (theme.value === null ? "#999" : "#aaa"));
 
 onMounted(() => {
-  const isDarkTheme = window.matchMedia("(prefers-color-scheme: light)"); // 是深色
+  const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)"); // 是深色
   if (isDarkTheme.matches) {
     theme.value = darkTheme;
   } else {

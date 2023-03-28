@@ -1,5 +1,5 @@
 import { http } from "@/utils/request";
 
-export const aboutMe = () => {
-    return http.get<API.ResponseAbout<API.AboutMe>>("/health");
-  };
+export function login(data: User.Login) {
+  return http.post<User.UserInfo, User.Login>("/getImages", data);
+}

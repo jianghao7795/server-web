@@ -39,33 +39,32 @@
           </template>
           <template #header>
             <div class="headerStyleLine">
-              <b @click="changePath('/')">吴昊</b>
+              <n-space>
+                <b @click="changePath('/')" style="cursor: pointer">吴昊</b>
+                <span style="cursor: pointer" @click="() => changeActive(true)">更换背景图片</span>
+              </n-space>
             </div>
           </template>
           <div style="height: 300px; text-align: center">
-            <span v-if="!isMouseOver">
-              <span class="small-h1">
-                <b>吴昊</b>
-              </span>
-              <Search
-                @click="
-                  () => {
-                    isMouseOver = true;
-                  }
-                "
-              />
-            </span>
+            <div v-if="!isMouseOver">
+              <n-popover trigger="hover">
+                <template #trigger>
+                  <Search size="24" theme="outline" @click="() => changeBlur(true)" fill="#333" :strokeWidth="3" />
+                </template>
+                <span>搜索文章</span>
+              </n-popover>
+            </div>
             <NInput
               v-else
               :autofocus="true"
               ref="searchInputRef"
               v-model:value="searchInput"
-              style="max-width: 30%; margin: '15px 0'"
+              style="max-width: 30%; margin: 0"
               placeholder="搜索文章"
               type="text"
+              @blur="() => changeBlur(false)"
               @keyup.enter="submit"
             />
-            <hr class="small" />
             <span class="subheading">愈有知，愈无知。</span>
           </div>
         </n-card>
@@ -88,6 +87,45 @@
         </footer>
       </n-layout-footer>
     </n-layout>
+    <n-drawer v-model:show="active" placement="bottom" :height="400">
+      <n-drawer-content title="更换背景图片">
+        <n-carousel :space-between="30" :loop="false" slides-per-view="auto" centered-slides draggable>
+          <n-carousel-item style="width: 30%" v-for="item in bgImage" :key="item.ID">
+            <n-popconfirm @positive-click="() => {}" positive-text="确认" negative-text="取消">
+              <template #trigger>
+                <img
+                  :src="item.url.includes('http') ? item.url : `/${item.url}`"
+                  :title="item.name"
+                  class="carousel-img"
+                />
+              </template>
+              确定更换背景图片
+            </n-popconfirm>
+          </n-carousel-item>
+
+          <!-- <template #arrow="{ prev, next }">
+            <div class="custom-arrow">
+              <button type="button" class="custom-arrow--left" @click="prev">
+                <n-icon><ArrowBack /></n-icon>
+              </button>
+              <button type="button" class="custom-arrow--right" @click="next">
+                <n-icon><ArrowForward /></n-icon>
+              </button>
+            </div>
+          </template>
+          <template #dots="{ total, currentIndex, to }">
+            <ul class="custom-dots">
+              <li
+                v-for="index of total"
+                :key="index"
+                :class="{ ['is-active']: currentIndex === index - 1 }"
+                @click="to(index - 1)"
+              />
+            </ul>
+          </template> -->
+        </n-carousel>
+      </n-drawer-content>
+    </n-drawer>
   </div>
 </template>
 
@@ -105,17 +143,38 @@ import { RouterView, useRouter, useRoute } from "vue-router";
 import { Search, Sun, SunOne } from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import { emitter } from "@/utils/common";
+import { getImages } from "@/services/image";
 
 const route = useRoute();
 const router = useRouter();
-const searchInput = ref<string>("");
 const searchInputRef = ref<HTMLInputElement>();
+const searchInput = ref<string>("");
 const loadingFlag = ref<boolean>(false);
 const isMouseOver = ref<boolean>(false);
 const viewPage = ref<string>(route.fullPath);
-
+const colorSet = ref<string>(`url(${new URL("/home-bg.png", import.meta.url).href})`);
+const bgImage = ref<User.Images[]>([]);
+const active = ref<boolean>(false);
 const theme = inject<Ref<GlobalTheme | null>>("theme");
 const darkTheme = computed(() => !(theme?.value === null));
+
+const changeBlur = (status: boolean) => {
+  isMouseOver.value = status;
+  if (status) {
+    setTimeout(() => {
+      searchInputRef.value?.focus();
+    });
+  }
+};
+
+const clickImage = (data: User.Images) => {
+  console.log(data.url);
+  colorSet.value = `url(${new URL(data.url.includes("http") ? data.url : `/${data.url}`, import.meta.url).href})`;
+};
+
+const changeActive = (status: boolean) => {
+  active.value = status;
+};
 
 const railStyle = ({ checked }: { checked: boolean }) => {
   const style: CSSProperties = {};
@@ -149,6 +208,12 @@ onMounted(() => {
   emitter.on("closeLoading", () => {
     loadingFlag.value = false;
   });
+
+  getImages().then((resp) => {
+    if (resp) {
+      bgImage.value = resp.data;
+    }
+  });
 });
 
 const changePath = (url: string) => {
@@ -167,18 +232,26 @@ const submit = () => {
 </script>
 
 <style scoped lang="less">
+.carousel-img {
+  width: 100%;
+  // height: 240px;
+  object-fit: cover;
+}
 .headerStyleLine {
   font-size: 15px;
 }
 
 .darkStyle {
-  background: url("/home-bg.png") no-repeat center center;
+  // background: url("/home-bg.png") no-repeat center center;
+  background-image: v-bind(colorSet);
+  background-position: center;
   height: auto;
   width: 100%;
   background-size: cover;
   background-attachment: scroll;
   z-index: 1;
   margin-bottom: 20px;
+  // color: #fff;
 }
 
 .footerStyle {
