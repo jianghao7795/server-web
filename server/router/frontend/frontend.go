@@ -26,4 +26,8 @@ func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
 		frontend.GET("/getArticleComment/:articleId", frontendCommentApi.GetCommentByArticleId)
 		frontend.POST("/createdComment", frontendCommentApi.CreatedComment)
 	}
+	var frontendUserApi = v1.ApiGroupApp.FrontendApiGroup.FrontendUser
+	{
+		frontend.GET("/getImages", frontendUserApi.GetImages)
+	}
 }

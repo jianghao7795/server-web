@@ -4,7 +4,6 @@ import (
 	"server/global"
 	appReq "server/model/app/request"
 	"server/model/common/response"
-	"server/service"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -12,8 +11,6 @@ import (
 )
 
 type FrontendTagApi struct{}
-
-var frontendService = service.ServiceGroupApp.FrontendServiceGroup
 
 func (appTabApi *FrontendTagApi) GetTagList(c *gin.Context) {
 	var pageInfo appReq.TagSearch

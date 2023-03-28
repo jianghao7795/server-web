@@ -4,13 +4,12 @@ import "server/global"
 
 type User struct {
 	global.MODEL
-	Username  string `json:"username" form:"username"`
-	NickName  string `json:"nick_name" form:"nick_name"`
-	HeaderImg string `json:"header_img" form:"header_img"`
-	Phone     string `json:"phone" form:"phone"`
-	Email     string `json:"email" form:"email"`
+	Name         string `json:"name" form:"name" gorm:"column:name;comment:用户名;size:50;"`
+	HeadImg      string `json:"headImg" form:"headImg" gorm:"column:head_img;comment:头像;"`
+	Introduction string `json:"introduction" form:"introduction" gorm:"column:introduction;comment:简介;size:255;"`
+	Content      string `json:"content" form:"content" gorm:"column:content;comment:用户信息;size:255;"`
 }
 
 func (User) TableName() string {
-	return "sys_users"
+	return "user"
 }

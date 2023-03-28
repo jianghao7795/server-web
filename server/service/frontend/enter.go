@@ -4,4 +4,5 @@ type ServiceGroup struct {
 	FrontendArticle
 	FrontendTag
 	Comment
+	FrontendImages
 }

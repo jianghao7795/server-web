@@ -13,6 +13,7 @@ type User struct {
 	HeadImg      string `json:"headImg" form:"headImg" gorm:"column:head_img;comment:头像;"`
 	Introduction string `json:"introduction" form:"introduction" gorm:"column:introduction;comment:简介;size:255;"`
 	Content      string `json:"content" form:"content" gorm:"column:content;comment:用户信息;size:255;"`
+	Password     string `json:"password" form:"password" gorm:"column:name;comment:密码;size:255;"`
 }
 
 // TableName User 表名
