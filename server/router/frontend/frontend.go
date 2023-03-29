@@ -29,5 +29,6 @@ func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
 	var frontendUserApi = v1.ApiGroupApp.FrontendApiGroup.FrontendUser
 	{
 		frontend.GET("/getImages", frontendUserApi.GetImages)
+		frontend.POST("/login", frontendUserApi.Login)
 	}
 }

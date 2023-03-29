@@ -110,6 +110,7 @@
       <n-drawer-content title="登录">
         <n-form
           ref="formRef"
+          :model="userInfo"
           :rules="rules"
           label-placement="left"
           label-width="auto"
@@ -122,7 +123,7 @@
           <n-form-item path="password">
             <n-input type="password" v-model:value="userInfo.password" placeholder="密码" />
           </n-form-item>
-          <div><n-button type="primary" :block="true">登录</n-button></div>
+          <div><n-button type="primary" :block="true" @click="() => login()">登录</n-button></div>
         </n-form>
       </n-drawer-content>
     </n-drawer>
@@ -207,6 +208,10 @@ const changeActive = (status: boolean) => {
 
 const changeLogin = (status: boolean) => {
   loginStatus.value = status;
+};
+
+const login = () => {
+  userStore.logins({ name: userInfo.value.name, password: userInfo.value.password });
 };
 
 const railStyle = ({ checked }: { checked: boolean }) => {

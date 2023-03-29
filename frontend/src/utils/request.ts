@@ -35,7 +35,16 @@ service.interceptors.request.use(
 /* 响应拦截器 */
 service.interceptors.response.use(
   (response: AxiosResponse<Result>) => {
-    // console.log(response);
+    console.log(response);
+    if (!response?.data) {
+      window.$notification.error({
+        duration: 10000,
+        keepAliveOnHover: true,
+        content: `返回错误: 服务器错误`,
+        meta: 200,
+      });
+      return Promise.reject(new Error("服务器错误"));
+    }
     const { code, msg } = response.data;
     emitter.emit("closeLoading");
     // 根据自定义错误码判断请求是否成功

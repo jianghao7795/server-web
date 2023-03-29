@@ -49,7 +49,7 @@
           <el-input v-model="formData.name" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="密码:" v-show="!(type === 'update')">
-          <el-input v-model="formData.password" clearable placeholder="请输入" />
+          <el-input type="password" show-password v-model="formData.password" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="头像:">
           <el-input v-model="formData.headImg" clearable placeholder="请输入" />
