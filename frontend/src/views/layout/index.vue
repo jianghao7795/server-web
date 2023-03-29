@@ -137,7 +137,7 @@ export default {
 
 <script setup lang="ts">
 import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch, inject, type Ref, computed } from "vue";
-import type { GlobalTheme } from "naive-ui";
+import type { GlobalTheme, FormInst } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
 import { Search, Sun, SunOne } from "@icon-park/vue-next";
 import dayjs from "dayjs";
@@ -161,6 +161,8 @@ const loginStatus = ref<boolean>(false);
 // 主题状态
 const theme = inject<Ref<GlobalTheme | null>>("theme");
 const darkTheme = computed(() => !(theme?.value === null));
+//form Ref
+const formRef = ref<FormInst | null>(null);
 
 // 是否登录
 const isLogin = computed(() => !!userStore.user.ID);

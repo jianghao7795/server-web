@@ -43,10 +43,13 @@
         <el-pagination layout="total, sizes, prev, pager, next, jumper" :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </div>
-    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="弹窗操作">
+    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="用户">
       <el-form :model="formData" label-position="right" label-width="80px">
         <el-form-item label="用户名:">
           <el-input v-model="formData.name" clearable placeholder="请输入" />
+        </el-form-item>
+        <el-form-item label="密码:" v-show="!(type === 'update')">
+          <el-input v-model="formData.password" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="头像:">
           <el-input v-model="formData.headImg" clearable placeholder="请输入" />
@@ -88,6 +91,7 @@ const formData = ref({
   headImg: "",
   introduction: "",
   content: "",
+  password: "",
 });
 
 // =========== 表格控制部分 ===========
@@ -137,10 +141,10 @@ getTableData();
 // ============== 表格控制部分结束 ===============
 
 // 获取需要的字典 可能为空 按需保留
-const setOptions = async () => {};
+// const setOptions = async () => {};
 
 // 获取需要的字典 可能为空 按需保留
-setOptions();
+// setOptions();
 
 // 多选数据
 const multipleSelection = ref([]);

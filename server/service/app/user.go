@@ -2,10 +2,12 @@ package app
 
 import (
 	"errors"
+
 	"server/global"
 	"server/model/app"
 	appReq "server/model/app/request"
 	"server/model/common/request"
+	"server/utils"
 
 	"gorm.io/gorm"
 )
@@ -16,6 +18,11 @@ type UserService struct {
 // CreateUser 创建User记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (userService *UserService) CreateUser(user app.User) (err error) {
+	var userCurrent app.User
+	if !errors.Is(global.DB.Where("name = ?", user.Name).First(&userCurrent).Error, gorm.ErrRecordNotFound) { // 判断用户名是否注册
+		return errors.New("用户名已注册")
+	}
+	user.Password = utils.MD5V([]byte(user.Password))
 	err = global.DB.Create(&user).Error
 	return err
 }
