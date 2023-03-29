@@ -35,7 +35,7 @@ service.interceptors.request.use(
 /* 响应拦截器 */
 service.interceptors.response.use(
   (response: AxiosResponse<Result>) => {
-    console.log(response);
+    // console.log(response);
     if (!response?.data) {
       window.$notification.error({
         duration: 10000,
