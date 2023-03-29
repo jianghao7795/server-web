@@ -40,8 +40,9 @@
           <template #header>
             <div class="headerStyleLine">
               <n-space>
-                <b @click="changePath('/')" style="cursor: pointer">吴昊</b>
-                <span style="cursor: pointer" @click="() => changeActive(true)">更换背景图片</span>
+                <b @click="() => changePath('/')" v-if="isLogin" style="cursor: pointer">{{ userStore.user.name }}</b>
+                <b @click="() => changeLogin(true)" v-else style="cursor: pointer">登录</b>
+                <span style="cursor: pointer" @click="() => changeActive(true)" v-if="isLogin">更换背景图片</span>
               </n-space>
             </div>
           </template>
@@ -102,28 +103,27 @@
               确定更换背景图片
             </n-popconfirm>
           </n-carousel-item>
-
-          <!-- <template #arrow="{ prev, next }">
-            <div class="custom-arrow">
-              <button type="button" class="custom-arrow--left" @click="prev">
-                <n-icon><ArrowBack /></n-icon>
-              </button>
-              <button type="button" class="custom-arrow--right" @click="next">
-                <n-icon><ArrowForward /></n-icon>
-              </button>
-            </div>
-          </template>
-          <template #dots="{ total, currentIndex, to }">
-            <ul class="custom-dots">
-              <li
-                v-for="index of total"
-                :key="index"
-                :class="{ ['is-active']: currentIndex === index - 1 }"
-                @click="to(index - 1)"
-              />
-            </ul>
-          </template> -->
         </n-carousel>
+      </n-drawer-content>
+    </n-drawer>
+    <n-drawer v-model:show="loginStatus" :width="502" placement="left">
+      <n-drawer-content title="登录">
+        <n-form
+          ref="formRef"
+          :rules="rules"
+          label-placement="left"
+          label-width="auto"
+          require-mark-placement="right-hanging"
+          size="large"
+        >
+          <n-form-item path="name">
+            <n-input type="text" v-model:value="userInfo.name" placeholder="账号" />
+          </n-form-item>
+          <n-form-item path="password">
+            <n-input type="password" v-model:value="userInfo.password" placeholder="密码" />
+          </n-form-item>
+          <div><n-button type="primary" :block="true">登录</n-button></div>
+        </n-form>
       </n-drawer-content>
     </n-drawer>
   </div>
@@ -139,12 +139,13 @@ export default {
 import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch, inject, type Ref, computed } from "vue";
 import type { GlobalTheme } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
-// import { NCard, NSpace, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader, NInput, NSpin, NIcon, NSwitch, NTabs, NTabPane } from "naive-ui";
 import { Search, Sun, SunOne } from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import { emitter } from "@/utils/common";
 import { getImages } from "@/services/image";
+import { useUserStore } from "@/stores/user";
 
+const userStore = useUserStore();
 const route = useRoute();
 const router = useRouter();
 const searchInputRef = ref<HTMLInputElement>();
@@ -155,8 +156,35 @@ const viewPage = ref<string>(route.fullPath);
 const colorSet = ref<string>(`url(${new URL("/home-bg.png", import.meta.url).href})`);
 const bgImage = ref<User.Images[]>([]);
 const active = ref<boolean>(false);
+//登录页面的status
+const loginStatus = ref<boolean>(false);
+// 主题状态
 const theme = inject<Ref<GlobalTheme | null>>("theme");
 const darkTheme = computed(() => !(theme?.value === null));
+
+// 是否登录
+const isLogin = computed(() => !!userStore.user.ID);
+const userInfo = ref<User.UserInfo>({
+  ID: 0,
+  name: "",
+  introduction: "",
+  head_img: "",
+  content: "",
+  password: "",
+});
+
+const rules = {
+  name: {
+    required: true,
+    trigger: ["blur", "input"],
+    message: "请输入账号",
+  },
+  password: {
+    required: true,
+    trigger: ["blur", "input"],
+    message: "请输入密码",
+  },
+};
 
 const changeBlur = (status: boolean) => {
   isMouseOver.value = status;
@@ -168,12 +196,15 @@ const changeBlur = (status: boolean) => {
 };
 
 const changeImages = (data: User.Images) => {
-  console.log(data.url);
   colorSet.value = `url(${new URL(data.url.includes("http") ? data.url : `/${data.url}`, import.meta.url).href})`;
 };
 
 const changeActive = (status: boolean) => {
   active.value = status;
+};
+
+const changeLogin = (status: boolean) => {
+  loginStatus.value = status;
 };
 
 const railStyle = ({ checked }: { checked: boolean }) => {
