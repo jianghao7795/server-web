@@ -91,7 +91,7 @@
       <n-drawer-content title="更换背景图片">
         <n-carousel :space-between="30" :loop="false" slides-per-view="auto" centered-slides draggable>
           <n-carousel-item style="width: 30%" v-for="item in bgImage" :key="item.ID">
-            <n-popconfirm @positive-click="() => {}" positive-text="确认" negative-text="取消">
+            <n-popconfirm positive-text="确认" negative-text="取消" :on-positive-click="() => changeImages(item)">
               <template #trigger>
                 <img
                   :src="item.url.includes('http') ? item.url : `/${item.url}`"
@@ -167,7 +167,7 @@ const changeBlur = (status: boolean) => {
   }
 };
 
-const clickImage = (data: User.Images) => {
+const changeImages = (data: User.Images) => {
   console.log(data.url);
   colorSet.value = `url(${new URL(data.url.includes("http") ? data.url : `/${data.url}`, import.meta.url).href})`;
 };

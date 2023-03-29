@@ -8,6 +8,7 @@ import (
 	"server/global"
 	"server/model/common/request"
 	"server/model/example"
+	fileDimensionReq "server/model/example/request"
 	"server/utils/upload"
 )
 
@@ -88,7 +89,7 @@ func (e *FileUploadAndDownloadService) GetFileRecordInfoList(info request.PageIn
 //@param: header *multipart.FileHeader, noSave string
 //@return: err error, file model.ExaFileUploadAndDownload
 
-func (e *FileUploadAndDownloadService) UploadFile(header *multipart.FileHeader, noSave string) (file example.ExaFileUploadAndDownload, err error) {
+func (e *FileUploadAndDownloadService) UploadFile(header *multipart.FileHeader, noSave string, fileDimension fileDimensionReq.FileDimension) (file example.ExaFileUploadAndDownload, err error) {
 	oss := upload.NewOss()
 	filePath, key, uploadErr := oss.UploadFile(header)
 	if uploadErr != nil {
@@ -97,10 +98,13 @@ func (e *FileUploadAndDownloadService) UploadFile(header *multipart.FileHeader, 
 	if noSave == "0" {
 		s := strings.Split(header.Filename, ".")
 		f := example.ExaFileUploadAndDownload{
-			Url:  filePath,
-			Name: header.Filename,
-			Tag:  s[len(s)-1],
-			Key:  key,
+			Url:        filePath,
+			Name:       header.Filename,
+			Tag:        s[len(s)-1],
+			Key:        key,
+			Width:      fileDimension.Width,
+			Height:     fileDimension.Height,
+			Proportion: fileDimension.Proportion,
 		}
 		return f, e.Upload(f)
 	}
