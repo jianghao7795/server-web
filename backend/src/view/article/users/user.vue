@@ -26,7 +26,14 @@
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="ID" prop="ID" width="80" />
         <el-table-column align="left" label="用户名" prop="name" width="120" />
-        <el-table-column align="left" label="头像" prop="headImg" width="120" />
+        <el-table-column align="left" label="背景图" prop="headImg" width="120">
+          <template #default="scope">
+            <div>
+              <!-- <viewer :images="[scope.row.url]"><CustomPic pic-type="file" :pic-src="scope.row.url" /></viewer> -->
+              <CustomPic pic-type="file" :pic-src="scope.row.headImg" />
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column align="left" label="简介" prop="introduction" width="120" />
         <el-table-column align="left" label="用户信息" prop="content" width="120" />
         <el-table-column align="left" label="创建时间" width="180">
@@ -79,7 +86,7 @@ export default {
 
 <script setup>
 import { createUser, deleteUser, deleteUserByIds, updateUser, findUser, getUserList } from "@/api/users";
-
+import CustomPic from "@/components/customPic/index.vue";
 // 全量引入格式化工具 请按需保留
 import { formatDate } from "@/utils/format";
 import { ElMessage, ElMessageBox } from "element-plus";
