@@ -78,7 +78,7 @@
       <n-layout-content position="static" class="middle-view">
         <NSpin :show="loadingFlag">
           <RouterView v-slot="{ Component, route }">
-            <transition mode="out-in" name="el-fade-in-linear" type="transition" :appear="true">
+            <transition mode="out-in" name="fade-in-linear" type="transition" :appear="true">
               <keep-alive v-bind:exclude="['ArticleDetail', 'Article']">
                 <component :is="Component" :key="route.name" />
               </keep-alive>
@@ -390,5 +390,17 @@ a::before {
 
 .middle-view {
   min-height: calc(100% - 443px);
+}
+</style>
+
+<style>
+.fade-in-linear-enter-active,
+.fade-in-linear-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-in-linear-enter-from,
+.fade-in-linear-leave-to {
+  opacity: 0;
 }
 </style>
