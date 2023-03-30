@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { login } from "@/services/user";
+import { login, getCurrentUser } from "@/services/user";
 
 export const useUserStore = defineStore("user", {
   state: (): { currentUser: User.CurrentUser; loading: boolean } => ({
@@ -25,6 +25,21 @@ export const useUserStore = defineStore("user", {
       } catch (e) {
         this.loading = false;
         window.$message.error("登录失败");
+      }
+    },
+    async getUser() {
+      const token = localStorage.getItem("token");
+      if (!this.currentUser.token && token) {
+        this.currentUser.token = token;
+      } else {
+        return;
+      }
+      try {
+        const info = await getCurrentUser();
+        this.currentUser.user = info.data.user;
+        this.currentUser.exportAt = info.data.exportAt;
+      } catch (e) {
+        window.$message.error("个人信息获取失败，请重新登录");
       }
     },
   },

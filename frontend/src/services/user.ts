@@ -3,3 +3,7 @@ import { http } from "@/utils/request";
 export function login(data: User.Login) {
   return http.post<Global.Response<User.CurrentUser>, User.Login>("/login", data);
 }
+
+export function getCurrentUser() {
+  return http.get<Global.Response<User.CurrentUser>>("/getCurrentUser");
+}

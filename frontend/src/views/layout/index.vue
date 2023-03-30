@@ -41,7 +41,9 @@
             <div class="headerStyleLine">
               <n-space>
                 <b @click="() => changePath('/')" v-if="isLogin" style="cursor: pointer">
-                  {{ userStore.currentUser.user.name }}
+                  <n-dropdown :options="options" placement="bottom-start" trigger="click" @select="userLogout">
+                    {{ userStore.currentUser.user.name }}
+                  </n-dropdown>
                 </b>
                 <b @click="() => changeLogin(true)" v-else style="cursor: pointer">登录</b>
                 <span style="cursor: pointer" @click="() => changeActive(true)" v-if="isLogin">更换背景图片</span>
@@ -141,10 +143,11 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch, inject, type Ref, computed } from "vue";
+import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch, inject, type Ref, computed, h } from "vue";
 import type { GlobalTheme, FormInst } from "naive-ui";
+import { NIcon } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
-import { Search, Sun, SunOne } from "@icon-park/vue-next";
+import { Search, Sun, SunOne, Logout } from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import { emitter } from "@/utils/common";
 import { getImages } from "@/services/image";
@@ -193,6 +196,31 @@ const rules = {
   },
 };
 
+const options = [
+  {
+    label: "退出登录",
+    key: "logout",
+    icon: () => {
+      return h(NIcon, null, {
+        default: () =>
+          h(Logout, {
+            theme: "outline",
+            size: 26,
+            fill: "#333",
+            strokeWidth: 3,
+          }),
+      });
+    },
+  },
+];
+
+const userLogout = (key: string | number) => {
+  if (key === "logout") {
+    userStore.$reset();
+    localStorage.removeItem("token");
+  }
+};
+//<logout theme="outline" size="26" fill="#333" :strokeWidth="3"/>
 const changeBlur = (status: boolean) => {
   isMouseOver.value = status;
   if (status) {
@@ -258,6 +286,7 @@ onMounted(() => {
       bgImage.value = resp.data;
     }
   });
+  userStore.getUser();
 });
 
 const changePath = (url: string) => {

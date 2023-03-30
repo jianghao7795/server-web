@@ -5,6 +5,7 @@ import (
 	"server/model/common/response"
 	loginRequest "server/model/frontend/request"
 	"server/utils"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -26,4 +27,19 @@ func (u *FrontendUser) Login(c *gin.Context) {
 	} else {
 		response.OkWithDetailed(userInfo, "获取成功", c)
 	}
+}
+
+func (u *FrontendUser) GetCurrent(c *gin.Context) {
+	token := c.Request.Header.Get("authorization")
+	if token == "" {
+		response.FailWithMessage("请登录", c)
+		return
+	}
+	var tokenSplit = strings.Split(token, " ")
+	userInfo, err := frontendService.GetUser(tokenSplit[1])
+	if err != nil {
+		response.FailWithMessage("token失效，请重新登录", c)
+		return
+	}
+	response.OkWithDetailed(userInfo, "获取成功", c)
 }

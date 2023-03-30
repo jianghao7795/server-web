@@ -40,6 +40,18 @@ func (u *FrontendUser) Login(data frontendRequest.LoginForm) (userInter frontend
 	return
 }
 
+func (u *FrontendUser) GetUser(tokenString string) (userInter frontendResponse.LoginResponse, err error) {
+	myClaims, err := ParseToken(tokenString)
+	if err != nil {
+		return
+	}
+	var userInfo frontend.User
+	err = global.DB.Where("name = ? and password = ?", myClaims.Name, myClaims.Password).First(&userInfo).Error
+	userInter.User = userInfo
+	userInter.ExpiresAt = myClaims.RegisteredClaims.ExpiresAt.Unix()
+	return
+}
+
 func MakeToken(data frontendRequest.LoginForm) (tokenString string, expiresAt int64, err error) {
 	claim := MyClaims{
 		Name:     data.Name,
