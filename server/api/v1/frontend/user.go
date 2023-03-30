@@ -3,6 +3,7 @@ package frontend
 import (
 	"server/global"
 	"server/model/common/response"
+	"server/model/frontend"
 	loginRequest "server/model/frontend/request"
 	"server/utils"
 	"strings"
@@ -42,4 +43,16 @@ func (u *FrontendUser) GetCurrent(c *gin.Context) {
 		return
 	}
 	response.OkWithDetailed(userInfo, "获取成功", c)
+}
+
+func (u *FrontendUser) UpdateUserBackgroudImage(c *gin.Context) {
+	var user frontend.User
+	_ = c.ShouldBindJSON(&user)
+
+	err := frontendService.UpdateUserBackgroudImage(user)
+	if err != nil {
+		response.FailWithMessage("更新失败："+err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(nil, "更新成功", c)
 }

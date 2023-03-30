@@ -31,5 +31,6 @@ func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
 		frontend.GET("getImages", frontendUserApi.GetImages)
 		frontend.POST("login", frontendUserApi.Login)
 		frontend.GET("getCurrentUser", frontendUserApi.GetCurrent)
+		frontend.PUT("updateBackgroundImage", frontendUserApi.UpdateUserBackgroudImage)
 	}
 }

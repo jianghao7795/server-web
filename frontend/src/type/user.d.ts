@@ -14,8 +14,13 @@ declare namespace User {
   };
 
   export type Images = {
-    name: string;
     url: string;
+    name: string;
+    ID: number;
+  };
+
+  export type UpdateImages = {
+    head_img: string;
     ID: number;
   };
 

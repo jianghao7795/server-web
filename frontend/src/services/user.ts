@@ -7,3 +7,7 @@ export function login(data: User.Login) {
 export function getCurrentUser() {
   return http.get<Global.Response<User.CurrentUser>>("/getCurrentUser");
 }
+
+export function updateBackgroundImage(data: User.UpdateImages) {
+  return http.put<Global.Response<string>>("/updateBackgroundImage", data);
+}

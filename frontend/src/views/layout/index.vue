@@ -152,6 +152,7 @@ import dayjs from "dayjs";
 import { emitter } from "@/utils/common";
 import { getImages } from "@/services/image";
 import { useUserStore } from "@/stores/user";
+import { updateBackgroundImage } from "@/services/user";
 
 const userStore = useUserStore();
 const route = useRoute();
@@ -218,6 +219,7 @@ const userLogout = (key: string | number) => {
   if (key === "logout") {
     userStore.$reset();
     localStorage.removeItem("token");
+    colorSet.value = `url(${new URL("/home-bg.png", import.meta.url).href})`;
   }
 };
 //<logout theme="outline" size="26" fill="#333" :strokeWidth="3"/>
@@ -230,7 +232,10 @@ const changeBlur = (status: boolean) => {
   }
 };
 
-const changeImages = (data: User.Images) => {
+const changeImages = async (data: User.Images) => {
+  await updateBackgroundImage({ ID: userStore.currentUser.user.ID, head_img: data.url });
+  window.$message.success("更换成功");
+  active.value = false;
   colorSet.value = `url(${new URL(data.url.includes("http") ? data.url : `/${data.url}`, import.meta.url).href})`;
 };
 
@@ -243,7 +248,12 @@ const changeLogin = (status: boolean) => {
 };
 
 const login = () => {
-  userStore.logins({ name: userInfo.value.name, password: userInfo.value.password }, () => {
+  userStore.logins({ name: userInfo.value.name, password: userInfo.value.password }, (imageString: string) => {
+    if (!!imageString) {
+      colorSet.value = `url(${
+        new URL(imageString.includes("http") ? imageString : `/${imageString}`, import.meta.url).href
+      })`;
+    }
     loginStatus.value = false;
     userInfo.value = {
       ID: 0,
@@ -294,7 +304,9 @@ onMounted(() => {
       bgImage.value = resp.data;
     }
   });
-  userStore.getUser();
+  userStore.getUser((head_img: string) => {
+    colorSet.value = `url(${new URL(head_img.includes("http") ? head_img : `/${head_img}`, import.meta.url).href})`;
+  });
 });
 
 const changePath = (url: string) => {

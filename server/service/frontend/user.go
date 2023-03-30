@@ -19,6 +19,11 @@ type MyClaims struct {
 	jwt.RegisteredClaims        // 注意!这是jwt-go的v4版本新增的，原先是jwt.StandardClaims
 }
 
+type UpdateImage struct {
+	ID        int
+	HeapImage string
+}
+
 var MySecret = []byte(global.CONFIG.JWT.SigningKey)
 
 type FrontendUser struct{}
@@ -49,6 +54,11 @@ func (u *FrontendUser) GetUser(tokenString string) (userInter frontendResponse.L
 	err = global.DB.Where("name = ? and password = ?", myClaims.Name, myClaims.Password).First(&userInfo).Error
 	userInter.User = userInfo
 	userInter.ExpiresAt = myClaims.RegisteredClaims.ExpiresAt.Unix()
+	return
+}
+
+func (u *FrontendUser) UpdateUserBackgroudImage(data frontend.User) (err error) {
+	err = global.DB.Model(&frontend.User{}).Where("id = ?", data.ID).Update("head_img", data.HeadImg).Error
 	return
 }
 
