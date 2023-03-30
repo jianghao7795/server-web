@@ -1,24 +1,31 @@
 <template>
   <div class="view-content">
     <div class="view-margin">
-      <h1 class="view-center"><b>{{ articleStore.detail?.title }}</b></h1>
+      <h1 class="view-center">
+        <b>{{ articleStore.detail?.title }}</b>
+      </h1>
       <h3>简介：{{ articleStore.detail?.title }}</h3>
       <h4>
         <NSpace style="width: 80%">
           标签：
-          <n-tag size="small" round v-for="(item, index) in articleStore.detail?.tags" :type="colorIndex(index)">{{
-            item.name }}</n-tag>
+          <n-tag size="small" round v-for="(item, index) in articleStore.detail?.tags" :type="colorIndex(index)">
+            {{ item.name }}
+          </n-tag>
         </NSpace>
       </h4>
       <!-- <div>作者：{{ detail?.user?.nick_name }}</div> -->
       <div>日期：{{ changeDate(articleStore.detail?.CreatedAt) }}</div>
       <n-divider />
-      <MdEditor :style="{ width: '100%' }" :model-value="articleStore.detail?.content" :theme="theme ? 'dark' : 'light'"
-        :pageFullscreen="true" :previewOnly="true"></MdEditor>
+      <MdEditor
+        :style="{ width: '100%' }"
+        :model-value="articleStore.detail?.content"
+        :theme="theme ? 'dark' : 'light'"
+        :pageFullscreen="true"
+        :previewOnly="true"
+      ></MdEditor>
     </div>
     <div @click="() => focusInput(true)">
-      <n-input placeholder="评论" type="textarea" size="small" :autosize="true" v-model:value="inputRef">
-      </n-input>
+      <n-input placeholder="评论" type="textarea" size="small" :autosize="true" v-model:value="inputRef"></n-input>
       <div class="comment-line" v-show="isComment">
         <div></div>
         <div>
@@ -28,13 +35,16 @@
     </div>
     <a-comment v-for="items in comment" :key="items.ID">
       <template #actions>
-        <a key="comment-nested-reply-to" v-if="!isCommentChildren[items.ID]"
-          @click="() => isCommentChildren[items.ID as number] = true">回复</a>
+        <a
+          key="comment-nested-reply-to"
+          v-if="!isCommentChildren[items.ID]"
+          @click="() => isCommentChildren[items.ID as number] = true"
+        >
+          回复
+        </a>
         <n-input-group v-else>
           <n-input v-model:value="inputChildren" placeholder="评论" />
-          <n-button type="primary" ghost @click="submit(items.ID, items.children)">
-            回复
-          </n-button>
+          <n-button type="primary" ghost @click="submit(items.ID, items.children)">回复</n-button>
         </n-input-group>
       </template>
       <template #author>
@@ -60,7 +70,6 @@
             {{ item.content }}
           </p>
         </template>
-
       </a-comment>
     </a-comment>
   </div>
@@ -81,7 +90,7 @@ import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 import { useArticleStore } from "@/stores/article";
 import { getArticleComment, createdComment } from "@/services/comment";
-import { useMessage } from 'naive-ui';
+import { useMessage } from "naive-ui";
 
 const message = useMessage();
 
@@ -89,22 +98,22 @@ const route = useRoute();
 const theme = inject("theme");
 const articleStore = useArticleStore();
 const isComment = ref<boolean>(false);
-const isCommentChildren = ref<{ [id: number]: boolean }>({})
+const isCommentChildren = ref<{ [id: number]: boolean }>({});
 
-const comment = ref<Comment.comment[]>([])
-const inputRef = ref<string>('')
-const inputChildren = ref<string>('')
+const comment = ref<Comment.comment[]>([]);
+const inputRef = ref<string>("");
+const inputChildren = ref<string>("");
 
 const focusInput = (isFouse: boolean) => {
   isComment.value = isFouse;
-}
+};
 
 const submit = async (parentId: number, children: Comment.comment[]) => {
-  if (parentId === 0 && inputRef.value === '') {
+  if (parentId === 0 && inputRef.value === "") {
     message.warning("请输入评论");
     return;
   }
-  if (parentId !== 0 && inputChildren.value === '') {
+  if (parentId !== 0 && inputChildren.value === "") {
     message.warning("请输入评论");
     return;
   }
@@ -113,22 +122,36 @@ const submit = async (parentId: number, children: Comment.comment[]) => {
   //   inputRef.value = '';
   //   focusInput(false);
   // }, 3000);
-  const resp = await createdComment({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId, user_id: 0, user_name: '测试' } as Comment.comment)
+  const resp = await createdComment({
+    content: inputRef.value || inputChildren.value,
+    articleId: Number(route.params.id).valueOf(),
+    parentId,
+    user_id: 0,
+    user_name: "测试",
+  } as Comment.comment);
   if (resp?.code === 0) {
-    message.success('评论成功');
+    message.success("评论成功");
     setTimeout(() => {
-      let child = undefined
+      let child = undefined;
       if (parentId === 0) {
         child = [];
       }
       isComment.value = false;
       isCommentChildren.value[parentId] = false;
-      children.unshift({ content: inputRef.value || inputChildren.value, articleId: Number(route.params.id).valueOf(), parentId, user_id: 0, user_name: '测试', ID: resp.data.id, children: child } as Comment.comment);
-      inputRef.value = '';
-      inputChildren.value = '';
+      children.unshift({
+        content: inputRef.value || inputChildren.value,
+        articleId: Number(route.params.id).valueOf(),
+        parentId,
+        user_id: 0,
+        user_name: "测试",
+        ID: resp.data.id,
+        children: child,
+      } as Comment.comment);
+      inputRef.value = "";
+      inputChildren.value = "";
     }, 1000);
   }
-}
+};
 
 const changeDate = (timeData?: string): string => {
   return !!timeData ? dayjs(timeData).format("YYYY-MM-DD") : "";
@@ -136,9 +159,10 @@ const changeDate = (timeData?: string): string => {
 
 onMounted(async () => {
   const params = route.params;
+  console.log(params);
   articleStore.getDetail({ id: params.id as string });
-  const resp = await getArticleComment({ articleId: params.id as string })
-  comment.value = resp.data
+  const resp = await getArticleComment({ articleId: params.id as string });
+  comment.value = resp.data;
   // console.log(route.params, params);
   //   console.log(resp);
 });

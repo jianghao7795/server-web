@@ -70,18 +70,16 @@
               @blur="() => changeBlur(false)"
               @keyup.enter="submit"
             />
-            <span class="subheading">
-              <logout theme="outline" size="26" fill="#ddd" :strokeWidth="3" />
-              愈有知，愈无知。
-            </span>
+            <span class="subheading">愈有知，愈无知。</span>
           </div>
         </n-card>
       </n-layout-header>
+      <!-- include exclude 包含和不包含 字符串是组件的name -->
       <n-layout-content position="static" class="middle-view">
         <NSpin :show="loadingFlag">
           <RouterView v-slot="{ Component, route }">
             <transition mode="out-in" name="el-fade-in-linear" type="transition" :appear="true">
-              <keep-alive>
+              <keep-alive v-bind:exclude="['ArticleDetail', 'Article']">
                 <component :is="Component" :key="route.name" />
               </keep-alive>
             </transition>
