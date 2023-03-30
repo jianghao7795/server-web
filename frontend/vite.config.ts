@@ -42,8 +42,9 @@ export default defineConfig(({ mode }: { mode: string }) => {
     root: "./", // js导入的资源路径，src
     server: {
       // 如果使用docker-compose开发模式，设置为false
+      cors: true,
+      hmr: true,
       port: Number(env.VITE_CLI_PORT).valueOf(),
-      host: "0.0.0.0",
       proxy: {
         // 把key的路径代理到target位置
         // detail: https://cli.vuejs.org/config/#devserver-proxy
@@ -54,13 +55,6 @@ export default defineConfig(({ mode }: { mode: string }) => {
           secure: true,
           rewrite: (path) => path.replace(new RegExp(`^${env.VITE_BASE_API}`), "/frontend"),
           // rewrite: (path) => path.replace("", ""),
-        },
-        "/upload": {
-          target: `${env.VITE_BASE_PATH}:${env.VITE_SERVER_PORT}`, // 目标服务器 代理的地址
-          changeOrigin: true, // 允许跨域
-          secure: true, // 支持https
-          // pathRewrite: { "^/api": "/" }, // 相当于用'/api'代替target里面的地址，调接口时用/api代替
-          rewrite: (path) => path.replace(new RegExp("^" + process.env.VITE_BASE_API), ""),
         },
       },
     },
