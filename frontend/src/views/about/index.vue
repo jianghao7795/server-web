@@ -1,7 +1,8 @@
 <template>
   <div class="view-content">
     <h1 class="view-center">关于我</h1>
-    <p v-if="userStore.currentUser.user.ID !== 0">{{ userStore.currentUser.user.content }}</p>
+    <h4>介绍: {{ userStore.currentUser.user.introduction }}</h4>
+    <p v-if="userStore.currentUser.user.ID !== 0">描述：{{ userStore.currentUser.user.content }}</p>
   </div>
 </template>
 
