@@ -70,7 +70,10 @@
               @blur="() => changeBlur(false)"
               @keyup.enter="submit"
             />
-            <span class="subheading">愈有知，愈无知。</span>
+            <span class="subheading">
+              <logout theme="outline" size="26" fill="#ddd" :strokeWidth="3" />
+              愈有知，愈无知。
+            </span>
           </div>
         </n-card>
       </n-layout-header>
@@ -144,7 +147,7 @@ export default {
 
 <script setup lang="ts">
 import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch, inject, type Ref, computed, h } from "vue";
-import type { GlobalTheme, FormInst } from "naive-ui";
+import type { GlobalTheme, FormInst, DropdownOption } from "naive-ui";
 import { NIcon } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
 import { Search, Sun, SunOne, Logout } from "@icon-park/vue-next";
@@ -196,24 +199,25 @@ const rules = {
     message: "请输入密码",
   },
 };
-
-const options = [
+//
+const options = ref<DropdownOption[]>([
   {
     label: "退出登录",
     key: "logout",
     icon: () => {
+      console.log(darkTheme.value);
       return h(NIcon, null, {
         default: () =>
           h(Logout, {
             theme: "outline",
-            size: 26,
-            fill: "#333",
+            size: "26",
+            fill: darkTheme.value ? "#ddd" : "#333",
             strokeWidth: 3,
           }),
       });
     },
   },
-];
+]);
 
 const userLogout = (key: string | number) => {
   if (key === "logout") {
@@ -222,6 +226,7 @@ const userLogout = (key: string | number) => {
     colorSet.value = `url(${new URL("/home-bg.png", import.meta.url).href})`;
   }
 };
+//<logout theme="outline" size="26" fill="#ddd" :strokeWidth="3"/>
 //<logout theme="outline" size="26" fill="#333" :strokeWidth="3"/>
 const changeBlur = (status: boolean) => {
   isMouseOver.value = status;
