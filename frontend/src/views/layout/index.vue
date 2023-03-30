@@ -245,6 +245,14 @@ const changeLogin = (status: boolean) => {
 const login = () => {
   userStore.logins({ name: userInfo.value.name, password: userInfo.value.password }, () => {
     loginStatus.value = false;
+    userInfo.value = {
+      ID: 0,
+      name: "",
+      introduction: "",
+      head_img: "",
+      content: "",
+      password: "",
+    };
   });
 };
 
