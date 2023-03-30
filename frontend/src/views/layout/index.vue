@@ -46,7 +46,7 @@
                   </n-dropdown>
                 </b>
                 <b @click="() => changeLogin(true)" v-else style="cursor: pointer">登录</b>
-                <span style="cursor: pointer" @click="() => changeActive(true)" v-if="isLogin">更换背景图片</span>
+                <!-- <span style="cursor: pointer" @click="() => changeActive(true)" v-if="isLogin">更换背景图片</span> -->
               </n-space>
             </div>
           </template>
@@ -148,7 +148,7 @@ import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch, injec
 import type { GlobalTheme, FormInst, DropdownOption } from "naive-ui";
 import { NIcon } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
-import { Search, Sun, SunOne, Logout } from "@icon-park/vue-next";
+import { Search, Sun, SunOne, Logout, Change } from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import { emitter } from "@/utils/common";
 import { getImages } from "@/services/image";
@@ -203,10 +203,24 @@ const options = ref<DropdownOption[]>([
     label: "退出登录",
     key: "logout",
     icon: () => {
-      console.log(darkTheme.value);
       return h(NIcon, null, {
         default: () =>
           h(Logout, {
+            theme: "outline",
+            size: "26",
+            fill: darkTheme.value ? "#ddd" : "#333",
+            strokeWidth: 3,
+          }),
+      });
+    },
+  },
+  {
+    label: "更改背景图",
+    key: "change",
+    icon: () => {
+      return h(NIcon, null, {
+        default: () =>
+          h(Change, {
             theme: "outline",
             size: "26",
             fill: darkTheme.value ? "#ddd" : "#333",
@@ -222,6 +236,10 @@ const userLogout = (key: string | number) => {
     userStore.$reset();
     localStorage.removeItem("token");
     colorSet.value = `url(${new URL("/home-bg.png", import.meta.url).href})`;
+  }
+
+  if (key === "change") {
+    changeActive(true);
   }
 };
 //<logout theme="outline" size="26" fill="#ddd" :strokeWidth="3"/>
@@ -390,17 +408,5 @@ a::before {
 
 .middle-view {
   min-height: calc(100% - 443px);
-}
-</style>
-
-<style>
-.fade-in-linear-enter-active,
-.fade-in-linear-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-in-linear-enter-from,
-.fade-in-linear-leave-to {
-  opacity: 0;
 }
 </style>
