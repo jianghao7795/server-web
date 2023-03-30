@@ -159,7 +159,6 @@ const changeDate = (timeData?: string): string => {
 
 onMounted(async () => {
   const params = route.params;
-  console.log(params);
   articleStore.getDetail({ id: params.id as string });
   const resp = await getArticleComment({ articleId: params.id as string });
   comment.value = resp.data;
