@@ -1,5 +1,5 @@
 import { http } from "@/utils/request";
 
 export function login(data: User.Login) {
-  return http.post<User.UserInfo, User.Login>("/login", data);
+  return http.post<Global.Response<User.CurrentUser>, User.Login>("/login", data);
 }

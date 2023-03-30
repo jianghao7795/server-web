@@ -40,9 +40,10 @@ service.interceptors.response.use(
       window.$notification.error({
         duration: 10000,
         keepAliveOnHover: true,
-        content: `返回错误: 服务器错误`,
-        meta: 200,
+        content: `返回错误: 500`,
+        meta: "服务器错误",
       });
+      emitter.emit("closeLoading");
       return Promise.reject(new Error("服务器错误"));
     }
     const { code, msg } = response.data;
@@ -54,7 +55,12 @@ service.interceptors.response.use(
     } else {
       // 处理业务错误。
       // Message.error(message)
-      window.$notification.error({ duration: 10000, keepAliveOnHover: true, content: `返回错误: ${msg}`, meta: 200 });
+      window.$notification.error({
+        duration: 10000,
+        keepAliveOnHover: true,
+        content: `返回错误: ${msg ? 400 : 500}`,
+        meta: msg,
+      });
       return Promise.reject(new Error(msg));
     }
   },

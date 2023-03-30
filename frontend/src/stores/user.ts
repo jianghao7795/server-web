@@ -2,22 +2,29 @@ import { defineStore } from "pinia";
 import { login } from "@/services/user";
 
 export const useUserStore = defineStore("user", {
-  state: (): { user: User.UserInfo; token: string; exportAt: number } => ({
-    user: { ID: 0, name: "", introduction: "", head_img: "", content: "", password: "" },
-    token: "",
-    exportAt: 0,
+  state: (): { currentUser: User.CurrentUser; loading: boolean } => ({
+    currentUser: {
+      user: { ID: 0, name: "", introduction: "", head_img: "", content: "", password: "" },
+      token: "",
+      exportAt: 0,
+    },
+    loading: false,
   }),
   getters: {
-    getToken: (state) => state.token,
+    getToken: (state) => state.currentUser.token,
   },
   actions: {
-    async logins(data: User.Login) {
-      console.log(data);
+    async logins(data: User.Login, callback: () => void) {
+      this.loading = true;
       try {
         const info = await login(data);
-        console.log(info);
+        this.loading = false;
+        this.currentUser = info.data;
+        callback();
+        localStorage.setItem("token", info.data.token);
       } catch (e) {
-        console.log(e);
+        this.loading = false;
+        window.$message.error("登录失败");
       }
     },
   },

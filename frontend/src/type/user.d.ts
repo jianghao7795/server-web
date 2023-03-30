@@ -18,4 +18,10 @@ declare namespace User {
     url: string;
     ID: number;
   };
+
+  export type CurrentUser = {
+    user: User.UserInfo;
+    token: string;
+    exportAt: number;
+  };
 }

@@ -40,7 +40,9 @@
           <template #header>
             <div class="headerStyleLine">
               <n-space>
-                <b @click="() => changePath('/')" v-if="isLogin" style="cursor: pointer">{{ userStore.user.name }}</b>
+                <b @click="() => changePath('/')" v-if="isLogin" style="cursor: pointer">
+                  {{ userStore.currentUser.user.name }}
+                </b>
                 <b @click="() => changeLogin(true)" v-else style="cursor: pointer">登录</b>
                 <span style="cursor: pointer" @click="() => changeActive(true)" v-if="isLogin">更换背景图片</span>
               </n-space>
@@ -121,9 +123,11 @@
             <n-input type="text" v-model:value="userInfo.name" placeholder="账号" />
           </n-form-item>
           <n-form-item path="password">
-            <n-input type="password" v-model:value="userInfo.password" placeholder="密码" />
+            <n-input type="password" show-password-on="click" v-model:value="userInfo.password" placeholder="密码" />
           </n-form-item>
-          <div><n-button type="primary" :block="true" @click="() => login()">登录</n-button></div>
+          <div>
+            <n-button :loading="userStore.loading" type="primary" :block="true" @click="() => login()">登录</n-button>
+          </div>
         </n-form>
       </n-drawer-content>
     </n-drawer>
@@ -166,7 +170,7 @@ const darkTheme = computed(() => !(theme?.value === null));
 const formRef = ref<FormInst | null>(null);
 
 // 是否登录
-const isLogin = computed(() => !!userStore.user.ID);
+const isLogin = computed(() => !!userStore.currentUser.user.ID);
 const userInfo = ref<User.UserInfo>({
   ID: 0,
   name: "",
@@ -211,7 +215,9 @@ const changeLogin = (status: boolean) => {
 };
 
 const login = () => {
-  userStore.logins({ name: userInfo.value.name, password: userInfo.value.password });
+  userStore.logins({ name: userInfo.value.name, password: userInfo.value.password }, () => {
+    loginStatus.value = false;
+  });
 };
 
 const railStyle = ({ checked }: { checked: boolean }) => {

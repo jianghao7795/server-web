@@ -8,7 +8,6 @@ import (
 	"server/model/common/request"
 	"server/model/common/response"
 	"server/service"
-	"server/utils"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -32,10 +31,6 @@ var userService = service.ServiceGroupApp.AppServiceGroup.UserService
 func (userApi *UserApi) CreateUser(c *gin.Context) {
 	var user app.User
 	_ = c.ShouldBindJSON(&user)
-	if err := utils.Verify(user, utils.LoginVerifyFrontend); err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	if err := userService.CreateUser(user); err != nil {
 		global.LOG.Error(err.Error(), zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
