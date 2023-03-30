@@ -46,10 +46,7 @@ const userStore = useUserStore();
 
 const avatar = computed(() => {
   if (props.picSrc === "") {
-    if (
-      userStore.userInfo.headerImg !== "" &&
-      userStore.userInfo.headerImg.slice(0, 4) === "http"
-    ) {
+    if (userStore.userInfo.headerImg !== "" && userStore.userInfo.headerImg.slice(0, 4) === "http") {
       return userStore.userInfo.headerImg;
     }
     return path.value + userStore.userInfo.headerImg;
@@ -64,7 +61,7 @@ const file = computed(() => {
   if (props.picSrc && props.picSrc.slice(0, 4) !== "http") {
     return path.value + props.picSrc;
   }
-  return props.picSrc;
+  return `/${props.picSrc}`;
 });
 </script>
 

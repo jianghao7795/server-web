@@ -90,7 +90,7 @@ export default defineConfig(({ command, mode }) => {
           target: `${process.env.VITE_BASE_PATH}:${process.env.VITE_SERVER_PORT}/`, // 代理到 目标路径
           changeOrigin: true,
           secure: true,
-          rewrite: (path) => path.replace(new RegExp("^" + process.env.VITE_BASE_API), path.includes("uploads/") ? "/" : "/backend"),
+          // rewrite: (path) => path.replace(new RegExp("^" + process.env.VITE_BASE_API), process.env.VITE_BASE_API),
         },
       },
     },
