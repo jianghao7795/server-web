@@ -9,7 +9,8 @@ import (
 type CustomClaims struct {
 	BaseClaims
 	BufferTime int64
-	jwt.StandardClaims
+	// jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
 type BaseClaims struct {

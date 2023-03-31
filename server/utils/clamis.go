@@ -24,11 +24,11 @@ func GetUserID(c *gin.Context) uint {
 		if cl, err := GetClaims(c); err != nil {
 			return 0
 		} else {
-			return uint(cl.ID)
+			return uint(cl.BaseClaims.ID)
 		}
 	} else {
 		waitUse := claims.(*systemReq.CustomClaims)
-		return waitUse.ID
+		return waitUse.BaseClaims.ID
 	}
 }
 
