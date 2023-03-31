@@ -14,7 +14,11 @@
         </NSpace>
       </h4>
       <!-- <div>作者：{{ detail?.user?.nick_name }}</div> -->
-      <div>日期：{{ changeDate(articleStore.detail?.CreatedAt) }}</div>
+      <NSpace vertical>
+        <div>日期：{{ changeDate(articleStore.detail?.CreatedAt) }}</div>
+        <div>阅读量：{{ articleStore.detail?.reading_quantity }}</div>
+      </NSpace>
+
       <n-divider />
       <MdEditor
         :style="{ width: '100%' }"

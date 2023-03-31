@@ -95,7 +95,7 @@
     </n-layout>
     <n-drawer v-model:show="active" placement="bottom" :height="400">
       <n-drawer-content title="更换背景图片">
-        <n-carousel :space-between="30" :loop="false" slides-per-view="auto" centered-slides draggable>
+        <n-carousel :space-between="30" :loop="false" slides-per-view="auto" draggable>
           <n-carousel-item style="width: 30%" v-for="item in bgImage" :key="item.ID">
             <n-popconfirm positive-text="确认" negative-text="取消" :on-positive-click="() => changeImages(item)">
               <template #trigger>
@@ -145,7 +145,7 @@ export default {
 
 <script setup lang="ts">
 import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch, inject, type Ref, computed, h } from "vue";
-import type { GlobalTheme, FormInst, DropdownOption } from "naive-ui";
+import type { GlobalTheme, FormInst } from "naive-ui";
 import { NIcon } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
 import { Search, Sun, SunOne, Logout, Change } from "@icon-park/vue-next";
@@ -200,7 +200,7 @@ const rules = {
   },
 };
 //
-const options = ref<DropdownOption[]>([
+const options = [
   {
     label: "退出登录",
     key: "logout",
@@ -210,7 +210,6 @@ const options = ref<DropdownOption[]>([
           h(Logout, {
             theme: "outline",
             size: "26",
-            fill: darkTheme.value ? "#ddd" : "#333",
             strokeWidth: 3,
           }),
       });
@@ -225,13 +224,12 @@ const options = ref<DropdownOption[]>([
           h(Change, {
             theme: "outline",
             size: "26",
-            fill: darkTheme.value ? "#ddd" : "#333",
             strokeWidth: 3,
           }),
       });
     },
   },
-]);
+];
 
 const userLogout = (key: string | number) => {
   if (key === "logout") {
@@ -239,7 +237,7 @@ const userLogout = (key: string | number) => {
     localStorage.removeItem("token");
     colorSet.value = `url(${new URL("/home-bg.png", import.meta.url).href})`;
   }
-
+  // debugger;
   if (key === "change") {
     changeActive(true);
   }
@@ -312,7 +310,8 @@ const changeTheme = (e: boolean) => {
 watch(
   () => route.fullPath,
   (value) => {
-    viewPage.value = value;
+    const pathArray = value.split("/");
+    viewPage.value = `/${pathArray[1]}`;
   },
 );
 
@@ -323,6 +322,9 @@ onMounted(() => {
   emitter.on("closeLoading", () => {
     loadingFlag.value = false;
   });
+
+  const pathArray = route.fullPath.split("/");
+  viewPage.value = `/${pathArray[1]}`;
 
   getImages().then((resp) => {
     if (resp) {
@@ -345,7 +347,7 @@ const submit = () => {
     window.$message.warning("请输入");
     return;
   }
-  router.push(`/search/article/${searchInput.value}`);
+  router.push(`/articles/search/${searchInput.value}`);
   isMouseOver.value = false;
   searchInput.value = "";
 };

@@ -1,9 +1,9 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 // console.log(import.meta.env.VITE_BASE_PATH);
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
   routes: [
     {
       path: "/",
@@ -51,7 +51,7 @@ const router = createRouter({
           },
         },
         {
-          path: "/search/:name/:value",
+          path: "/:name/search/:value",
           name: "search",
           component: () => import("@/views/search/index.vue"),
           meta: {

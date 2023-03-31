@@ -3,16 +3,16 @@ package frontend
 import (
 	"encoding/json"
 	"errors"
-	"server/global"
-	"server/model/frontend"
-	frontendReq "server/model/frontend/request"
-	"strconv"
 	"strings"
 	"time"
 
+	"server/global"
+	"server/model/frontend"
+	frontendReq "server/model/frontend/request"
+
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
-	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
 type FrontendArticle struct{}
@@ -63,31 +63,49 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *gin.
 }
 
 func (s *FrontendArticle) GetAricleDetail(articleId int, c *gin.Context) (articleDetail frontend.Article, err error) {
-	var cacheTime = global.CONFIG.Cache.Time
-	var articleDetailStr string
-	articleDetailStr, err = global.REDIS.Get(c, "article"+strconv.Itoa(articleId)).Result()
-	if err == redis.Nil {
-		db := global.DB.Model(&frontend.Article{})
-		err = db.Where("id = ?", articleId).Preload("Tags").First(&articleDetail).Error
+	reqIP := c.ClientIP()
+	var ipUser frontend.Ip
+	db := global.DB.Model(&frontend.Article{})
+	dbIp := global.DB.Model(&frontend.Ip{}).Where("ip = ? and article_id = ?", reqIP, articleId).First(&ipUser)
+	if errors.Is(dbIp.Error, gorm.ErrRecordNotFound) {
+		ipUser.ArticleID = uint(articleId)
+		ipUser.Ip = reqIP
+		err = global.DB.Create(&ipUser).Error
 		if err != nil {
-			return articleDetail, err
+			return
 		}
-		articleString, _ := json.Marshal(articleDetail)
-		err := global.REDIS.Set(c, "article"+strconv.Itoa(articleId), articleString, time.Duration(cacheTime)*time.Second).Err()
-		if err != nil {
-			global.LOG.Error("Redis 存储失败!", zap.Error(err))
-		}
-		return articleDetail, err
-	} else if err != nil {
-		return
-	} else {
-		if articleDetailStr != "" {
-			err = json.Unmarshal([]byte(articleDetailStr), &articleDetail)
+		db = db.Where("id = ?", articleId).Update("reading_quantity", gorm.Expr("reading_quantity + ?", 1))
+		if db.Error != nil {
 			return articleDetail, err
 		}
 	}
+	err = db.Where("id = ?", articleId).Preload("Tags").First(&articleDetail).Error
+	return articleDetail, err
+	// var cacheTime = global.CONFIG.Cache.Time
+	// var articleDetailStr string
+	// articleDetailStr, err = global.REDIS.Get(c, "article"+strconv.Itoa(articleId)).Result()
+	// if err == redis.Nil {
+	// 	db := global.DB.Model(&frontend.Article{})
+	// 	err = db.Where("id = ?", articleId).Preload("Tags").First(&articleDetail).Error
+	// 	if err != nil {
+	// 		return articleDetail, err
+	// 	}
+	// 	articleString, _ := json.Marshal(articleDetail)
+	// 	err := global.REDIS.Set(c, "article"+strconv.Itoa(articleId), articleString, time.Duration(cacheTime)*time.Second).Err()
+	// 	if err != nil {
+	// 		global.LOG.Error("Redis 存储失败!", zap.Error(err))
+	// 	}
+	// 	return articleDetail, err
+	// } else if err != nil {
+	// 	return
+	// } else {
+	// 	if articleDetailStr != "" {
+	// 		err = json.Unmarshal([]byte(articleDetailStr), &articleDetail)
+	// 		return articleDetail, err
+	// 	}
+	// }
 
-	return
+	// return
 }
 
 func (s *FrontendArticle) GetSearchArticle(info frontendReq.ArticleSearch) (list []frontend.Article, err error) {
@@ -109,7 +127,7 @@ func (s *FrontendArticle) GetSearchArticle(info frontendReq.ArticleSearch) (list
 	//     Users []*User `gorm:"many2many:user_languages;"`
 	// }
 
-	if info.Name == "tag" {
+	if info.Name == "tags" {
 		// 多对多关联 Association
 		var id uint
 		global.DB.Model(&frontend.Tag{}).Select("id").Where("name = ?", info.Value).First(&id)
@@ -117,8 +135,16 @@ func (s *FrontendArticle) GetSearchArticle(info frontendReq.ArticleSearch) (list
 		err = global.DB.Model(dbTag).Preload("Tags").Association("Articles").Find(&list)
 	}
 
-	if info.Name == "article" {
-		err = db.Where("title like ?", strings.Join([]string{"%", info.Value, "%"}, "")).Preload("Tags").Order("id desc").Find(&list).Error
+	var sortField = make(map[string]string)
+	sortField["read"] = "reading_quantity"
+	sortField["time"] = "created_at"
+
+	if info.Name == "articles" {
+		if info.Sort != "" {
+			err = db.Where("title like ?", strings.Join([]string{"%", info.Value, "%"}, "")).Preload("Tags").Order(sortField[info.Sort] + " desc").Find(&list).Error
+		} else {
+			err = db.Where("title like ?", strings.Join([]string{"%", info.Value, "%"}, "")).Preload("Tags").Order("id desc").Find(&list).Error
+		}
 	}
 
 	return

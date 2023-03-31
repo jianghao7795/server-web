@@ -22,7 +22,8 @@ func (s *ArticltRouter) InitArticleRouter(Router *gin.RouterGroup) {
 		articleRouter.PUT("putArticleByIds", articleApi.PutArticleByIds)          // 批量更新 是否首页显示article
 	}
 	{
-		articleRouterWithoutRecord.GET("findArticle/:id", articleApi.FindArticle)   // 根据ID获取article
-		articleRouterWithoutRecord.GET("getArticleList", articleApi.GetArticleList) // 获取article列表
+		articleRouterWithoutRecord.GET("findArticle/:id", articleApi.FindArticle)         // 根据ID获取article
+		articleRouterWithoutRecord.GET("getArticleList", articleApi.GetArticleList)       // 获取article列表
+		articleRouterWithoutRecord.GET("getArticleReading", articleApi.GetArticleReading) // 获取阅读量
 	}
 }

@@ -10,4 +10,5 @@ type ArticleSearch struct {
 	request.PageInfo
 	Name  string `json:"name" form:"name"`
 	Value string `json:"value" form:"value"`
+	Sort  string `json:"sort" form:"sort"`
 }

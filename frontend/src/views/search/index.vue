@@ -1,5 +1,24 @@
 <template>
   <div class="article-list">
+    <n-h4 class="sortH4">
+      <a
+        v-bind:style="{
+          color: colorRef.time ? '#70a1ff' : undefined,
+        }"
+        @click="() => changeSort('time')"
+      >
+        时间排序
+      </a>
+      <n-divider vertical />
+      <a
+        v-bind:style="{
+          color: colorRef.read ? '#70a1ff' : undefined,
+        }"
+        @click="() => changeSort('read')"
+      >
+        阅读排序
+      </a>
+    </n-h4>
     <n-list hoverable clickable v-if="data.length !== 0">
       <n-list-item v-for="item in data" :key="item.ID" @click="changeUrl(item.ID)">
         <n-thing content-style="margin-top: 10px;">
@@ -12,6 +31,7 @@
             <div>
               简述:
               <b>{{ item.desc }}</b>
+              &nbsp;&nbsp; 阅读量: {{ item.reading_quantity }}
             </div>
           </template>
           <!-- <md-editor v-model="item.content" preview-only /> -->
@@ -63,11 +83,23 @@ import { Right } from "@icon-park/vue-next";
 import { useRouter, useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
 
+const colorRef = ref<{ time?: boolean; read?: boolean }>({});
 const router = useRouter();
 const route = useRoute();
 const data = ref<API.Article[]>([]);
 const page = ref<number>(1);
 const articleLength = computed(() => data.value.length);
+
+const changeSort = async (v: string) => {
+  if (data.value.length === 0) {
+    colorRef.value = { [v]: true };
+  }
+  const response = await getArticleSearch({ page: 1, ...route.params, sort: v });
+  if (response?.code === 0) {
+    data.value = response.data?.list || [];
+    colorRef.value = { [v]: true };
+  }
+};
 
 const changeUrl = (id: number) => {
   router.push(`/articles/${id}`);
@@ -102,5 +134,14 @@ watch(
 
 .pageNext {
   margin: 15px 0 45px 0;
+}
+
+.sortH4 {
+  a {
+    color: #999999;
+  }
+  a:hover {
+    color: #70a1ff;
+  }
 }
 </style>

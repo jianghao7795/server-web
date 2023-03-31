@@ -63,6 +63,7 @@ func (s *FrontendArticleApi) GetSearchArticle(c *gin.Context) {
 	var searchValue request.ArticleSearch
 	searchValue.Name = c.Param("name")
 	searchValue.Value = c.Param("value")
+	searchValue.Sort = c.Query("sort")
 	if list, err := frontendService.GetSearchArticle(searchValue); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)

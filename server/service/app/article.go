@@ -6,6 +6,7 @@ import (
 	appReq "server/model/app/request"
 	"server/model/common/request"
 	"strings"
+	"time"
 )
 
 type ArticleService struct{}
@@ -99,5 +100,13 @@ func (articleSearch *ArticleService) GetArticleInfoList(info appReq.ArticleSearc
 // 批量更新
 func (articleSearch *ArticleService) PutArticleByIds(ids request.IdsReq) (err error) {
 	err = global.DB.Model(&app.Article{}).Where("id in ?", ids.Ids).Update("is_important", 2).Error
+	return
+}
+
+func (article *ArticleService) GetArticleReading() (count int64, err error) {
+	t := time.Now()
+	startTime := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+	endTime := time.Date(t.Year(), t.Month(), t.Day(), 23, 59, 59, 99, t.Location())
+	err = global.DB.Model(&app.Ip{}).Where("created_at > ? and created_at < ?", startTime, endTime).Count(&count).Error
 	return
 }

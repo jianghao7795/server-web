@@ -8,15 +8,15 @@
           <div class="top-card-left-dot">{{ weatherInfo }}</div>
           <div class="top-card-left-rows">
             <el-row v-auth="888">
-              <el-col :span="8" :xs="24" :sm="8">
+              <el-col :span="6" :xs="24" :sm="6">
                 <div class="flex-center">
                   <el-icon class="dasboard-icon">
                     <sort />
                   </el-icon>
-                  今日流量 ({{ flowmeter }} M)
+                  今日流量 {{ flowmeter }} M
                 </div>
               </el-col>
-              <el-col :span="8" :xs="24" :sm="8">
+              <el-col :span="6" :xs="24" :sm="6">
                 <div class="flex-center">
                   <el-icon class="dasboard-icon">
                     <avatar />
@@ -24,12 +24,20 @@
                   总用户数 ({{ userNumber }})
                 </div>
               </el-col>
-              <el-col :span="8" :xs="24" :sm="8">
+              <el-col :span="6" :xs="24" :sm="6">
                 <div class="flex-center">
                   <el-icon class="dasboard-icon">
                     <comment />
                   </el-icon>
                   好评率 (99%)
+                </div>
+              </el-col>
+              <el-col :span="6" :xs="24" :sm="6">
+                <div class="flex-center">
+                  <el-icon class="dasboard-icon">
+                    <View />
+                  </el-icon>
+                  阅读量 ({{ readingQuantity }})
                 </div>
               </el-col>
             </el-row>
@@ -113,10 +121,12 @@ import { useNow, useDateFormat } from "@vueuse/core";
 import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { useWeatherInfo } from "./weather";
+import { View, Comment, Sort, Avatar } from "@element-plus/icons-vue";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { getFlowmeter, userCount } from "@/api/user";
+import { getReading } from "@/api/article";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -126,6 +136,7 @@ const formatted = useDateFormat(useNow(), "YYYY-MM-DD HH:mm:ss");
 const period = ref("");
 const userNumber = ref(0);
 const flowmeter = ref(0);
+const readingQuantity = ref(0);
 // console.log("上午好");
 
 onMounted(() => {
@@ -145,7 +156,10 @@ onMounted(() => {
     }
   });
   getFlowmeter().then((resp) => {
-    flowmeter.value = ((resp.data.transmitBytes || 0) / 1024 / 1024).toFixed(2);
+    flowmeter.value = ((resp.data.transmitBytes || 0) / 1024 / 1024).toFixed(0);
+  });
+  getReading().then((resp) => {
+    readingQuantity.value = resp.data.reading_quantity || 0;
   });
 });
 

@@ -66,3 +66,11 @@ export const putArticleByIds = (data) => {
     data: data,
   });
 };
+
+// 文章阅读量
+export const getReading = () => {
+  return service({
+    url: "/article/getArticleReading",
+    method: "get",
+  });
+};

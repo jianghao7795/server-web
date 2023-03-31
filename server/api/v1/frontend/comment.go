@@ -1,7 +1,6 @@
 package frontend
 
 import (
-	"log"
 	"server/global"
 	"server/model/common/response"
 	"server/model/frontend"
@@ -16,7 +15,7 @@ type CommentApi struct{}
 func (s *CommentApi) GetCommentByArticleId(c *gin.Context) {
 	articleId := c.Param("articleId")
 	id, _ := strconv.Atoi(articleId)
-	log.Println("artilceId", id)
+	// log.Println("artilceId", id)
 	if articleComment, err := frontendService.Comment.GetCommentByArticleId(id); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)

@@ -10,6 +10,7 @@ declare namespace API {
     tags?: Tag[];
     title: string;
     user_id: number;
+    reading_quantity: number;
   };
 
   export type User = {
@@ -51,6 +52,7 @@ declare namespace API {
     is_important?: number;
     name?: "tag" | "article";
     value?: string;
+    sort?: string;
   };
 
   export type SearchTag = {

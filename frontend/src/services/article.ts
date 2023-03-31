@@ -19,7 +19,11 @@ export const getArticleDetail = (id: string) => {
 
 // 搜索文章的 tag 或 title
 export const getArticleSearch = (params: API.SearchArticle) => {
-  return http.get<API.Response<{ list: API.Article[]; total: number }>>(`/getSearchArticle/${params.name}/${params.value}`, {
-    method: "get",
-  });
+  return http.get<API.Response<{ list: API.Article[]; total: number }>>(
+    `/getSearchArticle/${params.name}/${params.value}`,
+    {
+      method: "get",
+      params: { sort: params.sort },
+    },
+  );
 };

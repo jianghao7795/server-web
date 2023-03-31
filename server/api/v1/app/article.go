@@ -165,3 +165,22 @@ func (*ArticleApi) PutArticleByIds(c *gin.Context) {
 		response.OkWithMessage("批量更新成功", c)
 	}
 }
+
+// GetArticleReading 获取文章阅读量
+// @Tags Article
+// @Summary 获取文章阅读量
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body app.Article true "获取文章阅读量"
+// @Success 200 {string} string "{"code":0,"data":{},"msg":"获取成功"}"
+// @Router /article/getArticleReading [get]
+func (*ArticleApi) GetArticleReading(c *gin.Context) {
+	count, err := articleService.GetArticleReading()
+	if err != nil {
+		global.LOG.Error("获取阅读量失败!", zap.Error(err))
+		response.FailWithMessage("获取阅读量失败", c)
+	} else {
+		response.OkWithDetailed(gin.H{"reading_quantity": count}, "获取成功", c)
+	}
+}
