@@ -39,15 +39,11 @@
     </div>
     <a-comment v-for="items in comment" :key="items.ID">
       <template #actions>
-        <a
-          key="comment-nested-reply-to"
-          v-if="!isCommentChildren[items.ID]"
-          @click="() => isCommentChildren[items.ID as number] = true"
-        >
+        <a key="comment-nested-reply-to" v-if="!isCommentChildren[items.ID]" @click="() => reply(items.ID, true)">
           回复
         </a>
-        <n-input-group v-else>
-          <n-input v-model:value="inputChildren" placeholder="评论" />
+        <n-input-group v-else="isCommentChildren[items.ID]">
+          <n-input v-model:value="inputChildren" placeholder="评论" autofocus />
           <n-button type="primary" ghost @click="submit(items.ID, items.children)">回复</n-button>
         </n-input-group>
       </template>
@@ -86,7 +82,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { onMounted, inject, ref } from "vue";
+import { onMounted, inject, ref, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
 import dayjs from "dayjs";
@@ -95,9 +91,10 @@ import "md-editor-v3/lib/style.css";
 import { useArticleStore } from "@/stores/article";
 import { getArticleComment, createdComment } from "@/services/comment";
 import { useMessage } from "naive-ui";
+import { useUserStore } from "@/stores/user";
 
 const message = useMessage();
-
+const userStroe = useUserStore();
 const route = useRoute();
 const theme = inject("theme");
 const articleStore = useArticleStore();
@@ -112,6 +109,9 @@ const focusInput = (isFouse: boolean) => {
   isComment.value = isFouse;
 };
 
+const reply = (id: number, status: boolean) => {
+  isCommentChildren.value = { [id]: status };
+};
 const submit = async (parentId: number, children: Comment.comment[]) => {
   if (parentId === 0 && inputRef.value === "") {
     message.warning("请输入评论");
@@ -130,8 +130,8 @@ const submit = async (parentId: number, children: Comment.comment[]) => {
     content: inputRef.value || inputChildren.value,
     articleId: Number(route.params.id).valueOf(),
     parentId,
-    user_id: 0,
-    user_name: "测试",
+    user_id: userStroe.currentUser.user.ID || 0,
+    user_name: userStroe.currentUser.user.name || "测试",
   } as Comment.comment);
   if (resp?.code === 0) {
     message.success("评论成功");
@@ -146,8 +146,8 @@ const submit = async (parentId: number, children: Comment.comment[]) => {
         content: inputRef.value || inputChildren.value,
         articleId: Number(route.params.id).valueOf(),
         parentId,
-        user_id: 0,
-        user_name: "测试",
+        user_id: userStroe.currentUser.user.ID || 0,
+        user_name: userStroe.currentUser.user.name || "测试",
         ID: resp.data.id,
         children: child,
       } as Comment.comment);
