@@ -51,9 +51,9 @@ func JWTAuth() gin.HandlerFunc {
 		//	response.FailWithDetailed(gin.H{"reload": true}, err.Error(), c)
 		//	c.Abort()
 		//}
-		// log.Println("claims: ", time.Now().Unix()-claims.NotBefore.Unix())
+		// log.Println("claims: ", time.Now().Unix()-claims.NotBefore.Unix(), claims.ExpiresAt)
 		if time.Now().Unix()-claims.NotBefore.Unix() > claims.BufferTime*60 {
-			claims.ExpiresAt = jwt.NewNumericDate(time.Unix(time.Now().Unix()+global.CONFIG.JWT.ExpiresTime*60*60, 0))
+			claims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(time.Duration(global.CONFIG.JWT.ExpiresTime) * time.Hour))
 			newToken, _ := j.CreateTokenByOldToken(token, *claims)
 			newClaims, _ := j.ParseToken(newToken)
 			c.Header("new-token", newToken)

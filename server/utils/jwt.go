@@ -37,10 +37,10 @@ func (j *JWT) CreateClaims(baseClaims request.BaseClaims) request.CustomClaims {
 		// 	Issuer:    global.CONFIG.JWT.Issuer,                          // 签名的发行者
 		// },
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)), // 过期时间
-			IssuedAt:  jwt.NewNumericDate(time.Now()),                     // 签发时间
-			NotBefore: jwt.NewNumericDate(time.Now()),                     // 生效时间
-			Issuer:    global.CONFIG.JWT.Issuer,                           // 签名的发行者
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(global.CONFIG.JWT.ExpiresTime) * time.Hour)), // 过期时间
+			IssuedAt:  jwt.NewNumericDate(time.Now()),                                                               // 签发时间
+			NotBefore: jwt.NewNumericDate(time.Now()),                                                               // 生效时间
+			Issuer:    global.CONFIG.JWT.Issuer,                                                                     // 签名的发行者
 		},
 	}
 	return claims
