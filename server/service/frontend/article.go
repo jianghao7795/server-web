@@ -65,8 +65,10 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *gin.
 func (s *FrontendArticle) GetAricleDetail(articleId int, c *gin.Context) (articleDetail frontend.Article, err error) {
 	reqIP := c.ClientIP()
 	var ipUser frontend.Ip
+	t := time.Now()
+	startTime := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
 	db := global.DB.Model(&frontend.Article{})
-	dbIp := global.DB.Model(&frontend.Ip{}).Where("ip = ? and article_id = ?", reqIP, articleId).First(&ipUser)
+	dbIp := global.DB.Model(&frontend.Ip{}).Where("ip = ? and article_id = ?", reqIP, articleId).Where("created_at > ?", startTime).First(&ipUser)
 	if errors.Is(dbIp.Error, gorm.ErrRecordNotFound) {
 		ipUser.ArticleID = uint(articleId)
 		ipUser.Ip = reqIP
