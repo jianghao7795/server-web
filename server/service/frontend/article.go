@@ -72,12 +72,16 @@ func (s *FrontendArticle) GetAricleDetail(articleId int, c *gin.Context) (articl
 	if errors.Is(dbIp.Error, gorm.ErrRecordNotFound) {
 		ipUser.ArticleID = uint(articleId)
 		ipUser.Ip = reqIP
-		err = global.DB.Create(&ipUser).Error
+		err = global.DB.Transaction(func(tx *gorm.DB) error {
+			if err := tx.Create(&ipUser).Error; err != nil {
+				return err
+			}
+			if err = tx.Model(&frontend.Article{}).Where("id = ?", articleId).Update("reading_quantity", gorm.Expr("reading_quantity + ?", 1)).Error; err != nil {
+				return err
+			}
+			return nil
+		})
 		if err != nil {
-			return
-		}
-		db = db.Where("id = ?", articleId).Update("reading_quantity", gorm.Expr("reading_quantity + ?", 1))
-		if db.Error != nil {
 			return articleDetail, err
 		}
 	}

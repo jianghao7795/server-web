@@ -45,6 +45,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
       cors: true,
       hmr: true,
       port: Number(env.VITE_CLI_PORT).valueOf(),
+      host: "0.0.0.0",
       proxy: {
         // 把key的路径代理到target位置
         // detail: https://cli.vuejs.org/config/#devserver-proxy
