@@ -7,7 +7,7 @@
       <h3>简介：{{ articleStore.detail?.title }}</h3>
       <h4>
         <NSpace style="width: 80%">
-          标签：
+          标签：&#129409;
           <n-tag size="small" round v-for="(item, index) in articleStore.detail?.tags" :type="colorIndex(index)">
             {{ item.name }}
           </n-tag>
@@ -54,9 +54,9 @@
         <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
       </template>
       <template #content>
-        <p>
-          {{ items.content }}
-        </p>
+        <div>
+          <div v-html="items.content"></div>
+        </div>
       </template>
       <a-comment v-for="item in items.children" :key="item.ID">
         <template #author>
@@ -66,9 +66,9 @@
           <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
         </template>
         <template #content>
-          <p>
-            {{ item.content }}
-          </p>
+          <div>
+            <div v-html="item.content"></div>
+          </div>
         </template>
       </a-comment>
     </a-comment>
