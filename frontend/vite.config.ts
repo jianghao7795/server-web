@@ -54,7 +54,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
           target: `${env.VITE_BASE_PATH}:${env.VITE_SERVER_PORT}`, // 代理到 目标路径
           changeOrigin: true,
           secure: true,
-          rewrite: (path) => path.replace(new RegExp(`^${env.VITE_BASE_API}`), "/frontend"),
+          // rewrite: (path) => path.replace(new RegExp(`^${env.VITE_BASE_API}`), "/frontend"),
           // rewrite: (path) => path.replace("", ""),
         },
       },

@@ -11,6 +11,7 @@
   "dependencies": {
     "@icon-park/vue-next": "^1.4.2",
     "@vueuse/core": "^9.1.0",
+    "alova": "^2.0.14",
     "ant-design-vue": "^3.2.15",
     "axios": "^0.27.2",
     "dayjs": "^1.11.7",

@@ -7,8 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UserRouter struct {
-}
+type UserRouter struct{}
 
 // InitUserRouter 初始化 User 路由信息
 func (s *UserRouter) InitUserRouter(Router *gin.RouterGroup) {

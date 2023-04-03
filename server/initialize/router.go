@@ -35,7 +35,7 @@ func Routers() *gin.Engine {
 	// Router.Static("/favicon.ico", "./dist/favicon.ico")
 	// Router.Static("/static", "./dist/assets")   // dist里面的静态资源
 	// Router.StaticFile("/", "./dist/index.html") // 前端网页入口页面
-	Router.StaticFS("/frontend/uploads", http.Dir("uploads"))                     // 本地的文件路由转化
+	Router.StaticFS("/api/uploads", http.Dir("uploads"))                          // 本地的文件路由转化
 	Router.StaticFS("/backend/uploads", http.Dir("uploads"))                      // 本地的文件路由转化
 	Router.StaticFS(global.CONFIG.Local.Path, http.Dir(global.CONFIG.Local.Path)) // 为用户头像和文件提供静态地址
 	// Router.Use(middleware.LoadTls())  // 如果需要使用https 请打开此中间件 然后前往 core/server.go 将启动模式 更变为 Router.RunTLS("端口","你的cre/pem文件","你的key文件")
@@ -50,7 +50,7 @@ func Routers() *gin.Engine {
 
 	// Router.Use(middleware.GinRecovery(true)) // recover掉项目可能出现的panic，并使用zap记录相关日志
 
-	PublicGroup := Router.Group("frontend")
+	PublicGroup := Router.Group("api")
 	{
 		// 健康监测
 		PublicGroup.GET("/health", func(c *gin.Context) {
@@ -91,6 +91,7 @@ func Routers() *gin.Engine {
 		systemRouter.InitSysOperationRecordRouter(PrivateGroup)  // 操作记录
 		systemRouter.InitSysDictionaryDetailRouter(PrivateGroup) // 字典详情管理
 		systemRouter.InitAuthorityBtnRouterRouter(PrivateGroup)  // 字典详情管理
+		systemRouter.InitProblemRouter(PrivateGroup)             // problem
 
 		exampleRouter.InitExcelRouter(PrivateGroup)                 // 表格导入导出
 		exampleRouter.InitCustomerRouter(PrivateGroup)              // 客户路由
@@ -101,7 +102,6 @@ func Routers() *gin.Engine {
 		appRouter.InitTagRouter(PrivateGroup)         // tab
 		appRouter.InitArticleRouter(PrivateGroup)     //article
 		appRouter.InitCommentRouter(PrivateGroup)     // comment
-		systemRouter.InitProblemRouter(PrivateGroup)  // problem
 		appRouter.InitBaseMessageRouter(PrivateGroup) // baseMessage
 		appRouter.InitTaskRouter(PrivateGroup)        //task 任务
 		appRouter.InitUserRouter(PrivateGroup)        // frontend user
