@@ -1,4 +1,5 @@
 import { http } from "@/utils/request";
+import alovaInstance from "@/utils/requestAlova";
 
 export const getArticleList = (params?: API.SearchArticle) => {
   // return request({
@@ -6,7 +7,6 @@ export const getArticleList = (params?: API.SearchArticle) => {
   //   method: "get",
   // });
   return http.get<API.Response<{ list: API.Article[]; total: number }>>("/getArticleList", {
-    method: "get",
     params: params,
   });
 };
@@ -26,4 +26,8 @@ export const getArticleSearch = (params: API.SearchArticle) => {
       params: { sort: params.sort },
     },
   );
+};
+
+export const getArticleAlova = (id: string) => {
+  return alovaInstance.Get<API.Response<{ article: API.Article }>>(`/getArticle/${id}`);
 };
