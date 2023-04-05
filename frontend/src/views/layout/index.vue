@@ -277,6 +277,11 @@ const login = () => {
         new URL(imageString.includes("http") ? imageString : `${Base_URL}/${imageString}`, import.meta.url).href
       })`;
     }
+    getImages().then((resp) => {
+      if (resp) {
+        bgImage.value = resp.data;
+      }
+    });
     loginStatus.value = false;
     userInfo.value = {
       ID: 0,
@@ -326,11 +331,13 @@ onMounted(() => {
   const pathArray = route.fullPath.split("/");
   viewPage.value = `/${pathArray[1]}`;
 
-  getImages().then((resp) => {
-    if (resp) {
-      bgImage.value = resp.data;
-    }
-  });
+  if (userStore.currentUser.user.ID !== 0) {
+    getImages().then((resp) => {
+      if (resp) {
+        bgImage.value = resp.data;
+      }
+    });
+  }
   userStore.getUser((head_img: string) => {
     colorSet.value = `url(${
       new URL(head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`, import.meta.url).href

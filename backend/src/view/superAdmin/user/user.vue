@@ -59,14 +59,7 @@
 
         <el-table-column label="操作" min-width="250" fixed="right">
           <template #default="scope">
-            <el-popconfirm
-              placement="top"
-              width="160"
-              title="确定要删除吗?"
-              confirm-button-text="确定"
-              cancel-button-text="取消"
-              @confirm="deleteUserFunc(scope.row)"
-            >
+            <el-popconfirm placement="top" width="160" title="确定要删除吗?" confirm-button-text="确定" cancel-button-text="取消" @confirm="deleteUserFunc(scope.row)">
               <!-- <p>确定要删除此用户吗</p>
               <div style="text-align: right; margin-top: 8px">
                 <el-button size="small" link type="primary" @click="scope.row.visible = false"
@@ -86,26 +79,10 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination
-          background
-          :current-page="page"
-          :page-size="pageSize"
-          :page-sizes="[10, 30, 50, 100]"
-          :total="total"
-          layout="total, sizes, prev, pager, next, jumper"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </div>
-    <el-dialog
-      :model-value="addUserDialog"
-      class="user-dialog"
-      title="用户"
-      :show-close="false"
-      :close-on-press-escape="false"
-      :close-on-click-modal="false"
-    >
+    <el-dialog :model-value="addUserDialog" class="user-dialog" title="用户" :show-close="false" :close-on-press-escape="false" :close-on-click-modal="false">
       <div style="height: 60vh; overflow: auto; padding: 0 12px">
         <el-form ref="userForm" :rules="rules" :model="userInfo" label-width="80px">
           <el-form-item v-if="dialogFlag === 'add'" label="用户名" prop="userName">
@@ -142,11 +119,7 @@
           </el-form-item>
           <el-form-item label="头像" label-width="80px">
             <div style="display: inline-block" @click="openHeaderChange">
-              <img
-                v-if="userInfo.headerImg"
-                class="header-img-box"
-                :src="userInfo.headerImg && userInfo.headerImg.slice(0, 4) !== 'http' ? path + userInfo.headerImg : userInfo.headerImg"
-              />
+              <img v-if="userInfo.headerImg" class="header-img-box" :src="userInfo.headerImg && userInfo.headerImg.slice(0, 4) !== 'http' ? path + `/${userInfo.headerImg}` : userInfo.headerImg" />
               <div v-else class="header-img-box">从媒体库选择</div>
             </div>
           </el-form-item>

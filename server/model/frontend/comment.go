@@ -12,6 +12,7 @@ type Comment struct {
 	Content   string  `json:"content" form:"content" gorm:"column:content;comment:内容;"`
 	UserId    int     `json:"user_id" form:"user_id" gorm:"column:user_id;comment:用户id;"`
 	UserName  string  `json:"user_name" form:"user_name" gorm:"column:user_name;comment:用户名;"`
+	User      User    `json:"user" form:"user" gorm:"foreignKey:UserId"`
 	// UserPraise []system.SysUser `json:"praise" from:"praise" gorm:"many2many:praise"`
 	Children []Comment `json:"children" form:"children" gorm:"foreignKey:ParentId;"`
 }

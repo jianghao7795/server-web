@@ -16,11 +16,7 @@
     <div class="media">
       <div v-for="(item, key) in picList" :key="key" class="media-box">
         <div class="header-img-box-list">
-          <el-image
-            :key="key"
-            :src="item.url && item.url.slice(0, 4) !== 'http' ? path + item.url : item.url"
-            @click="chooseImg(item.url, target, targetKey)"
-          >
+          <el-image :key="key" :src="item.url && item.url.slice(0, 4) !== 'http' ? path + `/${item.url}` : item.url" @click="chooseImg(item.url, target, targetKey)">
             <template #error>
               <div class="header-img-box-list">
                 <el-icon>
@@ -35,16 +31,7 @@
         </div>
       </div>
     </div>
-    <el-pagination
-      background
-      :current-page="page"
-      :page-size="pageSize"
-      :total="total"
-      :style="{ 'justify-content': 'center' }"
-      layout="total, prev, pager, next, jumper"
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-    />
+    <el-pagination background :current-page="page" :page-size="pageSize" :total="total" :style="{ 'justify-content': 'center' }" layout="total, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
   </el-drawer>
 </template>
 

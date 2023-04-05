@@ -59,7 +59,7 @@
           <el-input type="password" show-password v-model="formData.password" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="头像:">
-          <el-input v-model="formData.headImg" clearable placeholder="请输入" />
+          <el-input v-model="formData.header" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="简介:">
           <el-input v-model="formData.introduction" clearable placeholder="请输入" />
@@ -95,7 +95,7 @@ import { ref } from "vue";
 // 自动化生成的字典（可能为空）以及字段
 const formData = ref({
   name: "",
-  headImg: "",
+  header: "",
   introduction: "",
   content: "",
   password: "",

@@ -23,6 +23,7 @@ type Comment struct {
 	UserName  string  `json:"user_name" form:"user_name" gorm:"column:user_name;comment:用户名;"`
 	// UserPraise []system.SysUser `json:"praise" from:"praise" gorm:"many2many:praise"`
 	Children []Comment `json:"children" form:"children" gorm:"foreignKey:ParentId;"`
+	User     User      `json:"user" form:"user" gorm:"foreignKey:UserId"`
 }
 
 // TableName Comment 表名
