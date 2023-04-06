@@ -99,6 +99,8 @@ service.interceptors.response.use(
 );
 
 /* 导出封装的请求方法 */
+// T 是 返回类型
+// R 是 传入类型
 export const http = {
   get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
     return service.get(url, config);
