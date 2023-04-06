@@ -58,14 +58,20 @@
         <el-form-item label="密码:" v-show="!(type === 'update')">
           <el-input type="password" show-password v-model="formData.password" clearable placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="头像:">
-          <el-input v-model="formData.header" clearable placeholder="请输入" />
+        <el-form-item label="背景图:">
+          <img v-if="formData.headImg" class="header-img-box" :src="formData.headImg && formData.headImg.slice(0, 4) !== 'http' ? path + `/${formData.headImg}` : formData.headImg" />
         </el-form-item>
         <el-form-item label="简介:">
           <el-input v-model="formData.introduction" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="用户信息:">
           <el-input v-model="formData.content" clearable placeholder="请输入" />
+        </el-form-item>
+        <el-form-item label="头像:" label-width="80px">
+          <div style="display: inline-block" @click="openHeaderChange">
+            <img v-if="formData.header" class="header-img-box" :src="formData.header && formData.header.slice(0, 4) !== 'http' ? path + `/${formData.header}` : formData.header" />
+            <div v-else class="header-img-box">从媒体库选择</div>
+          </div>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -75,6 +81,7 @@
         </div>
       </template>
     </el-dialog>
+    <ChooseImg ref="chooseImg" :target="formData" :target-key="`header`" />
   </div>
 </template>
 
@@ -91,6 +98,7 @@ import CustomPic from "@/components/customPic/index.vue";
 import { formatDate } from "@/utils/format";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { ref } from "vue";
+import ChooseImg from "@/components/chooseImg/index.vue";
 
 // 自动化生成的字典（可能为空）以及字段
 const formData = ref({
@@ -99,7 +107,11 @@ const formData = ref({
   introduction: "",
   content: "",
   password: "",
+  headImg: "",
 });
+
+const path = ref(import.meta.env.VITE_BASE_API);
+const chooseImg = ref(null);
 
 // =========== 表格控制部分 ===========
 const page = ref(1);
@@ -107,6 +119,10 @@ const total = ref(0);
 const pageSize = ref(10);
 const tableData = ref([]);
 const searchInfo = ref({});
+
+const openHeaderChange = () => {
+  chooseImg.value.open();
+};
 
 // 重置
 const onReset = () => {
@@ -212,6 +228,7 @@ const updateUserFunc = async (row) => {
   if (res.code === 0) {
     formData.value = res.data.reuser;
     dialogFormVisible.value = true;
+    console.log(formData.value);
   }
 };
 
@@ -274,4 +291,14 @@ const enterDialog = async () => {
 };
 </script>
 
-<style></style>
+<style scoped>
+.header-img-box {
+  width: 200px;
+  height: 200px;
+  border: 1px dashed #ccc;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 200px;
+  cursor: pointer;
+}
+</style>

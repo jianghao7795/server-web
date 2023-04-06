@@ -8,6 +8,7 @@ type User struct {
 	HeadImg      string `json:"head_img" form:"head_img" gorm:"column:head_img;comment:头像;"`
 	Introduction string `json:"introduction" form:"introduction" gorm:"column:introduction;comment:简介;size:255;"`
 	Content      string `json:"content" form:"content" gorm:"column:content;comment:用户信息;size:255;"`
+	Header       string `json:"header" form:"header" gorm:"column:header;comment:头像;size:100"`
 }
 
 func (User) TableName() string {

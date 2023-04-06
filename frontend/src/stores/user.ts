@@ -4,7 +4,7 @@ import { login, getCurrentUser } from "@/services/user";
 export const useUserStore = defineStore("user", {
   state: (): { currentUser: User.CurrentUser; loading: boolean } => ({
     currentUser: {
-      user: { ID: 0, name: "", introduction: "", head_img: "", content: "", password: "" },
+      user: { ID: 0, name: "", introduction: "", head_img: "", content: "", header: "" },
       token: "",
       exportAt: 0,
     },
@@ -35,7 +35,9 @@ export const useUserStore = defineStore("user", {
         return;
       }
       try {
+        this.loading = true;
         const info = await getCurrentUser();
+        this.loading = false;
         this.currentUser.user = info.data.user;
         this.currentUser.exportAt = info.data.exportAt;
         if (info.data.user.head_img !== "") {
@@ -44,6 +46,7 @@ export const useUserStore = defineStore("user", {
         }
       } catch (e) {
         // console.log(e);
+        this.loading = false;
         window.$message.error("个人信息获取失败，请重新登录");
       }
     },

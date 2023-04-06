@@ -28,7 +28,7 @@
                   :rail-style="railStyle"
                 >
                   <template #checked-icon>
-                    <NIcon :component="Sun" />
+                    <NIcon :component="Moon" />
                   </template>
                   <template #unchecked-icon>
                     <NIcon :component="SunOne" />
@@ -38,17 +38,21 @@
             </div>
           </template>
           <template #header>
-            <div class="headerStyleLine">
-              <n-space>
-                <b @click="() => changePath('/')" v-if="isLogin" style="cursor: pointer">
-                  <n-dropdown :options="options" placement="bottom-start" trigger="click" @select="userLogout">
-                    {{ userStore.currentUser.user.name }}
-                  </n-dropdown>
-                </b>
-                <b @click="() => changeLogin(true)" v-else style="cursor: pointer">登录</b>
-                <!-- <span style="cursor: pointer" @click="() => changeActive(true)" v-if="isLogin">更换背景图片</span> -->
-              </n-space>
-            </div>
+            <span class="headerStyleLine">
+              <b @click="() => changePath('/')" v-if="isLogin" style="cursor: pointer">
+                <n-dropdown
+                  :options="options"
+                  placement="bottom-end"
+                  trigger="click"
+                  :show-arrow="true"
+                  @select="userLogout"
+                >
+                  <n-avatar round size="small" :src="headImage"></n-avatar>
+                </n-dropdown>
+              </b>
+              <b @click="() => changeLogin(true)" v-else style="cursor: pointer">登录</b>
+              <!-- <span style="cursor: pointer" @click="() => changeActive(true)" v-if="isLogin">更换背景图片</span> -->
+            </span>
           </template>
           <div style="height: 300px; text-align: center">
             <div v-if="!isMouseOver">
@@ -148,7 +152,7 @@ import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch, injec
 import type { GlobalTheme, FormInst } from "naive-ui";
 import { NIcon } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
-import { Search, Sun, SunOne, Logout, Change } from "@icon-park/vue-next";
+import { Search, Logout, Change, Moon, SunOne } from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import { emitter } from "@/utils/common";
 import { getImages } from "@/services/image";
@@ -156,6 +160,8 @@ import { useUserStore } from "@/stores/user";
 import { updateBackgroundImage } from "@/services/user";
 
 const Base_URL = import.meta.env.VITE_BASE_API;
+
+const headImage = computed(() => `${Base_URL}/${userStore.currentUser.user.header}`);
 
 const userStore = useUserStore();
 const route = useRoute();
@@ -178,12 +184,8 @@ const formRef = ref<FormInst | null>(null);
 
 // 是否登录
 const isLogin = computed(() => !!userStore.currentUser.user.ID);
-const userInfo = ref<User.UserInfo>({
-  ID: 0,
+const userInfo = ref<{ name: string; password: string }>({
   name: "",
-  introduction: "",
-  head_img: "",
-  content: "",
   password: "",
 });
 
@@ -284,11 +286,7 @@ const login = () => {
     });
     loginStatus.value = false;
     userInfo.value = {
-      ID: 0,
       name: "",
-      introduction: "",
-      head_img: "",
-      content: "",
       password: "",
     };
   });

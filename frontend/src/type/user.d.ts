@@ -5,7 +5,8 @@ declare namespace User {
     introduction: string;
     head_img: string;
     content: string;
-    password: string;
+    // password: string;
+    header: string;
   };
 
   export type Login = {

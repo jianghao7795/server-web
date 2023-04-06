@@ -82,7 +82,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { onMounted, inject, ref, nextTick } from "vue";
+import { onMounted, inject, ref } from "vue";
 import { useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
 import dayjs from "dayjs";
