@@ -9,6 +9,7 @@ declare namespace Comment {
     content: string;
     user_id: number;
     user_name: string;
+    user: User.UserInfo;
     children: comment[];
   }
 }

@@ -51,7 +51,12 @@
         <a>{{ items.user_name }}</a>
       </template>
       <template #avatar>
-        <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
+        <a-avatar
+          v-if="items.user_id === 0"
+          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          alt="Han Solo"
+        />
+        <a-avatar v-else :src="items.user.header ? `${Base_URL}/${items.user.header}` : ''" alt="Han Solo" />
       </template>
       <template #content>
         <div>
@@ -63,7 +68,12 @@
           <a>{{ item.user_name }}</a>
         </template>
         <template #avatar>
-          <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
+          <a-avatar
+            v-if="item.user_id === 0"
+            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+            alt="Han Solo"
+          />
+          <a-avatar v-else :src="item.user.header ? `${Base_URL}/${item.user.header}` : ''" alt="Han Solo" />
         </template>
         <template #content>
           <div>
@@ -92,6 +102,8 @@ import { useArticleStore } from "@/stores/article";
 import { getArticleComment, createdComment } from "@/services/comment";
 import { useMessage } from "naive-ui";
 import { useUserStore } from "@/stores/user";
+
+const Base_URL = ref<string>(import.meta.env.VITE_BASE_API);
 
 const message = useMessage();
 const userStroe = useUserStore();
@@ -143,6 +155,7 @@ const submit = async (parentId: number, children: Comment.comment[]) => {
       isComment.value = false;
       isCommentChildren.value[parentId] = false;
       children.unshift({
+        user: userStroe.currentUser.user,
         content: inputRef.value || inputChildren.value,
         articleId: Number(route.params.id).valueOf(),
         parentId,
