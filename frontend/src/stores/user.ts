@@ -41,11 +41,10 @@ export const useUserStore = defineStore("user", {
         this.currentUser.user = info.data.user;
         this.currentUser.exportAt = info.data.exportAt;
         if (info.data.user.head_img !== "") {
-          // console.log(info.data.user);
           callback(info.data.user.head_img);
         }
       } catch (e) {
-        // console.log(e);
+        localStorage.removeItem("token");
         this.loading = false;
         window.$message.error("个人信息获取失败，请重新登录");
       }
