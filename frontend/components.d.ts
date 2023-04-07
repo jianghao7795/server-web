@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     AAvatar: typeof import('ant-design-vue/es')['Avatar']
     AComment: typeof import('ant-design-vue/es')['Comment']
     Comments: typeof import('./src/components/comments/index.vue')['default']
+    Emoji: typeof import('./src/components/emoji/index.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
     IconEcosystem: typeof import('./src/components/icons/IconEcosystem.vue')['default']

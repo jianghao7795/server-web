@@ -28,10 +28,18 @@
         :previewOnly="true"
       ></MdEditor>
     </div>
-    <div @click="() => focusInput(true)">
-      <n-input placeholder="评论" type="textarea" size="small" :autosize="true" v-model:value="inputRef"></n-input>
+    <div>
+      <n-input
+        @click="focusInput(true)"
+        placeholder="评论"
+        type="textarea"
+        size="small"
+        :autosize="true"
+        v-model:value="inputRef"
+        ref="inputSelectRef"
+      ></n-input>
       <div class="comment-line" v-show="isComment">
-        <div></div>
+        <div><Emoji @changeActive="changeActive" @handleFouces="handleFouces" /></div>
         <div>
           <NButton type="primary" @click="submit(0, comment)">发表评论</NButton>
         </div>
@@ -100,11 +108,13 @@ import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 import { useArticleStore } from "@/stores/article";
 import { getArticleComment, createdComment } from "@/services/comment";
-import { useMessage } from "naive-ui";
+import { useMessage, type InputInst } from "naive-ui";
 import { useUserStore } from "@/stores/user";
+import Emoji from "@/components/emoji/index.vue";
 
 const Base_URL = ref<string>(import.meta.env.VITE_BASE_API);
 
+const inputSelectRef = ref();
 const message = useMessage();
 const userStroe = useUserStore();
 const route = useRoute();
@@ -119,6 +129,16 @@ const inputChildren = ref<string>("");
 
 const focusInput = (isFouse: boolean) => {
   isComment.value = isFouse;
+};
+
+const changeActive = (n: EmojiType.emoji) => {
+  inputSelectRef.value.focus();
+  inputRef.value = inputRef.value + n.char;
+};
+
+const handleFouces = () => {
+  inputSelectRef.value.focus();
+  console.log(inputSelectRef.value.select());
 };
 
 const reply = (id: number, status: boolean) => {

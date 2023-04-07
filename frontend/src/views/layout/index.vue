@@ -28,10 +28,10 @@
                   :rail-style="railStyle"
                 >
                   <template #checked-icon>
-                    <NIcon :component="Moon" />
+                    <NIcon><moon theme="filled" size="26" fill="#333" :strokeWidth="3" /></NIcon>
                   </template>
                   <template #unchecked-icon>
-                    <NIcon :component="SunOne" />
+                    <NIcon><sun-one theme="outline" size="26" fill="#333" :strokeWidth="3" /></NIcon>
                   </template>
                 </n-switch>
               </NSpace>
@@ -109,7 +109,7 @@
                   class="carousel-img"
                 />
               </template>
-              确定更换背景图片
+              确定更换背景图片？
             </n-popconfirm>
           </n-carousel-item>
         </n-carousel>
@@ -337,6 +337,13 @@ onMounted(() => {
     });
   }
   userStore.getUser((head_img: string) => {
+    if (userStore.currentUser.user.ID !== 0) {
+      getImages().then((resp) => {
+        if (resp) {
+          bgImage.value = resp.data;
+        }
+      });
+    }
     colorSet.value = `url(${
       new URL(head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`, import.meta.url).href
     })`;
