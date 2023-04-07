@@ -2,6 +2,7 @@ package frontend
 
 import (
 	v1 "server/api/v1"
+	"server/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -30,7 +31,7 @@ func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
 	{
 		frontend.GET("getImages", frontendUserApi.GetImages)
 		frontend.POST("login", frontendUserApi.Login)
-		frontend.GET("getCurrentUser", frontendUserApi.GetCurrent)
+		frontend.GET("getCurrentUser", middleware.JWTAuthMiddleware(), frontendUserApi.GetCurrent)
 		frontend.PUT("updateBackgroundImage", frontendUserApi.UpdateUserBackgroudImage)
 	}
 }
