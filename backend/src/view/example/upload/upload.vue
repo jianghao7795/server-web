@@ -57,17 +57,7 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination
-          background
-          :current-page="page"
-          :page-size="pageSize"
-          :page-sizes="[10, 30, 50, 100]"
-          :style="{ float: 'right', padding: '20px' }"
-          :total="total"
-          layout="total, sizes, prev, pager, next, jumper"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :style="{ float: 'right', padding: '20px' }" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
       <!-- <VueViewer :images="tableData.map((i) => i.url)">
         <template slot-scope="scope">
@@ -124,7 +114,7 @@ const getTableData = async () => {
     total.value = table.data.total;
     page.value = table.data.page;
     pageSize.value = table.data.pageSize;
-    console.log(table);
+    // console.log(table);
   }
 };
 getTableData();

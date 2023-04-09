@@ -53,7 +53,7 @@
           <template #default="{ row }">
             <div class="centerBg">
               <el-space>
-                <el-tag :type="row.is_important === 1 ? 'success' : 'error'">{{ row.is_important === 1 ? "显示" : "隐藏" }}</el-tag>
+                <el-tag :type="row.is_important === 1 ? 'success' : ''">{{ row.is_important === 1 ? "显示" : "隐藏" }}</el-tag>
               </el-space>
             </div>
           </template>
