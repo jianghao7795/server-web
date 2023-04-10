@@ -32,10 +32,12 @@ func (*Local) UploadFile(file *multipart.FileHeader) (string, string, error) {
 	// 读取文件名并加密
 	name := strings.TrimSuffix(file.Filename, ext)
 	name = utils.MD5V([]byte(name))
+
+	nowTime := time.Now()
 	// 路径
-	filepath := time.Now().Format("2006/01/02")
+	filepath := nowTime.Format("2006/01/02")
 	// 拼接新文件名
-	filename := name + ext
+	filename := name + "_" + nowTime.Format("150405") + ext
 	// 尝试创建此路径
 	mkdirErr := os.MkdirAll(global.CONFIG.Local.Path+"/"+filepath, os.ModePerm)
 	if mkdirErr != nil {
