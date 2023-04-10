@@ -74,7 +74,7 @@
               @blur="() => changeBlur(false)"
               @keyup.enter="submit"
             />
-            <span class="subheading">愈有知，愈无知。</span>
+            <span class="subheading">{{ currentRouter }}</span>
           </div>
         </n-card>
       </n-layout-header>
@@ -175,6 +175,7 @@ const viewPage = ref<string>(route.fullPath);
 const colorSet = ref<string>(`url(${new URL("/home-bg.png", import.meta.url).href})`);
 const bgImage = ref<User.Images[]>([]);
 const active = ref<boolean>(false);
+const currentRouter = ref<string>("");
 //登录页面的status
 const loginStatus = ref<boolean>(false);
 // 主题状态
@@ -316,6 +317,22 @@ watch(
   (value) => {
     const pathArray = value.split("/");
     viewPage.value = `/${pathArray[1]}`;
+    switch (pathArray[1]) {
+      case undefined:
+        currentRouter.value = "首页";
+        break;
+      case "articles":
+        currentRouter.value = "文章";
+        break;
+      case "about":
+        currentRouter.value = "关于我";
+        break;
+      case "tags":
+        currentRouter.value = "标签";
+        break;
+      default:
+        currentRouter.value = "首页";
+    }
   },
 );
 
@@ -329,6 +346,22 @@ onMounted(() => {
 
   const pathArray = route.fullPath.split("/");
   viewPage.value = `/${pathArray[1]}`;
+  switch (pathArray[1]) {
+    case undefined:
+      currentRouter.value = "首页";
+      break;
+    case "articles":
+      currentRouter.value = "文章";
+      break;
+    case "about":
+      currentRouter.value = "关于我";
+      break;
+    case "tags":
+      currentRouter.value = "标签";
+      break;
+    default:
+      currentRouter.value = "首页";
+  }
 
   if (userStore.currentUser.user.ID !== 0) {
     getImages().then((resp) => {
@@ -337,6 +370,7 @@ onMounted(() => {
       }
     });
   }
+
   userStore.getUser((head_img: string) => {
     if (userStore.currentUser.user.ID !== 0) {
       getImages().then((resp) => {
