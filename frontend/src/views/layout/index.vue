@@ -125,6 +125,7 @@
           label-width="auto"
           require-mark-placement="right-hanging"
           size="large"
+          @keyup.enter.native="login"
         >
           <n-form-item path="name">
             <n-input type="text" v-model:value="userInfo.name" placeholder="账号" />

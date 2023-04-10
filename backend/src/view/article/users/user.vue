@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="search-box">
-      <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
+      <el-form :inline="true" :model="searchInfo" class="demo-form-inline" @keyup.enter.native="onSubmit">
+        <el-form-item label="用户名:">
+          <el-input v-model="searchInfo.name"></el-input>
+        </el-form-item>
         <el-form-item>
           <el-button size="small" type="primary" icon="search" @click="onSubmit">查询</el-button>
           <el-button size="small" icon="refresh" @click="onReset">重置</el-button>

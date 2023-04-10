@@ -62,11 +62,15 @@ func (userService *UserService) GetUserInfoList(info appReq.UserSearch) (list in
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
 	db := global.DB.Model(&app.User{})
+
 	var users []app.User
 	// 如果有条件搜索 下方会自动创建搜索语句
 	err = db.Count(&total).Error
 	if err != nil {
 		return
+	}
+	if info.Name != "" {
+		db = db.Where("name like ?", "%"+info.Name+"%")
 	}
 	err = db.Limit(limit).Offset(offset).Find(&users).Error
 	return users, total, err
