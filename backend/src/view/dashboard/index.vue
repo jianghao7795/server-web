@@ -75,7 +75,7 @@
         </div>
         <div class="echart-box">
           <el-row :gutter="20">
-            <el-col :xs="24" :sm="18">
+            <el-col :xs="24" :sm="16">
               <!-- <swiper
                 :modules="modules"
                 :speed="1200"
@@ -101,7 +101,7 @@
                 </swiper>
               </div>
             </el-col>
-            <el-col :xs="24" :sm="6">
+            <el-col :xs="24" :sm="8">
               <dashboard-table />
             </el-col>
           </el-row>

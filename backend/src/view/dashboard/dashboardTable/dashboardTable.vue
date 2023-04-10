@@ -2,7 +2,7 @@
   <div class="commit-table">
     <div class="commit-table-title">更新日志</div>
     <div class="log">
-      <el-scrollbar height="400px" @scroll="scrollChange">
+      <el-scrollbar @scroll="scrollChange">
         <div v-for="(item, key) in dataTimeline" :key="item.message" class="log-item">
           <div class="flex-1 flex key-box">
             <span class="key" :class="key < 3 && 'top'">{{ key + 1 }}</span>
@@ -29,7 +29,7 @@ const dataTimeline = ref([]);
 const page = ref(1);
 
 const scrollChange = (event) => {
-  console.log(event);
+  // console.log(event);
   if (event.scrollTop === 1620) {
     page.value = page.value + 1;
     loadCommits();
