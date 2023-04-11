@@ -3,6 +3,7 @@ package frontend
 import (
 	"errors"
 	"server/global"
+	"server/model/app"
 	"server/model/frontend"
 	frontendRequest "server/model/frontend/request"
 	frontendResponse "server/model/frontend/response"
@@ -42,6 +43,22 @@ func (u *FrontendUser) Login(data frontendRequest.LoginForm) (userInter frontend
 	userInter.User = user
 	userInter.Token = tokenString
 	userInter.ExpiresAt = expiresAt
+	return
+}
+
+func (u *FrontendUser) RegisterUser(data frontendRequest.RegisterUser) (err error) {
+	user := app.User{
+		Name:         data.Name,
+		Introduction: data.Introduction,
+		Content:      data.Content,
+	}
+	user.Password = utils.MD5V([]byte(data.Password))
+	var userLog frontend.User
+	err = global.DB.Where("name = ? and password = ?", data.Name, user.Password).First(&userLog).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return errors.New("账号已注册，请重新注册")
+	}
+	err = global.DB.Create(&user).Error
 	return
 }
 

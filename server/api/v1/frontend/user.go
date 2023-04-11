@@ -30,6 +30,25 @@ func (u *FrontendUser) Login(c *gin.Context) {
 	}
 }
 
+func (*FrontendUser) RegisterUser(c *gin.Context) {
+	var userInfo loginRequest.RegisterUser
+	_ = c.ShouldBindJSON(&userInfo)
+	if err := utils.Verify(userInfo, utils.RegisterVerifyFrontend); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	err := frontendService.RegisterUser(userInfo)
+	if err != nil {
+		global.LOG.Error("注册失败!", zap.Error(err))
+		response.FailWithDetailed(gin.H{
+			"error": err,
+		}, "注册失败", c)
+	} else {
+		response.OkWithDetailed(gin.H{}, "注册成功", c)
+	}
+}
+
 func (u *FrontendUser) GetCurrent(c *gin.Context) {
 	token := c.Request.Header.Get("authorization")
 	if token == "" {
