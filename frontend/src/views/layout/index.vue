@@ -247,6 +247,7 @@ const userLogout = (key: string | number) => {
     userStore.$reset();
     localStorage.removeItem("token");
     colorSet.value = `url(${new URL("/home-bg.png", import.meta.url).href})`;
+    loginStatus.value = true;
   }
   // debugger;
   if (key === "change") {

@@ -10,7 +10,7 @@ import (
 type FrontendRouter struct{}
 
 func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
-	frontend := Router.Group("").Use(middleware.OperationRecordFrontend())
+	frontend := Router.Group("")
 	var frontendTagApi = v1.ApiGroupApp.FrontendApiGroup.FrontendTagApi
 	{
 		frontend.GET("getTagList", frontendTagApi.GetTagList)
@@ -25,14 +25,14 @@ func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
 	var frontendCommentApi = v1.ApiGroupApp.FrontendApiGroup.CommentApi
 	{
 		frontend.GET("/getArticleComment/:articleId", frontendCommentApi.GetCommentByArticleId)
-		frontend.POST("/createdComment", frontendCommentApi.CreatedComment)
+		frontend.POST("/createdComment", middleware.OperationRecordFrontend(), frontendCommentApi.CreatedComment)
 	}
 	var frontendUserApi = v1.ApiGroupApp.FrontendApiGroup.FrontendUser
 	{
 		frontend.GET("getImages", frontendUserApi.GetImages)
 		frontend.POST("login", frontendUserApi.Login)
 		frontend.GET("getCurrentUser", middleware.JWTAuthMiddleware(), frontendUserApi.GetCurrent)
-		frontend.PUT("updateBackgroundImage", frontendUserApi.UpdateUserBackgroudImage)
-		frontend.POST("register", frontendUserApi.RegisterUser)
+		frontend.PUT("updateBackgroundImage", middleware.OperationRecordFrontend(), frontendUserApi.UpdateUserBackgroudImage)
+		frontend.POST("register", middleware.OperationRecordFrontend(), frontendUserApi.RegisterUser)
 	}
 }
