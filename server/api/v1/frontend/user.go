@@ -24,10 +24,10 @@ func (u *FrontendUser) Login(c *gin.Context) {
 	}
 	userInfo, err := frontendService.Login(user)
 	if err != nil {
-		global.LOG.Error("登录失败!", zap.Error(err))
-		response.FailWithMessage("登录失败", c)
+		global.LOG.Error(err.Error(), zap.Error(err))
+		response.FailWithMessage(err.Error(), c)
 	} else {
-		response.OkWithDetailed(userInfo, "获取成功", c)
+		response.OkWithDetailed(userInfo, "登录成功", c)
 	}
 }
 

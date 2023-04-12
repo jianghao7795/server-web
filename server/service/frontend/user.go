@@ -40,6 +40,9 @@ func (u *FrontendUser) Login(data frontendRequest.LoginForm) (userInter frontend
 	if err != nil {
 		return
 	}
+	if user.Header == "" {
+		user.Header = "uploads/file/2023/04/10/b53b3a3d6ab90ce0268229151c9bde11_162839.jpeg"
+	}
 	userInter.User = user
 	userInter.Token = tokenString
 	userInter.ExpiresAt = expiresAt

@@ -1,6 +1,5 @@
 <template>
   <div class="view-content">
-    <h1>标签</h1>
     <n-space>
       <n-button
         strong
