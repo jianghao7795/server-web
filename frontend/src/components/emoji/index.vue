@@ -15,7 +15,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineEmits } from "vue";
 import emoji from "@/common/emoji";
 import { GrinningFace } from "@icon-park/vue-next";
 

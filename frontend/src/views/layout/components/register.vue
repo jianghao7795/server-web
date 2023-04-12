@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, defineEmits } from "vue"; // defineExpose 组件暴露自己的属性
+import { ref } from "vue"; // defineExpose 组件暴露自己的属性
 import { useUserStore } from "@/stores/user";
 import type { FormItemRule } from "naive-ui";
 const props = defineProps<{

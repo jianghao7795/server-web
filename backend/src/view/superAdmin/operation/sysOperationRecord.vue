@@ -2,6 +2,12 @@
   <div>
     <div class="search-box">
       <el-form :inline="true" :model="searchInfo" @keyup.enter.native="onSubmit">
+        <el-form-item>
+          <el-select v-model="searchInfo.type_port" placeholder="前后台" filterable>
+            <el-option label="前台请求" :value="1"></el-option>
+            <el-option label="后台请求" :value="0"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="请求方法">
           <el-input v-model="searchInfo.method" placeholder="搜索条件" />
         </el-form-item>
@@ -26,25 +32,15 @@
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
-            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length" @click="deleteVisible = true">
-              删除
-            </el-button>
+            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length" @click="deleteVisible = true">删除</el-button>
           </template>
         </el-popover>
       </div>
-      <el-table
-        ref="multipleTable"
-        :data="tableData"
-        style="width: 100%"
-        tooltip-effect="dark"
-        row-key="ID"
-        @selection-change="handleSelectionChange"
-        v-loading="loading"
-      >
+      <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID" @selection-change="handleSelectionChange" v-loading="loading">
         <el-table-column align="left" type="selection" width="55" />
         <el-table-column align="left" label="操作人" width="160">
           <template #default="scope">
-            <div>{{ scope.row.user.userName }}({{ scope.row.user.nickName }})</div>
+            <div>{{ scope.row.user.userName }}({{ scope.row.user.nickName || scope.row.user.name }})</div>
           </template>
         </el-table-column>
         <el-table-column align="left" label="日期" width="180">
@@ -107,16 +103,7 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination
-          background
-          :current-page="page"
-          :page-size="pageSize"
-          :page-sizes="[10, 30, 50, 100]"
-          :total="total"
-          layout="total, sizes, prev, pager, next, jumper"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </div>
   </div>
@@ -132,7 +119,7 @@ const page = ref(1);
 const total = ref(0);
 const pageSize = ref(10);
 const tableData = ref([]);
-const searchInfo = ref({});
+const searchInfo = ref({ type_port: 0 });
 const loading = ref(false);
 const onReset = () => {
   searchInfo.value = {};
@@ -176,7 +163,7 @@ const getTableData = async () => {
 };
 
 onMounted(() => {
-  getTableData();
+  getTableData(searchInfo.value);
 });
 
 const deleteVisible = ref(false);

@@ -61,13 +61,14 @@ func (operationRecordService *OperationRecordService) GetSysOperationRecord(id u
 //@param: info systemReq.SysOperationRecordSearch
 //@return: err error, list interface{}, total int64
 
-func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoList(info systemReq.SysOperationRecordSearch) (list interface{}, total int64, err error) {
+func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoList(info systemReq.SysOperationRecordSearch) (list []system.SysOperationRecord, total int64, err error) {
 	// time.Sleep(3 * time.Second)
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
 	db := global.DB.Model(&system.SysOperationRecord{})
 	var sysOperationRecords []system.SysOperationRecord
+	db = db.Where("type_port = ?", info.TypePort)
 	// 如果有条件搜索 下方会自动创建搜索语句
 	if info.Method != "" {
 		db = db.Where("method = ?", info.Method)
@@ -84,4 +85,33 @@ func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoL
 	}
 	err = db.Order("id desc").Limit(limit).Offset(offset).Preload("User").Find(&sysOperationRecords).Error
 	return sysOperationRecords, total, err
+
+}
+
+func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoFrontendList(info systemReq.SysOperationRecordSearch) (list []system.SysOperationRecordFrontend, total int64, err error) {
+	// time.Sleep(3 * time.Second)
+	limit := info.PageSize
+	offset := info.PageSize * (info.Page - 1)
+	// 创建db
+	db := global.DB.Model(&system.SysOperationRecordFrontend{})
+
+	var sysOperationRecords []system.SysOperationRecordFrontend
+	db = db.Where("type_port = ?", info.TypePort)
+	// 如果有条件搜索 下方会自动创建搜索语句
+	if info.Method != "" {
+		db = db.Where("method = ?", info.Method)
+	}
+	if info.Path != "" {
+		db = db.Where("path LIKE ?", "%"+info.Path+"%")
+	}
+	if info.Status != 0 {
+		db = db.Where("status = ?", info.Status)
+	}
+	err = db.Count(&total).Error
+	if err != nil {
+		return
+	}
+	err = db.Order("id desc").Limit(limit).Offset(offset).Preload("User").Find(&sysOperationRecords).Error
+	return sysOperationRecords, total, err
+
 }

@@ -10,9 +10,6 @@ import (
 	"strings"
 	"time"
 
-	// "io/ioutil"
-	// jsoniter "github.com/json-iterator/go"
-
 	"server/global"
 	"server/model/system"
 	"server/service"
@@ -63,12 +60,13 @@ func OperationRecord() gin.HandlerFunc {
 			userId = id
 		}
 		record := system.SysOperationRecord{
-			Ip:     c.ClientIP(),
-			Method: c.Request.Method,
-			Path:   c.Request.URL.Path,
-			Agent:  c.Request.UserAgent(),
-			Body:   string(body),
-			UserID: userId,
+			Ip:       c.ClientIP(),
+			Method:   c.Request.Method,
+			Path:     c.Request.URL.Path,
+			Agent:    c.Request.UserAgent(),
+			Body:     string(body),
+			UserID:   userId,
+			TypePort: system.Backend,
 		}
 		// 上传文件时候 中间件日志进行裁断操作
 		if strings.Contains(c.GetHeader("Content-Type"), "multipart/form-data") {

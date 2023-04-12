@@ -15,6 +15,7 @@ import (
 )
 
 type MyClaims struct {
+	ID                   uint   `json:"id"`
 	Name                 string `json:"name"`
 	Password             string `json:"password"`
 	jwt.RegisteredClaims        // 注意!这是jwt-go的v4版本新增的，原先是jwt.StandardClaims
@@ -36,7 +37,7 @@ func (u *FrontendUser) Login(data frontendRequest.LoginForm) (userInter frontend
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return userInter, errors.New("密码错误")
 	}
-	tokenString, expiresAt, err := MakeToken(data)
+	tokenString, expiresAt, err := MakeToken(data, user.ID)
 	if err != nil {
 		return
 	}
@@ -82,8 +83,9 @@ func (u *FrontendUser) UpdateUserBackgroudImage(data frontend.User) (err error) 
 	return
 }
 
-func MakeToken(data frontendRequest.LoginForm) (tokenString string, expiresAt int64, err error) {
+func MakeToken(data frontendRequest.LoginForm, id uint) (tokenString string, expiresAt int64, err error) {
 	claim := MyClaims{
+		ID:       id,
 		Name:     data.Name,
 		Password: data.Password,
 		RegisteredClaims: jwt.RegisteredClaims{

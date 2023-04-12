@@ -21,4 +21,16 @@ type SysOperationRecord struct {
 	Resp         string        `json:"resp" form:"resp" gorm:"type:text;column:resp;comment:响应Body"`                 // 响应Body
 	UserID       int           `json:"user_id" form:"user_id" gorm:"column:user_id;comment:用户id"`                    // 用户id
 	User         SysUser       `json:"user"`
+	TypePort     PolicyType    `json:"type_port" form:"type_port" gorm:"column:type_port;comment:区别前后台"`
+}
+
+type PolicyType int
+
+const (
+	Backend  PolicyType = 0
+	Frontend PolicyType = 1
+)
+
+func (SysOperationRecord) TableName() string {
+	return "sys_operation_records"
 }

@@ -105,15 +105,30 @@ func (s *OperationRecordApi) FindSysOperationRecord(c *gin.Context) {
 func (s *OperationRecordApi) GetSysOperationRecordList(c *gin.Context) {
 	var pageInfo systemReq.SysOperationRecordSearch
 	_ = c.ShouldBindQuery(&pageInfo)
-	if list, total, err := operationRecordService.GetSysOperationRecordInfoList(pageInfo); err != nil {
-		global.LOG.Error("获取失败!", zap.Error(err))
-		response.FailWithMessage("获取失败", c)
+	if pageInfo.TypePort == system.Backend {
+		if list, total, err := operationRecordService.GetSysOperationRecordInfoList(pageInfo); err != nil {
+			global.LOG.Error("获取失败!", zap.Error(err))
+			response.FailWithMessage("获取失败", c)
+		} else {
+			response.OkWithDetailed(response.PageResult{
+				List:     list,
+				Total:    total,
+				Page:     pageInfo.Page,
+				PageSize: pageInfo.PageSize,
+			}, "获取成功", c)
+		}
 	} else {
-		response.OkWithDetailed(response.PageResult{
-			List:     list,
-			Total:    total,
-			Page:     pageInfo.Page,
-			PageSize: pageInfo.PageSize,
-		}, "获取成功", c)
+		if list, total, err := operationRecordService.GetSysOperationRecordInfoFrontendList(pageInfo); err != nil {
+			global.LOG.Error("获取失败!", zap.Error(err))
+			response.FailWithMessage("获取失败", c)
+		} else {
+			response.OkWithDetailed(response.PageResult{
+				List:     list,
+				Total:    total,
+				Page:     pageInfo.Page,
+				PageSize: pageInfo.PageSize,
+			}, "获取成功", c)
+		}
 	}
+
 }
