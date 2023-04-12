@@ -72,7 +72,7 @@ func (userService *UserService) GetUserInfoList(info appReq.UserSearch) (list in
 	if info.Name != "" {
 		db = db.Where("name like ?", "%"+info.Name+"%")
 	}
-	err = db.Limit(limit).Offset(offset).Find(&users).Error
+	err = db.Limit(limit).Offset(offset).Order("id desc").Find(&users).Error
 	return users, total, err
 }
 

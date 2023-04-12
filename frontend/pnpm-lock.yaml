@@ -8,7 +8,6 @@ specifiers:
   '@vitejs/plugin-vue': ^3.0.1
   '@vue/tsconfig': ^0.1.3
   '@vueuse/core': ^9.1.0
-  alova: ^2.0.14
   ant-design-vue: ^3.2.15
   axios: ^0.27.2
   dayjs: ^1.11.7
@@ -30,7 +29,6 @@ specifiers:
 dependencies:
   '@icon-park/vue-next': 1.4.2_vue@3.2.41
   '@vueuse/core': 9.4.0_vue@3.2.41
-  alova: 2.0.14
   ant-design-vue: 3.2.15_vue@3.2.41
   axios: 0.27.2
   dayjs: 1.11.7
@@ -469,11 +467,6 @@ packages:
     resolution: {integrity: sha512-xjIYgE8HBrkpd/sJqOGNspf8uHG+NOHGOw6a/Urj8taM2EXfdNAH2oFcPeIFfsv3+kz/mJrS5VuMqbNLjCa2vw==}
     engines: {node: '>=0.4.0'}
     hasBin: true
-    dev: false
-
-  /alova/2.0.14:
-    resolution: {integrity: sha512-/yNLf32jG4MS8qN2h7FsPEzNI5T+6Rw+/Mllc/fkrwUCeqw9CurXrfreyaHURB578rM6WDCC0NDDRQOt64moCQ==}
-    engines: {node: '>= 0.12.0'}
     dev: false
 
   /ansi-styles/3.2.1:
