@@ -1,6 +1,7 @@
 package frontend
 
 import (
+	"errors"
 	"server/global"
 	"server/model/common/response"
 	"server/model/frontend"
@@ -33,6 +34,11 @@ func (u *FrontendUser) Login(c *gin.Context) {
 func (*FrontendUser) RegisterUser(c *gin.Context) {
 	var userInfo loginRequest.RegisterUser
 	_ = c.ShouldBindJSON(&userInfo)
+	if userInfo.Password != userInfo.RePassword {
+		global.LOG.Error("密码不一致!", zap.Error(errors.New("密码不一致")))
+		response.FailWithMessage("密码不一致", c)
+		return
+	}
 	if err := utils.Verify(userInfo, utils.RegisterVerifyFrontend); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -41,9 +47,7 @@ func (*FrontendUser) RegisterUser(c *gin.Context) {
 	err := frontendService.RegisterUser(userInfo)
 	if err != nil {
 		global.LOG.Error("注册失败!", zap.Error(err))
-		response.FailWithDetailed(gin.H{
-			"error": err,
-		}, "注册失败", c)
+		response.FailWithDetailed(gin.H{}, err.Error(), c)
 	} else {
 		response.OkWithDetailed(gin.H{}, "注册成功", c)
 	}

@@ -10,7 +10,7 @@ import (
 type FrontendRouter struct{}
 
 func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
-	frontend := Router.Group("")
+	frontend := Router.Group("").Use()
 	var frontendTagApi = v1.ApiGroupApp.FrontendApiGroup.FrontendTagApi
 	{
 		frontend.GET("getTagList", frontendTagApi.GetTagList)
@@ -33,5 +33,6 @@ func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
 		frontend.POST("login", frontendUserApi.Login)
 		frontend.GET("getCurrentUser", middleware.JWTAuthMiddleware(), frontendUserApi.GetCurrent)
 		frontend.PUT("updateBackgroundImage", frontendUserApi.UpdateUserBackgroudImage)
+		frontend.POST("register", frontendUserApi.RegisterUser)
 	}
 }

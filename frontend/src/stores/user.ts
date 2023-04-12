@@ -1,19 +1,35 @@
 import { defineStore } from "pinia";
-import { login, getCurrentUser } from "@/services/user";
+import { login, getCurrentUser, registerUser } from "@/services/user";
 
 export const useUserStore = defineStore("user", {
-  state: (): { currentUser: User.CurrentUser; loading: boolean } => ({
+  state: (): { currentUser: User.CurrentUser; loading: boolean; loadingRegister: boolean } => ({
     currentUser: {
       user: { ID: 0, name: "", introduction: "", head_img: "", content: "", header: "" },
       token: "",
       exportAt: 0,
     },
     loading: false,
+    loadingRegister: false,
   }),
   getters: {
     getToken: (state) => state.currentUser.token,
   },
   actions: {
+    async register(data: User.Register, callback: () => void) {
+      this.loadingRegister = true;
+      try {
+        const resp = await registerUser(data);
+        this.loadingRegister = false;
+        if (resp.code === 0) {
+          callback();
+        } else {
+          window.$message.error("注册失败, 请重试");
+        }
+      } catch (e) {
+        this.loadingRegister = false;
+        window.$message.error("注册失败, 请重试");
+      }
+    },
     async logins(data: User.Login, callback: (imageString: string) => void) {
       this.loading = true;
       try {

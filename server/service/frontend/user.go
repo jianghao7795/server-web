@@ -54,12 +54,11 @@ func (u *FrontendUser) RegisterUser(data frontendRequest.RegisterUser) (err erro
 	}
 	user.Password = utils.MD5V([]byte(data.Password))
 	var userLog frontend.User
-	err = global.DB.Where("name = ? and password = ?", data.Name, user.Password).First(&userLog).Error
+	err = global.DB.Where("name = ?", data.Name).First(&userLog).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return errors.New("账号已注册，请重新注册")
+		return global.DB.Create(&user).Error
 	}
-	err = global.DB.Create(&user).Error
-	return
+	return errors.New("账号已注册，请重新注册")
 }
 
 func (u *FrontendUser) GetUser(tokenString string) (userInter frontendResponse.LoginResponse, err error) {

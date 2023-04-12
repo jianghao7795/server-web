@@ -38,7 +38,7 @@
           </template>
         </el-table-column>
         <el-table-column align="left" label="简介" prop="introduction" width="120" />
-        <el-table-column align="left" label="用户信息" prop="content" width="120" />
+        <el-table-column align="left" label="用户信息" prop="content" width="300" />
         <el-table-column align="left" label="创建时间" width="180">
           <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
         </el-table-column>

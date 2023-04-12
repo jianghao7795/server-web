@@ -30,4 +30,12 @@ declare namespace User {
     token: string;
     exportAt: number;
   };
+
+  export type Register = {
+    name: string;
+    password: string;
+    content: string;
+    introduction: string;
+    re_password: string;
+  };
 }

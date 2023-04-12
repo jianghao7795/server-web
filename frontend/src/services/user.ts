@@ -11,3 +11,7 @@ export function getCurrentUser() {
 export function updateBackgroundImage(data: User.UpdateImages) {
   return http.put<Global.Response<string>>("/updateBackgroundImage", data);
 }
+
+export function registerUser(data: User.Register) {
+  return http.post<Global.Response<User.CurrentUser>>("/register", data);
+}

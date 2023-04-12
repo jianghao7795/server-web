@@ -50,8 +50,11 @@
                   <n-avatar round size="small" :src="headImage"></n-avatar>
                 </n-dropdown>
               </b>
-              <b @click="() => changeLogin(true)" v-else style="cursor: pointer">登录</b>
-              <!-- <span style="cursor: pointer" @click="() => changeActive(true)" v-if="isLogin">更换背景图片</span> -->
+              <span v-else>
+                <b @click="() => changeLogin(true)" style="cursor: pointer">登录</b>
+                <NDivider vertical />
+                <b @click="() => changeRegisterStatus(true)" style="cursor: pointer">注册</b>
+              </span>
             </span>
           </template>
           <div style="height: 300px; text-align: center">
@@ -139,6 +142,7 @@
         </n-form>
       </n-drawer-content>
     </n-drawer>
+    <register :register-status="registerStatus" @change-status="changeRegisterStatus" />
   </div>
 </template>
 
@@ -159,6 +163,7 @@ import { emitter } from "@/utils/common";
 import { getImages } from "@/services/image";
 import { useUserStore } from "@/stores/user";
 import { updateBackgroundImage } from "@/services/user";
+import Register from "./components/register.vue";
 
 const Base_URL = import.meta.env.VITE_BASE_API;
 
@@ -176,6 +181,8 @@ const colorSet = ref<string>(`url(${new URL("/home-bg.png", import.meta.url).hre
 const bgImage = ref<User.Images[]>([]);
 const active = ref<boolean>(false);
 const currentRouter = ref<string>("");
+// 注册页面的status
+const registerStatus = ref<boolean>(false);
 //登录页面的status
 const loginStatus = ref<boolean>(false);
 // 主题状态
@@ -246,6 +253,10 @@ const userLogout = (key: string | number) => {
     changeActive(true);
   }
 };
+
+const changeRegisterStatus = (status: boolean): void => {
+  registerStatus.value = status;
+};
 //<logout theme="outline" size="26" fill="#ddd" :strokeWidth="3"/>
 //<logout theme="outline" size="26" fill="#333" :strokeWidth="3"/>
 const changeBlur = (status: boolean) => {
@@ -270,7 +281,7 @@ const changeActive = (status: boolean) => {
   active.value = status;
 };
 
-const changeLogin = (status: boolean) => {
+const changeLogin = (status: boolean): void => {
   loginStatus.value = status;
 };
 
@@ -462,6 +473,6 @@ a::before {
 }
 
 .middle-view {
-  min-height: calc(100% - 443px);
+  min-height: calc(100% - 460px);
 }
 </style>
