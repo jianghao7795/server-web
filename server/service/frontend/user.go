@@ -53,6 +53,7 @@ func (u *FrontendUser) RegisterUser(data frontendRequest.RegisterUser) (err erro
 		Name:         data.Name,
 		Introduction: data.Introduction,
 		Content:      data.Content,
+		Header:       data.Header,
 	}
 	user.Password = utils.MD5V([]byte(data.Password))
 	if user.Header == "" {
