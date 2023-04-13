@@ -51,6 +51,20 @@
             :clearable="true"
           />
         </n-form-item>
+        <n-form-item>
+          <n-upload
+            accept=".png,.jpg,.git,.jpeg"
+            :file-list="fileList"
+            list-type="image-card"
+            :max="1"
+            v-bind:on-change="changeFileUpload"
+            response-type="json"
+            file-list-style="border-radius: '50%'"
+            :custom-request="requestFile"
+          >
+            头像
+          </n-upload>
+        </n-form-item>
         <div>
           <n-button :loading="userStore.loadingRegister" type="primary" :block="true" @click="() => register()">
             注册
@@ -64,7 +78,8 @@
 <script setup lang="ts">
 import { ref } from "vue"; // defineExpose 组件暴露自己的属性
 import { useUserStore } from "@/stores/user";
-import type { FormItemRule } from "naive-ui";
+import type { FormItemRule, UploadFileInfo, UploadCustomRequestOptions } from "naive-ui";
+import { uploadFile } from "@/services/fileUpload";
 const props = defineProps<{
   registerStatus: boolean;
 }>();
@@ -77,13 +92,35 @@ const userRegister = ref<User.Register>({
   content: "",
   introduction: "",
   re_password: "",
+  header: "",
 });
+const fileList = ref<UploadFileInfo[]>([]);
+
+const changeFileUpload = (options: { file: UploadFileInfo; fileList: Array<UploadFileInfo>; event?: Event }) => {
+  fileList.value = options.fileList;
+};
+
+const requestFile = (options: UploadCustomRequestOptions) => {
+  const formData = new FormData();
+  formData.append("file", options.file.file as File, options.file.name);
+  uploadFile(formData)
+    .then((resp) => {
+      if (resp.code === 0) {
+        window.$message.success("上传成功");
+        userRegister.value.header = resp.data?.file.url as string;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+      window.$message.error("上传失败");
+    });
+};
 
 const userStore = useUserStore();
 const register = () => {
   userStore.register(userRegister.value as User.Register, () => {
     emits("changeStatus", false);
-    userRegister.value = { name: "", password: "", content: "", introduction: "", re_password: "" };
+    userRegister.value = { name: "", password: "", content: "", introduction: "", re_password: "", header: "" };
     window.$message.success("注册成功，请登录");
   });
 };

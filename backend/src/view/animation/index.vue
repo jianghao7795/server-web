@@ -13,13 +13,14 @@
 
 <script>
 import { onMounted, reactive, toRefs, computed, defineComponent } from "vue";
+const Base_URL = import.meta.env.VITE_BASE_API + "/";
 export default defineComponent({
   setup() {
     const state = reactive({
       prizeList: [
         {
           name: "手机",
-          pic: "/backend/uploads/file/2023/04/10/b53b3a3d6ab90ce0268229151c9bde11_162839.jpeg",
+          pic: `${Base_URL}uploads/file/2023/04/10/b53b3a3d6ab90ce0268229151c9bde11_162839.jpeg`,
         },
         {
           name: "手表",

@@ -213,12 +213,12 @@ const rules = {
 //
 const options = [
   {
-    label: "退出登录",
-    key: "logout",
+    label: "更改背景图",
+    key: "change",
     icon: () => {
       return h(NIcon, null, {
         default: () =>
-          h(Logout, {
+          h(Change, {
             theme: "outline",
             size: "26",
             strokeWidth: 3,
@@ -227,12 +227,12 @@ const options = [
     },
   },
   {
-    label: "更改背景图",
-    key: "change",
+    label: "退出登录",
+    key: "logout",
     icon: () => {
       return h(NIcon, null, {
         default: () =>
-          h(Change, {
+          h(Logout, {
             theme: "outline",
             size: "26",
             strokeWidth: 3,

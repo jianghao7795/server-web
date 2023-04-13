@@ -37,5 +37,6 @@ declare namespace User {
     content: string;
     introduction: string;
     re_password: string;
+    header: string;
   };
 }
