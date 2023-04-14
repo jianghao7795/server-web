@@ -31,7 +31,7 @@
     <div>
       <n-input
         @click="focusInput(true)"
-        placeholder="评论"
+        placeholder="留言评论"
         type="textarea"
         size="small"
         :autosize="true"
@@ -45,51 +45,54 @@
         </div>
       </div>
     </div>
-    <a-comment v-for="items in comment" :key="items.ID">
-      <template #actions>
-        <a key="comment-nested-reply-to" v-if="!isCommentChildren[items.ID]" @click="() => reply(items.ID, true)">
-          回复
-        </a>
-        <n-input-group v-else="isCommentChildren[items.ID]">
-          <n-input v-model:value="inputChildren" placeholder="评论" autofocus />
-          <n-button type="primary" ghost @click="submit(items.ID, items.children)">回复</n-button>
-        </n-input-group>
-      </template>
-      <template #author>
-        <a>{{ items.user_name }}</a>
-      </template>
-      <template #avatar>
-        <a-avatar
-          v-if="items.user_id === 0"
-          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          alt="Han Solo"
-        />
-        <a-avatar v-else :src="items.user.header ? `${Base_URL}/${items.user.header}` : ''" alt="Han Solo" />
-      </template>
-      <template #content>
-        <div>
-          <div v-html="items.content"></div>
-        </div>
-      </template>
-      <a-comment v-for="item in items.children" :key="item.ID">
+    <n-card :title="`全部评论 (${comment.length})`" :bordered="false">
+      <n-empty description="快点评论吧！"></n-empty>
+      <a-comment v-for="items in comment" :key="items.ID">
+        <template #actions>
+          <a key="comment-nested-reply-to" v-if="!isCommentChildren[items.ID]" @click="() => reply(items.ID, true)">
+            回复
+          </a>
+          <n-input-group v-else="isCommentChildren[items.ID]">
+            <n-input v-model:value="inputChildren" placeholder="评论" autofocus />
+            <n-button type="primary" ghost @click="submit(items.ID, items.children)">回复</n-button>
+          </n-input-group>
+        </template>
         <template #author>
-          <a>{{ item.user_name }}</a>
+          <a>{{ items.user_name }}</a>
         </template>
         <template #avatar>
           <a-avatar
-            v-if="item.user_id === 0"
+            v-if="items.user_id === 0"
             src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
             alt="Han Solo"
           />
-          <a-avatar v-else :src="item.user.header ? `${Base_URL}/${item.user.header}` : ''" alt="Han Solo" />
+          <a-avatar v-else :src="items.user.header ? `${Base_URL}/${items.user.header}` : ''" alt="Han Solo" />
         </template>
         <template #content>
           <div>
-            <div v-html="item.content"></div>
+            <div v-html="items.content"></div>
           </div>
         </template>
+        <a-comment v-for="item in items.children" :key="item.ID">
+          <template #author>
+            <a>{{ item.user_name }}</a>
+          </template>
+          <template #avatar>
+            <a-avatar
+              v-if="item.user_id === 0"
+              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+              alt="Han Solo"
+            />
+            <a-avatar v-else :src="item.user.header ? `${Base_URL}/${item.user.header}` : ''" alt="Han Solo" />
+          </template>
+          <template #content>
+            <div>
+              <div v-html="item.content"></div>
+            </div>
+          </template>
+        </a-comment>
       </a-comment>
-    </a-comment>
+    </n-card>
   </div>
 </template>
 
@@ -103,6 +106,7 @@ export default {
 import { onMounted, inject, ref } from "vue";
 import { useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
+import { Comment } from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
