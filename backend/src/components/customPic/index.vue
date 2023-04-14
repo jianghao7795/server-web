@@ -9,7 +9,8 @@
       <img v-else :src="noAvatar" class="avatar" />
     </template>
     <template v-if="picType === 'file'">
-      <img :src="file" class="file" />
+      <el-icon v-if="file === '/'"><icon-picture /></el-icon>
+      <img v-else :src="file" class="file" />
     </template>
   </span>
 </template>
@@ -24,6 +25,7 @@ export default {
 import noAvatarPng from "@/assets/noBody.png";
 import { useUserStore } from "@/pinia/modules/user";
 import { computed, ref } from "vue";
+import { Picture as IconPicture } from "@element-plus/icons-vue";
 const props = defineProps({
   picType: {
     type: String,
@@ -76,5 +78,15 @@ const file = computed(() => {
   width: 80px;
   height: 80px;
   position: relative;
+}
+.image-slot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: var(--el-fill-color-light);
+  color: var(--el-text-color-secondary);
+  font-size: 30px;
 }
 </style>
