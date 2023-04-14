@@ -41,7 +41,7 @@ cors:
   mode: whitelist
   whitelist:
     - allow-origin: example1.com
-      allow-methods: GET, POST, PUT, DELETE
+      allow-methods: GET, POST, PUT, DELETE, PATCH
       allow-headers: content-type
       expose-headers:
         Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
@@ -93,7 +93,7 @@ local:
   path: uploads/file
 mysql:
   path: 127.0.0.1
-  port: "3316"
+  port: "3306"
   config: charset=utf8mb4&parseTime=True&loc=Local
   db-name: server
   username: root
