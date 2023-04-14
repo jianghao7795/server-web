@@ -157,7 +157,7 @@ import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch, injec
 import type { GlobalTheme, FormInst } from "naive-ui";
 import { NIcon } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
-import { Search, Logout, Change, Moon, SunOne } from "@icon-park/vue-next";
+import { Search, Logout, Change, Moon, SunOne, SettingTwo, Lock } from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import { emitter } from "@/utils/common";
 import { getImages } from "@/services/image";
@@ -226,6 +226,37 @@ const options = [
       });
     },
   },
+  {
+    label: "个人信息",
+    key: "setting",
+    icon: () => {
+      return h(NIcon, null, {
+        default: () =>
+          h(SettingTwo, {
+            theme: "outline",
+            size: 26,
+            strokeWidth: 3,
+          }),
+      });
+    },
+  },
+  //<setting-two theme="outline" size="26" fill="#333" :strokeWidth="3"/>
+  {
+    label: "修改密码",
+    key: "lock",
+    icon: () => {
+      return h(NIcon, null, {
+        default: () => {
+          return h(Lock, {
+            theme: "outline",
+            size: 26,
+            strokeWidth: 3,
+          });
+        },
+      });
+    },
+  },
+  // <lock theme="outline" size="26" fill="#333" :strokeWidth="3"/>
   {
     label: "退出登录",
     key: "logout",

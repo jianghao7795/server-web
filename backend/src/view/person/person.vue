@@ -10,11 +10,7 @@
               <div
                 class="user-headpic-update"
                 :style="{
-                  'background-image': `url(${
-                    userStore.userInfo.headerImg && userStore.userInfo.headerImg.slice(0, 4) !== 'http'
-                      ? path + userStore.userInfo.headerImg
-                      : userStore.userInfo.headerImg
-                  })`,
+                  'background-image': `url(${userStore.userInfo.headerImg && userStore.userInfo.headerImg.slice(0, 4) !== 'http' ? path + '/' + userStore.userInfo.headerImg : userStore.userInfo.headerImg})`,
                   'background-repeat': 'no-repeat',
                   'background-size': 'cover',
                 }"
@@ -223,14 +219,7 @@
           </div>
           <div>
             <el-form-item label="" label-width="100px">
-              <el-button
-                size="small"
-                @click="addChallenge"
-                :disabled="securityQuestionList.length >= 4"
-                :plain="true"
-                style="width: 100%"
-                :icon="Plus"
-              ></el-button>
+              <el-button size="small" @click="addChallenge" :disabled="securityQuestionList.length >= 4" :plain="true" style="width: 100%" :icon="Plus"></el-button>
             </el-form-item>
           </div>
         </div>
@@ -253,14 +242,7 @@
         </div>
         <div>
           <el-form-item label="" label-width="100px">
-            <el-button
-              size="small"
-              @click="addChallenge"
-              :disabled="securityQuestionList.length >= 4"
-              :plain="true"
-              style="width: 100%"
-              :icon="Plus"
-            ></el-button>
+            <el-button size="small" @click="addChallenge" :disabled="securityQuestionList.length >= 4" :plain="true" style="width: 100%" :icon="Plus"></el-button>
           </el-form-item>
         </div>
         <div style="text-align: center">
@@ -694,8 +676,7 @@ const changeEmail = async () => {
   border-radius: 20px;
   &:hover {
     color: #fff;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%),
-      radial-gradient(at top center, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 120%) #989898;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%), radial-gradient(at top center, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 120%) #989898;
     background-blend-mode: multiply, multiply;
     .update {
       color: #fff;
