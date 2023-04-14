@@ -63,6 +63,9 @@ const file = computed(() => {
   if (props.picSrc && props.picSrc.slice(0, 4) !== "http") {
     return path.value + props.picSrc;
   }
+  if (props.picSrc && props.picSrc.slice(0, 4) === "http") {
+    return props.picSrc;
+  }
   return `/${props.picSrc}`;
 });
 </script>
