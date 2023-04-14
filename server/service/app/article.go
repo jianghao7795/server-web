@@ -93,7 +93,7 @@ func (articleSearch *ArticleService) GetArticleInfoList(info appReq.ArticleSearc
 		return
 	}
 	//
-	err = db.Limit(limit).Offset(offset).Order("id desc").Preload("Tags").Find(&articles).Error
+	err = db.Limit(limit).Offset(offset).Order("id desc").Preload("User").Preload("Tags").Find(&articles).Error
 	return articles, total, err
 }
 

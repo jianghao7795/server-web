@@ -64,6 +64,11 @@
             <span>{{ row.reading_quantity }}</span>
           </template>
         </el-table-column>
+        <el-table-column label="作者" prop="user">
+          <template #default="{ row }">
+            <span>{{ row.user.name }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="创建时间">
           <template #default="{ row }">
             {{ formatDate(row.CreatedAt) }}
