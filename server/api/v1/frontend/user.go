@@ -79,3 +79,14 @@ func (u *FrontendUser) UpdateUserBackgroudImage(c *gin.Context) {
 	}
 	response.OkWithDetailed(nil, "更新成功", c)
 }
+
+func (u *FrontendUser) UpdateUser(c *gin.Context) {
+	var user frontend.User
+	_ = c.ShouldBindJSON(&user)
+
+	if err := frontendService.UpdateUser(user); err != nil {
+		response.FailWithDetailed(err.Error(), "更新失败", c)
+		return
+	}
+	response.OkWithDetailed(nil, "更新成功", c)
+}

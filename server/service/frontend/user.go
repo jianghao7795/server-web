@@ -84,6 +84,11 @@ func (u *FrontendUser) UpdateUserBackgroudImage(data frontend.User) (err error) 
 	return
 }
 
+func (u *FrontendUser) UpdateUser(data frontend.User) (err error) {
+	err = global.DB.Save(&data).Error
+	return
+}
+
 func MakeToken(data frontendRequest.LoginForm, id uint) (tokenString string, expiresAt int64, err error) {
 	claim := MyClaims{
 		ID:       id,
