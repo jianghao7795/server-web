@@ -49,7 +49,7 @@ func Routers() *gin.Engine {
 	global.LOG.Info("register swagger handler")
 	// 方便统一添加路由组前缀 多服务器上线使用
 
-	// Router.Use(middleware.GinRecovery(true)) // recover掉项目可能出现的panic，并使用zap记录相关日志
+	Router.Use(middleware.GinRecovery(true)) // recover掉项目可能出现的panic，并使用zap记录相关日志
 
 	PublicGroup := Router.Group("api")
 	{
