@@ -76,13 +76,13 @@ export default defineConfig(({ command, mode }) => {
       hmr: true,
       port: process.env.VITE_CLI_PORT,
       proxy: {
-        // "/backend/uploads/": {
-        //   // 需要代理的路径   例如 '/api'
-        //   target: `${process.env.VITE_BASE_PATH}:${process.env.VITE_SERVER_PORT}/`, // 代理到 目标路径
-        //   changeOrigin: true,
-        //   secure: true,
-        //   rewrite: (path) => path.replace(new RegExp("^/backend/uploads/"), "/uploads/"),
-        // },
+        "/form-generator/": {
+          // 需要代理的路径   例如 '/api'
+          target: `${process.env.VITE_BASE_PATH}:${process.env.VITE_SERVER_PORT}/`, // 代理到 目标路径
+          changeOrigin: true,
+          secure: true,
+          rewrite: (path) => path.replace(new RegExp("^/form-generator/"), "/form-generator/"),
+        },
         // 把key的路径代理到target位置
         // detail: https://cli.vuejs.org/config/#devserver-proxy
         [process.env.VITE_BASE_API]: {

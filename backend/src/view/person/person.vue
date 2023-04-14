@@ -10,7 +10,7 @@
               <div
                 class="user-headpic-update"
                 :style="{
-                  'background-image': `url(${userStore.userInfo.headerImg && userStore.userInfo.headerImg.slice(0, 4) !== 'http' ? path + '/' + userStore.userInfo.headerImg : userStore.userInfo.headerImg})`,
+                  'background-image': `url(${userStore.userInfo.headerImg && userStore.userInfo.headerImg.slice(0, 4) !== 'http' ? path + userStore.userInfo.headerImg : userStore.userInfo.headerImg})`,
                   'background-repeat': 'no-repeat',
                   'background-size': 'cover',
                 }"
@@ -267,7 +267,7 @@ import { ElMessage } from "element-plus";
 import { useUserStore } from "@/pinia/modules/user";
 import { Edit, Picture, Plus, Upload } from "@element-plus/icons-vue";
 
-const path = ref(import.meta.env.VITE_BASE_API);
+const path = ref(import.meta.env.VITE_BASE_API + "/");
 const activeName = ref("second");
 const rules = reactive({
   password: [
@@ -416,7 +416,7 @@ const changeSecurity = (status = false) => {
     });
   } else {
     securityQuestionList.value = [{ problem: undefined, answer: undefined }];
-    console.log(securityQuestionList.value);
+    // console.log(securityQuestionList.value);
   }
 };
 
