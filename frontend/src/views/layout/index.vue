@@ -61,7 +61,7 @@
             <div v-if="!isMouseOver">
               <n-popover trigger="hover">
                 <template #trigger>
-                  <Search size="24" theme="outline" @click="() => changeBlur(true)" fill="#333" :strokeWidth="3" />
+                  <Search size="24" theme="outline" @click="() => changeBlur(true)" :strokeWidth="3" />
                 </template>
                 <span>搜索文章</span>
               </n-popover>
@@ -143,6 +143,7 @@
       </n-drawer-content>
     </n-drawer>
     <register :register-status="registerStatus" @change-status="changeRegisterStatus" />
+    <Person />
   </div>
 </template>
 
@@ -164,6 +165,7 @@ import { getImages } from "@/services/image";
 import { useUserStore } from "@/stores/user";
 import { updateBackgroundImage } from "@/services/user";
 import Register from "./components/register.vue";
+import Person from "./components/person.vue";
 
 const Base_URL = import.meta.env.VITE_BASE_API;
 

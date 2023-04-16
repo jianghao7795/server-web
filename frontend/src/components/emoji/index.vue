@@ -3,7 +3,7 @@
     <n-popover popper-class="biaoqing" :width="400" trigger="click" placement="bottom">
       <template #trigger>
         <n-button quaternary>
-          <grinning-face theme="outline" size="18" fill="#333" :strokeWidth="3" @click="handleEmoji" />
+          <span @click="handleEmoji">🙂</span>
         </n-button>
       </template>
       <div class="emotionList">

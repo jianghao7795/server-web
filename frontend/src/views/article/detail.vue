@@ -46,7 +46,7 @@
       </div>
     </div>
     <n-card :title="`全部评论 (${comment.length})`" :bordered="false">
-      <n-empty description="快点评论吧！"></n-empty>
+      <n-empty description="快点评论吧！" v-show="comment.length === 0"></n-empty>
       <a-comment v-for="items in comment" :key="items.ID">
         <template #actions>
           <a key="comment-nested-reply-to" v-if="!isCommentChildren[items.ID]" @click="() => reply(items.ID, true)">
@@ -106,7 +106,6 @@ export default {
 import { onMounted, inject, ref } from "vue";
 import { useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
-import { Comment } from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
