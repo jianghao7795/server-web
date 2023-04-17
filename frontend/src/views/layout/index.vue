@@ -143,7 +143,8 @@
       </n-drawer-content>
     </n-drawer>
     <register :register-status="registerStatus" @change-status="changeRegisterStatus" />
-    <Person />
+    <ResetPassord :active="revisePassword" @change-status="changeResetPasswordStatus" @resetStore="resetStore" />
+    <!-- <Person /> -->
   </div>
 </template>
 
@@ -167,6 +168,7 @@ import { useUserStore } from "@/stores/user";
 import { updateBackgroundImage } from "@/services/user";
 import Register from "./components/register.vue";
 import Person from "./components/person.vue";
+import ResetPassord from "./components/reset_password.vue";
 
 const Base_URL = import.meta.env.VITE_BASE_API;
 
@@ -193,6 +195,8 @@ const theme = inject<Ref<GlobalTheme | null>>("theme");
 const darkTheme = computed(() => !(theme?.value === null));
 //form Ref
 const formRef = ref<FormInst | null>(null);
+// 修改密码status
+const revisePassword = ref<boolean>(false);
 
 // 是否登录
 const isLogin = computed(() => !!userStore.currentUser.user.ID);
@@ -215,20 +219,6 @@ const rules = {
 };
 //
 const options = [
-  {
-    label: "更改背景图",
-    key: "change",
-    icon: () => {
-      return h(NIcon, null, {
-        default: () =>
-          h(Change, {
-            theme: "outline",
-            size: "26",
-            strokeWidth: 3,
-          }),
-      });
-    },
-  },
   {
     label: "个人信息",
     key: "setting",
@@ -261,6 +251,20 @@ const options = [
   },
   // <lock theme="outline" size="26" fill="#333" :strokeWidth="3"/>
   {
+    label: "更改背景图",
+    key: "change",
+    icon: () => {
+      return h(NIcon, null, {
+        default: () =>
+          h(Change, {
+            theme: "outline",
+            size: "26",
+            strokeWidth: 3,
+          }),
+      });
+    },
+  },
+  {
     label: "退出登录",
     key: "logout",
     icon: () => {
@@ -276,21 +280,33 @@ const options = [
   },
 ];
 
+const resetStore = () => {
+  userStore.$reset();
+  localStorage.removeItem("token");
+  colorSet.value = `url(${new URL("/home-bg.png", import.meta.url).href})`;
+  loginStatus.value = true;
+};
+
 const userLogout = (key: string | number) => {
   if (key === "logout") {
-    userStore.$reset();
-    localStorage.removeItem("token");
-    colorSet.value = `url(${new URL("/home-bg.png", import.meta.url).href})`;
-    loginStatus.value = true;
+    resetStore();
   }
   // debugger;
   if (key === "change") {
     changeActive(true);
   }
+
+  if (key === "lock") {
+    changeResetPasswordStatus(true);
+  }
 };
 
 const changeRegisterStatus = (status: boolean): void => {
   registerStatus.value = status;
+};
+
+const changeResetPasswordStatus = (status: boolean): void => {
+  revisePassword.value = status;
 };
 //<logout theme="outline" size="26" fill="#ddd" :strokeWidth="3"/>
 //<logout theme="outline" size="26" fill="#333" :strokeWidth="3"/>

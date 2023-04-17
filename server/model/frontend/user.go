@@ -11,6 +11,13 @@ type User struct {
 	Header       string `json:"header" form:"header" gorm:"column:header;comment:头像;size:100"`
 }
 
+type ResetPassword struct {
+	ID                uint   `json:"id" form:"id"`
+	Password          string `json:"password" form:"password"`
+	NewPassword       string `json:"new_password" form:"new_password"`
+	RepeatNewPassword string `json:"repeat_new_password" form:"repeat_new_password"`
+}
+
 func (User) TableName() string {
 	return "user"
 }

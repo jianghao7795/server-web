@@ -15,3 +15,8 @@ export function updateBackgroundImage(data: User.UpdateImages) {
 export function registerUser(data: User.Register) {
   return http.post<Global.Response<User.CurrentUser>>("/register", data);
 }
+
+//重置密码
+export function resetPassword(data: User.ResetPassword) {
+  return http.put<Global.Response<null>>("/resetPassword", data);
+}

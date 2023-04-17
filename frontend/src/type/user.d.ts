@@ -39,4 +39,11 @@ declare namespace User {
     re_password: string;
     header: string;
   };
+
+  export type ResetPassword = {
+    id: number;
+    password: string;
+    new_password: string;
+    repeat_new_password: string;
+  };
 }

@@ -7,6 +7,7 @@ import (
 	"server/model/frontend"
 	loginRequest "server/model/frontend/request"
 	"server/utils"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -66,6 +67,27 @@ func (u *FrontendUser) GetCurrent(c *gin.Context) {
 		return
 	}
 	response.OkWithDetailed(userInfo, "获取成功", c)
+}
+
+func (u *FrontendUser) UpdatePassword(c *gin.Context) {
+	var resetPasswor frontend.ResetPassword
+	_ = c.ShouldBindJSON(&resetPasswor)
+	userId := c.Param("id")
+	id, _ := strconv.Atoi(userId)
+
+	if resetPasswor.NewPassword != resetPasswor.RepeatNewPassword {
+		global.LOG.Error("密码不一致!", zap.Error(errors.New("密码不一致")))
+		response.FailWithMessage("密码不一致", c)
+		return
+	}
+
+	resetPasswor.ID = uint(id)
+	if err := frontendService.ResetPassword(resetPasswor); err != nil {
+		response.FailWithMessage("重置密码失败："+err.Error(), c)
+		return
+	}
+
+	response.OkWithDetailed(nil, "重置密码成功", c)
 }
 
 func (u *FrontendUser) UpdateUserBackgroudImage(c *gin.Context) {

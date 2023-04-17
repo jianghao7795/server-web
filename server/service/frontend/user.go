@@ -89,6 +89,15 @@ func (u *FrontendUser) UpdateUser(data frontend.User) (err error) {
 	return
 }
 
+func (u *FrontendUser) ResetPassword(data frontend.ResetPassword) (err error) {
+	var userInfo frontend.User
+	err = global.DB.Where("id = ? and password = ?", data.ID, data.Password).First(&userInfo).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return err
+	}
+	return global.DB.Model(&frontend.User{}).Where("id = ?", data.ID).Update("password", data.Password).Error
+}
+
 func MakeToken(data frontendRequest.LoginForm, id uint) (tokenString string, expiresAt int64, err error) {
 	claim := MyClaims{
 		ID:       id,
