@@ -103,7 +103,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { onMounted, inject, ref } from "vue";
+import { onMounted, inject, ref, type Ref } from "vue";
 import { useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
 import dayjs from "dayjs";
@@ -111,7 +111,7 @@ import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 import { useArticleStore } from "@/stores/article";
 import { getArticleComment, createdComment } from "@/services/comment";
-import { useMessage, type InputInst } from "naive-ui";
+import { useMessage, type GlobalTheme } from "naive-ui";
 import { useUserStore } from "@/stores/user";
 import Emoji from "@/components/emoji/index.vue";
 
@@ -121,7 +121,7 @@ const inputSelectRef = ref();
 const message = useMessage();
 const userStroe = useUserStore();
 const route = useRoute();
-const theme = inject("theme");
+const theme = inject<Ref<GlobalTheme | null>>("theme");
 const articleStore = useArticleStore();
 const isComment = ref<boolean>(false);
 const isCommentChildren = ref<{ [id: number]: boolean }>({});
@@ -129,6 +129,7 @@ const isCommentChildren = ref<{ [id: number]: boolean }>({});
 const comment = ref<Comment.comment[]>([]);
 const inputRef = ref<string>("");
 const inputChildren = ref<string>("");
+const changeLogin = inject<(status: boolean) => void>("changeLogin");
 
 const focusInput = (isFouse: boolean) => {
   isComment.value = isFouse;
@@ -141,13 +142,17 @@ const changeActive = (n: EmojiType.emoji) => {
 
 const handleFouces = () => {
   inputSelectRef.value.focus();
-  console.log(inputSelectRef.value.select());
 };
 
 const reply = (id: number, status: boolean) => {
   isCommentChildren.value = { [id]: status };
 };
 const submit = async (parentId: number, children: Comment.comment[]) => {
+  if (userStroe.currentUser.user.ID === 0) {
+    message.warning("请登录");
+    changeLogin?.(true);
+    return;
+  }
   if (parentId === 0 && inputRef.value === "") {
     message.warning("请输入评论");
     return;

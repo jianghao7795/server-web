@@ -154,7 +154,8 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { KeepAlive, Transition, onMounted, ref, type CSSProperties, watch, inject, type Ref, computed, h } from "vue";
+import { KeepAlive, Transition, onMounted, ref, watch, inject, provide, computed, h } from "vue";
+import type { CSSProperties, Ref } from "vue";
 import type { GlobalTheme, FormInst } from "naive-ui";
 import { NIcon } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
@@ -318,6 +319,7 @@ const changeActive = (status: boolean) => {
 const changeLogin = (status: boolean): void => {
   loginStatus.value = status;
 };
+provide("changeLogin", changeLogin); // 传递方法给下级
 
 const login = () => {
   userStore.logins({ name: userInfo.value.name, password: userInfo.value.password }, (imageString: string) => {
@@ -406,14 +408,6 @@ onMounted(() => {
       break;
     default:
       currentRouter.value = "首页";
-  }
-
-  if (userStore.currentUser.user.ID !== 0) {
-    getImages().then((resp) => {
-      if (resp) {
-        bgImage.value = resp.data;
-      }
-    });
   }
 
   userStore.getUser((head_img: string) => {
