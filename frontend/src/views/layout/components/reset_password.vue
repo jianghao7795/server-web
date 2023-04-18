@@ -67,6 +67,7 @@ const submit = () => {
         window.$message.success(resp.msg);
         emits("resetStore");
         emits("changeStatus", false);
+        formRef.value?.restoreValidation();
       }
     })
     .finally(() => {
