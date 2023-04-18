@@ -64,6 +64,7 @@ const submit = () => {
   resetPassword({ ...userPassword.value, id: userStore.currentUser.user.ID })
     .then((resp) => {
       if (resp.code === 0) {
+        window.$message.success(resp.msg);
         emits("resetStore");
         emits("changeStatus", false);
       }

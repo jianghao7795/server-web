@@ -7,7 +7,6 @@ import (
 	"server/model/frontend"
 	loginRequest "server/model/frontend/request"
 	"server/utils"
-	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -70,19 +69,23 @@ func (u *FrontendUser) GetCurrent(c *gin.Context) {
 }
 
 func (u *FrontendUser) UpdatePassword(c *gin.Context) {
-	var resetPasswor frontend.ResetPassword
-	_ = c.ShouldBindJSON(&resetPasswor)
-	userId := c.Param("id")
-	id, _ := strconv.Atoi(userId)
+	var resetPassword frontend.ResetPassword
+	_ = c.ShouldBindJSON(&resetPassword)
 
-	if resetPasswor.NewPassword != resetPasswor.RepeatNewPassword {
+	if err := utils.Verify(resetPassword, utils.ResetPasswordVerifyFrontend); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	if resetPassword.NewPassword != resetPassword.RepeatNewPassword {
 		global.LOG.Error("密码不一致!", zap.Error(errors.New("密码不一致")))
 		response.FailWithMessage("密码不一致", c)
 		return
 	}
-
-	resetPasswor.ID = uint(id)
-	if err := frontendService.ResetPassword(resetPasswor); err != nil {
+	resetPassword.Password = utils.MD5V([]byte(resetPassword.Password))
+	resetPassword.NewPassword = utils.MD5V([]byte(resetPassword.NewPassword))
+	resetPassword.RepeatNewPassword = utils.MD5V([]byte(resetPassword.RepeatNewPassword))
+	if err := frontendService.ResetPassword(resetPassword); err != nil {
 		response.FailWithMessage("重置密码失败："+err.Error(), c)
 		return
 	}

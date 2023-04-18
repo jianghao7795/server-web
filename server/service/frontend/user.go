@@ -95,7 +95,7 @@ func (u *FrontendUser) ResetPassword(data frontend.ResetPassword) (err error) {
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return err
 	}
-	return global.DB.Model(&frontend.User{}).Where("id = ?", data.ID).Update("password", data.Password).Error
+	return global.DB.Model(&frontend.User{}).Where("id = ?", data.ID).Update("password", data.NewPassword).Error
 }
 
 func MakeToken(data frontendRequest.LoginForm, id uint) (tokenString string, expiresAt int64, err error) {
