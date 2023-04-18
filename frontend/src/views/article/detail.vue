@@ -52,7 +52,7 @@
           <a key="comment-nested-reply-to" v-if="!isCommentChildren[items.ID]" @click="() => reply(items.ID, true)">
             回复
           </a>
-          <n-input-group v-else="isCommentChildren[items.ID]">
+          <n-input-group v-else>
             <n-input v-model:value="inputChildren" placeholder="评论" autofocus />
             <n-button type="primary" ghost @click="submit(items.ID, items.children)">回复</n-button>
           </n-input-group>

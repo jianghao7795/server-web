@@ -26,12 +26,13 @@ var articleService = service.ServiceGroupApp.AppServiceGroup.ArticleService
 // @Param data body app.Article true "创建Article"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /Article/createArticle [post]
-func (articleApi *ArticleApi) CreateArticle(c *gin.Context) {
+func (a *ArticleApi) CreateArticle(c *gin.Context) {
 	var article app.Article
 	_ = c.ShouldBindJSON(&article)
 	if err := articleService.CreateArticle(article); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
+
 	} else {
 		response.OkWithMessage("创建成功", c)
 	}
@@ -66,7 +67,7 @@ func (*ArticleApi) DeleteArticle(c *gin.Context) {
 // @Param data body app.Article true "批量删除Article"
 // @Success 200 {string} string "{}"
 // @Router /article/deleteArticleByIds [delete]
-func (appTabApi *ArticleApi) DeleteArticleByIds(c *gin.Context) {
+func (a *ArticleApi) DeleteArticleByIds(c *gin.Context) {
 	var IDS request.IdsReq
 	_ = c.ShouldBindJSON(&IDS)
 	if err := articleService.DeleteArticleByIds(IDS); err != nil {
@@ -77,7 +78,7 @@ func (appTabApi *ArticleApi) DeleteArticleByIds(c *gin.Context) {
 	}
 }
 
-// CreateArticle 更新Article
+// UpdateArticle 更新Article
 // @Tags Article
 // @Summary 更新Article
 // @Security ApiKeyAuth
@@ -120,7 +121,7 @@ func (*ArticleApi) FindArticle(c *gin.Context) {
 	}
 }
 
-// GetAppTabList 分页获取article列表
+// GetArticleList 分页获取article列表
 // FindArticle Get Article
 // @Tags Article
 // @Summary Get Article
@@ -146,7 +147,7 @@ func (*ArticleApi) GetArticleList(c *gin.Context) {
 	}
 }
 
-// DeleteArticleByIds 批量更新Article
+// PutArticleByIds 批量更新Article
 // @Tags Article
 // @Summary 批量更新Article
 // @Security ApiKeyAuth

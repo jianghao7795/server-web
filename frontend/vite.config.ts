@@ -2,7 +2,10 @@ import * as path from "path";
 import vuePlugin from "@vitejs/plugin-vue";
 import { defineConfig, loadEnv } from "vite";
 import legacyPlugin from "@vitejs/plugin-legacy";
-import { AntDesignVueResolver, NaiveUiResolver } from "unplugin-vue-components/resolvers";
+import {
+  AntDesignVueResolver,
+  NaiveUiResolver,
+} from "unplugin-vue-components/resolvers";
 import Components from "unplugin-vue-components/vite";
 
 const rollupOptions = {
@@ -22,7 +25,14 @@ export default defineConfig(({ mode }: { mode: string }) => {
     plugins: [
       legacyPlugin({
         // targets: ["defaults", "not IE 11"],
-        targets: ["Android > 39", "Chrome >= 60", "Safari >= 10.1", "iOS >= 10.3", "Firefox >= 54", "Edge >= 15"],
+        targets: [
+          "Android > 39",
+          "Chrome >= 60",
+          "Safari >= 10.1",
+          "iOS >= 10.3",
+          "Firefox >= 54",
+          "Edge >= 15",
+        ],
         renderLegacyChunks: false,
       }),
       // vue(),
@@ -54,7 +64,8 @@ export default defineConfig(({ mode }: { mode: string }) => {
           target: `${env.VITE_BASE_PATH}:${env.VITE_SERVER_PORT}`, // 代理到 目标路径
           changeOrigin: true,
           secure: true,
-          rewrite: (path) => path.replace(new RegExp(`^${env.VITE_BASE_API}`), "/api"),
+          rewrite: (path) =>
+            path.replace(new RegExp(`^${env.VITE_BASE_API}`), "/api"),
           // rewrite: (path) => path.replace("", ""),
         },
       },

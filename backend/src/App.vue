@@ -8,7 +8,6 @@
 </template>
 
 <script>
-// import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 export default {
   name: "App",
 };
@@ -42,7 +41,6 @@ a {
   outline: none;
   cursor: pointer;
   transition: color 0.3s;
-  -webkit-text-decoration-skip: objects;
 }
 
 // 加载条的 css

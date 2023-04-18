@@ -9,7 +9,7 @@ import (
 
 type TaskNameApi struct{}
 
-// StatusTasking start Tasking
+// StartTasking start Tasking
 // @Tags start Tasking
 // @Summary start Tasking
 // @Security ApiKeyAuth

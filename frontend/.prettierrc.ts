@@ -1,6 +1,4 @@
 module.exports = {
-  semi: true,
-  tabWidth: 2,
   singleQuote: false, //使用单引号
   tabWidth: 2, //缩进长度
   useTabs: false, //使用空格代替tab缩进

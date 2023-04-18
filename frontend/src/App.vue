@@ -1,13 +1,22 @@
 <script lang="ts" setup>
-import { h, defineComponent, ref, onMounted, provide, computed } from "vue";
+import { computed, defineComponent, h, onMounted, provide, ref } from "vue";
 import { RouterView } from "vue-router";
-import { useLoadingBar, useMessage, useNotification, darkTheme } from "naive-ui";
 import type { GlobalTheme } from "naive-ui";
+import { darkTheme, useLoadingBar, useMessage, useNotification } from "naive-ui";
 import { emitter } from "./utils/common";
 
 const theme = ref<GlobalTheme | null>(null);
 const color = computed(() => (theme.value === null ? "#000" : "#fff"));
 const colorComment = computed(() => (theme.value === null ? "#999" : "#aaa"));
+
+provide("theme", theme);
+emitter.on("darkMode", () => {
+  theme.value = darkTheme;
+});
+
+emitter.on("lightMode", () => {
+  theme.value = null;
+});
 
 onMounted(() => {
   const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)"); // 是深色
@@ -16,15 +25,6 @@ onMounted(() => {
   } else {
     theme.value = null;
   }
-  emitter.on("darkMode", () => {
-    theme.value = darkTheme;
-  });
-
-  emitter.on("lightMode", () => {
-    theme.value = null;
-  });
-
-  provide("theme", theme);
 });
 
 function registerNaiveTools() {

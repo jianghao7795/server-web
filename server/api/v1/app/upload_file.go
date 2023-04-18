@@ -23,7 +23,7 @@ type FileUploadAndDownloadApi struct{}
 
 var fileUploadService = service.ServiceGroupApp.AppServiceGroup.FileUploadService
 
-// @Tags ExaFileUploadAndDownload
+// UploadFile @Tags UploadFile ExaFileUploadAndDownload
 // @Summary 上传文件示例
 // @Security ApiKeyAuth
 // @accept multipart/form-data

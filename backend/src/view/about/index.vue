@@ -49,8 +49,7 @@ strokeWidth	the stroke-width prop of svg element	number	4
             </div>
           </template>
           <el-timeline>
-            <el-timeline-item v-for="(activity, index) in commits" :key="index" :timestamp="activity.date"
-              placement="top">
+            <el-timeline-item v-for="(activity, index) in commits" :key="index" :timestamp="activity.date" placement="top">
               <el-card>
                 <h4>{{ activity.name }}</h4>
                 <p>{{ activity.message }}</p>

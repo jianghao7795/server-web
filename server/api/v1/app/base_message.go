@@ -18,7 +18,7 @@ type BaseMessageApi struct{}
 var baseMessageService = service.ServiceGroupApp.AppServiceGroup.BaseMessageService
 
 // CreateBaseMessage 创建base_message
-func (baseMessageApi *BaseMessageApi) CreateBaseMessage(c *gin.Context) {
+func (a *BaseMessageApi) CreateBaseMessage(c *gin.Context) {
 	var baseMessage app.BaseMessage
 	_ = c.ShouldBindJSON(&baseMessage)
 	if err := baseMessageService.CreateBaseMessage(baseMessage); err != nil {
@@ -35,7 +35,7 @@ func (baseMessageApi *BaseMessageApi) CreateBaseMessage(c *gin.Context) {
  * @return {*}
  */
 
-func (baseMessageApi *BaseMessageApi) UpdateBaseMessage(c *gin.Context) {
+func (a *BaseMessageApi) UpdateBaseMessage(c *gin.Context) {
 	var baseMessage app.BaseMessage
 	_ = c.ShouldBindJSON(&baseMessage)
 	if err := baseMessageService.UpdateBaseMessage(baseMessage); err != nil {
@@ -51,7 +51,7 @@ func (baseMessageApi *BaseMessageApi) UpdateBaseMessage(c *gin.Context) {
  * @param {*gin.Context} c
  * @return {*}
  */
-func (BaseMessageApi *BaseMessageApi) FindBaseMessage(c *gin.Context) {
+func (a *BaseMessageApi) FindBaseMessage(c *gin.Context) {
 	id := c.Param("id")
 	ids, _ := strconv.Atoi(id)
 	if responseBaseMessage, err := baseMessageService.FindBaseMessage(uint(ids)); err != nil {
