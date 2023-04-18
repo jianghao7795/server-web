@@ -30,4 +30,4 @@ yarn-error.log*
 # /server/uploads/file/*
 
 *.iml
-/server
+/server/server
