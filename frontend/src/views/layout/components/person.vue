@@ -6,7 +6,7 @@
     v-bind:on-update:show="changeStatus"
   >
     <n-drawer-content title="个人信息">
-      <template #footer v-if="isUpdate">
+      <template #footer>
         <div>
           <NButton>提交</NButton>
         </div>
@@ -20,11 +20,24 @@
         label-width="auto"
         require-mark-placement="right-hanging"
       >
-        <n-form-item label="Input" path="inputValue">
-          <n-input v-model:value="user.name" placeholder="Input" />
+        <n-form-item label="头像" path="header">
+          <n-upload
+            list-type="image-card"
+            :file-list="fileList"
+            :max="1"
+          ></n-upload>
         </n-form-item>
-        <n-form-item label="Textarea" path="textareaValue">
-          <n-input v-model:value="user.header" placeholder="Textarea" />
+        <n-form-item label="账号" path="name">
+          <n-input v-model:value="userInfo.name" placeholder="Textarea" />
+        </n-form-item>
+        <n-form-item label="简介" path="introduction">
+          <n-input
+            v-model:value="userInfo.introduction"
+            placeholder="Textarea"
+          />
+        </n-form-item>
+        <n-form-item label="介绍" path="content">
+          <n-input v-model:value="userInfo.content" placeholder="Textarea" />
         </n-form-item>
       </n-form>
     </n-drawer-content>
@@ -32,7 +45,7 @@
 </template>
 <script lang="ts" name="Person" setup>
 import { ref } from "vue";
-import type { FormInst } from "naive-ui";
+import type { FormInst, UploadFileInfo } from "naive-ui";
 import { useUserStore } from "@/stores/user";
 
 const props = defineProps<{ active: boolean }>();
@@ -48,7 +61,15 @@ const userStore = useUserStore();
 const user = userStore.currentUser.user;
 
 const userInfo = ref<User.UserInfo>(user);
-
+const fileList = ref<UploadFileInfo[]>([
+  {
+    id: "a",
+    name: "头像.png",
+    status: "finished",
+    url: "/api/" + user.header,
+  },
+]);
+console.log(userInfo.value);
 const rules = {};
 </script>
 
