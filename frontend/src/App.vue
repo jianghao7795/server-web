@@ -7,10 +7,15 @@ import {
   useLoadingBar,
   useMessage,
   useNotification,
+  useOsTheme,
 } from "naive-ui";
 import { emitter } from "./utils/common";
 
-const theme = ref<GlobalTheme | null>(null);
+const isDarkTheme = useOsTheme();
+
+const theme = ref<GlobalTheme | null>(
+  isDarkTheme.value === "dark" ? darkTheme : null
+);
 const color = computed(() => (theme.value === null ? "#000" : "#fff"));
 const colorComment = computed(() => (theme.value === null ? "#999" : "#aaa"));
 
@@ -24,8 +29,9 @@ emitter.on("lightMode", () => {
 });
 
 onMounted(() => {
-  const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)"); // 是深色
-  if (isDarkTheme.matches) {
+  //  const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)"); // 是深色
+
+  if (isDarkTheme.value === "dark") {
     theme.value = darkTheme;
   } else {
     theme.value = null;
@@ -50,10 +56,10 @@ const NaiveProviderContent = defineComponent({
 </script>
 
 <template>
-  <NLoadingBarProvider
-    :loading-bar-style="{ loading: { height: '4px', background: '#1e80ff' } }"
-  >
-    <NConfigProvider :theme="theme">
+  <NConfigProvider :theme="theme as GlobalTheme">
+    <NLoadingBarProvider
+      :loading-bar-style="{ loading: { height: '4px', background: '#1e80ff' } }"
+    >
       <div class="view-dark view-comment">
         <NNotificationProvider>
           <NMessageProvider>
@@ -62,8 +68,8 @@ const NaiveProviderContent = defineComponent({
           </NMessageProvider>
         </NNotificationProvider>
       </div>
-    </NConfigProvider>
-  </NLoadingBarProvider>
+    </NLoadingBarProvider>
+  </NConfigProvider>
 </template>
 
 <style lang="less">
