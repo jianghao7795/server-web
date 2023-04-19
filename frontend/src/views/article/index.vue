@@ -1,7 +1,11 @@
 <template>
   <div class="article-list">
-    <n-list hoverable clickable>
-      <n-list-item v-for="item in article.list" :key="item.ID" @click="changeUrl(item.ID)">
+    <n-list clickable hoverable>
+      <n-list-item
+        v-for="item in article.list"
+        :key="item.ID"
+        @click="changeUrl(item.ID)"
+      >
         <n-thing content-style="margin-top: 10px;">
           <template #header>
             <div>
@@ -16,8 +20,14 @@
           </template>
           <!-- <md-editor v-model="item.content" preview-only /> -->
           <template #footer>
-            <n-space size="small" style="margin-top: 4px">
-              <n-tag :bordered="false" size="small" v-for="i in item.tags" :key="i.ID" :type="colorIndex(i.ID)">
+            <n-space size="small">
+              <n-tag
+                v-for="i in item.tags"
+                :key="i.ID"
+                :bordered="false"
+                :type="colorIndex(i.ID)"
+                size="small"
+              >
                 {{ i.name }}
               </n-tag>
             </n-space>
@@ -27,16 +37,20 @@
     </n-list>
     <div class="pageNext">
       <n-space justify="space-between">
-        <n-button v-show="page !== 1" icon-placement="left" @click="() => changePage(false)">
+        <n-button
+          v-show="page !== 1"
+          icon-placement="left"
+          @click="() => changePage(false)"
+        >
           <template #icon>
-            <right theme="outline" size="24" fill="#333" />
+            <right fill="#333" size="24" theme="outline" />
           </template>
           上一页
         </n-button>
-        <n-button icon-placement="right" v-show="articleLength === 10">
+        <n-button v-show="articleLength === 10" icon-placement="right">
           下一页
           <template #icon>
-            <right theme="outline" size="24" fill="#333" />
+            <right fill="#333" size="24" theme="outline" />
           </template>
         </n-button>
       </n-space>
@@ -50,7 +64,7 @@ export default {
 };
 </script>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 // import { NList, NThing, NListItem, NSpace, NTag, NButton } from "naive-ui";
 import { ref, onMounted, computed } from "vue";
 import { Right } from "@icon-park/vue-next";
@@ -86,7 +100,7 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .article-list {
   margin: auto 25%;
 }

@@ -5,9 +5,11 @@ export const getArticleComment = (params: { articleId: string }) => {
   //   url: "/frontend/getArticleList",
   //   method: "get",
   // });
-  return http.get<API.Response<Comment.comment[]>>(`/getArticleComment/${params.articleId}`);
+  return http.get<Global.Response<Comment.comment[]>>(
+    `/getArticleComment/${params.articleId}`
+  );
 };
 
 export const createdComment = (data: Comment.comment) => {
-  return http.post<API.Response<{ id: number }>>(`/createdComment`, data);
+  return http.post<Global.Response<{ id: number }>>(`/createdComment`, data);
 };

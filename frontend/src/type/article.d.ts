@@ -25,24 +25,12 @@ declare namespace API {
   };
 
   export type Tag = {
-    ID: 12;
+    ID: number;
     CreatedAt: string;
     UpdatedAt: string;
     name: string;
     status: 1;
     aritcles?: Article[];
-  };
-
-  export type Response<T> = {
-    code: 0 | 7;
-    data: T;
-    msg: string;
-  };
-
-  export type ResponseAbout<T> = {
-    code: 0 | 7;
-    data?: T;
-    msg: string;
   };
 
   export type SearchArticle = {

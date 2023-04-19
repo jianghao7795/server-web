@@ -4,4 +4,10 @@ declare namespace Global {
     data: T;
     msg: string;
   };
+
+  export type ResponseAbout<T> = {
+    code: 0 | 7;
+    data?: T;
+    msg: string;
+  };
 }
