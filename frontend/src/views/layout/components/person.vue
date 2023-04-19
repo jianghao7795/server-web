@@ -1,54 +1,55 @@
 <template>
-  <n-drawer v-model:show="props.active" :width="502" placement="right">
-    <n-drawer-content title="斯通纳">
+  <n-drawer
+    v-model:show="props.active"
+    :width="502"
+    placement="right"
+    v-bind:on-update:show="changeStatus"
+  >
+    <n-drawer-content title="个人信息">
+      <template #footer v-if="isUpdate">
+        <div>
+          <NButton>提交</NButton>
+        </div>
+      </template>
+
       <n-form
         ref="formRef"
-        :model="userPasswor"
+        :model="user"
         :rules="rules"
         label-placement="left"
         label-width="auto"
         require-mark-placement="right-hanging"
-        size="large"
       >
-        <n-form-item path="name">
-          <n-input type="text" v-model:value="userPasswor.password" placeholder="密码" />
+        <n-form-item label="Input" path="inputValue">
+          <n-input v-model:value="user.name" placeholder="Input" />
         </n-form-item>
-        <n-form-item path="password">
-          <n-input
-            type="password"
-            show-password-on="click"
-            v-model:value="userPasswor.newPassword"
-            placeholder="新密码"
-          />
+        <n-form-item label="Textarea" path="textareaValue">
+          <n-input v-model:value="user.header" placeholder="Textarea" />
         </n-form-item>
-        <n-form-item path="password">
-          <n-input
-            type="password"
-            show-password-on="click"
-            v-model:value="userPasswor.resetPassword"
-            placeholder="重复新密码"
-          />
-        </n-form-item>
-        <div>
-          <n-button :loading="loading" type="primary" :block="true" @click="() => {}">修改密码</n-button>
-        </div>
       </n-form>
     </n-drawer-content>
   </n-drawer>
 </template>
-<script setup lang="ts" name="Person">
+<script lang="ts" name="Person" setup>
 import { ref } from "vue";
 import type { FormInst } from "naive-ui";
+import { useUserStore } from "@/stores/user";
+
 const props = defineProps<{ active: boolean }>();
-const emits = defineEmits<{ changeStatus: () => void }>();
+const emits = defineEmits<{ (e: "changeStatus", status: boolean): void }>();
+const changeStatus = (show: boolean) => {
+  emits("changeStatus", show);
+};
+
+const isUpdate = ref<boolean>(false);
 const loading = ref<boolean>(false);
 const formRef = ref<FormInst | null>(null);
-const userPasswor = ref({
-  password: "",
-  newPassword: "",
-  resetPassword: "",
-});
+const userStore = useUserStore();
+const user = userStore.currentUser.user;
+
+const userInfo = ref<User.UserInfo>(user);
+
 const rules = {};
 </script>
 
-<style lang="less"></style>
+<style scoped lang="less"></style>

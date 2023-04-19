@@ -28,10 +28,22 @@
                   :rail-style="railStyle"
                 >
                   <template #checked-icon>
-                    <NIcon><moon theme="filled" size="26" fill="#333" :strokeWidth="3" /></NIcon>
+                    <NIcon
+                      ><moon
+                        theme="filled"
+                        size="26"
+                        fill="#333"
+                        :strokeWidth="3"
+                    /></NIcon>
                   </template>
                   <template #unchecked-icon>
-                    <NIcon><sun-one theme="outline" size="26" fill="#333" :strokeWidth="3" /></NIcon>
+                    <NIcon
+                      ><sun-one
+                        theme="outline"
+                        size="26"
+                        fill="#333"
+                        :strokeWidth="3"
+                    /></NIcon>
                   </template>
                 </n-switch>
               </NSpace>
@@ -39,7 +51,11 @@
           </template>
           <template #header>
             <span class="headerStyleLine">
-              <b @click="() => changePath('/')" v-if="isLogin" style="cursor: pointer">
+              <b
+                @click="() => changePath('/')"
+                v-if="isLogin"
+                style="cursor: pointer"
+              >
                 <n-dropdown
                   :options="options"
                   placement="bottom-end"
@@ -51,9 +67,15 @@
                 </n-dropdown>
               </b>
               <span v-else>
-                <b @click="() => changeLogin(true)" style="cursor: pointer">登录</b>
+                <b @click="() => changeLogin(true)" style="cursor: pointer"
+                  >登录</b
+                >
                 <NDivider vertical />
-                <b @click="() => changeRegisterStatus(true)" style="cursor: pointer">注册</b>
+                <b
+                  @click="() => changeRegisterStatus(true)"
+                  style="cursor: pointer"
+                  >注册</b
+                >
               </span>
             </span>
           </template>
@@ -61,7 +83,12 @@
             <div v-if="!isMouseOver">
               <n-popover trigger="hover">
                 <template #trigger>
-                  <Search size="24" theme="outline" @click="() => changeBlur(true)" :strokeWidth="3" />
+                  <Search
+                    size="24"
+                    theme="outline"
+                    @click="() => changeBlur(true)"
+                    :strokeWidth="3"
+                  />
                 </template>
                 <span>搜索文章</span>
               </n-popover>
@@ -85,7 +112,12 @@
       <n-layout-content position="static" class="middle-view">
         <NSpin :show="loadingFlag">
           <RouterView v-slot="{ Component, route }">
-            <transition mode="out-in" name="fade-in-linear" type="transition" :appear="true">
+            <transition
+              mode="out-in"
+              name="fade-in-linear"
+              type="transition"
+              :appear="true"
+            >
               <keep-alive v-bind:exclude="['ArticleDetail', 'Article']">
                 <component :is="Component" :key="route.name" />
               </keep-alive>
@@ -102,12 +134,29 @@
     </n-layout>
     <n-drawer v-model:show="active" placement="bottom" :height="400">
       <n-drawer-content title="更换背景图片">
-        <n-carousel :space-between="30" :loop="false" slides-per-view="auto" draggable>
-          <n-carousel-item style="width: 30%" v-for="item in bgImage" :key="item.ID">
-            <n-popconfirm positive-text="确认" negative-text="取消" :on-positive-click="() => changeImages(item)">
+        <n-carousel
+          :space-between="30"
+          :loop="false"
+          slides-per-view="auto"
+          draggable
+        >
+          <n-carousel-item
+            style="width: 30%"
+            v-for="item in bgImage"
+            :key="item.ID"
+          >
+            <n-popconfirm
+              positive-text="确认"
+              negative-text="取消"
+              :on-positive-click="() => changeImages(item)"
+            >
               <template #trigger>
                 <img
-                  :src="item.url.includes('http') ? item.url : `${Base_URL}/${item.url}`"
+                  :src="
+                    item.url.includes('http')
+                      ? item.url
+                      : `${Base_URL}/${item.url}`
+                  "
                   :title="item.name"
                   class="carousel-img"
                 />
@@ -131,20 +180,45 @@
           @keyup.enter.native="login"
         >
           <n-form-item path="name">
-            <n-input type="text" v-model:value="userInfo.name" placeholder="账号" />
+            <n-input
+              type="text"
+              v-model:value="userInfo.name"
+              placeholder="账号"
+            />
           </n-form-item>
           <n-form-item path="password">
-            <n-input type="password" show-password-on="click" v-model:value="userInfo.password" placeholder="密码" />
+            <n-input
+              type="password"
+              show-password-on="click"
+              v-model:value="userInfo.password"
+              placeholder="密码"
+            />
           </n-form-item>
           <div>
-            <n-button :loading="userStore.loading" type="primary" :block="true" @click="() => login()">登录</n-button>
+            <n-button
+              :loading="userStore.loading"
+              type="primary"
+              :block="true"
+              @click="() => login()"
+              >登录</n-button
+            >
           </div>
         </n-form>
       </n-drawer-content>
     </n-drawer>
-    <register :register-status="registerStatus" @change-status="changeRegisterStatus" />
-    <ResetPassord :active="revisePassword" @change-status="changeResetPasswordStatus" @resetStore="resetStore" />
-    <!-- <Person /> -->
+    <register
+      :register-status="registerStatus"
+      @change-status="changeRegisterStatus"
+    />
+    <ResetPassord
+      :active="revisePassword"
+      @change-status="changeResetPasswordStatus"
+      @resetStore="resetStore"
+    />
+    <Person
+      :active="personalInformationStatus"
+      @changeStatus="changePersonalInformationStatus"
+    />
   </div>
 </template>
 
@@ -155,12 +229,30 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { KeepAlive, Transition, onMounted, ref, watch, inject, provide, computed, h } from "vue";
+import {
+  KeepAlive,
+  Transition,
+  onMounted,
+  ref,
+  watch,
+  inject,
+  provide,
+  computed,
+  h,
+} from "vue";
 import type { CSSProperties, Ref } from "vue";
 import type { GlobalTheme, FormInst } from "naive-ui";
 import { NIcon } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
-import { Search, Logout, Change, Moon, SunOne, SettingTwo, Lock } from "@icon-park/vue-next";
+import {
+  Search,
+  Logout,
+  Change,
+  Moon,
+  SunOne,
+  SettingTwo,
+  Lock,
+} from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import { emitter } from "@/utils/common";
 import { getImages } from "@/services/image";
@@ -172,7 +264,9 @@ import ResetPassord from "./components/reset_password.vue";
 
 const Base_URL = import.meta.env.VITE_BASE_API;
 
-const headImage = computed(() => `${Base_URL}/${userStore.currentUser.user.header}`);
+const headImage = computed(
+  () => `${Base_URL}/${userStore.currentUser.user.header}`
+);
 
 const userStore = useUserStore();
 const route = useRoute();
@@ -182,7 +276,9 @@ const searchInput = ref<string>("");
 const loadingFlag = ref<boolean>(false);
 const isMouseOver = ref<boolean>(false);
 const viewPage = ref<string>(route.fullPath);
-const colorSet = ref<string>(`url(${new URL("/home-bg.png", import.meta.url).href})`);
+const colorSet = ref<string>(
+  `url(${new URL("/home-bg.png", import.meta.url).href})`
+);
 const bgImage = ref<User.Images[]>([]);
 const active = ref<boolean>(false);
 const currentRouter = ref<string>("");
@@ -190,6 +286,8 @@ const currentRouter = ref<string>("");
 const registerStatus = ref<boolean>(false);
 //登录页面的status
 const loginStatus = ref<boolean>(false);
+
+const personalInformationStatus = ref<boolean>(false);
 // 主题状态
 const theme = inject<Ref<GlobalTheme | null>>("theme");
 const darkTheme = computed(() => !(theme?.value === null));
@@ -287,6 +385,10 @@ const resetStore = () => {
   loginStatus.value = true;
 };
 
+const changePersonalInformationStatus = (status: boolean) => {
+  personalInformationStatus.value = status;
+};
+
 const userLogout = (key: string | number) => {
   if (key === "logout") {
     resetStore();
@@ -299,6 +401,10 @@ const userLogout = (key: string | number) => {
   if (key === "lock") {
     changeResetPasswordStatus(true);
   }
+
+  if (key === "setting") {
+    changePersonalInformationStatus(true);
+  }
 };
 
 const changeRegisterStatus = (status: boolean): void => {
@@ -308,8 +414,7 @@ const changeRegisterStatus = (status: boolean): void => {
 const changeResetPasswordStatus = (status: boolean): void => {
   revisePassword.value = status;
 };
-//<logout theme="outline" size="26" fill="#ddd" :strokeWidth="3"/>
-//<logout theme="outline" size="26" fill="#333" :strokeWidth="3"/>
+
 const changeBlur = (status: boolean) => {
   isMouseOver.value = status;
   if (status) {
@@ -320,11 +425,17 @@ const changeBlur = (status: boolean) => {
 };
 
 const changeImages = async (data: User.Images) => {
-  await updateBackgroundImage({ ID: userStore.currentUser.user.ID, head_img: data.url });
+  await updateBackgroundImage({
+    ID: userStore.currentUser.user.ID,
+    head_img: data.url,
+  });
   window.$message.success("更换成功");
   active.value = false;
   colorSet.value = `url(${
-    new URL(data.url.includes("http") ? data.url : `${Base_URL}/${data.url}`, import.meta.url).href
+    new URL(
+      data.url.includes("http") ? data.url : `${Base_URL}/${data.url}`,
+      import.meta.url
+    ).href
   })`;
 };
 
@@ -338,23 +449,31 @@ const changeLogin = (status: boolean): void => {
 provide("changeLogin", changeLogin); // 传递方法给下级
 
 const login = () => {
-  userStore.logins({ name: userInfo.value.name, password: userInfo.value.password }, (imageString: string) => {
-    if (!!imageString) {
-      colorSet.value = `url(${
-        new URL(imageString.includes("http") ? imageString : `${Base_URL}/${imageString}`, import.meta.url).href
-      })`;
-    }
-    getImages().then((resp) => {
-      if (resp) {
-        bgImage.value = resp.data;
+  userStore.logins(
+    { name: userInfo.value.name, password: userInfo.value.password },
+    (imageString: string) => {
+      if (!!imageString) {
+        colorSet.value = `url(${
+          new URL(
+            imageString.includes("http")
+              ? imageString
+              : `${Base_URL}/${imageString}`,
+            import.meta.url
+          ).href
+        })`;
       }
-    });
-    loginStatus.value = false;
-    userInfo.value = {
-      name: "",
-      password: "",
-    };
-  });
+      getImages().then((resp) => {
+        if (resp) {
+          bgImage.value = resp.data;
+        }
+      });
+      loginStatus.value = false;
+      userInfo.value = {
+        name: "",
+        password: "",
+      };
+    }
+  );
 };
 
 const railStyle = ({ checked }: { checked: boolean }) => {
@@ -396,7 +515,7 @@ watch(
       default:
         currentRouter.value = "首页";
     }
-  },
+  }
 );
 
 onMounted(() => {
@@ -435,7 +554,10 @@ onMounted(() => {
       });
     }
     colorSet.value = `url(${
-      new URL(head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`, import.meta.url).href
+      new URL(
+        head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`,
+        import.meta.url
+      ).href
     })`;
   });
 });
