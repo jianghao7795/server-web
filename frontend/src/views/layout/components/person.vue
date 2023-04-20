@@ -8,9 +8,9 @@
     <n-drawer-content title="个人信息">
       <template #footer>
         <div>
-          <NButton type="primary" @click="submit" :loading="loading"
-            >提交</NButton
-          >
+          <NButton type="primary" @click="submit" :loading="loading">
+            提交
+          </NButton>
         </div>
       </template>
 

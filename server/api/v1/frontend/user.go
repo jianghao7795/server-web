@@ -108,7 +108,10 @@ func (u *FrontendUser) UpdateUserBackgroudImage(c *gin.Context) {
 func (u *FrontendUser) UpdateUser(c *gin.Context) {
 	var user frontend.User
 	_ = c.ShouldBindJSON(&user)
-
+	if err := utils.Verify(user, utils.UpdateUserVerify); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
 	if err := frontendService.UpdateUser(user); err != nil {
 		response.FailWithDetailed(err.Error(), "更新失败", c)
 		return
