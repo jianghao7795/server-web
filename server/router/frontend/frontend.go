@@ -35,7 +35,7 @@ func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
 		frontend.PUT("updateBackgroundImage", middleware.OperationRecordFrontend(), frontendUserApi.UpdateUserBackgroudImage)
 		frontend.PUT("resetPassword", middleware.OperationRecordFrontend(), frontendUserApi.UpdatePassword)
 		frontend.POST("register", frontendUserApi.RegisterUser)
-		frontend.PUT("updateUser", middleware.JWTAuthMiddleware(), frontendUserApi.UpdateUser)
+		frontend.PUT("updateUser", middleware.JWTAuthMiddleware(), middleware.OperationRecordFrontend(), frontendUserApi.UpdateUser)
 	}
 	var frontendUploadApi = v1.ApiGroupApp.AppApiGroup.FileUploadAndDownloadApi
 	{
