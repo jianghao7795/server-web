@@ -1,7 +1,10 @@
 import { http } from "@/utils/request";
 
 export function login(data: User.Login) {
-  return http.post<Global.Response<User.CurrentUser>, User.Login>("/login", data);
+  return http.post<Global.Response<User.CurrentUser>, User.Login>(
+    "/login",
+    data
+  );
 }
 
 export function getCurrentUser() {
@@ -18,5 +21,9 @@ export function registerUser(data: User.Register) {
 
 //重置密码
 export function resetPassword(data: User.ResetPassword) {
-  return http.put<Global.Response<null>>("/resetPassword", data);
+  return http.put<Global.Response<{}>>("/resetPassword", data);
+}
+// 更新客户
+export function updateUser(data: User.UserInfo) {
+  return http.put<Global.Response<{ error?: string }>>("/updateUser", data);
 }
