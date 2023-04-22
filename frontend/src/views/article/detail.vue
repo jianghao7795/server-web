@@ -169,32 +169,16 @@ const focusInput = (isFouse: boolean) => {
 
 const changeActive = (n: EmojiType.emoji) => {
   inputSelectRef.value.focus();
-
+  const selectStart =
+    inputSelectRef.value.getTextareaScrollContainer().selectionStart;
   // console.log(inputSelectRef.value);
   inputRef.value =
-    inputRef.value.substring(
-      0,
-      inputSelectRef.value.getTextareaScrollContainer().selectionStart
-    ) +
+    inputRef.value.substring(0, selectStart) +
     n.char +
-    inputRef.value.substring(
-      inputSelectRef.value.getTextareaScrollContainer().selectionStart
-    );
-  inputSelectRef.value
-    .getTextareaScrollContainer()
-    .setSelectionRange(
-      inputSelectRef.value.getTextareaScrollContainer().selectionStart,
-      inputSelectRef.value.getTextareaScrollContainer().selectionStart
-    );
+    inputRef.value.substring(selectStart);
 };
 
 const handleFouces = () => {
-  inputSelectRef.value
-    .getTextareaScrollContainer()
-    .setSelectionRange(
-      inputSelectRef.value.getTextareaScrollContainer().selectionStart,
-      inputSelectRef.value.getTextareaScrollContainer().selectionStart
-    );
   inputSelectRef.value.focus();
 };
 
