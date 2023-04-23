@@ -47,9 +47,9 @@ func (a *BaseMessageApi) UpdateBaseMessage(c *gin.Context) {
 }
 
 /**
- * @description: 查找用户数据
+ * @description: find base message
  * @param {*gin.Context} c
- * @return {*}
+ * @return nil
  */
 func (a *BaseMessageApi) FindBaseMessage(c *gin.Context) {
 	id := c.Param("id")

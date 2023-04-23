@@ -22,9 +22,9 @@ var (
 	CONFIG config.Server
 	VIP    *viper.Viper // 读取配置文件
 	// LOG    *oplogging.Logger
-	LOG                 *zap.Logger         // 日志
-	Timer               timer.Timer         = timer.NewTimerTask()
-	Concurrency_Control *singleflight.Group = &singleflight.Group{}
+	LOG                *zap.Logger // 日志
+	Timer              = timer.NewTimerTask()
+	ConcurrencyControl = &singleflight.Group{}
 
 	BlackCache local_cache.Cache
 	lock       sync.RWMutex

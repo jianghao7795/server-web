@@ -23,7 +23,7 @@
         </el-card>
       </el-col>
       <el-col :span="24">
-        <draggable-vue />
+        <draggable />
       </el-col>
       <el-col :span="24">
         <el-card class="box-card" style="margin-top: 20px">
@@ -57,12 +57,17 @@ strokeWidth	the stroke-width prop of svg element	number	4
             </el-timeline-item>
           </el-timeline>
           <el-icon v-if="isLoading" class="is-loading">
-            <Loading></Loading>
+            <Loading />
           </el-icon>
           <el-button v-show="!isShow" link size="default" type="primary" @click="commitHistory">Loading More</el-button>
         </el-card>
       </el-col>
     </el-row>
+    <H>
+      <template #active>
+        <div>123123</div>
+      </template>
+    </H>
   </div>
 </template>
 
@@ -73,15 +78,14 @@ export default {
 </script>
 
 <script setup>
-import draggableVue from "./draggable.vue";
+import Draggable from "./draggable.vue";
 import pkg from "~/package.json";
 import { Commits } from "@/api/github";
 import { onMounted, ref } from "vue";
 import { Like, BankCardOne } from "@icon-park/vue-next";
 import { useI18n } from "vue-i18n";
 import { useBtnAuth } from "@/utils/btnAuth";
-// import dayjs from "dayjs";
-// import H from "./Tabs/h.vue";
+import H from "@/view/about/Tabs/h.vue";
 
 const btnAuth = useBtnAuth();
 
