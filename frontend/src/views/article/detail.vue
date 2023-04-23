@@ -8,7 +8,12 @@
       <h4>
         <NSpace style="width: 80%">
           标签：&#129409;
-          <n-tag size="small" round v-for="(item, index) in articleStore.detail?.tags" :type="colorIndex(index)">
+          <n-tag
+            size="small"
+            round
+            v-for="(item, index) in articleStore.detail?.tags"
+            :type="colorIndex(index)"
+          >
             {{ item.name }}
           </n-tag>
         </NSpace>
@@ -37,24 +42,43 @@
         :autosize="true"
         v-model:value="inputRef"
         ref="inputSelectRef"
-      ></n-input>
+        @scrollTo="scrollTo"
+      />
       <div class="comment-line" v-show="isComment">
-        <div><Emoji @changeActive="changeActive" @handleFouces="handleFouces" /></div>
+        <div>
+          <Emoji @changeActive="changeActive" @handleFouces="handleFouces" />
+        </div>
         <div>
           <NButton type="primary" @click="submit(0, comment)">发表评论</NButton>
         </div>
       </div>
     </div>
     <n-card :title="`全部评论 (${comment.length})`" :bordered="false">
-      <n-empty description="快点评论吧！" v-show="comment.length === 0"></n-empty>
+      <n-empty
+        description="快点评论吧！"
+        v-show="comment.length === 0"
+      ></n-empty>
       <a-comment v-for="items in comment" :key="items.ID">
         <template #actions>
-          <a key="comment-nested-reply-to" v-if="!isCommentChildren[items.ID]" @click="() => reply(items.ID, true)">
+          <a
+            key="comment-nested-reply-to"
+            v-if="!isCommentChildren[items.ID]"
+            @click="() => reply(items.ID, true)"
+          >
             回复
           </a>
           <n-input-group v-else>
-            <n-input v-model:value="inputChildren" placeholder="评论" autofocus />
-            <n-button type="primary" ghost @click="submit(items.ID, items.children)">回复</n-button>
+            <n-input
+              v-model:value="inputChildren"
+              placeholder="评论"
+              autofocus
+            />
+            <n-button
+              type="primary"
+              ghost
+              @click="submit(items.ID, items.children)"
+              >回复</n-button
+            >
           </n-input-group>
         </template>
         <template #author>
@@ -66,7 +90,11 @@
             src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
             alt="Han Solo"
           />
-          <a-avatar v-else :src="items.user.header ? `${Base_URL}/${items.user.header}` : ''" alt="Han Solo" />
+          <a-avatar
+            v-else
+            :src="items.user.header ? `${Base_URL}/${items.user.header}` : ''"
+            alt="Han Solo"
+          />
         </template>
         <template #content>
           <div>
@@ -83,7 +111,11 @@
               src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
               alt="Han Solo"
             />
-            <a-avatar v-else :src="item.user.header ? `${Base_URL}/${item.user.header}` : ''" alt="Han Solo" />
+            <a-avatar
+              v-else
+              :src="item.user.header ? `${Base_URL}/${item.user.header}` : ''"
+              alt="Han Solo"
+            />
           </template>
           <template #content>
             <div>
@@ -117,7 +149,7 @@ import Emoji from "@/components/emoji/index.vue";
 
 const Base_URL = ref<string>(import.meta.env.VITE_BASE_API);
 
-const inputSelectRef = ref();
+const inputSelectRef = ref<any>(null);
 const message = useMessage();
 const userStroe = useUserStore();
 const route = useRoute();
@@ -137,7 +169,13 @@ const focusInput = (isFouse: boolean) => {
 
 const changeActive = (n: EmojiType.emoji) => {
   inputSelectRef.value.focus();
-  inputRef.value = inputRef.value + n.char;
+  const selectStart =
+    inputSelectRef.value.getTextareaScrollContainer().selectionStart;
+  // console.log(inputSelectRef.value);
+  inputRef.value =
+    inputRef.value.substring(0, selectStart) +
+    n.char +
+    inputRef.value.substring(selectStart);
 };
 
 const handleFouces = () => {
@@ -200,6 +238,14 @@ const submit = async (parentId: number, children: Comment.comment[]) => {
 
 const changeDate = (timeData?: string): string => {
   return !!timeData ? dayjs(timeData).format("YYYY-MM-DD") : "";
+};
+
+const scrollTo = (options: {
+  left?: number;
+  top?: number;
+  behavior?: "auto" | "smooth";
+}): void => {
+  console.log(options);
 };
 
 onMounted(async () => {
