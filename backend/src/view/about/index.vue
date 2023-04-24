@@ -63,11 +63,14 @@ strokeWidth	the stroke-width prop of svg element	number	4
         </el-card>
       </el-col>
     </el-row>
-    <H>
-      <template #active>
-        <div>123123</div>
-      </template>
-    </H>
+    <el-card>
+      <H :sum="88">
+        <template #active>
+          <div>123123</div>
+        </template>
+        <div>我是Slot 嘿嘿秘密</div>
+      </H>
+    </el-card>
   </div>
 </template>
 
