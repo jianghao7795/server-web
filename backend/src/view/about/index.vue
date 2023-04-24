@@ -68,7 +68,9 @@ strokeWidth	the stroke-width prop of svg element	number	4
         <template #active>
           <div>123123</div>
         </template>
-        <div>我是Slot 嘿嘿秘密</div>
+        <template v-slot:default="slotProps">
+          <div>我是Slot 嘿嘿秘密 {{ slotProps.text }} {{ slotProps.count }}</div>
+        </template>
       </H>
     </el-card>
   </div>

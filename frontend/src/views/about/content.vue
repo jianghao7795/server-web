@@ -1,6 +1,12 @@
 <template>
-  <div>{{ props.imgUrl }}</div>
+  <p>{{ props.imgUrl }}</p>
 </template>
+
+<script lang="ts">
+export default {
+  name: "Content",
+};
+</script>
 
 <script lang="ts" setup>
 import { onMounted, computed } from "vue";
