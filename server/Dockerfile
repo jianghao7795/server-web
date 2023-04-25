@@ -1,6 +1,6 @@
 FROM golang:alpine as builder
 
-WORKDIR /go/src/server
+WORKDIR /go/src/server-web
 COPY . .
 
 RUN go env -w GO111MODULE=on \
@@ -12,13 +12,13 @@ RUN go env -w GO111MODULE=on \
 
 FROM alpine:latest
 
-LABEL MAINTAINER="SliverHorn@sliver_horn@qq.com"
+LABEL MAINTAINER="978561120@qq.com"
 
-WORKDIR /go/src/server
+WORKDIR /go/src/server-web
 
-COPY --from=0 /go/src/server/server ./
-COPY --from=0 /go/src/server/resource ./resource/
-COPY --from=0 /go/src/server/config.docker.yaml ./
+COPY --from=0 /go/src/server-web/server ./
+COPY --from=0 /go/src/server-web/resource ./resource/
+COPY --from=0 /go/src/server-web/config.docker.yaml ./
 
-EXPOSE 8888
+EXPOSE 3100
 ENTRYPOINT ./server -c config.docker.yaml
