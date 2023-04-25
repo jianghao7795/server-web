@@ -107,7 +107,12 @@ export default defineConfig(({ command, mode }) => {
     optimizeDeps,
     plugins: [
       Components({
-        resolvers: [ElementPlusResolver({ importStyle: "css" })],
+        resolvers: [ElementPlusResolver({ importStyle: "sass" })],
+        // dirs: ["src/components", "src/view"], // 要导入组件的目录路径
+        // extensions: ["vue"],
+        // deep: true, // 搜索子目录
+        // dts: false, // 不使用ts
+        // include: [/\.vue$/, /\.vue\?vue/], // 只识别vue文件
       }),
       legacyPlugin({
         targets: ["Android > 39", "Chrome >= 60", "Safari >= 10.1", "iOS >= 10.3", "Firefox >= 54", "Edge >= 15"],

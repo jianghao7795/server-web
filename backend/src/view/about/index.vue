@@ -5,7 +5,7 @@
         <el-card>
           <template #header>
             <div class="card-header">
-              <span v-auth="btnAuth.a">项目信息</span>
+              <span v-auth="btnAuth.about">项目信息</span>
               <!-- changeVNode() -->
             </div>
           </template>
@@ -23,10 +23,29 @@
         </el-card>
       </el-col>
       <el-col :span="24">
-        <draggable />
+        <el-card class="box-card">
+          <template #header>
+            <div class="card-header">
+              <span>测试</span>
+              <!-- changeVNode() -->
+            </div>
+          </template>
+          <H :sum="88">
+            <template #active>
+              <div>123123</div>
+            </template>
+            <template v-slot:default="slotProps">
+              <div>我是Slot 嘿嘿秘密 {{ slotProps.text }} {{ slotProps.count }}</div>
+            </template>
+            <template #[templateComponent]><div>dfasdfasdf</div></template>
+          </H>
+        </el-card>
       </el-col>
       <el-col :span="24">
-        <el-card class="box-card" style="margin-top: 20px">
+        <Draggable />
+      </el-col>
+      <el-col :span="24">
+        <el-card class="box-card">
           <template #header>
             <div class="card-header">
               <span style="margin-right: 40px">提交记录 {{ t("menus.home") }}</span>
@@ -63,16 +82,6 @@ strokeWidth	the stroke-width prop of svg element	number	4
         </el-card>
       </el-col>
     </el-row>
-    <el-card>
-      <H :sum="88">
-        <template #active>
-          <div>123123</div>
-        </template>
-        <template v-slot:default="slotProps">
-          <div>我是Slot 嘿嘿秘密 {{ slotProps.text }} {{ slotProps.count }}</div>
-        </template>
-      </H>
-    </el-card>
   </div>
 </template>
 
@@ -85,7 +94,7 @@ export default {
 <script setup>
 import Draggable from "./draggable.vue";
 import pkg from "~/package.json";
-import { Commits } from "@/api/github";
+import { Commits, Members } from "@/api/github";
 import { onMounted, ref } from "vue";
 import { Like, BankCardOne } from "@icon-park/vue-next";
 import { useI18n } from "vue-i18n";
@@ -104,6 +113,8 @@ const isLoading = ref(false);
 const isShow = ref(false);
 const page = ref(1);
 
+const templateComponent = "active";
+
 const changeShake = () => {
   isShake.value = true;
   setTimeout(() => {
@@ -118,6 +129,10 @@ onMounted(() => {
       date: i.commit.author.date,
       message: i.commit.message,
     }));
+  });
+
+  Members().then((resp) => {
+    console.log(resp);
   });
 });
 

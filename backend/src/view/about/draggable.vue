@@ -49,7 +49,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-card style="margin-top: 20px" class="box-card">
+  <el-card class="box-card">
     <div class="drag-container">
       <!-- grid列表拖拽 -->
       <el-row :gutter="25">
