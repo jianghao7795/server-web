@@ -6,6 +6,7 @@ import {
   AntDesignVueResolver,
   NaiveUiResolver,
 } from "unplugin-vue-components/resolvers";
+import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 
 const rollupOptions = {
@@ -37,6 +38,19 @@ export default defineConfig(({ mode }: { mode: string }) => {
       }),
       // vue(),
       vuePlugin({}),
+      AutoImport({
+        imports: [
+          "vue",
+          {
+            "naive-ui": [
+              "useDialog",
+              "useMessage",
+              "useNotification",
+              "useLoadingBar",
+            ],
+          },
+        ],
+      }),
       Components({
         resolvers: [NaiveUiResolver(), AntDesignVueResolver()],
       }),

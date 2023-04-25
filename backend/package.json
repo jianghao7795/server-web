@@ -39,6 +39,7 @@
     "spark-md5": "^3.0.2",
     "swiper": "^8.4.7",
     "undraw-ui": "^0.5.9",
+    "unplugin-auto-import": "^0.15.3",
     "vue": "^3.2.47",
     "vue-i18n": "9.3.0-beta.6",
     "vue-router": "^4.1.6",

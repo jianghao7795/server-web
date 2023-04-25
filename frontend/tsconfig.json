@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["src/env.d.tsd.ts", "src/**/*", "src/**/*.vue", ".prettierrc.js", "src/type/**/*", "src/vue.d.ts"],
+  "include": ["src/**/*", "src/**/*.vue", "src/type/**/*"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

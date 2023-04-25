@@ -82,7 +82,7 @@
           </n-input-group>
         </template>
         <template #author>
-          <a>{{ items.user_name }}</a>
+          <a>{{ items?.user?.name }}</a>
         </template>
         <template #avatar>
           <a-avatar
@@ -103,7 +103,7 @@
         </template>
         <a-comment v-for="item in items.children" :key="item.ID">
           <template #author>
-            <a>{{ item.user_name }}</a>
+            <a>{{ items?.user?.name }}</a>
           </template>
           <template #avatar>
             <a-avatar

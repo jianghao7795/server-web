@@ -23,7 +23,7 @@
         </el-card>
       </el-col>
       <el-col :span="24">
-        <el-card class="box-card">
+        <ElCard class="box-card">
           <template #header>
             <div class="card-header">
               <span>测试</span>
@@ -39,7 +39,7 @@
             </template>
             <template #[templateComponent]><div>dfasdfasdf</div></template>
           </H>
-        </el-card>
+        </ElCard>
       </el-col>
       <el-col :span="24">
         <Draggable />

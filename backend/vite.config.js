@@ -10,6 +10,7 @@ import vuePlugin from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
 // import importElementPlus from "vite-plugin-element-plus";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import AutoImport from "unplugin-auto-import/vite";
 // import WindiCSS from "vite-plugin-windicss";
 // import vueJsx from '@vitejs/plugin-vue-jsx';
 // import { isAsyncFunction } from 'util/types';
@@ -106,6 +107,9 @@ export default defineConfig(({ command, mode }) => {
     esbuild,
     optimizeDeps,
     plugins: [
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+      }),
       Components({
         resolvers: [ElementPlusResolver({ importStyle: "sass" })],
         // dirs: ["src/components", "src/view"], // 要导入组件的目录路径
