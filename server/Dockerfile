@@ -1,6 +1,6 @@
-FROM golang:alpine as builder
+FROM golang:latest as builder
 
-WORKDIR /go/src/server-web
+WORKDIR /go/src/server
 COPY . .
 
 RUN go env -w GO111MODULE=on \
@@ -12,13 +12,14 @@ RUN go env -w GO111MODULE=on \
 
 FROM alpine:latest
 
-LABEL MAINTAINER="978561120@qq.com"
+LABEL MAINTAINER="SliverHorn@sliver_horn@qq.com"
 
-WORKDIR /go/src/server-web
+WORKDIR /go/src/server
 
-COPY --from=0 /go/src/server-web/server ./
-COPY --from=0 /go/src/server-web/resource ./resource/
-COPY --from=0 /go/src/server-web/config.docker.yaml ./
+COPY --from=builder /go/src/server/server ./
+COPY --from=builder /go/src/server/resource ./resource/
+COPY --from=builder /go/src/server/config.docker.yaml ./
+COPY --from=builder /go/src/server/rbac_model.conf ./
 
 EXPOSE 3100
 ENTRYPOINT ./server -c config.docker.yaml

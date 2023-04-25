@@ -36,7 +36,7 @@ captcha:
   img-width: 240
   img-height: 80
 casbin:
-  model-path: ./config/rbac_model.conf
+  model-path: ./rbac_model.conf
 cors:
   mode: whitelist
   whitelist:
@@ -92,12 +92,12 @@ jwt:
 local:
   path: uploads/file
 mysql:
-  path: 127.0.0.1
-  port: "3306"
+  path: 172.17.0.2
+  port: 3306
   config: charset=utf8mb4&parseTime=True&loc=Local
   db-name: server
   username: root
-  password: "123456"
+  password: 123456
   max-idle-conns: 100
   max-open-conns: 1000
   log-mode: silent
@@ -124,7 +124,7 @@ qiniu:
   use-cdn-domains: false
 redis:
   db: 0
-  addr: 127.0.0.1:6379
+  addr: 172.17.0.3:6379
   password: ""
 system:
   env: develop
