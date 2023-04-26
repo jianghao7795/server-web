@@ -20,6 +20,7 @@ COPY --from=builder /go/src/server/server ./
 COPY --from=builder /go/src/server/resource ./resource/
 COPY --from=builder /go/src/server/config.docker.yaml ./
 COPY --from=builder /go/src/server/rbac_model.conf ./
+COPY --from=builder /go/src/server/uploads ./uploads/
 
 EXPOSE 3100
 ENTRYPOINT ./server -c config.docker.yaml
