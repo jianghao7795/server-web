@@ -11,10 +11,12 @@ definitions:
       id:
         description: 主键ID
         type: integer
+      is_important:
+        type: integer
+      reading_quantity:
+        type: integer
       state:
         type: integer
-      sys_user:
-        $ref: '#/definitions/system.SysUser'
       tags:
         items:
           $ref: '#/definitions/app.Tag'
@@ -25,6 +27,8 @@ definitions:
       updatedAt:
         description: 更新时间
         type: string
+      user:
+        $ref: '#/definitions/app.UserFrontend'
       user_id:
         type: integer
     type: object
@@ -52,6 +56,12 @@ definitions:
       updatedAt:
         description: 更新时间
         type: string
+      user:
+        $ref: '#/definitions/app.User'
+      user_id:
+        type: integer
+      user_name:
+        type: string
     type: object
   app.Tag:
     properties:
@@ -69,6 +79,52 @@ definitions:
         type: string
       status:
         type: integer
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
+  app.User:
+    properties:
+      content:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      headImg:
+        type: string
+      header:
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      introduction:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
+  app.UserFrontend:
+    properties:
+      content:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      headImg:
+        type: string
+      header:
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      introduction:
+        type: string
+      name:
+        type: string
       updatedAt:
         description: 更新时间
         type: string
@@ -627,6 +683,9 @@ definitions:
       createdAt:
         description: 创建时间
         type: string
+      height:
+        description: 图片高度
+        type: integer
       id:
         description: 主键ID
         type: integer
@@ -636,6 +695,9 @@ definitions:
       name:
         description: 文件名
         type: string
+      proportion:
+        description: 图片长宽比例
+        type: number
       tag:
         description: 文件标签
         type: string
@@ -645,6 +707,9 @@ definitions:
       url:
         description: 文件地址
         type: string
+      width:
+        description: 图片宽度
+        type: integer
     type: object
   example.ExcelInfo:
     properties:
@@ -1408,6 +1473,8 @@ definitions:
       status:
         description: 请求状态
         type: integer
+      type_port:
+        type: integer
       updatedAt:
         description: 更新时间
         type: string
@@ -1584,7 +1651,7 @@ paths:
       tags:
       - SysApi
   /api/getAllApis:
-    post:
+    get:
       consumes:
       - application/json
       produces:
@@ -1866,6 +1933,167 @@ paths:
       summary: 更新Tag
       tags:
       - Tag
+  /article/deleteArticle/:id:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 删除Article
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 删除Article
+      tags:
+      - Article
+  /article/deleteArticleByIds:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除Article
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 批量删除Article
+      tags:
+      - Article
+  /article/findArticle/:id:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: get单个Article
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true, "msg":"获得成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: get单个Article
+      tags:
+      - Article
+  /article/getArticleList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Get Article
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true, "msg":"获得成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Get Article
+      tags:
+      - Article
+  /article/getArticleReading:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 获取文章阅读量
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 获取文章阅读量
+      tags:
+      - Article
+  /article/putArticleByIds:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量更新Article
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 批量更新Article
+      tags:
+      - Article
+  /article/updateArticle/:id:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 更新Article
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true, "msg":"更新成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 更新Article
+      tags:
+      - Article
   /authority/copyAuthority:
     post:
       consumes:
@@ -2451,7 +2679,7 @@ paths:
       tags:
       - AutoCode
   /base/captcha:
-    post:
+    get:
       consumes:
       - application/json
       produces:
@@ -2651,6 +2879,12 @@ paths:
       - description: 更新时间
         in: query
         name: updatedAt
+        type: string
+      - in: query
+        name: user_id
+        type: integer
+      - in: query
+        name: user_name
         type: string
       produces:
       - application/json
@@ -4078,6 +4312,9 @@ paths:
         in: query
         name: status
         type: integer
+      - in: query
+        name: type_port
+        type: integer
       - description: 更新时间
         in: query
         name: updatedAt
@@ -4167,6 +4404,9 @@ paths:
         in: query
         name: status
         type: integer
+      - in: query
+        name: type_port
+        type: integer
       - description: 更新时间
         in: query
         name: updatedAt
@@ -4217,7 +4457,7 @@ paths:
       tags:
       - System
   /system/getSystemConfig:
-    post:
+    get:
       produces:
       - application/json
       responses:
@@ -4381,6 +4621,29 @@ paths:
       summary: 用户修改密码
       tags:
       - SysUser
+  /user/createUser:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建User
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 创建User
+      tags:
+      - User
   /user/deleteUser:
     delete:
       consumes:
@@ -4409,6 +4672,76 @@ paths:
       summary: 删除用户
       tags:
       - SysUser
+  /user/deleteUserByIds:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除User
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IdsReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"批量删除成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 批量删除User
+      tags:
+      - User
+  /user/findUser:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: content
+        type: string
+      - description: 创建时间
+        in: query
+        name: createdAt
+        type: string
+      - in: query
+        name: headImg
+        type: string
+      - in: query
+        name: header
+        type: string
+      - description: 主键ID
+        in: query
+        name: id
+        type: integer
+      - in: query
+        name: introduction
+        type: string
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: password
+        type: string
+      - description: 更新时间
+        in: query
+        name: updatedAt
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"查询成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 用id查询User
+      tags:
+      - User
   /user/getUserInfo:
     get:
       consumes:
@@ -4434,6 +4767,64 @@ paths:
       tags:
       - SysUser
   /user/getUserList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: content
+        type: string
+      - description: 创建时间
+        in: query
+        name: createdAt
+        type: string
+      - in: query
+        name: headImg
+        type: string
+      - in: query
+        name: header
+        type: string
+      - description: 主键ID
+        in: query
+        name: id
+        type: integer
+      - in: query
+        name: introduction
+        type: string
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - in: query
+        name: name
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      - in: query
+        name: password
+        type: string
+      - description: 更新时间
+        in: query
+        name: updatedAt
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取User列表
+      tags:
+      - User
     post:
       consumes:
       - application/json
@@ -4576,6 +4967,29 @@ paths:
       summary: 设置用户信息
       tags:
       - SysUser
+  /user/updateUser:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 更新User
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"更新成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 更新User
+      tags:
+      - User
 securityDefinitions:
   ApiKeyAuth:
     in: header

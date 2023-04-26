@@ -205,7 +205,7 @@ const docTemplate = `{
             }
         },
         "/api/getAllApis": {
-            "post": {
+            "get": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -676,6 +676,272 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "{\"success\":true,\"data\":{},\"msg\":\"更新成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/article/deleteArticle/:id": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "删除Article",
+                "parameters": [
+                    {
+                        "description": "删除Article",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.Article"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/article/deleteArticleByIds": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "批量删除Article",
+                "parameters": [
+                    {
+                        "description": "批量删除Article",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.Article"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/article/findArticle/:id": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "get单个Article",
+                "parameters": [
+                    {
+                        "description": "get单个Article",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.Article"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true, \"msg\":\"获得成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/article/getArticleList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Get Article",
+                "parameters": [
+                    {
+                        "description": "Get Article",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.Article"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true, \"msg\":\"获得成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/article/getArticleReading": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "获取文章阅读量",
+                "parameters": [
+                    {
+                        "description": "获取文章阅读量",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.Article"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/article/putArticleByIds": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "批量更新Article",
+                "parameters": [
+                    {
+                        "description": "批量更新Article",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.Article"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/article/updateArticle/:id": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "更新Article",
+                "parameters": [
+                    {
+                        "description": "更新Article",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.Article"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true, \"msg\":\"更新成功\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -1717,7 +1983,7 @@ const docTemplate = `{
             }
         },
         "/base/captcha": {
-            "post": {
+            "get": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -2069,6 +2335,16 @@ const docTemplate = `{
                         "type": "string",
                         "description": "更新时间",
                         "name": "updatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "user_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "user_name",
                         "in": "query"
                     }
                 ],
@@ -4535,6 +4811,11 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "name": "type_port",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "更新时间",
                         "name": "updatedAt",
@@ -4676,6 +4957,11 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "name": "type_port",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "更新时间",
                         "name": "updatedAt",
@@ -4754,7 +5040,7 @@ const docTemplate = `{
             }
         },
         "/system/getSystemConfig": {
-            "post": {
+            "get": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -5048,6 +5334,44 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/createUser": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "创建User",
+                "parameters": [
+                    {
+                        "description": "创建User",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/user/deleteUser": {
             "delete": {
                 "security": [
@@ -5098,6 +5422,121 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/deleteUserByIds": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "批量删除User",
+                "parameters": [
+                    {
+                        "description": "批量删除User",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.IdsReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"批量删除成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/findUser": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "用id查询User",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "content",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "创建时间",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "headImg",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "header",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "主键ID",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "introduction",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "password",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "更新时间",
+                        "name": "updatedAt",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"查询成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/user/getUserInfo": {
             "get": {
                 "security": [
@@ -5142,6 +5581,99 @@ const docTemplate = `{
             }
         },
         "/user/getUserList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "分页获取User列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "content",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "创建时间",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "headImg",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "header",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "主键ID",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "introduction",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "关键字",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "password",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "更新时间",
+                        "name": "updatedAt",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
             "post": {
                 "security": [
                     {
@@ -5394,6 +5926,44 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/user/updateUser": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "更新User",
+                "parameters": [
+                    {
+                        "description": "更新User",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"更新成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -5414,11 +5984,14 @@ const docTemplate = `{
                     "description": "主键ID",
                     "type": "integer"
                 },
-                "state": {
+                "is_important": {
                     "type": "integer"
                 },
-                "sys_user": {
-                    "$ref": "#/definitions/system.SysUser"
+                "reading_quantity": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "integer"
                 },
                 "tags": {
                     "type": "array",
@@ -5433,6 +6006,9 @@ const docTemplate = `{
                 "updatedAt": {
                     "description": "更新时间",
                     "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/app.UserFrontend"
                 },
                 "user_id": {
                     "type": "integer"
@@ -5472,6 +6048,15 @@ const docTemplate = `{
                 "updatedAt": {
                     "description": "更新时间",
                     "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/app.User"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "user_name": {
+                    "type": "string"
                 }
             }
         },
@@ -5497,6 +6082,73 @@ const docTemplate = `{
                 },
                 "status": {
                     "type": "integer"
+                },
+                "updatedAt": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "app.User": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "headImg": {
+                    "type": "string"
+                },
+                "header": {
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
+                "introduction": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "app.UserFrontend": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "headImg": {
+                    "type": "string"
+                },
+                "header": {
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
+                "introduction": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
                 },
                 "updatedAt": {
                     "description": "更新时间",
@@ -6299,6 +6951,10 @@ const docTemplate = `{
                     "description": "创建时间",
                     "type": "string"
                 },
+                "height": {
+                    "description": "图片高度",
+                    "type": "integer"
+                },
                 "id": {
                     "description": "主键ID",
                     "type": "integer"
@@ -6311,6 +6967,10 @@ const docTemplate = `{
                     "description": "文件名",
                     "type": "string"
                 },
+                "proportion": {
+                    "description": "图片长宽比例",
+                    "type": "number"
+                },
                 "tag": {
                     "description": "文件标签",
                     "type": "string"
@@ -6322,6 +6982,10 @@ const docTemplate = `{
                 "url": {
                     "description": "文件地址",
                     "type": "string"
+                },
+                "width": {
+                    "description": "图片宽度",
+                    "type": "integer"
                 }
             }
         },
@@ -7418,6 +8082,9 @@ const docTemplate = `{
                 },
                 "status": {
                     "description": "请求状态",
+                    "type": "integer"
+                },
+                "type_port": {
                     "type": "integer"
                 },
                 "updatedAt": {
