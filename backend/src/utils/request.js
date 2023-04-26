@@ -41,22 +41,22 @@ service.interceptors.request.use(
     if (config.headers["Content-Type"]) {
       config.headers = {
         ...config.headers,
+        Authorization: `Bearer ${userStore.token}`,
         Accept: "application/json",
         // "Content-Type": "application/json; charset=utf-8",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "OPTIONS,GET,DELETE,PATCH,POST",
         "Access-Control-Allow-Credentials": "true",
-        "x-token": userStore.token,
         "x-user-id": userStore.userInfo.ID,
       };
     } else {
       config.headers = {
         Accept: "application/json",
+        Authorization: `Bearer ${userStore.token}`,
         "Content-Type": "application/json; charset=utf-8",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "OPTIONS,GET,DELETE,PATCH,POST",
         "Access-Control-Allow-Credentials": "true",
-        "x-token": userStore.token,
         "x-user-id": userStore.userInfo.ID,
         ...config.headers,
       };

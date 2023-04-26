@@ -1,19 +1,26 @@
 package utils
 
 import (
+	"errors"
 	"server/global"
 	systemReq "server/model/system/request"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
 )
 
 func GetClaims(c *gin.Context) (*systemReq.CustomClaims, error) {
-	token := c.Request.Header.Get("x-token")
+	tokenString := c.Request.Header.Get("Authorization")
+	tokenValue := strings.Split(tokenString, " ")
+	if tokenValue[0] != "Bearer" {
+		return nil, errors.New("token 错误")
+	}
+	token := tokenValue[1]
 	j := NewJWT()
 	claims, err := j.ParseToken(token)
 	if err != nil {
-		global.LOG.Error("从Gin的Context中获取从jwt解析信息失败, 请检查请求头是否存在x-token且claims是否为规定结构")
+		global.LOG.Error("从Gin的Context中获取从jwt解析信息失败, 请检查请求头是否存在token且claims是否为规定结构")
 	}
 	return claims, err
 }
