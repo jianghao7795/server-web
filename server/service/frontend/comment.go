@@ -10,7 +10,7 @@ type Comment struct{}
 func (commentService *Comment) GetCommentByArticleId(articleId int) (list []frontend.Comment, err error) {
 	db := global.DB.Model(&frontend.Comment{})
 	var commentList []frontend.Comment
-	err = db.Where("article_id = ?", articleId).Where("parent_id = ?", 0).Preload("Article").Preload("User").Order("id desc").Find(&commentList).Error
+	err = db.Where("article_id = ?", articleId).Where("parent_id = ?", 0).Preload("User").Order("id desc").Find(&commentList).Error
 	// err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Find(&commentList).Error
 	if len(commentList) > 0 {
 		for comment := range commentList {

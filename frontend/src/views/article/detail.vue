@@ -82,7 +82,7 @@
           </n-input-group>
         </template>
         <template #author>
-          <a>{{ items?.user?.name }}</a>
+          <a>{{ items?.user?.name || items.user_name }}</a>
         </template>
         <template #avatar>
           <a-avatar
@@ -103,7 +103,7 @@
         </template>
         <a-comment v-for="item in items.children" :key="item.ID">
           <template #author>
-            <a>{{ items?.user?.name }}</a>
+            <a>{{ item?.user?.name || item?.user_name }}</a>
           </template>
           <template #avatar>
             <a-avatar
@@ -184,7 +184,9 @@ const handleFouces = () => {
 
 const reply = (id: number, status: boolean) => {
   isCommentChildren.value = { [id]: status };
+  console.log(userStroe.currentUser.user);
 };
+
 const submit = async (parentId: number, children: Comment.comment[]) => {
   if (userStroe.currentUser.user.ID === 0) {
     message.warning("请登录");
