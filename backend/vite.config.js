@@ -31,7 +31,7 @@ export default defineConfig(({ command, mode }) => {
 
   // const data = await isAsyncFunction();
   const NODE_ENV = process.env.NODE_ENV || "development";
-  console.log(NODE_ENV);
+  // console.log(NODE_ENV);
   const envFiles = [`.env.${NODE_ENV}`];
   for (const file of envFiles) {
     const envConfig = dotenv.parse(fs.readFileSync(file));

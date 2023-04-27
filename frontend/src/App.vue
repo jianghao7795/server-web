@@ -10,7 +10,10 @@ import {
   useOsTheme,
 } from "naive-ui";
 import { emitter } from "./utils/common";
+// import { loadEnv } from "vite";
 
+// const env = loadEnv("production", process.cwd());
+// console.log(env);
 const isDarkTheme = useOsTheme();
 
 const theme = ref<GlobalTheme | null>(

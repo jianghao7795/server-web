@@ -102,7 +102,7 @@ mysql:
   max-open-conns: 1000
   log-mode: silent
   log-zap: true
-  debug: true #gorm 开启日志
+  debug: true #gorm 开启显示SQL日志
 pgsql:
   path: ""
   port: ""

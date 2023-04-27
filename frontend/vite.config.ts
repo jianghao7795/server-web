@@ -22,6 +22,7 @@ const rollupOptions = {
 // mode 什么环境
 export default defineConfig(({ mode }: { mode: string }) => {
   const env = loadEnv(mode, process.cwd());
+  console.log(mode);
   return {
     plugins: [
       legacyPlugin({
@@ -68,8 +69,8 @@ export default defineConfig(({ mode }: { mode: string }) => {
       // 如果使用docker-compose开发模式，设置为false
       cors: true,
       hmr: true,
-      port: Number(env.VITE_CLI_PORT).valueOf(),
       host: "0.0.0.0",
+      port: 3500,
       proxy: {
         // 把key的路径代理到target位置
         // detail: https://cli.vuejs.org/config/#devserver-proxy

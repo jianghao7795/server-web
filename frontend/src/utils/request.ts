@@ -1,5 +1,10 @@
 import axios from "axios";
-import type { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import type {
+  AxiosInstance,
+  AxiosError,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from "axios";
 import { emitter } from "./common";
 import { useUserStore } from "@/stores/user";
 
@@ -16,21 +21,18 @@ const service: AxiosInstance = axios.create({
 });
 
 /* 请求拦截器 */
-service.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
-    const userStore = useUserStore();
-    //  伪代码
-    if (userStore.getToken) {
-      config.headers = { ...config.headers, Authorization: `Bearer ${userStore.getToken}` };
-    }
-    emitter.emit("showLoading");
-    return config;
-  },
-  (error: AxiosError) => {
-    // Message.error(error.message);
-    return Promise.reject(error);
-  },
-);
+service.interceptors.request.use((config: AxiosRequestConfig) => {
+  const userStore = useUserStore();
+  //  伪代码
+  if (userStore.getToken) {
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${userStore.getToken}`,
+    };
+  }
+  emitter.emit("showLoading");
+  return config;
+});
 
 /* 响应拦截器 */
 service.interceptors.response.use(
@@ -74,7 +76,6 @@ service.interceptors.response.use(
     switch (status) {
       case 401:
         message = "token 失效，请重新登录";
-        // 这里可以触发退出的 action
         break;
       case 403:
         message = "拒绝访问";
@@ -89,13 +90,13 @@ service.interceptors.response.use(
         message = "网络连接故障";
     }
     window.$notification.error({
-      content: `错误 ${status}: ${message}`,
+      content: `错误 ${!!status ? status : ""}: ${message}`,
       meta: error.response?.statusText,
       duration: 10000,
       keepAliveOnHover: true,
     });
     return;
-  },
+  }
 );
 
 /* 导出封装的请求方法 */
@@ -106,11 +107,19 @@ export const http = {
     return service.get(url, config);
   },
 
-  post<T = any, R = any>(url: string, data?: R, config?: AxiosRequestConfig): Promise<T> {
+  post<T = any, R = any>(
+    url: string,
+    data?: R,
+    config?: AxiosRequestConfig
+  ): Promise<T> {
     return service.post(url, data, config);
   },
 
-  put<T = any, R = any>(url: string, data?: R, config?: AxiosRequestConfig): Promise<T> {
+  put<T = any, R = any>(
+    url: string,
+    data?: R,
+    config?: AxiosRequestConfig
+  ): Promise<T> {
     return service.put(url, data, config);
   },
 
