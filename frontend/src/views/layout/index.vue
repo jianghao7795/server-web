@@ -544,22 +544,24 @@ onMounted(() => {
     default:
       currentRouter.value = "首页";
   }
-
-  userStore.getUser((head_img: string) => {
-    if (userStore.currentUser.user.ID !== 0) {
-      getImages().then((resp) => {
-        if (resp) {
-          bgImage.value = resp.data;
-        }
-      });
-    }
-    colorSet.value = `url(${
-      new URL(
-        head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`,
-        import.meta.url
-      ).href
-    })`;
-  });
+  const token = localStorage.getItem("token");
+  if (token) {
+    userStore.getUser((head_img: string) => {
+      if (userStore.currentUser.user.ID !== 0) {
+        getImages().then((resp) => {
+          if (resp) {
+            bgImage.value = resp.data;
+          }
+        });
+      }
+      colorSet.value = `url(${
+        new URL(
+          head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`,
+          import.meta.url
+        ).href
+      })`;
+    });
+  }
 });
 
 const changePath = (url: string) => {
