@@ -9,7 +9,7 @@
               <!-- changeVNode() -->
             </div>
           </template>
-          <el-descriptions :column="3" border class="margin-top" direction="vertical" size="default">
+          <el-descriptions :column="3" v-bind:border="true" class="margin-top" direction="vertical" size="default">
             <el-descriptions-item label="项目名称">
               <el-tag type="success">{{ pkg.name }}</el-tag>
             </el-descriptions-item>
