@@ -39,7 +39,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" style="width: 46%" size="large" v-if="isInit" @click="checkInit">前往初始化</el-button>
-            <el-button type="primary" size="large" :style="isInit ? { width: '46%', marginLeft: '8%' } : { width: '100%' }" @click="submitForm">登 录</el-button>
+            <el-button :icon="loading" type="primary" size="large" :style="isInit ? { width: '46%', marginLeft: '8%' } : { width: '100%' }" @click="submitForm">登 录</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -128,6 +128,7 @@ const loginFormData = reactive({
   captcha: "",
   captchaId: "",
 });
+const loading = ref(false);
 const rules = reactive({
   username: [{ validator: checkUsername, trigger: "blur" }],
   password: [{ validator: checkPassword, trigger: "blur" }],
@@ -147,7 +148,9 @@ const login = async () => {
 const submitForm = () => {
   loginForm.value.validate(async (v) => {
     if (v) {
+      loading.value = true;
       const flag = await login();
+      loading.value = false;
       // console.log(flag);
       if (!flag) {
         loginVerify();
