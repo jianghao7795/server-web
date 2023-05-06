@@ -8,6 +8,7 @@ import * as dotenv from "dotenv";
 import * as fs from "fs";
 import vuePlugin from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
+import ElementPlus from "unplugin-element-plus/vite";
 // import importElementPlus from "vite-plugin-element-plus";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import AutoImport from "unplugin-auto-import/vite";
@@ -108,6 +109,7 @@ export default defineConfig(({ command, mode }) => {
     esbuild,
     optimizeDeps,
     plugins: [
+      ElementPlus(),
       AutoImport({
         resolvers: [ElementPlusResolver()],
       }),
