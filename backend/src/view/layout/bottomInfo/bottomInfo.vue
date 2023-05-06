@@ -3,9 +3,9 @@
     <el-backtop></el-backtop>
     <div class="bottom-info">
       <div>
-        <span>Powered by Ours</span>
+        <span>Powered by chengdu</span>
         <el-divider direction="vertical" />
-        <span>Copyright Ours</span>
+        <span>Copyright @</span>
       </div>
     </div>
   </footer>

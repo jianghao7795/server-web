@@ -39,7 +39,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" style="width: 46%" size="large" v-if="isInit" @click="checkInit">前往初始化</el-button>
-            <el-button :icon="loading" type="primary" size="large" :style="isInit ? { width: '46%', marginLeft: '8%' } : { width: '100%' }" @click="submitForm">登 录</el-button>
+            <el-button v-bind:loading="loading" type="primary" size="large" :style="isInit ? { width: '46%', marginLeft: '8%' } : { width: '100%' }" @click="submitForm">登 录</el-button>
           </el-form-item>
         </el-form>
       </div>
