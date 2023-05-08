@@ -40,34 +40,32 @@ casbin:
 cors:
   mode: whitelist
   whitelist:
-    - allow-origin: example1.com
-      allow-methods: GET, POST, PUT, DELETE, PATCH
-      allow-headers: content-type
-      expose-headers:
-        Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
-        Content-Type
-      allow-credentials: true
-    - allow-origin: example2.com
-      allow-methods: GET, POST, PUT, DELETE
-      allow-headers: content-type
-      expose-headers:
-        Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
-        Content-Type
-      allow-credentials: true
+  - allow-origin: example1.com
+    allow-methods: GET, POST, PUT, DELETE, PATCH
+    allow-headers: content-type
+    expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
+      Content-Type
+    allow-credentials: true
+  - allow-origin: example2.com
+    allow-methods: GET, POST, PUT, DELETE
+    allow-headers: content-type
+    expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
+      Content-Type
+    allow-credentials: true
 db-list:
-  - disable: false
-    type: ""
-    alias-name: ""
-    path: ""
-    port: ""
-    config: ""
-    db-name: ""
-    username: ""
-    password: ""
-    max-idle-conns: 10
-    max-open-conns: 100
-    log-mode: ""
-    log-zap: false
+- disable: false
+  type: ""
+  alias-name: ""
+  path: ""
+  port: ""
+  config: ""
+  db-name: ""
+  username: ""
+  password: ""
+  max-idle-conns: 10
+  max-open-conns: 100
+  log-mode: ""
+  log-zap: false
 email:
   to: 978561120@qq.com
   port: 465
@@ -86,23 +84,23 @@ hua-wei-obs:
   secret-key: you-secret-key
 jwt:
   signing-key: 519fb1f4-4321-446a-bb7b-bfb13b68b960
-  expires-time: 12 #token生效时间 小时
-  buffer-time: 60 # 分钟
+  expires-time: 12
+  buffer-time: 60
   issuer: jianghao
 local:
   path: uploads/file
 mysql:
   path: 127.0.0.1
-  port: 3306
+  port: "3306"
   config: charset=utf8mb4&parseTime=True&loc=Local
   db-name: server
   username: root
-  password: 123456
+  password: "123456"
   max-idle-conns: 100
   max-open-conns: 1000
   log-mode: silent
   log-zap: true
-  debug: true #gorm 开启显示SQL日志
+  debug: true
 pgsql:
   path: ""
   port: ""
@@ -144,22 +142,22 @@ tencent-cos:
   path-prefix: server
 timer:
   start: true
-  spec: "@monthly"
+  spec: '@monthly'
   detail:
-    - tableName: sys_operation_records
-      compareField: created_at
-      interval: 2160h
-    - tableName: jwt_blacklists
-      compareField: created_at
-      interval: 2160h
+  - tableName: sys_operation_records
+    compareField: created_at
+    interval: 2160h
+  - tableName: jwt_blacklists
+    compareField: created_at
+    interval: 2160h
   tasks:
-    - taskName: server1
-      output: server run
-      interval: 1h
+  - taskName: server1
+    output: server run
+    interval: 1s
 zap:
   level: info
   format: console
-  prefix: "[server]-"
+  prefix: '[server]-'
   director: log
   show-line: true
   encode-level: LowercaseColorLevelEncoder

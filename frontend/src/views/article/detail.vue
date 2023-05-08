@@ -26,11 +26,11 @@
 
       <n-divider />
       <MdEditor
-        :style="{ width: '100%' }"
         :model-value="articleStore.detail?.content"
         :theme="theme ? 'dark' : 'light'"
-        :pageFullscreen="true"
+        :pageFullscreen="false"
         :previewOnly="true"
+        :showCodeRowNumber="true"
       ></MdEditor>
     </div>
     <div>
