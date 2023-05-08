@@ -1,7 +1,7 @@
 dev:
 	air
 build:
-	go build main.go
+	go build main.go -c config.dev.yaml
 mod:
 	go mod tidy
 run:

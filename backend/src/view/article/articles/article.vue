@@ -66,7 +66,7 @@
         </el-table-column>
         <el-table-column label="作者" prop="user">
           <template #default="{ row }">
-            <span>{{ row.user.name }}</span>
+            <span>{{ row.user.nickName }}</span>
           </template>
         </el-table-column>
         <el-table-column label="创建时间">
@@ -138,8 +138,11 @@ import { getTagList } from "@/api/tag";
 import { ref, onBeforeMount, reactive } from "vue";
 import { colorIndex } from "@/utils/util";
 // import { useDebounceFn } from "@vueuse/core";
+import { useUserStore } from "@/pinia/modules/user";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
+
+const userStore = useUserStore();
 
 const formData = ref({
   title: "",
@@ -355,13 +358,13 @@ const enterDialog = async (formRules) => {
 
       switch (type.value) {
         case "create":
-          res = await createArticle({ ...formData.value, tags: changeTags.value });
+          res = await createArticle({ ...formData.value, tags: changeTags.value, user_id: userStore.userInfo.ID });
           break;
         case "update":
           res = await updateArticle({ ...formData.value, tags: changeTags.value });
           break;
         default:
-          res = await createArticle({ ...formData.value, tags: changeTags.value });
+          res = await createArticle({ ...formData.value, tags: changeTags.value, user_id: userStore.userInfo.ID });
           break;
       }
       // console.log(formData.value);
