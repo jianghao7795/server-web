@@ -3,8 +3,7 @@
     <div class="search-box">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline" @keyup.enter.native="onSubmit">
         <el-form-item label="文章：">
-          <el-select v-model="searchInfo.articleId" :multiple="false" filterable remote clearable reserve-keyword
-            placeholder="请输入" :remote-method="searchArticle" :loading="loading">
+          <el-select v-model="searchInfo.articleId" :multiple="false" filterable remote clearable reserve-keyword placeholder="请输入" :remote-method="searchArticle" :loading="loading">
             <el-option v-for="item in options" :key="item.ID" :label="item.title" :value="item.ID" />
           </el-select>
         </el-form-item>
@@ -27,27 +26,22 @@
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
-            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length"
-              @click="deleteVisible = true">
-              删除
-            </el-button>
+            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length" @click="deleteVisible = true">删除</el-button>
           </template>
         </el-popover>
       </div>
-      <el-table :highlight-current-row="true" ref="multipleTable" style="width: 100%" tooltip-effect="dark"
-        :data="tableData" row-key="ID" @selection-change="handleSelectionChange">
+      <el-table :highlight-current-row="true" ref="multipleTable" style="width: 100%" tooltip-effect="dark" :data="tableData" row-key="ID" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
         <el-table-column header-align="center" align="center" prop="ID" label="ID" width="100"></el-table-column>
         <el-table-column align="left" label="文章" prop="articleId" width="220">
           <template #default="scope">{{ scope.row?.article?.title }}</template>
         </el-table-column>
         <el-table-column align="left" label="内容" prop="content" />
-        <el-table-column align="left" label="文章作者" width="120">
-          <template #default="scope">
-            {{ scope.row?.article?.sys_user?.nickName }}
+        <el-table-column align="left" label="评论人" width="120">
+          <template #default="{ row }">
+            {{ row?.user?.nickName }}
           </template>
         </el-table-column>
-        <el-table-column align="left" label="评论人" prop="user_name" width="120"></el-table-column>
         <!-- <el-table-column align="left" label="赞数" prop="praise" width="200">
           <template #header>
             <div style="padding-left: 10px">
@@ -79,24 +73,19 @@
         </el-table-column>
         <el-table-column align="left" label="操作">
           <template #default="scope">
-            <el-button link icon="edit" type="primary" size="small" class="table-button"
-              @click="updateCommentFunc(scope.row)">编辑</el-button>
+            <el-button link icon="edit" type="primary" size="small" class="table-button" @click="updateCommentFunc(scope.row)">编辑</el-button>
             <el-button link icon="delete" type="primary" size="small" @click="deleteRow(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination background layout="total, sizes, prev, pager, next, jumper" :current-page="page"
-          :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" @current-change="handleCurrentChange"
-          @size-change="handleSizeChange" />
+        <el-pagination background layout="total, sizes, prev, pager, next, jumper" :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </div>
-    <el-dialog :model-value="dialogFormVisible" :before-close="closeDialog"
-      :title="!formData.articleId ? '创建评论' : '更新评论'">
+    <el-dialog :model-value="dialogFormVisible" :before-close="closeDialog" :title="!formData.articleId ? '创建评论' : '更新评论'">
       <el-form :model="formData" label-position="right" label-width="80px">
         <el-form-item label="文章:">
-          <el-select v-model="formData.articleId" :multiple="false" filterable remote clearable style="width: 100%"
-            reserve-keyword placeholder="请输入" :remote-method="searchArticle" :loading="searchLoading">
+          <el-select v-model="formData.articleId" :multiple="false" filterable remote clearable style="width: 100%" reserve-keyword placeholder="请输入" :remote-method="searchArticle" :loading="searchLoading">
             <el-option v-for="item in options" :key="item.ID" :label="item.title" :value="item.ID"></el-option>
           </el-select>
         </el-form-item>
