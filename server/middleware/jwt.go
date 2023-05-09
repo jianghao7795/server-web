@@ -23,8 +23,13 @@ func JWTAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 我们这里jwt鉴权取头部信息 Authorization 登录时回返回token信息 这里前端需要把token存储到cookie或者本地localStorage中 不过需要跟后端协商过期时间 可以约定刷新令牌或者重新登录
 		tokenString := c.Request.Header.Get("Authorization")
+		if tokenString == "" {
+			response.FailWithDetailed(gin.H{"reload": true}, "未登录或非法访问", c)
+			c.Abort()
+			return
+		}
 		tokenValue := strings.Split(tokenString, " ")
-		if tokenValue[0] != "Bearer" {
+		if len(tokenValue) == 1 || tokenValue[0] != "Bearer" {
 			response.FailWithDetailed(gin.H{"reload": true}, "未登录或非法访问", c)
 			c.Abort()
 			return
