@@ -1,6 +1,7 @@
 package app
 
 import (
+	"log"
 	"server/global"
 	comment "server/model/app"
 	commentReq "server/model/app/request"
@@ -92,15 +93,16 @@ func (commentService *CommentService) GetCommentTreeList(info commentReq.Comment
 	}
 
 	var commentList []comment.Comment
-	err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Preload("Article", func(db *gorm.DB) *gorm.DB {
-		return db.Preload("User")
-	}).Preload("User").Order("id desc").Find(&commentList).Error
+
+	err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Preload("Article").Preload("User").Order("id desc").Find(&commentList).Error
 	// err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Find(&commentList).Error
 	if len(commentList) > 0 {
 		for comment := range commentList {
 			err = commentService.findChildrenComment(&commentList[comment])
 		}
 	}
+
+	log.Println("err1: ", err)
 
 	return commentList, total, err
 }

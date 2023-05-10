@@ -2,5 +2,5 @@ package utils
 
 const (
 	ConfigEnv  = "CONFIG"
-	ConfigFile = "config.yaml"
+	ConfigFile = "config.dev.yaml"
 )
