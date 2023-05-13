@@ -13,16 +13,21 @@ declare namespace API {
     reading_quantity: number;
   };
 
-  export type User = {
+  export interface User {
     ID: number;
     CreatedAt: string;
     UpdatedAt: string;
-    username: string;
-    nick_name: string;
-    header_img: string;
+    uuid: string;
+    userName: string;
+    nickName: string;
+    sideMode: string;
+    headerImg: string;
+    baseColor: string;
+    activeColor: string;
+    authorityId: string;
     phone: string;
     email: string;
-  };
+  }
 
   export type Tag = {
     ID: number;

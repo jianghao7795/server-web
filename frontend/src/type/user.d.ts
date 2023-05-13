@@ -1,12 +1,18 @@
 declare namespace User {
   export type UserInfo = {
     ID: number;
-    name: string;
-    introduction: string;
-    head_img: string;
-    content: string;
-    // password: string;
-    header: string;
+    CreatedAt: string;
+    UpdatedAt: string;
+    uuid: string;
+    userName: string;
+    nickName: string;
+    sideMode: string;
+    headerImg: string;
+    baseColor: string;
+    activeColor: string;
+    authorityId: string;
+    phone: string;
+    email: string;
   };
 
   export type Login = {

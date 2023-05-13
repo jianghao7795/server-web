@@ -82,7 +82,7 @@
           </n-input-group>
         </template>
         <template #author>
-          <a>{{ items?.user?.name || items.user_name }}</a>
+          <a>{{ items?.user?.nickName || items.user_name }}</a>
         </template>
         <template #avatar>
           <a-avatar
@@ -92,7 +92,9 @@
           />
           <a-avatar
             v-else
-            :src="items.user.header ? `${Base_URL}/${items.user.header}` : ''"
+            :src="
+              items.user.headerImg ? `${Base_URL}/${items.user.headerImg}` : ''
+            "
             alt="Han Solo"
           />
         </template>
@@ -103,7 +105,7 @@
         </template>
         <a-comment v-for="item in items.children" :key="item.ID">
           <template #author>
-            <a>{{ item?.user?.name || item?.user_name }}</a>
+            <a>{{ item?.user?.nickName || item?.user_name }}</a>
           </template>
           <template #avatar>
             <a-avatar
@@ -113,7 +115,9 @@
             />
             <a-avatar
               v-else
-              :src="item.user.header ? `${Base_URL}/${item.user.header}` : ''"
+              :src="
+                item.user.headerImg ? `${Base_URL}/${item.user.headerImg}` : ''
+              "
               alt="Han Solo"
             />
           </template>
@@ -211,7 +215,7 @@ const submit = async (parentId: number, children: Comment.comment[]) => {
     articleId: Number(route.params.id).valueOf(),
     parentId,
     user_id: userStroe.currentUser.user.ID || 0,
-    user_name: userStroe.currentUser.user.name || "测试",
+    user_name: userStroe.currentUser.user.nickName || "测试",
   } as Comment.comment);
   if (resp?.code === 0) {
     message.success("评论成功");
@@ -228,7 +232,7 @@ const submit = async (parentId: number, children: Comment.comment[]) => {
         articleId: Number(route.params.id).valueOf(),
         parentId,
         user_id: userStroe.currentUser.user.ID || 0,
-        user_name: userStroe.currentUser.user.name || "测试",
+        user_name: userStroe.currentUser.user.nickName || "测试",
         ID: resp.data.id,
         children: child,
       } as Comment.comment);

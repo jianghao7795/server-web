@@ -4,11 +4,17 @@ import "server/global"
 
 type User struct {
 	global.MODEL
-	Name         string `json:"name" form:"name" gorm:"column:name;comment:用户名;size:50;"`
-	HeadImg      string `json:"head_img" form:"head_img" gorm:"column:head_img;comment:头像;"`
-	Introduction string `json:"introduction" form:"introduction" gorm:"column:introduction;comment:简介;size:255;"`
-	Content      string `json:"content" form:"content" gorm:"column:content;comment:用户信息;size:255;"`
-	Header       string `json:"header" form:"header" gorm:"column:header;comment:头像;size:100"`
+	Username    string `json:"userName" gorm:"comment:用户登录名"`                                                    // 用户登录名
+	Password    string `json:"-"  gorm:"comment:用户登录密码"`                                                         // 用户登录密码
+	NickName    string `json:"nickName" gorm:"default:系统用户;comment:用户昵称"`                                        // 用户昵称
+	SideMode    string `json:"sideMode" gorm:"default:dark;comment:用户侧边主题"`                                      // 用户侧边主题
+	HeaderImg   string `json:"headerImg" gorm:"default:https://qmplusimg.henrongyi.top/header.jpg;comment:用户头像"` // 用户头像
+	BaseColor   string `json:"baseColor" gorm:"default:#fff;comment:基础颜色"`                                       // 基础颜色
+	ActiveColor string `json:"activeColor" gorm:"default:#1890ff;comment:活跃颜色"`                                  // 活跃颜色
+	AuthorityId string `json:"authorityId" gorm:"default:888;comment:用户角色ID"`                                    // 用户角色ID
+	Phone       string `json:"phone"  gorm:"comment:用户手机号"`                                                      // 用户手机号
+	Email       string `json:"email"  gorm:"comment:用户邮箱"`                                                       // 用户邮箱
+	HeadImg     string `json:"head_img" gorm:"comment:背景图"`
 }
 
 type ResetPassword struct {
@@ -19,5 +25,5 @@ type ResetPassword struct {
 }
 
 func (User) TableName() string {
-	return "user"
+	return "sys_users"
 }
