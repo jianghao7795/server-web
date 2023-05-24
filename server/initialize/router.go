@@ -21,7 +21,7 @@ import (
 // 初始化总路由
 
 func Routers() *gin.Engine {
-	gin.SetMode(gin.ReleaseMode)
+	// gin.SetMode(gin.ReleaseMode)
 	Router := gin.Default()
 	appRouter := router.RouterGroupApp.App
 	systemRouter := router.RouterGroupApp.System
