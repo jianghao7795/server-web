@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"server/model/common/response"
 	"sync"
 	"time"
 
@@ -43,7 +44,7 @@ func LimitHandler(maxConn int64) gin.HandlerFunc {
 	}
 	return func(c *gin.Context) {
 		if !tb.Allow() {
-			c.String(503, "Too many request")
+			response.FailWithDetailed(gin.H{"msg": "服务器需要休息一下，请等几分钟"}, "加载中", c)
 			c.Abort()
 			return
 		}
