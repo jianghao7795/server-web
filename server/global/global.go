@@ -3,10 +3,10 @@ package global
 import (
 	"server/config"
 	"server/utils/timer"
+
 	"sync"
 
 	ut "github.com/go-playground/universal-translator"
-
 	"github.com/go-redis/redis/v8"
 	"github.com/songzhibin97/gkit/cache/local_cache"
 	"github.com/spf13/viper"

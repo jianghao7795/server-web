@@ -1,14 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+// import WelcomeItem from "./components/WelcomeItem.vue";
+import { Button } from "vant";
+</script>
 
 <template>
-  <van-button
-    type="primary"
-    loading-type="spinner"
-    loading
-    loading-text="加载中"
-  >
-    重要按键
-  </van-button>
+  <div><router-view /> <Button>123123123</Button></div>
 </template>
 
 <style scoped></style>
