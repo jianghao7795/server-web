@@ -19,7 +19,7 @@
       <el-table :data="tableData">
         <el-table-column align="left" label="预览" width="100">
           <template #default="scope">
-            <div>
+            <div @click="() => changePicker(true, scope.row.url)">
               <!-- <viewer :images="[scope.row.url]"><CustomPic pic-type="file" :pic-src="scope.row.url" /></viewer> -->
               <CustomPic pic-type="file" :pic-src="scope.row.url" />
             </div>
@@ -64,6 +64,17 @@
           <img v-for="src in scope.images" :src="src" :key="src" class="image" />
         </template>
       </VueViewer> -->
+      <el-dialog v-model="dialogFormVisible" title="Shipping address">
+        <div>
+          <vue-cropper ref="cropper" :img="pickerUrlRef"></vue-cropper>
+        </div>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="() => changePicker(false, '')">Cancel</el-button>
+            <el-button type="primary" @click="() => changePicker(false, '')">Confirm</el-button>
+          </span>
+        </template>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -75,21 +86,35 @@ import CustomPic from "@/components/customPic/index.vue";
 import UploadImage from "@/components/upload/image.vue";
 import UploadCommon from "@/components/upload/common.vue";
 import { formatDate } from "@/utils/format";
+import "vue-cropper/dist/index.css";
+import { VueCropper } from "vue-cropper";
 // import VueViewer from "v-viewer";
-
 import { ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 
+const cropper = ref(null);
 const path = ref(import.meta.env.VITE_BASE_API);
 // const userStore = useUserStore();
 const imageUrl = ref("");
 const imageCommon = ref("");
+
+const dialogFormVisible = ref(false);
+const pickerUrlRef = ref("");
 
 const page = ref(1);
 const total = ref(0);
 const pageSize = ref(10);
 const search = ref({});
 const tableData = ref([]);
+
+const changePicker = (status = false, pickerUrl = "") => {
+  dialogFormVisible.value = status;
+  if (pickerUrl) {
+    pickerUrlRef.value = "/backend/" + pickerUrl;
+  } else {
+    pickerUrlRef.value = "";
+  }
+};
 
 // 分页
 const handleSizeChange = (val) => {
