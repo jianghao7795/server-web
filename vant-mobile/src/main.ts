@@ -9,5 +9,5 @@ const app = createApp(App);
 
 app.use(createPinia());
 app.use(router);
-
+console.log(app.config);
 app.mount("#app");
