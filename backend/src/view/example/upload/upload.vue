@@ -64,9 +64,32 @@
           <img v-for="src in scope.images" :src="src" :key="src" class="image" />
         </template>
       </VueViewer> -->
-      <el-dialog v-model="dialogFormVisible" title="Shipping address">
-        <div>
-          <vue-cropper ref="cropper" :img="pickerUrlRef"></vue-cropper>
+      <el-dialog v-model="dialogFormVisible" title="裁剪图片">
+        <div style="width: 400px; height: 400px">
+          <vue-cropper
+            ref="cropper"
+            :img="option.img"
+            :output-size="option.size"
+            :output-type="option.outputType"
+            :info="true"
+            :full="option.full"
+            :fixed="fixed"
+            :fixed-number="fixedNumber"
+            :can-move="option.canMove"
+            :can-move-box="option.canMoveBox"
+            :fixed-box="option.fixedBox"
+            :original="option.original"
+            :auto-crop="option.autoCrop"
+            :auto-crop-width="option.autoCropWidth"
+            :auto-crop-height="option.autoCropHeight"
+            :center-box="option.centerBox"
+            @real-time="realTime"
+            :high="option.high"
+            @img-load="imgLoad"
+            mode="contain"
+            :max-img-size="option.max"
+            @crop-moving="cropMoving"
+          ></vue-cropper>
         </div>
         <template #footer>
           <span class="dialog-footer">
@@ -99,7 +122,23 @@ const imageUrl = ref("");
 const imageCommon = ref("");
 
 const dialogFormVisible = ref(false);
-const pickerUrlRef = ref("");
+const option = ref({
+  img: "",
+  size: 1,
+  full: false,
+  outputType: "png",
+  canMove: true,
+  fixedBox: false,
+  original: false,
+  canMoveBox: true,
+  autoCrop: true,
+  // 只有自动截图开启 宽度高度才生效
+  autoCropWidth: 750,
+  autoCropHeight: 340,
+  centerBox: true,
+  high: true,
+  max: 99999,
+});
 
 const page = ref(1);
 const total = ref(0);
@@ -110,9 +149,9 @@ const tableData = ref([]);
 const changePicker = (status = false, pickerUrl = "") => {
   dialogFormVisible.value = status;
   if (pickerUrl) {
-    pickerUrlRef.value = "/backend/" + pickerUrl;
+    option.value.img = "/backend/" + pickerUrl;
   } else {
-    pickerUrlRef.value = "";
+    option.value.img = "";
   }
 };
 

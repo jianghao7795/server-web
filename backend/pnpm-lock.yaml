@@ -77,8 +77,8 @@ dependencies:
     specifier: ^3.2.47
     version: 3.2.47
   vue-cropper:
-    specifier: ^1.0.8
-    version: 1.0.8
+    specifier: ^1.0.9
+    version: 1.0.9
   vue-i18n:
     specifier: 9.3.0-beta.6
     version: 9.3.0-beta.6(vue@3.2.47)
@@ -7516,8 +7516,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vue-cropper@1.0.8:
-    resolution: {integrity: sha512-EX9XoT5a/PQ62J6KDZz8hhaFi9ME1k2yBZlRfYCm8iySzTcjw0nDBq8Y65HtyHaH2jJwUKgYfD6mdFCE0GhUzA==}
+  /vue-cropper@1.0.9:
+    resolution: {integrity: sha512-JhQwxmjqmQohzI7sAp5O/Rfdxuw5HOEYkKjnp/De7iCi6c8Mv6M3N9HpMt9xgWCFchX3/DfXBv2axCZOCg3G8Q==}
     dev: false
 
   /vue-demi@0.14.0(vue@3.2.47):
