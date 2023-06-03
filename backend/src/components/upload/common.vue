@@ -1,15 +1,6 @@
 <template>
   <div>
-    <el-upload
-      accept=".png,.jpg,.jpeg"
-      :action="`${path}/fileUploadAndDownload/upload`"
-      :before-upload="checkFile"
-      :headers="{ 'x-token': userStore.token }"
-      :on-error="uploadError"
-      :on-success="uploadSuccess"
-      :show-file-list="false"
-      class="upload-btn"
-    >
+    <el-upload accept=".png,.jpg,.jpeg" :action="`${path}/fileUploadAndDownload/upload`" :before-upload="checkFile" :headers="{ Authorization: `Bearer ${userStore.token}` }" :on-error="uploadError" :on-success="uploadSuccess" :show-file-list="false" class="upload-btn">
       <el-button size="small" type="primary">普通上传</el-button>
     </el-upload>
   </div>

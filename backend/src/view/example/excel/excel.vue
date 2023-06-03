@@ -2,13 +2,7 @@
   <div class="upload">
     <div class="table-box">
       <div class="btn-list">
-        <el-upload
-          class="excel-btn"
-          :action="`${path}/excel/importExcel`"
-          :headers="{ 'x-token': userStore.token }"
-          :on-success="loadExcel"
-          :show-file-list="false"
-        >
+        <el-upload class="excel-btn" :action="`${path}/excel/importExcel`" :headers="{ Authorization: `Bearer ${userStore.token}` }" :on-success="loadExcel" :show-file-list="false">
           <el-button size="small" type="primary" icon="upload">导入</el-button>
         </el-upload>
         <el-button class="excel-btn" size="small" type="primary" icon="download" @click="handleExcelExport('ExcelExport.xlsx')">导出</el-button>

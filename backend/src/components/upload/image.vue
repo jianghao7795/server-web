@@ -1,14 +1,6 @@
 <template>
   <div>
-    <el-upload
-      accept=".png,.jpeg,.jpg"
-      :action="`${path}/fileUploadAndDownload/upload`"
-      :headers="{ 'x-token': userStore.token }"
-      :show-file-list="false"
-      :on-success="handleImageSuccess"
-      :before-upload="beforeImageUpload"
-      :multiple="false"
-    >
+    <el-upload accept=".png,.jpeg,.jpg" :action="`${path}/fileUploadAndDownload/upload`" :headers="{ Authorization: `Bearer ${userStore.token}` }" :show-file-list="false" :on-success="handleImageSuccess" :before-upload="beforeImageUpload" :multiple="false">
       <el-button size="small" type="primary">压缩上传</el-button>
     </el-upload>
   </div>
