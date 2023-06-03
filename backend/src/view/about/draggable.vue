@@ -4,7 +4,7 @@ import draggable from "vuedraggable";
 
 const drag = ref(false);
 
-let gridLists = ref([
+const gridLists = ref([
   { grid: "cn", num: 1 },
   { grid: "cn", num: 2 },
   { grid: "cn", num: 3 },
@@ -16,14 +16,14 @@ let gridLists = ref([
   { grid: "cn", num: 9 },
 ]);
 
-let lists = ref([
+const lists = ref([
   { people: "cn", id: 1, name: "www.itxst.com" },
   { people: "cn", id: 2, name: "www.baidu.com" },
   { people: "cn", id: 3, name: "www.taobao.com" },
   { people: "cn", id: 4, name: "www.google.com" },
 ]);
 
-let cutLists = ref([
+const cutLists = ref([
   { people: "cn", id: 1, name: "cut1" },
   { people: "cn", id: 2, name: "cut2" },
   { people: "cn", id: 3, name: "cut3" },

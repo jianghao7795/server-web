@@ -131,9 +131,9 @@ onMounted(() => {
     }));
   });
 
-  Members().then((resp) => {
-    console.log(resp);
-  });
+  // Members().then((resp) => {
+  //   console.log(resp);
+  // });
 });
 
 const commitHistory = () => {
