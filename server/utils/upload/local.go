@@ -80,8 +80,13 @@ func (*Local) UploadFile(file *multipart.FileHeader) (string, string, error) {
 //@return: error
 
 func (*Local) DeleteFile(key string) error {
-	if err := os.Remove(key); err != nil {
-		return errors.New("本地文件删除失败, err:" + err.Error())
+	if strings.Contains(key, global.CONFIG.Local.Path) {
+		if err := os.Remove(key); err != nil {
+			return errors.New("本地文件删除失败, err:" + err.Error())
+		}
+	} else {
+		return errors.New("本地文件删除失败, err: 请配置环境是否为本地文件")
 	}
+
 	return nil
 }
