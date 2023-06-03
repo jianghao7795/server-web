@@ -47,7 +47,7 @@ func (e *FileUploadAndDownloadService) DeleteFile(file example.ExaFileUploadAndD
 		return
 	}
 	oss := upload.NewOss()
-	if err = oss.DeleteFile(fileFromDb.Key); err != nil {
+	if err = oss.DeleteFile(fileFromDb.Url); err != nil {
 		return errors.New("文件删除失败 " + err.Error())
 	}
 	err = global.DB.Where("id = ?", file.ID).Unscoped().Delete(&file).Error
