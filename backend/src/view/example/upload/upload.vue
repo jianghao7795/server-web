@@ -116,7 +116,7 @@ import { ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 
 const cropper = ref(null);
-const path = ref(import.meta.env.VITE_BASE_API);
+const path = ref(import.meta.env.VITE_BASE_API + "/");
 // const userStore = useUserStore();
 const imageUrl = ref("");
 const imageCommon = ref("");
