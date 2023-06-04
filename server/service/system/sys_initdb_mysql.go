@@ -85,7 +85,7 @@ func (h MysqlInitHandler) InitData(ctx context.Context, inits initSlice) error {
 			continue
 		}
 		if n, err := init.InitializeData(next); err != nil {
-			color.Info.Printf(InitDataFailed, Mysql, err)
+			color.Info.Printf(InitDataFailed, Mysql, Mysql, err)
 			return err
 		} else {
 			next = n

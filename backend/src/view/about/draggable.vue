@@ -92,26 +92,21 @@ onMounted(() => {
               </div>
             </template>
             <!-- 拖拽实现元素位置切换 -->
-            <!-- <draggable v-model="cutLists" @start="drag = true" @end="drag = false" item-key="name" :animation="300">
-                                                                                    <template #item="{ element }">
-                                                                                      <div class="item-cut">
-                                                                                        <p>{{ element.name }}</p>
-                                                                                      </div>
-                                                                                    </template>
-                                                                                  </draggable> -->
-            <div class="cut-container">
+            <draggable v-model="cutLists" @start="drag = true" @end="drag = false" item-key="name" :animation="300">
+              <template #item="{ element }">
+                <div class="item-cut">
+                  <p>{{ element.name }}</p>
+                </div>
+              </template>
+            </draggable>
+            <!-- <div class="cut-container">
               <div class="item-cut" v-for="(item, index) in cutLists" :key="index">
                 <p>{{ item.name }}</p>
               </div>
-            </div>
+            </div> -->
           </el-card>
         </el-col>
       </el-row>
-      <!-- <div class="cut-container">
-                                                                                      <div class="item-cut" v-for="(item, index) in cutLists" :key="index">
-                                                                                        <p>{{ item.name }}</p>
-                                                                                      </div>
-                                                                                    </div> -->
     </div>
   </el-card>
 </template>
