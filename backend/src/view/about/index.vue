@@ -94,7 +94,7 @@ export default {
 <script setup>
 import Draggable from "./draggable.vue";
 import pkg from "~/package.json";
-import { Commits, Members } from "@/api/github";
+import { Commits } from "@/api/github";
 import { onMounted, ref } from "vue";
 import { Like, BankCardOne } from "@icon-park/vue-next";
 import { useI18n } from "vue-i18n";
