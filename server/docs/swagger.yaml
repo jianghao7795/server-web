@@ -28,7 +28,7 @@ definitions:
         description: 更新时间
         type: string
       user:
-        $ref: '#/definitions/app.UserFrontend'
+        $ref: '#/definitions/system.SysUser'
       user_id:
         type: integer
     type: object
@@ -39,7 +39,6 @@ definitions:
       articleId:
         type: integer
       children:
-        description: UserPraise []system.SysUser `json:"praise" from:"praise" gorm:"many2many:praise"`
         items:
           $ref: '#/definitions/app.Comment'
         type: array
@@ -57,11 +56,11 @@ definitions:
         description: 更新时间
         type: string
       user:
-        $ref: '#/definitions/app.User'
+        allOf:
+        - $ref: '#/definitions/system.SysUser'
+        description: foreignKey是管联UserId的SysUser的表
       user_id:
         type: integer
-      user_name:
-        type: string
     type: object
   app.Tag:
     properties:
@@ -102,28 +101,6 @@ definitions:
       name:
         type: string
       password:
-        type: string
-      updatedAt:
-        description: 更新时间
-        type: string
-    type: object
-  app.UserFrontend:
-    properties:
-      content:
-        type: string
-      createdAt:
-        description: 创建时间
-        type: string
-      headImg:
-        type: string
-      header:
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      introduction:
-        type: string
-      name:
         type: string
       updatedAt:
         description: 更新时间
@@ -289,30 +266,6 @@ definitions:
         description: 需要清理的表名
         type: string
     type: object
-  config.Email:
-    properties:
-      from:
-        description: 收件人
-        type: string
-      host:
-        description: 服务器地址
-        type: string
-      is-ssl:
-        description: 是否SSL
-        type: boolean
-      nickname:
-        description: 昵称
-        type: string
-      port:
-        description: 端口
-        type: integer
-      secret:
-        description: 密钥
-        type: string
-      to:
-        description: 收件人:多个以英文逗号分隔
-        type: string
-    type: object
   config.Excel:
     properties:
       dir:
@@ -462,26 +415,29 @@ definitions:
       aliyun-oss:
         $ref: '#/definitions/config.AliyunOSS'
       autocode:
-        $ref: '#/definitions/config.Autocode'
+        allOf:
+        - $ref: '#/definitions/config.Autocode'
         description: auto
       aws-s3:
         $ref: '#/definitions/config.AwsS3'
       cache:
-        $ref: '#/definitions/config.Cache'
+        allOf:
+        - $ref: '#/definitions/config.Cache'
         description: 缓存
       captcha:
         $ref: '#/definitions/config.Captcha'
       casbin:
         $ref: '#/definitions/config.Casbin'
       cors:
-        $ref: '#/definitions/config.CORS'
+        allOf:
+        - $ref: '#/definitions/config.CORS'
         description: 跨域配置
       db-list:
         items:
           $ref: '#/definitions/config.DB'
         type: array
       email:
-        $ref: '#/definitions/config.Email'
+        $ref: '#/definitions/server_config.Email'
       excel:
         $ref: '#/definitions/config.Excel'
       hua-wei-obs:
@@ -489,10 +445,12 @@ definitions:
       jwt:
         $ref: '#/definitions/config.JWT'
       local:
-        $ref: '#/definitions/config.Local'
+        allOf:
+        - $ref: '#/definitions/config.Local'
         description: oss
       mysql:
-        $ref: '#/definitions/config.Mysql'
+        allOf:
+        - $ref: '#/definitions/config.Mysql'
         description: gorm
       pgsql:
         $ref: '#/definitions/config.Pgsql'
@@ -622,7 +580,8 @@ definitions:
         description: 主键ID
         type: integer
       sysUser:
-        $ref: '#/definitions/system.SysUser'
+        allOf:
+        - $ref: '#/definitions/system.SysUser'
         description: 管理详情
       sysUserAuthorityID:
         description: 管理角色ID
@@ -970,15 +929,6 @@ definitions:
       file:
         $ref: '#/definitions/example.ExaFile'
     type: object
-  response.LoginResponse:
-    properties:
-      expiresAt:
-        type: integer
-      token:
-        type: string
-      user:
-        $ref: '#/definitions/system.SysUser'
-    type: object
   response.PageResult:
     properties:
       list: {}
@@ -1074,6 +1024,39 @@ definitions:
       user:
         $ref: '#/definitions/system.SysUser'
     type: object
+  server_config.Email:
+    properties:
+      from:
+        description: 收件人
+        type: string
+      host:
+        description: 服务器地址
+        type: string
+      is-ssl:
+        description: 是否SSL
+        type: boolean
+      nickname:
+        description: 昵称
+        type: string
+      port:
+        description: 端口
+        type: integer
+      secret:
+        description: 密钥
+        type: string
+      to:
+        description: 收件人:多个以英文逗号分隔
+        type: string
+    type: object
+  server_model_system_response.LoginResponse:
+    properties:
+      expiresAt:
+        type: integer
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/system.SysUser'
+    type: object
   system.AutoCodeStruct:
     properties:
       abbreviation:
@@ -1137,6 +1120,32 @@ definitions:
         description: Field数据类型
         type: string
     type: object
+  system.Meta:
+    properties:
+      closeTab:
+        description: 自动关闭tab
+        type: boolean
+      defaultMenu:
+        description: 是否是基础路由（开发中）
+        type: boolean
+      icon:
+        description: 菜单图标
+        type: string
+      keepAlive:
+        description: 是否缓存
+        type: boolean
+      title:
+        description: 菜单名
+        type: string
+    type: object
+  system.PolicyType:
+    enum:
+    - 0
+    - 1
+    type: integer
+    x-enum-varnames:
+    - Backend
+    - Frontend
   system.SysApi:
     properties:
       apiGroup:
@@ -1224,34 +1233,26 @@ definitions:
         items:
           $ref: '#/definitions/system.SysBaseMenu'
         type: array
-      closeTab:
-        description: 自动关闭tab
-        type: boolean
       component:
         description: 对应前端文件路径
         type: string
       createdAt:
         description: 创建时间
         type: string
-      defaultMenu:
-        description: 是否是基础路由（开发中）
-        type: boolean
       hidden:
         description: 是否在列表隐藏
         type: boolean
-      icon:
-        description: 菜单图标
-        type: string
       id:
         description: 主键ID
         type: integer
-      keepAlive:
-        description: 是否缓存
-        type: boolean
       menuBtn:
         items:
           $ref: '#/definitions/system.SysBaseMenuBtn'
         type: array
+      meta:
+        allOf:
+        - $ref: '#/definitions/system.Meta'
+        description: 附加属性
       name:
         description: 路由name
         type: string
@@ -1268,9 +1269,6 @@ definitions:
       sort:
         description: 排序标记
         type: integer
-      title:
-        description: 菜单名
-        type: string
       updatedAt:
         description: 更新时间
         type: string
@@ -1385,36 +1383,28 @@ definitions:
         items:
           $ref: '#/definitions/system.SysMenu'
         type: array
-      closeTab:
-        description: 自动关闭tab
-        type: boolean
       component:
         description: 对应前端文件路径
         type: string
       createdAt:
         description: 创建时间
         type: string
-      defaultMenu:
-        description: 是否是基础路由（开发中）
-        type: boolean
       hidden:
         description: 是否在列表隐藏
         type: boolean
-      icon:
-        description: 菜单图标
-        type: string
       id:
         description: 主键ID
         type: integer
-      keepAlive:
-        description: 是否缓存
-        type: boolean
       menuBtn:
         items:
           $ref: '#/definitions/system.SysBaseMenuBtn'
         type: array
       menuId:
         type: string
+      meta:
+        allOf:
+        - $ref: '#/definitions/system.Meta'
+        description: 附加属性
       name:
         description: 路由name
         type: string
@@ -1431,9 +1421,6 @@ definitions:
       sort:
         description: 排序标记
         type: integer
-      title:
-        description: 菜单名
-        type: string
       updatedAt:
         description: 更新时间
         type: string
@@ -1474,7 +1461,7 @@ definitions:
         description: 请求状态
         type: integer
       type_port:
-        type: integer
+        $ref: '#/definitions/system.PolicyType'
       updatedAt:
         description: 更新时间
         type: string
@@ -1506,6 +1493,8 @@ definitions:
         type: string
       email:
         description: 用户邮箱
+        type: string
+      head_img:
         type: string
       headerImg:
         description: 用户头像
@@ -2720,7 +2709,7 @@ paths:
             - $ref: '#/definitions/response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.LoginResponse'
+                  $ref: '#/definitions/server_model_system_response.LoginResponse'
                 msg:
                   type: string
               type: object
@@ -2883,9 +2872,6 @@ paths:
       - in: query
         name: user_id
         type: integer
-      - in: query
-        name: user_name
-        type: string
       produces:
       - application/json
       responses:
@@ -4312,9 +4298,15 @@ paths:
         in: query
         name: status
         type: integer
-      - in: query
+      - enum:
+        - 0
+        - 1
+        in: query
         name: type_port
         type: integer
+        x-enum-varnames:
+        - Backend
+        - Frontend
       - description: 更新时间
         in: query
         name: updatedAt
@@ -4404,9 +4396,15 @@ paths:
         in: query
         name: status
         type: integer
-      - in: query
+      - enum:
+        - 0
+        - 1
+        in: query
         name: type_port
         type: integer
+        x-enum-varnames:
+        - Backend
+        - Frontend
       - description: 更新时间
         in: query
         name: updatedAt
