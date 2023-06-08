@@ -83,7 +83,7 @@ const chooseImg = (url, target, targetKey) => {
     target[targetKey] = url;
   }
   emit("enterImg", url);
-  drawer.value = false;
+  // drawer.value = false;
 };
 
 const open = async () => {
