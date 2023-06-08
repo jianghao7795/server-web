@@ -50,16 +50,23 @@ service.interceptors.request.use(
         "x-user-id": userStore.userInfo.ID,
       };
     } else {
-      config.headers = {
-        Accept: "application/json",
-        Authorization: `Bearer ${userStore.token}`,
-        "Content-Type": "application/json; charset=utf-8",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "OPTIONS,GET,DELETE,PATCH,POST",
-        "Access-Control-Allow-Credentials": "true",
-        "x-user-id": userStore.userInfo.ID,
-        ...config.headers,
-      };
+      if (config.data instanceof FormData) {
+        config.headers = {
+          Authorization: `Bearer ${userStore.token}`,
+          ...config.headers,
+        };
+      } else {
+        config.headers = {
+          Accept: "application/json",
+          Authorization: `Bearer ${userStore.token}`,
+          "Content-Type": "application/json; charset=utf-8",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,GET,DELETE,PATCH,POST",
+          "Access-Control-Allow-Credentials": "true",
+          "x-user-id": userStore.userInfo.ID,
+          ...config.headers,
+        };
+      }
     }
     return config;
   },

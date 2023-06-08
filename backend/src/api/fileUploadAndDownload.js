@@ -41,3 +41,11 @@ export const editFileName = (data) => {
     data,
   });
 };
+
+export const uploadFile = (data) => {
+  return service({
+    url: "/fileUploadAndDownload/upload",
+    method: "post",
+    data,
+  });
+};

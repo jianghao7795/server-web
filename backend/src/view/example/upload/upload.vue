@@ -19,7 +19,7 @@
       <el-table :data="tableData">
         <el-table-column align="left" label="预览" width="100">
           <template #default="scope">
-            <div @click="() => changePicker(true, scope.row.url)">
+            <div @click="() => changePicker(true, scope.row.url, scope.row.name)">
               <!-- <viewer :images="[scope.row.url]"><CustomPic pic-type="file" :pic-src="scope.row.url" /></viewer> -->
               <CustomPic pic-type="file" :pic-src="scope.row.url" />
             </div>
@@ -73,8 +73,8 @@
             :output-type="option.outputType"
             :info="true"
             :full="option.full"
-            :fixed="fixed"
-            :fixed-number="fixedNumber"
+            :fixed="false"
+            :fixed-number="[75, 34]"
             :can-move="option.canMove"
             :can-move-box="option.canMoveBox"
             :fixed-box="option.fixedBox"
@@ -93,8 +93,8 @@
         </div>
         <template #footer>
           <span class="dialog-footer">
-            <el-button @click="() => changePicker(false, '')">Cancel</el-button>
-            <el-button type="primary" @click="() => changePicker(false, '')">Confirm</el-button>
+            <el-button @click="oncancel">取消</el-button>
+            <el-button type="primary" @click="onOk">确定</el-button>
           </span>
         </template>
       </el-dialog>
@@ -103,7 +103,7 @@
 </template>
 
 <script setup>
-import { getFileList, deleteFile, editFileName } from "@/api/fileUploadAndDownload";
+import { getFileList, deleteFile, editFileName, uploadFile } from "@/api/fileUploadAndDownload";
 import { downloadImage } from "@/utils/downloadImg";
 import CustomPic from "@/components/customPic/index.vue";
 import UploadImage from "@/components/upload/image.vue";
@@ -120,6 +120,7 @@ const path = ref(import.meta.env.VITE_BASE_API + "/");
 // const userStore = useUserStore();
 const imageUrl = ref("");
 const imageCommon = ref("");
+const filename = ref("");
 
 const dialogFormVisible = ref(false);
 const option = ref({
@@ -146,12 +147,48 @@ const pageSize = ref(10);
 const search = ref({});
 const tableData = ref([]);
 
-const changePicker = (status = false, pickerUrl = "") => {
+const cropMoving = (e) => {
+  console.log(e);
+};
+
+const realTime = (e) => {
+  console.log(e);
+};
+
+const imgLoad = (e) => {
+  console.log(e);
+};
+
+const oncancel = () => {
+  changePicker(false, "");
+};
+
+const onOk = () => {
+  // console.log(cropper.value);
+  cropper.value.getCropBlob(async (data) => {
+    const file = new window.File([data], filename.value, { type: data.type });
+    const forms = new FormData();
+    forms.append("file", file);
+    const resp = await uploadFile(forms);
+    if (resp.code === 0) {
+      ElMessage({
+        type: "success",
+        message: "截图成功 上传成功！",
+      });
+      getTableData();
+      changePicker();
+    }
+  });
+};
+
+const changePicker = (status = false, pickerUrl = "", name = "") => {
   dialogFormVisible.value = status;
   if (pickerUrl) {
+    filename.value = "screenshot_" + name;
     option.value.img = "/backend/" + pickerUrl;
   } else {
     option.value.img = "";
+    filename.value = "";
   }
 };
 
