@@ -16,6 +16,7 @@ import run from "@/core/vue-admin";
 import auth from "@/directive/auth";
 import { store } from "@/pinia";
 import App from "./App.vue";
+import "vue-cropper/dist/index.css";
 // import "virtual:windi.css"; // 会搞乱的
 // import "animate.css"; //导入animate.css包 https://animate.style/
 import i18n from "@/locals/index"; //语言翻译 i18b

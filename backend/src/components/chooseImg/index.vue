@@ -16,7 +16,7 @@
     <div class="media">
       <div v-for="(item, key) in picList" :key="key" class="media-box">
         <div class="header-img-box-list">
-          <el-image :key="key" :src="item.url && item.url.slice(0, 4) !== 'http' ? path + `/${item.url}` : item.url" @click="chooseImg(item.url, target, targetKey)">
+          <el-image :key="key" :src="item.url && item.url.slice(0, 4) !== 'http' ? path + `/${item.url}` : item.url" @click="chooseImg(item.url, target, targetKey, item)">
             <template #error>
               <div class="header-img-box-list">
                 <el-icon>
@@ -49,7 +49,7 @@ const search = ref({});
 const page = ref(1);
 const total = ref(0);
 const pageSize = ref(20);
-const keyword = ref("");
+// const keyword = ref("");
 
 // 分页
 const handleSizeChange = (val) => {
@@ -78,11 +78,11 @@ const drawer = ref(false);
 const picList = ref([]);
 const path = ref(import.meta.env.VITE_BASE_API);
 
-const chooseImg = (url, target, targetKey) => {
+const chooseImg = (url, target, targetKey, item) => {
   if (target && targetKey) {
     target[targetKey] = url;
   }
-  emit("enterImg", url);
+  emit("enterImg", url, item);
   // drawer.value = false;
 };
 

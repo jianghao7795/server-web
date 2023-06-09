@@ -250,6 +250,8 @@
         </div>
       </div>
     </el-dialog>
+
+    <ImageCropModal :img-url="cropUrl" :dialog-form-visible="cropStatus" :crop-data="cropData" @changeImageStatus="changeImageStatus" @changeAvatar="changeAvatar" />
   </div>
 </template>
 
@@ -266,6 +268,7 @@ import { reactive, ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useUserStore } from "@/pinia/modules/user";
 import { Edit, Picture, Plus, Upload } from "@element-plus/icons-vue";
+import ImageCropModal from "./ImageCropModal.vue";
 
 const path = ref(import.meta.env.VITE_BASE_API + "/");
 const activeName = ref("second");
@@ -296,12 +299,16 @@ const rules = reactive({
 
 const random = ref({});
 const kiomRabdom = ref(0);
-
 const active = ref(0);
-
 const securityQuestion = ref(false);
 const securityQuestionList = ref([]);
 const hasSetting = ref(false);
+//被裁剪图片的url
+const cropUrl = ref("");
+// 裁剪图片的modal status
+const cropStatus = ref(false);
+// 裁剪图片中的某条数据
+const cropData = ref({});
 
 const userStore = useUserStore();
 
@@ -457,7 +464,23 @@ const openChooseImg = () => {
   chooseImgRef.value.open();
 };
 
-const enterImg = async (url) => {
+const changeImageStatus = (status = false, url = "", data) => {
+  if (status) {
+    cropUrl.value = url;
+    cropStatus.value = status;
+    cropData.value = data;
+  } else {
+    cropUrl.value = "";
+    cropStatus.value = false;
+    cropData.value = {};
+  }
+};
+
+const enterImg = async (url, record) => {
+  changeImageStatus(true, `/backend/${url}`, record);
+};
+
+const changeAvatar = async (url) => {
   const res = await setSelfInfo({ headerImg: url });
   if (res.code === 0) {
     userStore.ResetUserInfo({ headerImg: url });
@@ -680,6 +703,7 @@ const changeEmail = async () => {
     background-blend-mode: multiply, multiply;
     .update {
       color: #fff;
+      cursor: pointer;
     }
   }
   .update {

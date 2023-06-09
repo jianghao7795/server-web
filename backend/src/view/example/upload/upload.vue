@@ -65,7 +65,7 @@
         </template>
       </VueViewer> -->
       <el-dialog v-model="dialogFormVisible" title="裁剪图片">
-        <div style="width: 400px; height: 400px">
+        <div style="width: 100%; height: 400px">
           <vue-cropper
             ref="cropper"
             :img="option.img"
@@ -109,7 +109,6 @@ import CustomPic from "@/components/customPic/index.vue";
 import UploadImage from "@/components/upload/image.vue";
 import UploadCommon from "@/components/upload/common.vue";
 import { formatDate } from "@/utils/format";
-import "vue-cropper/dist/index.css";
 import { VueCropper } from "vue-cropper";
 // import VueViewer from "v-viewer";
 import { ref } from "vue";
@@ -185,7 +184,7 @@ const changePicker = (status = false, pickerUrl = "", name = "") => {
   dialogFormVisible.value = status;
   if (pickerUrl) {
     filename.value = "screenshot_" + name;
-    option.value.img = "/backend/" + pickerUrl;
+    option.value.img = path + pickerUrl;
   } else {
     option.value.img = "";
     filename.value = "";
