@@ -194,7 +194,7 @@
         <el-steps :active="active" simple :space="200" class="botto">
           <el-step title="回答问题" :icon="Edit" />
           <el-step title="设置问题" :icon="Upload" />
-          <el-step title="完成" :icon="Picture" />
+          <el-step title="成功" :icon="Picture" />
         </el-steps>
         <div v-if="active === 0">
           <el-form :model="random">
