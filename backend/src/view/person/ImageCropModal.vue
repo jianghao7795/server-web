@@ -105,7 +105,7 @@ const onOk = () => {
     const file = new window.File([data], "screenshot_" + props.cropData.name, { type: data.type });
     const forms = new FormData();
     forms.append("file", file);
-    const resp = await uploadFile(forms);
+    const resp = await uploadFile(forms, 2);
     if (resp.code === 0) {
       ElMessage({
         type: "success",

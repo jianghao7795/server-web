@@ -90,6 +90,7 @@ const open = async () => {
   const res = await getFileList({
     page: page.value,
     pageSize: pageSize.value,
+    is_cropper: 1,
     ...search.value,
   });
   if (res.code === 0) {

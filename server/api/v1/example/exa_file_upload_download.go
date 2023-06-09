@@ -31,8 +31,8 @@ type FileUploadAndDownloadApi struct{}
 func (u *FileUploadAndDownloadApi) UploadFile(c *gin.Context) {
 	var file example.ExaFileUploadAndDownload
 	noSave := c.DefaultQuery("noSave", "0")
+	isCropper, _ := strconv.Atoi(c.DefaultQuery("is_cropper", "1"))
 	fileImages, header, err := c.Request.FormFile("file")
-	// log.Println(fileImages)
 	if err != nil {
 		global.LOG.Error("接收文件失败!", zap.Error(err))
 		response.FailWithMessage("接收文件失败", c)
@@ -51,7 +51,7 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *gin.Context) {
 	fileDimension.Width = fileCtx.Dx()
 	fileDimension.Proportion = float64(fileCtx.Dx()) / float64(fileCtx.Dy())
 
-	file, err = fileUploadAndDownloadService.UploadFile(header, noSave, fileDimension) // 文件上传后拿到文件路径
+	file, err = fileUploadAndDownloadService.UploadFile(header, noSave, fileDimension, isCropper) // 文件上传后拿到文件路径
 	if err != nil {
 		global.LOG.Error("修改数据库链接失败!", zap.Error(err))
 		response.FailWithMessage("修改数据库链接失败", c)

@@ -75,6 +75,10 @@ func (e *FileUploadAndDownloadService) GetFileRecordInfoList(info request.PageIn
 	if len(keyword) > 0 {
 		db = db.Where("name LIKE ?", "%"+keyword+"%")
 	}
+	if len(info.IsCropper) == 1 {
+		db = db.Where("is_cropper = ?", info.IsCropper)
+	}
+
 	err = db.Count(&total).Error
 	if err != nil {
 		return
@@ -89,7 +93,7 @@ func (e *FileUploadAndDownloadService) GetFileRecordInfoList(info request.PageIn
 //@param: header *multipart.FileHeader, noSave string
 //@return: err error, file model.ExaFileUploadAndDownload
 
-func (e *FileUploadAndDownloadService) UploadFile(header *multipart.FileHeader, noSave string, fileDimension fileDimensionReq.FileDimension) (file example.ExaFileUploadAndDownload, err error) {
+func (e *FileUploadAndDownloadService) UploadFile(header *multipart.FileHeader, noSave string, fileDimension fileDimensionReq.FileDimension, isCropper int) (file example.ExaFileUploadAndDownload, err error) {
 	oss := upload.NewOss()
 	filePath, key, uploadErr := oss.UploadFile(header)
 	if uploadErr != nil {
@@ -105,6 +109,7 @@ func (e *FileUploadAndDownloadService) UploadFile(header *multipart.FileHeader, 
 			Width:      fileDimension.Width,
 			Height:     fileDimension.Height,
 			Proportion: fileDimension.Proportion,
+			IsCropper:  isCropper,
 		}
 		return f, e.Upload(f)
 	}

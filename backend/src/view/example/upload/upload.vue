@@ -49,6 +49,13 @@
             </el-tag>
           </template>
         </el-table-column>
+        <el-table-column align="left" label="截图" props="is_cropper" width="100">
+          <template #default="scope">
+            <el-tag :type="scope.row.is_cropper ? 'warning' : 'success'" disable-transitions>
+              {{ scope.row.is_cropper === 2 ? "是" : "否" }}
+            </el-tag>
+          </template>
+        </el-table-column>
         <el-table-column align="left" label="操作" width="160">
           <template #default="scope">
             <el-button size="small" icon="download" link type="primary" @click="downloadFile(scope.row)">下载</el-button>
@@ -168,7 +175,7 @@ const onOk = () => {
     const file = new window.File([data], filename.value, { type: data.type });
     const forms = new FormData();
     forms.append("file", file);
-    const resp = await uploadFile(forms);
+    const resp = await uploadFile(forms, 2);
     if (resp.code === 0) {
       ElMessage({
         type: "success",
@@ -184,7 +191,7 @@ const changePicker = (status = false, pickerUrl = "", name = "") => {
   dialogFormVisible.value = status;
   if (pickerUrl) {
     filename.value = "screenshot_" + name;
-    option.value.img = path + pickerUrl;
+    option.value.img = path.value + pickerUrl;
   } else {
     option.value.img = "";
     filename.value = "";

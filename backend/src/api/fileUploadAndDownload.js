@@ -42,7 +42,14 @@ export const editFileName = (data) => {
   });
 };
 
-export const uploadFile = (data) => {
+export const uploadFile = (data, is_cropper) => {
+  if (is_cropper) {
+    return service({
+      url: `/fileUploadAndDownload/upload?is_cropper=${is_cropper}`,
+      method: "post",
+      data,
+    });
+  }
   return service({
     url: "/fileUploadAndDownload/upload",
     method: "post",
