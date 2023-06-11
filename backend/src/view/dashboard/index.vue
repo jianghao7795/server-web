@@ -92,14 +92,24 @@
                 <swiper-slide><img src="https://static.runoob.com/images/demo/demo2.jpg" alt="" /></swiper-slide>
                 <swiper-slide><img src="https://static.runoob.com/images/demo/demo3.jpg" alt="" /></swiper-slide>
               </swiper> -->
-              <div v-for="item in swiperExample" :key="item.id">
+              <div>
+                <h3 class="py-24px text-24px font-bold">{{ swiperUploadFile.label }}</h3>
+                <swiper v-bind="swiperUploadFile.options">
+                  <swiper-slide v-for="i in uploadedFile" :key="i.id">
+                    <div class="centerFloat">
+                      <el-image :src="path + i.url" fit="contain"></el-image>
+                    </div>
+                  </swiper-slide>
+                </swiper>
+              </div>
+              <!-- <div v-for="item in swiperExample" :key="item.id">
                 <h3 class="py-24px text-24px font-bold">{{ item.label }}</h3>
                 <swiper v-bind="item.options">
                   <swiper-slide v-for="i in 5" :key="i">
                     <div class="centerFloat">Slide{{ i }}</div>
                   </swiper-slide>
                 </swiper>
-              </div>
+              </div> -->
             </el-col>
             <el-col :xs="24" :sm="8">
               <dashboard-table />
@@ -127,6 +137,9 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { getFlowmeter, userCount } from "@/api/user";
 import { getReading } from "@/api/article";
+import { getFileList } from "@/api/fileUploadAndDownload";
+
+const path = import.meta.env.VITE_BASE_API + "/";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -161,106 +174,131 @@ onMounted(() => {
   getReading().then((resp) => {
     readingQuantity.value = resp.data.reading_quantity || 0;
   });
+  getFileList({ pageSize: 10 }).then((resp) => {
+    if (resp?.code === 0) {
+      uploadedFile.value = resp.data.list;
+    }
+  });
 });
 
-const swiperExample = ref([
-  {
-    id: 0,
-    label: "Default",
-    options: {
-      autoplay: {
-        // 自动播放
-        delay: 3000,
-        stopOnLastSlide: false,
-        disableOnInteraction: false, // 设置为false和自动播放将在用户交互后不会被禁用（Swipes），互动后每次都会重新启动它
-        pauseOnMouseEnter: true, // 当启用时，将在鼠标上通过Swiper容器进入鼠标时暂停。如果还启用了disableOninteraction，它将停止自动播放而不是暂停
-      },
+const swiperUploadFile = ref({
+  id: 8,
+  label: "最新图片",
+  options: {
+    navigation: true,
+    pagination: {
+      clickable: true,
+    },
+    loop: true,
+    autoplay: {
+      delay: 3000,
+      stopOnLastSlide: false,
+      disableOnInteraction: false, // 设置为false和自动播放将在用户交互后不会被禁用（Swipes），互动后每次都会重新启动它
+      pauseOnMouseEnter: true, // 当启用时，将在鼠标上通过Swiper容器进入鼠标时暂停。如果还启用了disableOninteraction，它将停止自动播放而不是暂停
     },
   },
-  {
-    id: 1,
-    label: "Navigation",
-    autoplay: true,
-    options: {
-      loop: true,
-      navigation: true,
-      autoplay: {
-        delay: 3000,
-        stopOnLastSlide: false,
-        disableOnInteraction: true,
-      },
-    },
-  },
-  {
-    id: 2,
-    label: "Pagination",
-    options: {
-      loop: true,
-      pagination: {
-        clickable: true,
-      },
-    },
-  },
-  {
-    id: 3,
-    label: "Pagination dynamic",
-    options: {
-      loop: true,
-      pagination: { dynamicBullets: true },
-    },
-  },
-  {
-    id: 4,
-    label: "Pagination progress",
-    options: {
-      navigation: true,
-      loop: true,
-      pagination: {
-        type: "progressbar",
-      },
-    },
-  },
-  {
-    id: 5,
-    label: "Pagination fraction",
-    options: {
-      navigation: true,
-      loop: true,
-      pagination: {
-        type: "fraction",
-      },
-    },
-  },
-  {
-    id: 6,
-    label: "Slides per view",
-    options: {
-      pagination: {
-        clickable: true,
-      },
-      slidesPerView: 3,
-      spaceBetween: 30,
-      loop: true,
-    },
-  },
-  {
-    id: 7,
-    label: "Infinite loop",
-    options: {
-      navigation: true,
-      pagination: {
-        clickable: true,
-      },
-      loop: true,
-      autoplay: {
-        delay: 3000,
-        stopOnLastSlide: false,
-        disableOnInteraction: false, // 设置为false和自动播放将在用户交互后不会被禁用（Swipes），互动后每次都会重新启动它
-        pauseOnMouseEnter: true, // 当启用时，将在鼠标上通过Swiper容器进入鼠标时暂停。如果还启用了disableOninteraction，它将停止自动播放而不是暂停
-      },
-    },
-  },
-]);
+});
+
+const uploadedFile = ref([]);
+
+// const swiperExample = ref([
+//   {
+//     id: 0,
+//     label: "Default",
+//     options: {
+//       autoplay: {
+//         // 自动播放
+//         delay: 3000,
+//         stopOnLastSlide: false,
+//         disableOnInteraction: false, // 设置为false和自动播放将在用户交互后不会被禁用（Swipes），互动后每次都会重新启动它
+//         pauseOnMouseEnter: true, // 当启用时，将在鼠标上通过Swiper容器进入鼠标时暂停。如果还启用了disableOninteraction，它将停止自动播放而不是暂停
+//       },
+//     },
+//   },
+//   {
+//     id: 1,
+//     label: "Navigation",
+//     autoplay: true,
+//     options: {
+//       loop: true,
+//       navigation: true,
+//       autoplay: {
+//         delay: 3000,
+//         stopOnLastSlide: false,
+//         disableOnInteraction: true,
+//       },
+//     },
+//   },
+//   {
+//     id: 2,
+//     label: "Pagination",
+//     options: {
+//       loop: true,
+//       pagination: {
+//         clickable: true,
+//       },
+//     },
+//   },
+//   {
+//     id: 3,
+//     label: "Pagination dynamic",
+//     options: {
+//       loop: true,
+//       pagination: { dynamicBullets: true },
+//     },
+//   },
+//   {
+//     id: 4,
+//     label: "Pagination progress",
+//     options: {
+//       navigation: true,
+//       loop: true,
+//       pagination: {
+//         type: "progressbar",
+//       },
+//     },
+//   },
+//   {
+//     id: 5,
+//     label: "Pagination fraction",
+//     options: {
+//       navigation: true,
+//       loop: true,
+//       pagination: {
+//         type: "fraction",
+//       },
+//     },
+//   },
+//   {
+//     id: 6,
+//     label: "Slides per view",
+//     options: {
+//       pagination: {
+//         clickable: true,
+//       },
+//       slidesPerView: 3,
+//       spaceBetween: 30,
+//       loop: true,
+//     },
+//   },
+//   {
+//     id: 7,
+//     label: "Infinite loop",
+//     options: {
+//       navigation: true,
+//       pagination: {
+//         clickable: true,
+//       },
+//       loop: true,
+//       autoplay: {
+//         delay: 3000,
+//         stopOnLastSlide: false,
+//         disableOnInteraction: false, // 设置为false和自动播放将在用户交互后不会被禁用（Swipes），互动后每次都会重新启动它
+//         pauseOnMouseEnter: true, // 当启用时，将在鼠标上通过Swiper容器进入鼠标时暂停。如果还启用了disableOninteraction，它将停止自动播放而不是暂停
+//       },
+//     },
+//   },
+// ]);
 
 const toolCards = ref([
   {

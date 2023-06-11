@@ -2,10 +2,11 @@ import axios from "axios";
 
 const service = axios.create();
 
-export function Commits(page) {
+export function Commits(params) {
   return service({
-    url: `https://api.github.com/repos/JiangHaoCode/server-web/commits?page=${page}`,
+    url: `https://api.github.com/repos/JiangHaoCode/server-web/commits`,
     method: "get",
+    params,
   });
 }
 

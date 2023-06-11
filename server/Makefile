@@ -1,3 +1,5 @@
+start:
+	go run .
 dev:
 	air
 build:
