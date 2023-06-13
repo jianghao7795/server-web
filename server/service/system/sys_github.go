@@ -16,7 +16,7 @@ func (g *GithubService) CreateApi(github []system.SysGithub) (err error) {
 
 	for _, item := range github {
 		var data system.SysGithub
-		if ierr := db.Where("message like ?", "%"+item.Message).First(&data).Error; ierr == gorm.ErrRecordNotFound {
+		if ierr := db.Where("commit_time = ?", item.CommitTime).First(&data).Error; ierr == gorm.ErrRecordNotFound {
 			iserr := db.Create(&item).Error
 			if iserr != nil {
 				err = multierror.Append(err, iserr)

@@ -50,7 +50,7 @@ const scrollChange = () => {
 const handleCreateGithub = () => {
   // loading.value = true;
   getGithubCommitList({ page: page.value, pageSize: 10 }).then((resp) => {
-    console.log(resp);
+    // console.log(resp);
     dataTimeline.value = [...dataTimeline.value, ...resp.data.list];
   });
 };
