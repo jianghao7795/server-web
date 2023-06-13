@@ -18,6 +18,7 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang-jwt/jwt/v4 v4.3.0
 	github.com/gookit/color v1.3.1
+	github.com/hashicorp/go-multierror v1.0.0
 	github.com/huaweicloud/huaweicloud-sdk-go-obs v3.21.8+incompatible
 	github.com/jordan-wright/email v0.0.0-20200824153738-3f5bafa1cd84
 	github.com/mojocn/base64Captcha v1.3.1
@@ -42,6 +43,8 @@ require (
 	gorm.io/gorm v1.22.5
 	nhooyr.io/websocket v1.8.6
 )
+
+require github.com/hashicorp/errwrap v1.0.0 // indirect
 
 require (
 	github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible // indirect

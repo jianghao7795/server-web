@@ -21,7 +21,7 @@ import (
 // 初始化总路由
 
 func Routers() *gin.Engine {
-	// gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.ReleaseMode)
 	Router := gin.Default()
 	appRouter := router.RouterGroupApp.App
 	systemRouter := router.RouterGroupApp.System
@@ -94,6 +94,7 @@ func Routers() *gin.Engine {
 		systemRouter.InitSysDictionaryDetailRouter(PrivateGroup) // 字典详情管理
 		systemRouter.InitAuthorityBtnRouterRouter(PrivateGroup)  // 字典详情管理
 		systemRouter.InitProblemRouter(PrivateGroup)             // problem
+		systemRouter.InitGithubRouter(PrivateGroup)              // github commit
 
 		exampleRouter.InitExcelRouter(PrivateGroup)                 // 表格导入导出
 		exampleRouter.InitCustomerRouter(PrivateGroup)              // 客户路由

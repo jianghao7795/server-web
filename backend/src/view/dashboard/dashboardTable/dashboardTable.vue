@@ -1,6 +1,11 @@
 <template>
   <div class="commit-table">
-    <div class="commit-table-title">更新日志</div>
+    <div class="commit-table-title">
+      <p @click="loadCommits">
+        更新日志
+        <el-icon v-loading="loadingPlue"><loading theme="outline" size="24" fill="#333" /></el-icon>
+      </p>
+    </div>
     <div class="log">
       <!-- <el-scrollbar @scroll="scrollChange" height="400px">
         <div v-for="(item, key) in dataTimeline" :key="item.message" class="log-item">
@@ -12,16 +17,9 @@
         </div>
       </el-scrollbar> -->
       <div>
-        <ul v-infinite-scroll="scrollChange" class="list infinite-list-wrapper" style="overflow: auto">
-          <li v-for="(item, key) in dataTimeline" :key="item.message" class="log-item">
-            <div class="flex-1 flex key-box">
-              <span class="key" :class="key < 3 && 'top'">{{ key + 1 }}</span>
-            </div>
-            <div class="flex-5 flex message" :title="item.message">{{ item.message }}</div>
-            <div class="flex-3 flex form" :title="item.from">{{ item.from }}</div>
-          </li>
+        <ul v-infinite-scroll="scrollChange" class="infinite-list" :infinite-scroll-delay="500" :infinite-scroll-immediate="false" style="overflow: auto">
+          <li v-for="(item, key) in dataTimeline" :key="item.commit_time" class="infinite-list-item">{{ key + 1 }} - {{ item.message }} - {{ item.author }}</li>
         </ul>
-        <p v-if="loading">Loading...</p>
       </div>
     </div>
   </div>
@@ -34,44 +32,52 @@ export default {
 </script>
 <script setup>
 // import { Commits } from "@/api/github";
-// import { formatTimeToStr } from "@/utils/date.js";
+import { formatTimeToStr } from "@/utils/date.js";
+import { getGithubCommitList, createCommit, Commits } from "@/api/github";
 import { ref, onMounted } from "vue";
+import { Loading } from "@icon-park/vue-next";
+import { ElMessage } from "element-plus";
 
 const dataTimeline = ref([]);
 const page = ref(1);
-const loading = ref(false);
+// const loading = ref(false);
+const loadingPlue = ref(false);
 
 const scrollChange = () => {
-  console.log(123123123);
   page.value = page.value + 1;
-  loadCommits();
+  handleCreateGithub();
+};
+const handleCreateGithub = () => {
+  // loading.value = true;
+  getGithubCommitList({ page: page.value, pageSize: 10 }).then((resp) => {
+    console.log(resp);
+    dataTimeline.value = [...dataTimeline.value, ...resp.data.list];
+  });
 };
 
-dataTimeline.value = [{ from: "12312312123", title: "1", showDayAndMonth: true, message: "123" }];
-
 const loadCommits = () => {
-  // console.log(12312);
-  loading.value = true;
-  // Commits({ page: page.value })
-  //   .then(({ data }) => {
-  //     const line = data.map((element) => {
-  //       return {
-  //         from: formatTimeToStr(element.commit.author.date, "yyyy-MM-dd hh:mm:ss"),
-  //         title: element.commit.author.name,
-  //         showDayAndMonth: true,
-  //         message: element.commit.message,
-  //       };
-  //     });
-  //     dataTimeline.value = [...dataTimeline.value, ...line];
-  //     // console.log(line);
-  //   })
-  //   .finally(() => {
-  //     loading.value = false;
-  //   });
+  // loadingPlue.value = true;
+  Commits({ page: page.value }).then(({ data }) => {
+    const line = data.map((element) => {
+      return {
+        commit_time: formatTimeToStr(element.commit.author.date, "yyyy-MM-dd hh:mm:ss"),
+        author: element.commit.author.name,
+        message: element.commit.message,
+      };
+    });
+    createCommit(line).then((resp) => {
+      if (resp.code === 0) {
+        ElMessage({
+          type: "success",
+          message: "更新成功!",
+        });
+      }
+    });
+  });
 };
 
 onMounted(() => {
-  loadCommits();
+  handleCreateGithub();
 });
 </script>
 
@@ -89,11 +95,11 @@ onMounted(() => {
 .infinite-list .infinite-list-item {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 50px;
-  background: var(--el-color-primary-light-9);
-  margin: 10px;
-  color: var(--el-color-primary);
+  justify-content: flex-start;
+  height: 40px;
+  background: #fff;
+  margin: 2px;
+  color: #111;
 }
 .infinite-list .infinite-list-item + .list-item {
   margin-top: 10px;

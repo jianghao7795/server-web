@@ -18,6 +18,7 @@ type ApiGroup struct {
 	DictionaryDetailApi
 	AuthorityBtnApi
 	UserProblem
+	SystemGithubApi
 }
 
 var (

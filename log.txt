@@ -1,547 +1,548 @@
-feat: 图片增加是否为裁剪图
-f105bec feat: 图片增加是否为裁剪图
-c5e22ec feat: 设置个人信息裁剪头像图片
-ba89b22 feat: 取消设置头像设置后el-drawer 设置true
-2214d0e feat: 后台截图成功
-126d62c feat: 后台截图成功
-92f2a50 fix: 更新环境配置
-b22353b feat: 生产doc
-568c234 fix: 修复推拽错误
-2f56794 fix: 修复server 错误返回
-817c7c2 fix: 修复图片的下载
-2f0b21f fix: 修复图片的下载
-713fd48 feat: 修复删除文件的 delete
-5f3c47c feat: 修复删除文件的 delete
-e7bca36 feat: 修复删除文件的 delete
-1f1432d feat: 更新token 和 验证规则
-d07bc5d fix: 更新comment model
-7a74ee3 fix: 配置环境
-bd8174c feat: 更新sql
-40fcc18 feat: 裁剪图片
-7cab6bb fix: 图片裁剪
-0335c56 fix: 修复移动端的报错
-cf23947 fix: 移动端
-b12454a fix: 移动端
-803e9c2 feat: 增加中间件 限制同时访问的用户数 避免服务器压力过大
-e059806 feat: 增加中间件 限制同时访问的用户数 避免服务器压力过大
-f02c0a5 feat: moblie 增加makefile
-ebb13e0 feat: server 开启debug
-790b474 fix: 修复前台前端和后端的评论
-c1b8e0d feat: 新增移动模型
-ddfa0d4 Merge branch 'main' of github.com:JiangHaoCode/server-web
-4703434 fix: server.sql
-d6f62bc fix: 修复后台的评论
-4e55827 fix: 修复server中间件jwt报错
-1281278 fix: 更改article的user为系统user
-3e4336b feat: 设置development config 文件
-77a2dda feat: 升级vite 和 重启服务 和任务的考开始启动
-2bfdede fix: 底部的更新
-96d9b5f feat: 解决引入遇到ElLoading、ElMessage、ElNotification、ElMessageBox样式丢失的问题
-ab17f40 fix: 登录增加loading
-ccf8cb5 feat: frontend token值得有无
-91303e3 feat: frontend token值得有无
-9d49369 fix: 去除GinRecovery
-d55fa96 fix: update config.docker.yaml
-07558b2 fix: sql
-2819c21 fix: 修复评论名字的显示错误
-9c04905 feat: 修改nginx配置
-c38e713 feat: 配置docker
-c0584da feat: 重新生成swagger
-8981c83 fix: 修复图片加载错误
-d66b9a3 feat: backend server端 token改为 Authorization
-037518f feat: en to zh
-f65910f feat: 更新 server config.yaml
-5f25163 feat: 更新 server dockerfile
-e517f79 feat: 更新dockerfile
-353c1ad feat: 修复评论的姓名和评论
-5c9758b feat: slot 动态插口
-4883e03 feat: frontend about 使用slot
-3564492 feat: frontend about 使用slot
-6547a0b feat: backend vue slot
-e4984f8 feat: backend更新包
-5d3e676 feat: 更新favicon
-52d22cb fix: 修复变异解析（新）的初始化
-8bb0e78 Merge branch 'master' of github.com:JiangHaoCode/server-web
-ed364f3 feat: server 删除editorconfig backend frontend格式化
-ff12bdd feat: 更新评论光标的插入
-2cb8ade feat: 更新评论光标的插入
-d4f45e6 feat: updateUser 增加中间件
-89ff2e1 feat: frontend 更改个人信息 server端验证
-22bf184 feat: frontend 更改个人信息
-0fe914b feat: frontend 个人信息
-ceb9352 feat: frontend个人信息
-7cac2e3 feat: frontend 使用useosTheme 获得浏览器主题
-66d1ea8 feat: 修改ts对应的类型
-4df4f47 feat: 修改.gitignore
-3266255 feat: 修改.gitignore
-53a7e4a feat: upload file
-377a31e feat: 修改.gitignore
-cc83193 feat: 修改.gitignore
-cdd9eea feat: 修改.gitignore
-2259c28 feat: 格式化和适应goland
-5c0502d feat: frontend重置密码
-e2b6bdb feat: frontend重置密码
-43cc1b8 feat: 重置密码
-0061367 fix: 修复评论必须登录的提示
-a0f77d7 feat: frontend 个人信息修改
-872b3bf feat: 更新上传列表的图片加载
-3645d7e feat: 更新backend的背景图
-4684ab9 feat: 更新文章作者
-f31863e feat: frontend新增个人信息
-118b3d7 fix: 修复文章评论不方便
-abc108a fix: 更新数据库的配置
-e18925a feat: 增加数据库表
-b8f9f35 fix: 修复后台的表单生成器的 页面访问 正常加载
-0db2d49 fix: 修复后台的表单生成器的 页面访问 正常加载
-18d62a0 feat: 后台个人信息的图片加载和前台的修改个人信息和密码（frontend）
-1a142ad fix: 修复上传头像 不显示上传图片
-b364dd9 feat: sql
-98ba493 feat: frontend 注册图片上传
-1d22f77 feat: 后台制作动画
-c3b751b feat: 更改中间的operation frontend位置
-adcd1d6 feat: sql
-b776000 fix: 修复登录使用中间件
-12a3587 feat: 前台增加操作记录
-a82ea14 feat: 默认frontend图片
-dba018a Create LICENSE
-24fa0be feat: frontend登录默认头像 后台默认图片
-3aff3c6 feat: frontend 去掉alova
-5b348c0 feat: frontend注册 server注册修改规则
-b788e4d feat: server端的注册
-db4ffc7 feat: 更新frontend title
-e2fa697 feat: 调整提交显示
-7193d83 feat: backend用户的搜索和frontend回车提交
-0a9c56d feat: 上传文章增加文件名后缀 避免重复
-3e1f65e feat: 修复backend tag type错误
-e62695f feat: frontend token失效删除本地token
-67731dc feat: 增加前台的token验证
-f53056d feat: 评论增加表情回答
-10d2022 feat: frontend评论的头像
-33ab134 feat: frontend 登录显示头像
-dd87148 feat: 更新request
-84ff375 feat: 修复图片的查看和评论的user一起返回
-2c67f15 feat: 增加请求包alova
-dae9e50 feat: 更改前缀frontend -> api
-3e9c58a feat: 更新frontend评论 表情的显示
-2210fa6 feat: 更新frontend server 的访问阅读量更新为事务更新
-75e56f8 fix: 修复文章的评价
-6c20f28 feat: 同一IP不同日期查看 视为阅读
-795bc1b feat: 更新sql
-4cf6e72 feat: 更新component.d.ts
-dbb8605 feat: 更改jwt 采用RegisteredClaims
-d6fd3ed feat: 更改jwt 采用RegisteredClaims
-a2ee45f feat: 增加阅读量和表table ip 修复router更新是tabs的颜色消失
-f9963a3 feat: 更新sql
-875c47c feat: 解决图片加载错误
-f405078 feat: 解决在部署 前后台的访问限制
-b94b5b6 feat: 更改前端访问后台域名
-9934d6f feat: frontend components.d.ts
-f0ee6ce feat: 更新更换背景图片
-937b7c1 feat: 关于我的设置
-6929634 feat: frontend 更新切换动画
-14ee9ec feat: frontend 更新切换动画
-6529add feat: frontend 关于我
-c7d3b75 feat: frontend keep-alive更改使得id的更新 文章的更新
-6fb2c1b feat: frontend 更新logout的图标
-bbde48e feat: 更新sql
-bba90a0 feat: frontend 首页的初始化和登录background的更换和设置
-cf4c090 feat: frontend 登录后初始化登录信息
-a885446 feat: frontend 登录和获取用户信息
-b76e517 feat: frontend 登录的 server端和前台端
-174c01a feat: server 端的frontend登录
-5aeef31 feat: 更新后台的前台图片显示
-05b4d77 feat: server 前台登录 生成Token
-9b94580 feat: backend server 更新用户的密码
-99bb079 feat: frontend登录页面
-af0223b feat: 更新sql
-f1e40d8 feat: 背景图片的获取更新条件
-7083d20 feat: 图片上传更改目录和增加上传图片的高度宽度 长宽比例
-1582b9d feat: 更新sql
-6ab6c81 feat: frontend 增加更换背景图和frontend的用户 backend 的前台用户管理
-4e05002 feat: frontend 增加更换背景图和frontend的用户 backend 的前台用户管理
-70b6f58 feat: 修复frontend主题 跟随着浏览器
-9585f43 feat: backend 前端用户 后台管理
-58f83d3 feat: backend user 后台管理前端
-80808f1 feat: backend user 后台管理 server
-2e7a569 feat: backend user 后台管理 server
-97904da feat: frontend 用户登录
-be41dfc feat: 查询评论id排序
-8c1ffa3 feat: 修复初次评论没有chrildren
-9ceb474 feat: 评论增加用户名
-730ecdb fix: backend 配置unplugin-vue-components 使用组件才加载 使编译后体积更小
-d160d1e fix: 修复h标签的字体颜色 不随主题改动而改动
-5065b1d feat: 更新评论的输入 提交
-52eb8b1 feat: 调整dark和line的切换字体颜色
-db60d42 feat: frontend 的评论
-2eb7d73 feat: 文章的评论
-411918b feat: frontend 的评论
-99491fe feat: 更新frontend reponse的typescript
-0e703ca feat: 文章的评论
-5fc6a5c feat: 更新评论搜索
-adb809d feat: frontend 评论
-06aeb6f feat: 增加frontend的ant-design-vue包
-964192c feat: 更新配置
-f0073fe Merge branch 'master' of github.com:JiangHaoCode/server-web
-8dad720 feat: 修复报错警告
-3055348 feat: 更新配置
-23c415e feat: 更新tsconfig jsconfig 适应编辑器
-3c90eb6 feat: 更新后台vite.config
-98a9bd4 feat: 菜单的按钮删除功能
-a016507 feat: frontend article使用pinia
-25b8a18 feat: frontend article使用pinia
-f4c2e81 feat: frontend article使用pinia
-90f8353 feat: 修改backend vite 配置 编译时的警告
-ed70ee1 feat: 后端去掉server对前台对user的请求， 修复前台前端的search article的切换路由对search的请求
-325b2dd feat: 更新frontend vite配置
-62709f2 feat: 解决后台加载图片失败的问题
-f3c1c19 fix: 修复docker部署 和backend主题切换的菜单颜色的bug
-24e16b6 fix: 修复docker部署 和backend主题切换的菜单颜色的bug
-b11e769 feat: 修改nginx 配置
-432049c feat: 更新frontend的标签
-f7ee755 feat: 更新frontend的标签
-5ea3c3d feat: 更新sql, 重命名web to backend
-64a59ae feat: 更新sql
-8fae03f feat: 文章detail随着theme的变更而变更
-2a75313 feat: frontend 增加字体的变色
-1c1ef3b feat: frontend 增加主题变更
-95a6bc1 feat: frontend 多对多关联查询
-e3c6bf8 Merge pull request #1 from JiangHaoCode/dependabot/go_modules/server/github.com/gin-gonic/gin-1.7.7
-4ca91c4 feat: 前台的前端的 typescript API去掉
-7228dbf feat: 更改错误显示
-6529ebc feat: frontend 的调整和request的修复
-175c13e feat: frontend 的调整和request的修复
-bd689b0 feat: frontend 读取env配置信息
-9af7dde build(deps): bump github.com/gin-gonic/gin in /server
-4e7490b feat: server更新加载配置文件
-c25079e feat: frontend更新配置
-decdf3e feat: frontend 监控搜索
-ad6e0b2 feat: frontend 请求报错显示
-130a64e feat: 更新设置首页信息
-192a98b feat: 前台更换tag的颜色
-de0a66c feat: 新增搜索页面
-3205ade feat: 新增搜索页面
-27e5948 feat: 新增搜索页 和标签跳转页面
-106e5e0 feat: 文章页面查看详情
-2d806b3 feat: 修改footer的css
-c258d18 feat: 修改footer的css
-428b081 feat: 前台的加载条和文章详情
-d7d0640 feat: 更新frontend的title
-cfcec5a feat: update vite.config
-57fbbf4 feat: 前台增加公共函数
-12da26a feat: 前台的文章页面
-e36ea85 feat: 前台标签
-9e6d9ef feat: 前台标签
-56f9b5d feat: 修复配置报错
-94699f6 feat: 删除报错文件
-031e19e feat: 生成swagger
-a3d2a39 feat: 注释log
-ef0ebb3 feat: 前台运行docker
-a5a8d38 feat: 更新 init sql
-d1df9c4 feat: 更新docker-compose
-fe7b204 feat: 去掉 css命名的前缀
-35c0357 feat: 去掉 css命名的前缀
-b45d061 feat: 去掉 css命名的前缀
-f989c1d feat: 去掉 css命名的前缀
-bce221d feat: 更新命名
-963c374 feat: 获取流量
-cfe5d20 feat: 更新修改 get post put delete
-eb21842 feat: 更新文章的写入的bug 更新jwt配置
-bf43945 feat: 更新server go 读写警告，导出发生错误的处理
-622abf5 feat: 修复加载慢问题
-ceae722 fix: update sql
-f9e6193 feat: 前台关于我
-9fbfa9b fix: 配置host 0.0.0.0
-ae888c2 fix: 修复api管理的查询 使用bindquery
-5c771d5 feat: 导出SQL
-541cc03 feat: 修复基本信息的css
-f8c9809 feat: 修复ts错误
-320a53d feat: 基本信息关联用户
-589eb7a feat: 更新前台的api router 分组 PublicGroup
-79bb3dc feat: 修复article的取消
-e563d4a feat: 用户的搜索
-53152e5 feat: 回车触发搜索
-e9c7231 feat: add component ProTable
-dac3308 fix: 去掉 更新api 更新casbin
-337229a feat: 新增Table模型
-97c9060 feat: 更新文章的接口
-9bcc3f6 fix: 修复标签的更名
-a9bb24d fix: 修复标签的更名
-518a9a2 fix: 更新github commit
-f496e92 fix: 更新github commit
-76003cd fix: 更新SQL
-8283106 fix: 更新SQL
-5584fe3 fix: 更新tag
-f612902 feat: 修复casbin拦截
-1fc69e4 fix: 删除多余的sql
-a88df4c feat: 重新加载配置文件和重启服务
-a380d02 feat: 系统配置增加缓存时间
-be8e005 feat: 设置redis 缓存的时间
-97815f4 feat: 设置redis 缓存的时间
-66820bb fix: 更新图片加载
-541ddc0 feat: 更新菜单的css
-0e0d022 feat: 更新是否是否初始化
-e69032c feat: 更新组件的引用 占用cpu降低
-0de71c0 Merge branch 'main' of github.com:JiangHaoCode/server-web into main
-618f32f feat: 更新组件的引用 占用cpu降低
-11bd7ef Merge branch 'main' of github.com:JiangHaoCode/server-web
-3a8a6ff feat: 更新element-plus vite
-28ab9d7 feat: 任务定时执行和 tag redis cache
-a06dfcf feat: 增加cache time 的配置
-0cb577d feat: 更新 go mod
-a97b70d Merge branch 'main' of github.com:JiangHaoCode/server-web into main
-7598a74 feat: 前台的article redis 缓存
-ecf63fb fix: 更新字典
-2684319 fix: 更新permission
-e98e614 feat: 修改db logMode 的选择
-d9c6a9b feat: 增加string to number func
-f53574d feat: delete deployment
-8b0c2de feat: delete sql
-602047e feat: delete sql
-6eb2fa6 feat: 修复getMenu 无权限的 无限循环
-66a482d feat: 更新菜单 当缩略是有提示 修改css
-9835739 feat: 更新菜单 当缩略是有提示 修改css
-89c608a feat: 更新菜单 当缩略是有提示
-14c36cf feat: 前端权限设置
-5951b80 feat: 开启任务
-97fd0ee feat: 新增SQL文件
-9047146 feat: 任务
-b0c6ae9 feat: 增加任务和新的任务执行 前端更改任务
-93ae0cb feat: 更改任务和配置
-6a8f747 Merge branch 'main' of github.com:JiangHaoCode/server-web into main
-ec75204 feat: get button authority list 改为 get
-6cc3b06 feat: 更换动态
-73d7f21 feat: 增加loading和更新 gorm
-01a0ec2 feat: 配置redis
-4460028 Merge branch 'main' of github.com:JiangHaoCode/server-web into main
-f7a8caa feat: get button authority list 改为 get
-4505ad9 feat: get button authority list 改为 get
-f502c6a feat: 更新vue
-ee119c7 feat: 删除文件的 错误返回
-48f2b10 feat: 增加用户的选择的动态体验 更新upload上传图片的返回值
-b706623 feat: 去掉赞
-bf502bf feat: 更新server model comment children gorm many2many foreignKey:ParentId
-c779d83 fix：增加makefile
-e6456cb fix：增加makefile 更新froentend devolpment 编译
-3a7d906 fix: update makefile
-7386965 update index.html
-15d853d feat: 设置权限 角色 api 增加搜索项
-a08d0ba feat: 设置权限 角色 api 增加搜索项
-b535e78 feat: 更新角色菜单 的有 children 禁止选择首页设置
-6d9d9c8 feat: 更新swagger
-0ff460b feat: 更新swagger
-7d0ed44 fix: 修改结构体 增加form
-af2e3b7 fix: 按键权限
-629aa47 feat: 修复API 菜单 casbin的互联
-f74ab43 feat: 修复casbin和角色和菜单的设置
-c99a1d2 feat: 恢复casbin
-d8e62c9 feat: 导出SQL
-21fa437 feat: 前台文章的展示
-8091b98 feat: 前台文章的展示
-4b03c01 feat: 前台文章的展示
-7cb4f62 feat: 前台的axios 请求
-877a910 feat: 更新布局
-46ebee6 feat: 更换文件名
-b0f5215 feat: get 文章详情
-9c1e2e5 feat: 更新tag的查询 改成 id查询
-d86f4d6 feat: 前台的 tag 和 article
-ec43251 feat: 更新标签对文章的搜索
-6d0f3c9 feat: 修改标签和文章的关联 many2many
-36f0ad6 feat: 前台雏形
-a550974 Merge branch 'main' of github.com:JiangHaoCode/server-web into main
-6476943 feat: 路由的排序
-a592a6b feat: 更新frontend
-468275f fix: 提交增加loading
-19d6e81 fix: 修复vue 警告
-721f90b feat: 修改评论为Tree状
-020142a feat: 评论的文章作者
-81d75d7 fix: 更新点赞的server 执行sql 语句
-8951503 fix: 修改css
-8d93ed7 fix: 修复评论的编辑
-b2ae6e2 feat: 点赞的关联表和gorm 执行原生SQL
-523476e fix: 设置 div 点击禁止
-19e6a60 feat: 设置时区
-773d857 feat: 更换点赞css
-44e4eeb feat: 引入i18n
-79f2635 fix: vue console
-0b65db4 fix: 文件的获取列表使用 get
-385f691 feat: web增加 Makefile
-11e0c63 feat: 更新基本信息没有的server 返回
-d74b345 feat: 搜索的上下移动和 回车触发事件
-de6b09c feat: 搜索的上下移动和 回车触发事件
-2358545 fix: 修改搜索的图标和样式css
-f5b08cc fix: 修改搜索的图标和样式css
-f82f999 fix: 修改搜索的图标和样式css
-605bb02 fix: 重新定义搜索项
-a4ef044 feat: 增加点击图标跳转首页
-d0a3021 feat: form表单规则
-1ba4210 feat: 基本信息增加规则
-8ca2cfb feat: sql
-77a4086 feat: 去掉组件v-viewer
-5c86905 feat: web基本信息完成
-e113e8f feat: server 基本信息 upload file
-d740da2 feat: server 修复创建和更新基本信息bug
-b279e7f feat: server 增加基本信息
-a3ae08c feat: 列表点赞完成
-8fbd3a3 fix: 修改评论文章搜索
-f4308b5 fix: 更新一些获取信息的 POST改为GET
-a089d8b feat: 拖拽位置兑换
-c82c96e feat: 更新拖拽实现元素位置切换
-3e164b4 feat: 增加包animate和vuedraggable
-b605bf6 feat: 更新摇一摇
-91a54fa feat: 增加包animate和vuedraggable
-5e976aa feat: 导出sql
-49229ca feat: css3的左右摆动
-71a10e4 feat: gorm 增加是否开启debug
-453fbbc feat: 点赞的初始化
-e23c19c merge main
-c9be744 fix: 更新配置
-d14c578 feat: 修复json
-ebb81e2 feat: 修复警告
-f04f44d feat: v-mode to mode-value
-811dd90 feat: json 改回encoding/json
-cf7a0b4 feat: 修改文章验证
-6393732 feat: 完成密保设置
-858fbe4 feat: crlf to  lf
-8119e30 fix: crlf -> lf
-cafd201 feat: crlf to  lf
-22248ac feat: update name
-19d3395 feat: change sql
-42456c4 feat: 完成密保问题
-8492e55 feat: 生成sql
-e5fef18 feat: 增加密保问题和验证密保问题
-c9a0ca3 feat: 更新包json数据
-79262e5 feat: 获得密保问题
-cf77915 feat: 定义数据库密保问题和定义好Model
-a5d6bef feat: history 增加 loading
-c7bff7a feat: 增加包 windicss
-2bf726b fix: 更新刷新页面
-ac65fb2 fix: 更新layout
-c10f8a2 fix: swiper的自动autoplay
-e8c34fc fix: 更新mysql的查询 和swiper的自动autoplay
-5c89cdb fix: form表单的验证规则
-672bac5 fix: 还原ELmessage的引入
-1b394ca fix: output sql
-f490846 Merge branch 'main' of github.com:JiangHaoCode/server-web into main
-3de8a47 fix: update vite.config
-8dfad94 fix: 修复变量admin 定义
-75c3ca8 feat: keep-alive component增加key
-38bb1a9 fix: js 去掉typescript的检查
-406da8f fix: 重新加载 增加进度条
-f8cf3a4 fix: 自动引入 element plus 的组件
-60674a8 fix: 更新进度条 修复加载慢的问题
-934a468 fix: 更新进度条 修复加载慢的问题
-8bf69bf fix: 邮件的发送
-d60f1a2 fix: 引入css
-d90d998 fix: 更新评论的查询和element plus 自动导入
-767c10b fix: 更新评论的查询和element plus 自动导入
-e5cbf76 fix: 评论完成
-0d3a239 fix: 评论的模板
-f0c64c4 feat: update sql
-c17c5bf feat: 增加图片的查看 和 组件
-4d1f98d feat: 增加图片的查看 和 组件
-3bdde6c fix: 更新关于我
-0f44cb7 fix: 更新关于我
-378befa fix: 增加loading
-e64bc21 fix: 更新关于我
-7c6ea91 fix: 重新服务器信息
-b739c46 feat: server article 列表
-ac5f2a1 feat: server article 列表
-ed8f009 feat: server tags 列表
-f72c193 fix: 文章标签的搜索
-7455d8a fix: 更新文章的查找
-b55636d fix: 增加标签的loading
-8b77ca0 fix: 更新markdown的图片上传
-0a047da fix: 图片的上传
-721df0e fix: 调整tabs 的上和下
-730f888 feat: 增加包 swiper
-24f22a4 fix: 修改css适合手机端
-6544beb fix: github的接口
-be567ad fix: 删除github 编译
-3809069 fix: 重新格式化 web
-808238e fix: 修改vite 配置
-bed061d fix: 修改vite 配置
-7e666b3 fix: frontend 配置 axios
-4a2cc7f fix: 导出数据
-f01d06d fix: 首页
-1890fae feat: 增加简单的hooks
-eb80bb2 feat: add frontend Naive-ui
-06ac39a fix: table 加载中
-b168f79 fix: 重新加载延迟
-f2b068d fix: 修复gpls报错
-ff19581 fix: 重新加载
-574dfc3 feat: 重新加载
-29ea7d0 feat: 新增加载条
-9986032 fix: 修复点击标签不跳转的bug
-3ade978 fix: markdown的值 必须为ref
-e4ebcca fix: 文章的新增 和编辑
-71872e7 Merge branch 'main' of github.com:JiangHaoCode/server-web into main
-5fa2385 fix: 更新文章
-ea0e032 change package
-49bf33a update package.json
-838ff3e fix: 文章的标签 article server 服务
-d2e2d8c fix: 修复分页的css 和 创建article表
-08c8176 fix: update css
-f3f89d4 fix: update css
-dd74b84 fix: update css
-e164e6f fix: update css
-d104803 fix: pnpm
-0f00643 fix: 修改token过期时间 和缓存时间
-6c486d6 fix: 不渲染的bug 和 element-plus 的警告
-4302f9d fix: bug修改升级 vite
-1fddfad feat: 导出sql数据
-85464c0 fix: vite 升级
-41c4eb3 fix: vue slot
-1fd9cd6 fix: 标签更新报错
-a617f03 fix: 标签更新状态
-45da85f fix: 删除使用组件popconfirm
-4150fd3 fix: 设置工作时间
-3875d8a fix: update tab order by id
-8a64d75 fix: 更换logo
-59a2ce1 fix: go版本的适配
-dcd2e7d fix: 更新标签的状态选择
-cf174ee fix: 更新icon
-df20eef fix: 实现动态的 开启和关闭菜单的css
-790517e fix: 实现动态的 开启和关闭菜单的css
-d353a48 fix: 实现动态的 开启和关闭菜单的css
-4e2a140 fixed: 去掉cabash
-b45857c fix: 导出sql
-30f1da7 fix: update api管理
-d50699b fix: 修改标签
-52e8bec fix: 修改标签
-e170a81 fix: change SQL
-c9864a0 fix: 修复tab查询
-f244637 fix: 增加api 和 view
-299612f fix: 生成代码
-d815275 fix: 更新表单生成器
-fac7254 fix: 模块api排序
-d206645 fix: web
-7fb0aa7 fix: uploda file change gva.sql
-4dc1276 fix: 增加sql
-7d3a267 fix: golang test api_test
-602e40e fix: 更新初始化的数据
-cda80c6 fix: 新增hooks request table data
-2185271 fix: captcha update to get
-a291e50 fix: web format
-6364db7 fix: 配置流程和客户列表
-579ea5b fix: 完成客户的查询
-f4ae997 fix: 完成客户的查询
-f96b1d5 fix: 修改初始化的warning 错误
-64abce4 fix: 修复断点上传的权限不足
-bdde831 fix: 修复warning警告
-e3ce17f fix: 更新配置
-6ddf501 更新api权限
-042db01 更新api
-580623c fix: 更修复 router的警告
-53f1952 fix: 增加拖拽组件
-ae7ddeb fix: 初始化的api接口的请求方式的更新
-69286c3 fix: 去掉Err 错误书写
-4798234 fix: 去掉初始化
-7012f4e fix: 去掉初始化
-b7dc0a3 fix: 修改日志
-82fcbb7 fix: 更新首页
-d26c88d fix: delete warning
-963036d fix: vue3 slot
-e69f32e fix: vue to jsx
-17ddade fix: ignore
-76ff366 fix: delete tmp
-e15b632 fix: init
+('e15b632 fix: init',
+('76ff366 fix: delete tmp',
+('17ddade fix: ignore',
+('e69f32e fix: vue to jsx',
+('963036d fix: vue3 slot',
+('d26c88d fix: delete warning',
+('82fcbb7 fix: 更新首页',
+('b7dc0a3 fix: 修改日志',
+('7012f4e fix: 去掉初始化',
+('4798234 fix: 去掉初始化',
+('69286c3 fix: 去掉Err 错误书写',
+('ae7ddeb fix: 初始化的api接口的请求方式的更新',
+('53f1952 fix: 增加拖拽组件',
+('580623c fix: 更修复 router的警告',
+('042db01 更新api',
+('6ddf501 更新api权限',
+('e3ce17f fix: 更新配置',
+('bdde831 fix: 修复warning警告',
+('64abce4 fix: 修复断点上传的权限不足',
+('f96b1d5 fix: 修改初始化的warning 错误',
+('f4ae997 fix: 完成客户的查询',
+('579ea5b fix: 完成客户的查询',
+('6364db7 fix: 配置流程和客户列表',
+('a291e50 fix: web format',
+('2185271 fix: captcha update to get',
+('cda80c6 fix: 新增hooks request table data',
+('602e40e fix: 更新初始化的数据',
+('7d3a267 fix: golang test api_test',
+('4dc1276 fix: 增加sql',
+('7fb0aa7 fix: uploda file change gva.sql',
+('d206645 fix: web',
+('fac7254 fix: 模块api排序',
+('d815275 fix: 更新表单生成器',
+('299612f fix: 生成代码',
+('f244637 fix: 增加api 和 view',
+('c9864a0 fix: 修复tab查询',
+('e170a81 fix: change SQL',
+('52e8bec fix: 修改标签',
+('d50699b fix: 修改标签',
+('30f1da7 fix: update api管理',
+('b45857c fix: 导出sql',
+('4e2a140 fixed: 去掉cabash',
+('d353a48 fix: 实现动态的 开启和关闭菜单的css',
+('790517e fix: 实现动态的 开启和关闭菜单的css',
+('df20eef fix: 实现动态的 开启和关闭菜单的css',
+('cf174ee fix: 更新icon',
+('dcd2e7d fix: 更新标签的状态选择',
+('59a2ce1 fix: go版本的适配',
+('8a64d75 fix: 更换logo',
+('3875d8a fix: update tab order by id',
+('4150fd3 fix: 设置工作时间',
+('45da85f fix: 删除使用组件popconfirm',
+('a617f03 fix: 标签更新状态',
+('1fd9cd6 fix: 标签更新报错',
+('41c4eb3 fix: vue slot',
+('85464c0 fix: vite 升级',
+('1fddfad feat: 导出sql数据',
+('4302f9d fix: bug修改升级 vite',
+('6c486d6 fix: 不渲染的bug 和 element-plus 的警告',
+('0f00643 fix: 修改token过期时间 和缓存时间',
+('d104803 fix: pnpm',
+('e164e6f fix: update css',
+('dd74b84 fix: update css',
+('f3f89d4 fix: update css',
+('08c8176 fix: update css',
+('d2e2d8c fix: 修复分页的css 和 创建article表',
+('838ff3e fix: 文章的标签 article server 服务',
+('49bf33a update package.json',
+('ea0e032 change package',
+('5fa2385 fix: 更新文章',
+('71872e7 Merge branch 'main' of github.com:JiangHaoCode/server-web into main',
+('e4ebcca fix: 文章的新增 和编辑',
+('3ade978 fix: markdown的值 必须为ref',
+('9986032 fix: 修复点击标签不跳转的bug',
+('29ea7d0 feat: 新增加载条',
+('574dfc3 feat: 重新加载',
+('ff19581 fix: 重新加载',
+('f2b068d fix: 修复gpls报错',
+('b168f79 fix: 重新加载延迟',
+('06ac39a fix: table 加载中',
+('eb80bb2 feat: add frontend Naive-ui',
+('1890fae feat: 增加简单的hooks',
+('f01d06d fix: 首页',
+('4a2cc7f fix: 导出数据',
+('7e666b3 fix: frontend 配置 axios',
+('bed061d fix: 修改vite 配置',
+('808238e fix: 修改vite 配置',
+('3809069 fix: 重新格式化 web',
+('be567ad fix: 删除github 编译',
+('6544beb fix: github的接口',
+('24f22a4 fix: 修改css适合手机端',
+('730f888 feat: 增加包 swiper',
+('721df0e fix: 调整tabs 的上和下',
+('0a047da fix: 图片的上传',
+('8b77ca0 fix: 更新markdown的图片上传',
+('b55636d fix: 增加标签的loading',
+('7455d8a fix: 更新文章的查找',
+('f72c193 fix: 文章标签的搜索',
+('ed8f009 feat: server tags 列表',
+('ac5f2a1 feat: server article 列表',
+('b739c46 feat: server article 列表',
+('7c6ea91 fix: 重新服务器信息',
+('e64bc21 fix: 更新关于我',
+('378befa fix: 增加loading',
+('0f44cb7 fix: 更新关于我',
+('3bdde6c fix: 更新关于我',
+('4d1f98d feat: 增加图片的查看 和 组件',
+('c17c5bf feat: 增加图片的查看 和 组件',
+('f0c64c4 feat: update sql',
+('0d3a239 fix: 评论的模板',
+('e5cbf76 fix: 评论完成',
+('767c10b fix: 更新评论的查询和element plus 自动导入',
+('d90d998 fix: 更新评论的查询和element plus 自动导入',
+('d60f1a2 fix: 引入css',
+('8bf69bf fix: 邮件的发送',
+('934a468 fix: 更新进度条 修复加载慢的问题',
+('60674a8 fix: 更新进度条 修复加载慢的问题',
+('f8cf3a4 fix: 自动引入 element plus 的组件',
+('406da8f fix: 重新加载 增加进度条',
+('38bb1a9 fix: js 去掉typescript的检查',
+('75c3ca8 feat: keep-alive component增加key',
+('8dfad94 fix: 修复变量admin 定义',
+('3de8a47 fix: update vite.config',
+('f490846 Merge branch 'main' of github.com:JiangHaoCode/server-web into main',
+('1b394ca fix: output sql',
+('672bac5 fix: 还原ELmessage的引入',
+('5c89cdb fix: form表单的验证规则',
+('e8c34fc fix: 更新mysql的查询 和swiper的自动autoplay',
+('c10f8a2 fix: swiper的自动autoplay',
+('ac65fb2 fix: 更新layout',
+('2bf726b fix: 更新刷新页面',
+('c7bff7a feat: 增加包 windicss',
+('a5d6bef feat: history 增加 loading',
+('cf77915 feat: 定义数据库密保问题和定义好Model',
+('79262e5 feat: 获得密保问题',
+('c9a0ca3 feat: 更新包json数据',
+('e5fef18 feat: 增加密保问题和验证密保问题',
+('8492e55 feat: 生成sql',
+('42456c4 feat: 完成密保问题',
+('19d3395 feat: change sql',
+('22248ac feat: update name',
+('cafd201 feat: crlf to  lf',
+('8119e30 fix: crlf -> lf',
+('858fbe4 feat: crlf to  lf',
+('6393732 feat: 完成密保设置',
+('cf7a0b4 feat: 修改文章验证',
+('811dd90 feat: json 改回encoding/json',
+('f04f44d feat: v-mode to mode-value',
+('ebb81e2 feat: 修复警告',
+('d14c578 feat: 修复json',
+('c9be744 fix: 更新配置',
+('e23c19c merge main',
+('453fbbc feat: 点赞的初始化',
+('71a10e4 feat: gorm 增加是否开启debug',
+('49229ca feat: css3的左右摆动',
+('5e976aa feat: 导出sql',
+('91a54fa feat: 增加包animate和vuedraggable',
+('b605bf6 feat: 更新摇一摇',
+('3e164b4 feat: 增加包animate和vuedraggable',
+('c82c96e feat: 更新拖拽实现元素位置切换',
+('a089d8b feat: 拖拽位置兑换',
+('f4308b5 fix: 更新一些获取信息的 POST改为GET',
+('8fbd3a3 fix: 修改评论文章搜索',
+('a3ae08c feat: 列表点赞完成',
+('b279e7f feat: server 增加基本信息',
+('d740da2 feat: server 修复创建和更新基本信息bug',
+('e113e8f feat: server 基本信息 upload file',
+('5c86905 feat: web基本信息完成',
+('77a4086 feat: 去掉组件v-viewer',
+('8ca2cfb feat: sql',
+('1ba4210 feat: 基本信息增加规则',
+('d0a3021 feat: form表单规则',
+('a4ef044 feat: 增加点击图标跳转首页',
+('605bb02 fix: 重新定义搜索项',
+('f82f999 fix: 修改搜索的图标和样式css',
+('f5b08cc fix: 修改搜索的图标和样式css',
+('2358545 fix: 修改搜索的图标和样式css',
+('de6b09c feat: 搜索的上下移动和 回车触发事件',
+('d74b345 feat: 搜索的上下移动和 回车触发事件',
+('11e0c63 feat: 更新基本信息没有的server 返回',
+('385f691 feat: web增加 Makefile',
+('0b65db4 fix: 文件的获取列表使用 get',
+('79f2635 fix: vue console',
+('44e4eeb feat: 引入i18n',
+('773d857 feat: 更换点赞css',
+('19e6a60 feat: 设置时区',
+('523476e fix: 设置 div 点击禁止',
+('b2ae6e2 feat: 点赞的关联表和gorm 执行原生SQL',
+('8d93ed7 fix: 修复评论的编辑',
+('8951503 fix: 修改css',
+('81d75d7 fix: 更新点赞的server 执行sql 语句',
+('020142a feat: 评论的文章作者',
+('721f90b feat: 修改评论为Tree状',
+('19d6e81 fix: 修复vue 警告',
+('468275f fix: 提交增加loading',
+('a592a6b feat: 更新frontend',
+('6476943 feat: 路由的排序',
+('a550974 Merge branch 'main' of github.com:JiangHaoCode/server-web into main',
+('36f0ad6 feat: 前台雏形',
+('6d0f3c9 feat: 修改标签和文章的关联 many2many',
+('ec43251 feat: 更新标签对文章的搜索',
+('d86f4d6 feat: 前台的 tag 和 article',
+('9c1e2e5 feat: 更新tag的查询 改成 id查询',
+('b0f5215 feat: get 文章详情',
+('46ebee6 feat: 更换文件名',
+('877a910 feat: 更新布局',
+('7cb4f62 feat: 前台的axios 请求',
+('4b03c01 feat: 前台文章的展示',
+('8091b98 feat: 前台文章的展示',
+('21fa437 feat: 前台文章的展示',
+('d8e62c9 feat: 导出SQL',
+('c99a1d2 feat: 恢复casbin',
+('f74ab43 feat: 修复casbin和角色和菜单的设置',
+('629aa47 feat: 修复API 菜单 casbin的互联',
+('af2e3b7 fix: 按键权限',
+('7d0ed44 fix: 修改结构体 增加form',
+('0ff460b feat: 更新swagger',
+('6d9d9c8 feat: 更新swagger',
+('b535e78 feat: 更新角色菜单 的有 children 禁止选择首页设置',
+('a08d0ba feat: 设置权限 角色 api 增加搜索项',
+('15d853d feat: 设置权限 角色 api 增加搜索项',
+('7386965 update index.html',
+('3a7d906 fix: update makefile',
+('e6456cb fix：增加makefile 更新froentend devolpment 编译',
+('c779d83 fix：增加makefile',
+('bf502bf feat: 更新server model comment children gorm many2many foreignKey:ParentId',
+('b706623 feat: 去掉赞',
+('48f2b10 feat: 增加用户的选择的动态体验 更新upload上传图片的返回值',
+('ee119c7 feat: 删除文件的 错误返回',
+('f502c6a feat: 更新vue',
+('4505ad9 feat: get button authority list 改为 get',
+('f7a8caa feat: get button authority list 改为 get',
+('4460028 Merge branch 'main' of github.com:JiangHaoCode/server-web into main',
+('01a0ec2 feat: 配置redis',
+('73d7f21 feat: 增加loading和更新 gorm',
+('6cc3b06 feat: 更换动态',
+('ec75204 feat: get button authority list 改为 get',
+('6a8f747 Merge branch 'main' of github.com:JiangHaoCode/server-web into main',
+('93ae0cb feat: 更改任务和配置',
+('b0c6ae9 feat: 增加任务和新的任务执行 前端更改任务',
+('9047146 feat: 任务',
+('97fd0ee feat: 新增SQL文件',
+('5951b80 feat: 开启任务',
+('14c36cf feat: 前端权限设置',
+('89c608a feat: 更新菜单 当缩略是有提示',
+('9835739 feat: 更新菜单 当缩略是有提示 修改css',
+('66a482d feat: 更新菜单 当缩略是有提示 修改css',
+('6eb2fa6 feat: 修复getMenu 无权限的 无限循环',
+('602047e feat: delete sql',
+('8b0c2de feat: delete sql',
+('f53574d feat: delete deployment',
+('d9c6a9b feat: 增加string to number func',
+('e98e614 feat: 修改db logMode 的选择',
+('2684319 fix: 更新permission',
+('ecf63fb fix: 更新字典',
+('7598a74 feat: 前台的article redis 缓存',
+('a97b70d Merge branch 'main' of github.com:JiangHaoCode/server-web into main',
+('0cb577d feat: 更新 go mod',
+('a06dfcf feat: 增加cache time 的配置',
+('28ab9d7 feat: 任务定时执行和 tag redis cache',
+('3a8a6ff feat: 更新element-plus vite',
+('11bd7ef Merge branch 'main' of github.com:JiangHaoCode/server-web',
+('618f32f feat: 更新组件的引用 占用cpu降低',
+('0de71c0 Merge branch 'main' of github.com:JiangHaoCode/server-web into main',
+('e69032c feat: 更新组件的引用 占用cpu降低',
+('0e0d022 feat: 更新是否是否初始化',
+('541ddc0 feat: 更新菜单的css',
+('66820bb fix: 更新图片加载',
+('97815f4 feat: 设置redis 缓存的时间',
+('be8e005 feat: 设置redis 缓存的时间',
+('a380d02 feat: 系统配置增加缓存时间',
+('a88df4c feat: 重新加载配置文件和重启服务',
+('1fc69e4 fix: 删除多余的sql',
+('f612902 feat: 修复casbin拦截',
+('5584fe3 fix: 更新tag',
+('8283106 fix: 更新SQL',
+('76003cd fix: 更新SQL',
+('f496e92 fix: 更新github commit',
+('518a9a2 fix: 更新github commit',
+('a9bb24d fix: 修复标签的更名',
+('9bcc3f6 fix: 修复标签的更名',
+('97c9060 feat: 更新文章的接口',
+('337229a feat: 新增Table模型',
+('dac3308 fix: 去掉 更新api 更新casbin',
+('e9c7231 feat: add component ProTable',
+('53152e5 feat: 回车触发搜索',
+('e563d4a feat: 用户的搜索',
+('79bb3dc feat: 修复article的取消',
+('589eb7a feat: 更新前台的api router 分组 PublicGroup',
+('320a53d feat: 基本信息关联用户',
+('f8c9809 feat: 修复ts错误',
+('541cc03 feat: 修复基本信息的css',
+('5c771d5 feat: 导出SQL',
+('ae888c2 fix: 修复api管理的查询 使用bindquery',
+('9fbfa9b fix: 配置host 0.0.0.0',
+('f9e6193 feat: 前台关于我',
+('ceae722 fix: update sql',
+('622abf5 feat: 修复加载慢问题',
+('bf43945 feat: 更新server go 读写警告，导出发生错误的处理',
+('eb21842 feat: 更新文章的写入的bug 更新jwt配置',
+('cfe5d20 feat: 更新修改 get post put delete',
+('963c374 feat: 获取流量',
+('bce221d feat: 更新命名',
+('f989c1d feat: 去掉 css命名的前缀',
+('b45d061 feat: 去掉 css命名的前缀',
+('35c0357 feat: 去掉 css命名的前缀',
+('fe7b204 feat: 去掉 css命名的前缀',
+('d1df9c4 feat: 更新docker-compose',
+('a5a8d38 feat: 更新 init sql',
+('ef0ebb3 feat: 前台运行docker',
+('a3d2a39 feat: 注释log',
+('031e19e feat: 生成swagger',
+('94699f6 feat: 删除报错文件',
+('56f9b5d feat: 修复配置报错',
+('9e6d9ef feat: 前台标签',
+('e36ea85 feat: 前台标签',
+('12da26a feat: 前台的文章页面',
+('57fbbf4 feat: 前台增加公共函数',
+('cfcec5a feat: update vite.config',
+('d7d0640 feat: 更新frontend的title',
+('428b081 feat: 前台的加载条和文章详情',
+('c258d18 feat: 修改footer的css',
+('2d806b3 feat: 修改footer的css',
+('106e5e0 feat: 文章页面查看详情',
+('27e5948 feat: 新增搜索页 和标签跳转页面',
+('3205ade feat: 新增搜索页面',
+('de0a66c feat: 新增搜索页面',
+('192a98b (tag: v0.0.1) feat: 前台更换tag的颜色',
+('130a64e (tag: v0.0.2) feat: 更新设置首页信息',
+('ad6e0b2 feat: frontend 请求报错显示',
+('decdf3e feat: frontend 监控搜索',
+('c25079e feat: frontend更新配置',
+('4e7490b feat: server更新加载配置文件',
+('9af7dde build(deps): bump github.com/gin-gonic/gin in /server',
+('bd689b0 feat: frontend 读取env配置信息',
+('175c13e feat: frontend 的调整和request的修复',
+('6529ebc feat: frontend 的调整和request的修复',
+('7228dbf feat: 更改错误显示',
+('4ca91c4 feat: 前台的前端的 typescript API去掉',
+('e3c6bf8 Merge pull request #1 from JiangHaoCode/dependabot/go_modules/server/github.com/gin-gonic/gin-1.7.7',
+('95a6bc1 feat: frontend 多对多关联查询',
+('1c1ef3b feat: frontend 增加主题变更',
+('2a75313 feat: frontend 增加字体的变色',
+('8fae03f feat: 文章detail随着theme的变更而变更',
+('64a59ae feat: 更新sql',
+('5ea3c3d feat: 更新sql, 重命名web to backend',
+('f7ee755 feat: 更新frontend的标签',
+('432049c feat: 更新frontend的标签',
+('b11e769 feat: 修改nginx 配置',
+('24e16b6 fix: 修复docker部署 和backend主题切换的菜单颜色的bug',
+('f3c1c19 fix: 修复docker部署 和backend主题切换的菜单颜色的bug',
+('62709f2 feat: 解决后台加载图片失败的问题',
+('325b2dd feat: 更新frontend vite配置',
+('ed70ee1 feat: 后端去掉server对前台对user的请求， 修复前台前端的search article的切换路由对search的请求',
+('90f8353 feat: 修改backend vite 配置 编译时的警告',
+('f4c2e81 feat: frontend article使用pinia',
+('25b8a18 feat: frontend article使用pinia',
+('a016507 feat: frontend article使用pinia',
+('98a9bd4 feat: 菜单的按钮删除功能',
+('3c90eb6 feat: 更新后台vite.config',
+('23c415e feat: 更新tsconfig jsconfig 适应编辑器',
+('3055348 feat: 更新配置',
+('8dad720 feat: 修复报错警告',
+('f0073fe Merge branch 'master' of github.com:JiangHaoCode/server-web',
+('964192c feat: 更新配置',
+('06aeb6f feat: 增加frontend的ant-design-vue包',
+('adb809d feat: frontend 评论',
+('5fc6a5c feat: 更新评论搜索',
+('0e703ca feat: 文章的评论',
+('99491fe feat: 更新frontend reponse的typescript',
+('411918b feat: frontend 的评论',
+('2eb7d73 feat: 文章的评论',
+('db60d42 feat: frontend 的评论',
+('52eb8b1 feat: 调整dark和line的切换字体颜色',
+('5065b1d feat: 更新评论的输入 提交',
+('d160d1e fix: 修复h标签的字体颜色 不随主题改动而改动',
+('730ecdb fix: backend 配置unplugin-vue-components 使用组件才加载 使编译后体积更小',
+('9ceb474 feat: 评论增加用户名',
+('8c1ffa3 feat: 修复初次评论没有chrildren',
+('be41dfc feat: 查询评论id排序',
+('97904da feat: frontend 用户登录',
+('2e7a569 feat: backend user 后台管理 server',
+('80808f1 feat: backend user 后台管理 server',
+('58f83d3 feat: backend user 后台管理前端',
+('9585f43 feat: backend 前端用户 后台管理',
+('70b6f58 feat: 修复frontend主题 跟随着浏览器',
+('4e05002 feat: frontend 增加更换背景图和frontend的用户 backend 的前台用户管理',
+('6ab6c81 feat: frontend 增加更换背景图和frontend的用户 backend 的前台用户管理',
+('1582b9d feat: 更新sql',
+('7083d20 feat: 图片上传更改目录和增加上传图片的高度宽度 长宽比例',
+('f1e40d8 feat: 背景图片的获取更新条件',
+('af0223b feat: 更新sql',
+('99bb079 feat: frontend登录页面',
+('9b94580 feat: backend server 更新用户的密码',
+('05b4d77 feat: server 前台登录 生成Token',
+('5aeef31 feat: 更新后台的前台图片显示',
+('174c01a feat: server 端的frontend登录',
+('b76e517 feat: frontend 登录的 server端和前台端',
+('a885446 feat: frontend 登录和获取用户信息',
+('cf4c090 feat: frontend 登录后初始化登录信息',
+('bba90a0 feat: frontend 首页的初始化和登录background的更换和设置',
+('bbde48e feat: 更新sql',
+('6fb2c1b feat: frontend 更新logout的图标',
+('c7d3b75 feat: frontend keep-alive更改使得id的更新 文章的更新',
+('6529add feat: frontend 关于我',
+('14ee9ec feat: frontend 更新切换动画',
+('6929634 feat: frontend 更新切换动画',
+('937b7c1 feat: 关于我的设置',
+('f0ee6ce feat: 更新更换背景图片',
+('9934d6f feat: frontend components.d.ts',
+('b94b5b6 feat: 更改前端访问后台域名',
+('f405078 feat: 解决在部署 前后台的访问限制',
+('875c47c feat: 解决图片加载错误',
+('f9963a3 feat: 更新sql',
+('a2ee45f feat: 增加阅读量和表table ip 修复router更新是tabs的颜色消失',
+('d6fd3ed feat: 更改jwt 采用RegisteredClaims',
+('dbb8605 feat: 更改jwt 采用RegisteredClaims',
+('4cf6e72 feat: 更新component.d.ts',
+('795bc1b feat: 更新sql',
+('6c20f28 feat: 同一IP不同日期查看 视为阅读',
+('75e56f8 fix: 修复文章的评价',
+('2210fa6 feat: 更新frontend server 的访问阅读量更新为事务更新',
+('3e9c58a feat: 更新frontend评论 表情的显示',
+('dae9e50 feat: 更改前缀frontend -> api',
+('2c67f15 feat: 增加请求包alova',
+('84ff375 feat: 修复图片的查看和评论的user一起返回',
+('dd87148 feat: 更新request',
+('33ab134 feat: frontend 登录显示头像',
+('10d2022 feat: frontend评论的头像',
+('f53056d feat: 评论增加表情回答',
+('67731dc feat: 增加前台的token验证',
+('e62695f feat: frontend token失效删除本地token',
+('3e1f65e feat: 修复backend tag type错误',
+('0a9c56d feat: 上传文章增加文件名后缀 避免重复',
+('7193d83 feat: backend用户的搜索和frontend回车提交',
+('e2fa697 (tag: v0.0.3) feat: 调整提交显示',
+('db4ffc7 feat: 更新frontend title',
+('b788e4d feat: server端的注册',
+('5b348c0 feat: frontend注册 server注册修改规则',
+('3aff3c6 feat: frontend 去掉alova',
+('24fa0be feat: frontend登录默认头像 后台默认图片',
+('dba018a Create LICENSE',
+('a82ea14 feat: 默认frontend图片',
+('12a3587 feat: 前台增加操作记录',
+('b776000 fix: 修复登录使用中间件',
+('adcd1d6 feat: sql',
+('c3b751b feat: 更改中间的operation frontend位置',
+('1d22f77 feat: 后台制作动画',
+('98ba493 feat: frontend 注册图片上传',
+('b364dd9 feat: sql',
+('1a142ad fix: 修复上传头像 不显示上传图片',
+('18d62a0 feat: 后台个人信息的图片加载和前台的修改个人信息和密码（frontend）',
+('0db2d49 fix: 修复后台的表单生成器的 页面访问 正常加载',
+('b8f9f35 fix: 修复后台的表单生成器的 页面访问 正常加载',
+('e18925a feat: 增加数据库表',
+('abc108a fix: 更新数据库的配置',
+('118b3d7 fix: 修复文章评论不方便',
+('f31863e feat: frontend新增个人信息',
+('4684ab9 feat: 更新文章作者',
+('3645d7e feat: 更新backend的背景图',
+('872b3bf feat: 更新上传列表的图片加载',
+('a0f77d7 feat: frontend 个人信息修改',
+('0061367 fix: 修复评论必须登录的提示',
+('43cc1b8 feat: 重置密码',
+('e2b6bdb feat: frontend重置密码',
+('5c0502d feat: frontend重置密码',
+('2259c28 feat: 格式化和适应goland',
+('cdd9eea feat: 修改.gitignore',
+('cc83193 feat: 修改.gitignore',
+('377a31e feat: 修改.gitignore',
+('53a7e4a feat: upload file',
+('3266255 feat: 修改.gitignore',
+('4df4f47 feat: 修改.gitignore',
+('66d1ea8 feat: 修改ts对应的类型',
+('7cac2e3 feat: frontend 使用useosTheme 获得浏览器主题',
+('ceb9352 feat: frontend个人信息',
+('0fe914b feat: frontend 个人信息',
+('22bf184 feat: frontend 更改个人信息',
+('89ff2e1 feat: frontend 更改个人信息 server端验证',
+('d4f45e6 feat: updateUser 增加中间件',
+('2cb8ade feat: 更新评论光标的插入',
+('ff12bdd feat: 更新评论光标的插入',
+('ed364f3 feat: server 删除editorconfig backend frontend格式化',
+('8bb0e78 Merge branch 'master' of github.com:JiangHaoCode/server-web',
+('52d22cb fix: 修复变异解析（新）的初始化',
+('5d3e676 feat: 更新favicon',
+('e4984f8 feat: backend更新包',
+('6547a0b feat: backend vue slot',
+('3564492 feat: frontend about 使用slot',
+('4883e03 feat: frontend about 使用slot',
+('5c9758b feat: slot 动态插口',
+('353c1ad feat: 修复评论的姓名和评论',
+('e517f79 feat: 更新dockerfile',
+('5f25163 feat: 更新 server dockerfile',
+('f65910f feat: 更新 server config.yaml',
+('037518f (origin/master, origin/HEAD) feat: en to zh',
+('d66b9a3 feat: backend server端 token改为 Authorization',
+('8981c83 fix: 修复图片加载错误',
+('c0584da feat: 重新生成swagger',
+('c38e713 feat: 配置docker',
+('9c04905 feat: 修改nginx配置',
+('2819c21 fix: 修复评论名字的显示错误',
+('07558b2 fix: sql',
+('d55fa96 fix: update config.docker.yaml',
+('9d49369 fix: 去除GinRecovery',
+('91303e3 feat: frontend token值得有无',
+('ccf8cb5 feat: frontend token值得有无',
+('ab17f40 fix: 登录增加loading',
+('96d9b5f feat: 解决引入遇到ElLoading、ElMessage、ElNotification、ElMessageBox样式丢失的问题',
+('2bfdede fix: 底部的更新',
+('77a2dda feat: 升级vite 和 重启服务 和任务的考开始启动',
+('3e4336b feat: 设置development config 文件',
+('1281278 fix: 更改article的user为系统user',
+('4e55827 fix: 修复server中间件jwt报错',
+('d6f62bc fix: 修复后台的评论',
+('4703434 fix: server.sql',
+('ddfa0d4 Merge branch 'main' of github.com:JiangHaoCode/server-web',
+('c1b8e0d feat: 新增移动模型',
+('790b474 fix: 修复前台前端和后端的评论',
+('ebb13e0 feat: server 开启debug',
+('f02c0a5 feat: moblie 增加makefile',
+('e059806 feat: 增加中间件 限制同时访问的用户数 避免服务器压力过大',
+('803e9c2 feat: 增加中间件 限制同时访问的用户数 避免服务器压力过大',
+('b12454a fix: 移动端',
+('cf23947 fix: 移动端',
+('0335c56 fix: 修复移动端的报错',
+('7cab6bb fix: 图片裁剪',
+('40fcc18 feat: 裁剪图片',
+('bd8174c feat: 更新sql',
+('7a74ee3 fix: 配置环境',
+('d07bc5d fix: 更新comment model',
+('1f1432d feat: 更新token 和 验证规则',
+('e7bca36 feat: 修复删除文件的 delete',
+('5f3c47c feat: 修复删除文件的 delete',
+('713fd48 feat: 修复删除文件的 delete',
+('2f0b21f fix: 修复图片的下载',
+('817c7c2 fix: 修复图片的下载',
+('2f56794 fix: 修复server 错误返回',
+('568c234 fix: 修复推拽错误',
+('b22353b feat: 生产doc',
+('92f2a50 fix: 更新环境配置',
+('126d62c feat: 后台截图成功',
+('2214d0e feat: 后台截图成功',
+('ba89b22 feat: 取消设置头像设置后el-drawer 设置true',
+('c5e22ec feat: 设置个人信息裁剪头像图片',
+('f105bec feat: 图片增加是否为裁剪图',
+('d0cda5d feat: 图片增加是否为裁剪图',
+('96ffc87 (HEAD -> main, origin/main) feat: 更新提交记录',
