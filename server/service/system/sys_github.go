@@ -1,33 +1,43 @@
 package system
 
 import (
-	"errors"
-	"log"
 	"server/global"
 	"server/model/common/request"
 	"server/model/system"
-
-	"github.com/hashicorp/go-multierror"
-	"gorm.io/gorm"
 )
 
 type GithubService struct{}
 
-func (g *GithubService) CreateApi(github []system.SysGithub) (err error) {
+func (g *GithubService) CreateApi(github []system.SysGithub) (total int, err error) {
 	db := global.DB.Model(&system.SysGithub{})
-	var data system.SysGithub
-	var ierr error
+	var data []system.SysGithub
 	for _, item := range github {
-		items := item
-		ierr = db.Where("commit_time = ?", item.CommitTime).First(&data).Error
-		if errors.Is(ierr, gorm.ErrRecordNotFound) {
-			iserr := db.Create(&items).Error
-			log.Println("iserr -------", iserr)
-			if iserr != nil {
-				err = multierror.Append(err, iserr)
+		db = db.Or("commit_time = ?", item.CommitTime)
+
+	}
+	db.Find(&data)
+	dataInsert := []system.SysGithub{}
+	var isExist = false
+	for _, item := range github {
+		for _, itemGithub := range data {
+			if itemGithub.CommitTime == item.CommitTime {
+				isExist = false
+				break
+			} else {
+				isExist = true
 			}
+
+		}
+		if isExist {
+			dataInsert = append(dataInsert, item)
+			isExist = false
 		}
 	}
+	// log.Println(dataInsert)
+	if len(dataInsert) != 0 {
+		err = db.Create(&dataInsert).Error
+	}
+
 	return
 
 }
