@@ -26,9 +26,10 @@ export function getGithubCommitList(params) {
   });
 }
 
-export function createCommit(params) {
+export function createCommit(data) {
   return serviceAxios({
     url: "github/createGithub",
     method: "post",
+    data,
   });
 }

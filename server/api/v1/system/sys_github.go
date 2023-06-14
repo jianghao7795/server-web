@@ -127,7 +127,7 @@ func (g *SystemGithubApi) GetGithubList(c *gin.Context) {
 func (g *SystemGithubApi) CreateGithub(c *gin.Context) {
 	var data []system.SysGithub
 	_ = c.ShouldBindJSON(&data)
-
+	// log.Println(data)
 	if err := githubService.CreateApi(data); err != nil {
 		global.LOG.Error("创建commit有错误!", zap.Error(err))
 		response.FailWithMessage("创建commit有错误!", c)

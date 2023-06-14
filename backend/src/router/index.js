@@ -15,6 +15,11 @@ const routes = [
     name: "Login",
     component: () => import("@/view/login/index.vue"),
   },
+  // {
+  //   path: "/:catchAll(.*)",
+  //   name: "404",
+  //   component: () => import("@/view/error/index.vue"),
+  // },
 ];
 
 const router = createRouter({
