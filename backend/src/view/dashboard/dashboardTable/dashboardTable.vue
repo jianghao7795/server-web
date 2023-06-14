@@ -22,7 +22,7 @@
             <div class="flex-1 flex key-box">
               <span class="key" :class="key < 3 && 'top'">{{ key + 1 }}</span>
             </div>
-            <div class="flex-5 flex message" :title="item.message">{{ item.message }}</div>
+            <div class="flex-7 flex message" :title="item.message">{{ item.message }}</div>
             <div class="flex-3 flex form" :title="item.from">{{ item.commit_time }}</div>
           </li>
         </ul>
@@ -168,8 +168,8 @@ onMounted(() => {
         display: inline-flex;
         justify-content: center;
         align-items: center;
-        width: 20px;
-        height: 20px;
+        width: 25px;
+        height: 25px;
         border-radius: 50%;
         background: #f0f2f5;
         text-align: center;
@@ -202,6 +202,12 @@ onMounted(() => {
       }
       .flex-5 {
         flex: 5;
+      }
+      .flex-6 {
+        flex: 6;
+      }
+      .flex-7 {
+        flex: 13;
       }
     }
   }
