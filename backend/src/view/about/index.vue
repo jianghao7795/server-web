@@ -22,12 +22,12 @@
           </el-descriptions>
         </el-card>
       </el-col>
-      <el-col :span="24">
+      <!-- <el-col :span="24">
         <ElCard class="box-card">
           <template #header>
             <div class="card-header">
               <span>测试</span>
-              <!-- changeVNode() -->
+              changeVNode() 
             </div>
           </template>
           <H :sum="88">
@@ -38,9 +38,9 @@
               <div>我是Slot 嘿嘿秘密 {{ slotProps.text }} {{ slotProps.count }}</div>
             </template>
             <template #[templateComponent]><div>dfasdfasdf</div></template>
-          </H>
+          </H> 
         </ElCard>
-      </el-col>
+      </el-col> -->
       <el-col :span="24">
         <Draggable />
       </el-col>
@@ -94,12 +94,11 @@ export default {
 <script setup>
 import Draggable from "./draggable.vue";
 import pkg from "~/package.json";
-import { Commits } from "@/api/github";
+import { getGithubCommitList } from "@/api/github";
 import { onMounted, ref } from "vue";
 import { Like, BankCardOne } from "@icon-park/vue-next";
 import { useI18n } from "vue-i18n";
 import { useBtnAuth } from "@/utils/btnAuth";
-import H from "@/view/about/Tabs/h.vue";
 
 const btnAuth = useBtnAuth();
 
@@ -123,11 +122,11 @@ const changeShake = () => {
 };
 
 onMounted(() => {
-  Commits(page.value).then((resp) => {
-    commits.value = resp.data.map((i) => ({
-      name: i.commit.author.name,
-      date: i.commit.author.date,
-      message: i.commit.message,
+  getGithubCommitList({ page: page.value }).then((resp) => {
+    commits.value = resp.data.list.map((i) => ({
+      name: i.author,
+      date: i.commit_time,
+      message: i.message,
     }));
   });
 
@@ -139,15 +138,17 @@ onMounted(() => {
 const commitHistory = () => {
   isLoading.value = true;
   page.value = page.value + 1;
-  Commits(page.value).then((resp) => {
+  getGithubCommitList({ page: page.value }).then((resp) => {
     isLoading.value = false;
-    isShow.value = true;
+    if (resp.data.list?.length < 10) {
+      isShow.value = true;
+    }
     commits.value = [
       ...commits.value,
-      ...resp.data.map((i) => ({
-        name: i.commit.author.name,
-        date: i.commit.author.date,
-        message: i.commit.message,
+      ...resp.data.list.map((i) => ({
+        name: i.author,
+        date: i.commit_time,
+        message: i.message,
       })),
     ];
   });
