@@ -79,11 +79,6 @@ const handleCreateGithub = (status = false) => {
       } else {
         dataTimeline.value = [...dataTimeline.value, ...resp.data.list];
       }
-
-      ElMessage({
-        type: "success",
-        message: "更新 commit 成功",
-      });
     }
   });
 };
