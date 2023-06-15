@@ -10,13 +10,13 @@ declare namespace User {
     headerImg: string;
     baseColor: string;
     activeColor: string;
-    authorityId: string;
     phone: string;
     email: string;
+    head_img: string;
   };
 
   export type Login = {
-    name: string;
+    username: string;
     password: string;
   };
 

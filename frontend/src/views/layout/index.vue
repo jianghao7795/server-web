@@ -265,7 +265,7 @@ import ResetPassord from "./components/reset_password.vue";
 const Base_URL = import.meta.env.VITE_BASE_API;
 
 const headImage = computed(
-  () => `${Base_URL}/${userStore.currentUser.user.header}`
+  () => `${Base_URL}/${userStore.currentUser.user.headerImg}`
 );
 
 const userStore = useUserStore();
@@ -450,7 +450,7 @@ provide("changeLogin", changeLogin); // 传递方法给下级
 
 const login = () => {
   userStore.logins(
-    { name: userInfo.value.name, password: userInfo.value.password },
+    { username: userInfo.value.name, password: userInfo.value.password },
     (imageString: string) => {
       if (!!imageString) {
         colorSet.value = `url(${

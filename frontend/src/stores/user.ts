@@ -2,9 +2,27 @@ import { defineStore } from "pinia";
 import { login, getCurrentUser, registerUser } from "@/services/user";
 
 export const useUserStore = defineStore("user", {
-  state: (): { currentUser: User.CurrentUser; loading: boolean; loadingRegister: boolean } => ({
+  state: (): {
+    currentUser: User.CurrentUser;
+    loading: boolean;
+    loadingRegister: boolean;
+  } => ({
     currentUser: {
-      user: { ID: 0, name: "", introduction: "", head_img: "", content: "", header: "" },
+      user: {
+        ID: 0,
+        CreatedAt: "",
+        UpdatedAt: "",
+        uuid: "",
+        userName: "",
+        nickName: "",
+        sideMode: "",
+        headerImg: "",
+        baseColor: "",
+        activeColor: "",
+        phone: "",
+        email: "",
+        head_img: "",
+      },
       token: "",
       exportAt: 0,
     },
