@@ -21,7 +21,7 @@ const rollupOptions = {
 
 // mode 什么环境
 export default defineConfig(({ mode }: { mode: string }) => {
-  console.log(mode);
+  // console.log(mode);
   const env = loadEnv(mode, process.cwd());
   return {
     plugins: [
@@ -71,19 +71,19 @@ export default defineConfig(({ mode }: { mode: string }) => {
       hmr: true,
       host: "0.0.0.0",
       port: 3500,
-      // proxy: {
-      //   // 把key的路径代理到target位置
-      //   // detail: https://cli.vuejs.org/config/#devserver-proxy
-      //   [env.VITE_BASE_API]: {
-      //     // 需要代理的路径   例如 '/api'
-      //     target: `${env.VITE_BASE_PATH}:${env.VITE_SERVER_PORT}`, // 代理到 目标路径
-      //     changeOrigin: true,
-      //     secure: true,
-      //     // rewrite: (path) =>
-      //     //   path.replace(new RegExp(`^${env.VITE_BASE_API}`), "/api"),
-      //     // rewrite: (path) => path.replace("", ""),
-      //   },
-      // },
+      proxy: {
+        // 把key的路径代理到target位置
+        // detail: https://cli.vuejs.org/config/#devserver-proxy
+        [env.VITE_BASE_API]: {
+          // 需要代理的路径   例如 '/api'
+          target: `${env.VITE_BASE_PATH}:${env.VITE_SERVER_PORT}`, // 代理到 目标路径
+          changeOrigin: true,
+          secure: true,
+          rewrite: (path) =>
+            path.replace(new RegExp(`^${env.VITE_BASE_API}`), "/api"),
+          // rewrite: (path) => path.replace("", ""),
+        },
+      },
     },
     build: {
       target: "es2015",

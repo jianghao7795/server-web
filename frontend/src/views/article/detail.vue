@@ -188,7 +188,7 @@ const handleFouces = () => {
 
 const reply = (id: number, status: boolean) => {
   isCommentChildren.value = { [id]: status };
-  console.log(userStroe.currentUser.user);
+  // console.log(userStroe.currentUser.user);
 };
 
 const submit = async (parentId: number, children: Comment.comment[]) => {
@@ -251,7 +251,7 @@ const scrollTo = (options: {
   top?: number;
   behavior?: "auto" | "smooth";
 }): void => {
-  console.log(options);
+  // console.log(options);
 };
 
 onMounted(async () => {

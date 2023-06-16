@@ -2,34 +2,115 @@ package frontend
 
 import (
 	"errors"
-	"log"
 	"server/global"
 	"server/model/common/response"
 	"server/model/frontend"
 	loginRequest "server/model/frontend/request"
+	"server/model/system"
 	"server/utils"
-	"strings"
+
+	systemReq "server/model/system/request"
+	systemRes "server/model/system/response"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v8"
 	"go.uber.org/zap"
 )
 
 type FrontendUser struct{}
 
-func (u *FrontendUser) Login(c *gin.Context) {
-	var user loginRequest.LoginForm
-	_ = c.ShouldBindJSON(&user)
-	log.Println("user: ", user)
-	if err := utils.Verify(user, utils.LoginVerifyFrontend); err != nil {
+// func (u *FrontendUser) Login(c *gin.Context) {
+// 	var user loginRequest.LoginForm
+// 	_ = c.ShouldBindJSON(&user)
+// 	log.Println("user: ", user)
+// 	if err := utils.Verify(user, utils.LoginVerifyFrontend); err != nil {
+// 		response.FailWithMessage(err.Error(), c)
+// 		return
+// 	}
+// 	userInfo, err := frontendService.Login(user)
+// 	if err != nil {
+// 		global.LOG.Error(err.Error(), zap.Error(err))
+// 		response.FailWithMessage(err.Error(), c)
+// 	} else {
+// 		response.OkWithDetailed(userInfo, "登录成功", c)
+// 	}
+// }
+
+func (b *FrontendUser) Login(c *gin.Context) {
+	var l systemReq.Login
+	_ = c.ShouldBindJSON(&l)
+	if err := utils.Verify(l, utils.LoginVerifyFrontend); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	userInfo, err := frontendService.Login(user)
-	if err != nil {
-		global.LOG.Error(err.Error(), zap.Error(err))
-		response.FailWithMessage(err.Error(), c)
+	if store.Verify(l.CaptchaId, l.Captcha, true) {
+		u := &system.SysUser{Username: l.Username, Password: l.Password}
+		if user, err := userService.Login(u); err != nil {
+			global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
+			response.FailWithMessage("用户名不存在或者密码错误", c)
+		} else {
+			b.tokenNext(c, *user)
+		}
 	} else {
-		response.OkWithDetailed(userInfo, "登录成功", c)
+		response.FailWithMessage("验证码错误", c)
+	}
+}
+
+// 登录以后签发jwt
+func (u *FrontendUser) tokenNext(c *gin.Context, user system.SysUser) {
+	j := &utils.JWT{SigningKey: []byte(global.CONFIG.JWT.SigningKey)} // 唯一签名
+	claims := j.CreateClaims(systemReq.BaseClaims{
+		UUID:        user.UUID,
+		ID:          user.ID,
+		NickName:    user.NickName,
+		Username:    user.Username,
+		AuthorityId: user.AuthorityId,
+	})
+	token, err := j.CreateToken(claims)
+	if err != nil {
+		global.LOG.Error("获取token失败!", zap.Error(err))
+		response.FailWithMessage("获取token失败", c)
+		return
+	}
+	if !global.CONFIG.System.UseMultipoint {
+		response.OkWithDetailed(systemRes.LoginResponse{
+			User:      user,
+			Token:     token,
+			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix(),
+		}, "登录成功", c)
+		return
+	}
+
+	if jwtStr, err := jwtService.GetRedisJWT(user.Username); err == redis.Nil {
+		if err := jwtService.SetRedisJWT(token, user.Username); err != nil {
+			global.LOG.Error("设置登录状态失败!", zap.Error(err))
+			response.FailWithMessage("设置登录状态失败", c)
+			return
+		}
+		response.OkWithDetailed(systemRes.LoginResponse{
+			User:      user,
+			Token:     token,
+			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix(),
+		}, "登录成功", c)
+	} else if err != nil {
+		global.LOG.Error("设置登录状态失败!", zap.Error(err))
+		response.FailWithMessage("设置登录状态失败", c)
+	} else {
+		var blackJWT system.JwtBlacklist
+		blackJWT.Jwt = jwtStr
+		if err := jwtService.JsonInBlacklist(blackJWT); err != nil {
+			response.FailWithMessage("jwt作废失败", c)
+			return
+		}
+		if err := jwtService.SetRedisJWT(token, user.Username); err != nil {
+			response.FailWithMessage("设置登录状态失败", c)
+			return
+		}
+		response.OkWithDetailed(systemRes.LoginResponse{
+			User:      user,
+			Token:     token,
+			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix(),
+		}, "登录成功", c)
 	}
 }
 
@@ -56,18 +137,14 @@ func (*FrontendUser) RegisterUser(c *gin.Context) {
 }
 
 func (u *FrontendUser) GetCurrent(c *gin.Context) {
-	token := c.Request.Header.Get("authorization")
-	if token == "" {
-		response.FailWithMessage("请登录", c)
-		return
+	uuid := utils.GetUserUuid(c)
+	// log.Println(uuid)
+	if ReqUser, err := userService.GetUserInfo(uuid); err != nil {
+		global.LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+	} else {
+		response.OkWithDetailed(ReqUser, "获取成功", c)
 	}
-	var tokenSplit = strings.Split(token, " ")
-	userInfo, err := frontendService.GetUser(tokenSplit[1])
-	if err != nil {
-		response.FailWithMessage("token失效，请重新登录", c)
-		return
-	}
-	response.OkWithDetailed(userInfo, "获取成功", c)
 }
 
 func (u *FrontendUser) UpdatePassword(c *gin.Context) {

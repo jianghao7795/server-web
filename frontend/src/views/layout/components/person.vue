@@ -33,7 +33,7 @@
           ></n-upload>
         </n-form-item>
         <n-form-item label="账号" path="name">
-          <n-input v-model:value="userInfo.name" placeholder="账号" />
+          <n-input v-model:value="userInfo.userName" placeholder="账号" />
         </n-form-item>
         <n-form-item label="简介" path="introduction">
           <n-input v-model:value="userInfo.introduction" placeholder="简介" />
@@ -80,12 +80,13 @@ const formRef = ref<FormInst | null>(null);
 const userStore = useUserStore();
 
 const userInfo = ref<User.UserInfo>(userStore.currentUser.user);
+
 const fileList = ref<UploadFileInfo[]>([
   {
     id: "a",
     name: "头像.png",
     status: "finished",
-    url: Base_URL + userStore.currentUser.user.header,
+    url: Base_URL + userStore.currentUser.user.headerImg,
   },
 ]);
 
@@ -98,7 +99,7 @@ watch(
         id: "a",
         name: "头像.png",
         status: "finished",
-        url: Base_URL + userStore.currentUser.user.header,
+        url: Base_URL + userStore.currentUser.user.headerImg,
       },
     ];
   },
@@ -112,7 +113,7 @@ const changeCustomRequest = (options: UploadCustomRequestOptions) => {
     .then((resp) => {
       if (resp.code === 0) {
         window.$message.success("上传成功");
-        userStore.currentUser.user.header = resp.data?.file.url as string;
+        userStore.currentUser.user.headerImg = resp.data?.file.url as string;
       }
     })
     .catch((e) => {

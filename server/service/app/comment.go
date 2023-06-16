@@ -1,7 +1,6 @@
 package app
 
 import (
-	"log"
 	"server/global"
 	comment "server/model/app"
 	commentReq "server/model/app/request"
@@ -102,7 +101,7 @@ func (commentService *CommentService) GetCommentTreeList(info commentReq.Comment
 		}
 	}
 
-	log.Println("err1: ", err)
+	// log.Println("err1: ", err)
 
 	return commentList, total, err
 }

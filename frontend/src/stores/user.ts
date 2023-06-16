@@ -22,6 +22,8 @@ export const useUserStore = defineStore("user", {
         phone: "",
         email: "",
         head_img: "",
+        introduction: "",
+        content: "",
       },
       token: "",
       exportAt: 0,
@@ -72,11 +74,9 @@ export const useUserStore = defineStore("user", {
         this.loading = true;
         const info = await getCurrentUser();
         this.loading = false;
-        this.currentUser.user = info.data.user;
-        this.currentUser.exportAt = info.data.exportAt;
-        if (info.data.user.head_img !== "") {
-          callback(info.data.user.head_img);
-        }
+        this.currentUser.user = info.data;
+        this.currentUser.exportAt = 0;
+        callback(info.data.head_img);
       } catch (e) {
         localStorage.removeItem("token");
         this.loading = false;

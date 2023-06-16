@@ -287,7 +287,7 @@ const deleteUserFunc = async (row) => {
 
 // 弹窗相关
 const userInfo = ref({
-  username: "",
+  userName: "",
   password: "",
   nickName: "",
   headerImg: "",
@@ -310,6 +310,8 @@ const rules = ref({
 const userForm = ref(null);
 const enterAddUserDialog = async () => {
   userInfo.value.authorityId = userInfo.value.authorityIds[0];
+  // console.log(userInfo.value);
+  // return;
   userForm.value.validate(async (valid) => {
     if (valid) {
       const req = {

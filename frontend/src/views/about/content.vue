@@ -14,6 +14,6 @@ import { onMounted, computed } from "vue";
 const props = defineProps<{ imgUrl: string }>();
 
 onMounted(() => {
-  console.log("234234234234");
+  // console.log("234234234234");
 });
 </script>

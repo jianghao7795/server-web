@@ -25,17 +25,17 @@ func (s *FrontendRouter) InitFrontendRouter(Router *gin.RouterGroup) {
 	var frontendCommentApi = v1.ApiGroupApp.FrontendApiGroup.CommentApi
 	{
 		frontend.GET("/getArticleComment/:articleId", frontendCommentApi.GetCommentByArticleId)
-		frontend.POST("/createdComment", middleware.OperationRecordFrontend(), frontendCommentApi.CreatedComment)
+		frontend.POST("/createdComment", middleware.OperationRecord(), frontendCommentApi.CreatedComment)
 	}
 	var frontendUserApi = v1.ApiGroupApp.FrontendApiGroup.FrontendUser
 	{
 		frontend.GET("getImages", frontendUserApi.GetImages)
 		frontend.POST("login", frontendUserApi.Login)
-		frontend.GET("getCurrentUser", middleware.JWTAuthMiddleware(), frontendUserApi.GetCurrent)
-		frontend.PUT("updateBackgroundImage", middleware.OperationRecordFrontend(), frontendUserApi.UpdateUserBackgroudImage)
-		frontend.PUT("resetPassword", middleware.OperationRecordFrontend(), frontendUserApi.UpdatePassword)
+		frontend.GET("getCurrentUser", middleware.JWTAuth(), frontendUserApi.GetCurrent)
+		frontend.PUT("updateBackgroundImage", middleware.OperationRecord(), frontendUserApi.UpdateUserBackgroudImage)
+		frontend.PUT("resetPassword", middleware.OperationRecord(), frontendUserApi.UpdatePassword)
 		frontend.POST("register", frontendUserApi.RegisterUser)
-		frontend.PUT("updateUser", middleware.JWTAuthMiddleware(), middleware.OperationRecordFrontend(), frontendUserApi.UpdateUser)
+		frontend.PUT("updateUser", middleware.JWTAuth(), middleware.OperationRecord(), frontendUserApi.UpdateUser)
 	}
 	var frontendUploadApi = v1.ApiGroupApp.AppApiGroup.FileUploadAndDownloadApi
 	{

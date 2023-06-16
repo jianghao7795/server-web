@@ -13,6 +13,8 @@ type Register struct {
 	HeaderImg    string   `json:"headerImg" gorm:"default:'https://qmplusimg.henrongyi.top/header.jpg'"`
 	AuthorityId  string   `json:"authorityId" gorm:"default:888"`
 	AuthorityIds []string `json:"authorityIds"`
+	Phone        string   `json:"phone"`
+	Email        string   `json:"email"`
 }
 
 // User login structure

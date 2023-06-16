@@ -13,10 +13,12 @@ declare namespace User {
     phone: string;
     email: string;
     head_img: string;
+    introduction: string;
+    content: string;
   };
 
   export type Login = {
-    name: string;
+    username: string;
     password: string;
   };
 

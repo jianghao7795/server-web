@@ -16,7 +16,12 @@
         size="large"
       >
         <n-form-item path="name">
-          <n-input type="text" v-model:value="userRegister.name" :clearable="true" placeholder="账号" />
+          <n-input
+            type="text"
+            v-model:value="userRegister.name"
+            :clearable="true"
+            placeholder="账号"
+          />
         </n-form-item>
         <n-form-item path="password">
           <n-input
@@ -38,7 +43,12 @@
           />
         </n-form-item>
         <n-form-item path="introduction">
-          <n-input type="text" v-model:value="userRegister.introduction" placeholder="简介" :clearable="true" />
+          <n-input
+            type="text"
+            v-model:value="userRegister.introduction"
+            placeholder="简介"
+            :clearable="true"
+          />
         </n-form-item>
         <n-form-item path="content">
           <n-input
@@ -66,7 +76,12 @@
           </n-upload>
         </n-form-item>
         <div>
-          <n-button :loading="userStore.loadingRegister" type="primary" :block="true" @click="() => register()">
+          <n-button
+            :loading="userStore.loadingRegister"
+            type="primary"
+            :block="true"
+            @click="() => register()"
+          >
             注册
           </n-button>
         </div>
@@ -78,7 +93,11 @@
 <script setup lang="ts">
 import { ref } from "vue"; // defineExpose 组件暴露自己的属性
 import { useUserStore } from "@/stores/user";
-import type { FormItemRule, UploadFileInfo, UploadCustomRequestOptions } from "naive-ui";
+import type {
+  FormItemRule,
+  UploadFileInfo,
+  UploadCustomRequestOptions,
+} from "naive-ui";
 import { uploadFile } from "@/services/fileUpload";
 const props = defineProps<{
   registerStatus: boolean;
@@ -96,7 +115,11 @@ const userRegister = ref<User.Register>({
 });
 const fileList = ref<UploadFileInfo[]>([]);
 
-const changeFileUpload = (options: { file: UploadFileInfo; fileList: Array<UploadFileInfo>; event?: Event }) => {
+const changeFileUpload = (options: {
+  file: UploadFileInfo;
+  fileList: Array<UploadFileInfo>;
+  event?: Event;
+}) => {
   fileList.value = options.fileList;
 };
 
@@ -120,7 +143,14 @@ const userStore = useUserStore();
 const register = () => {
   userStore.register(userRegister.value as User.Register, () => {
     emits("changeStatus", false);
-    userRegister.value = { name: "", password: "", content: "", introduction: "", re_password: "", header: "" };
+    userRegister.value = {
+      name: "",
+      password: "",
+      content: "",
+      introduction: "",
+      re_password: "",
+      header: "",
+    };
     window.$message.success("注册成功，请登录");
   });
 };

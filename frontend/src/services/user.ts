@@ -8,7 +8,7 @@ export function login(data: User.Login) {
 }
 
 export function getCurrentUser() {
-  return http.get<Global.Response<User.CurrentUser>>("/getCurrentUser");
+  return http.get<Global.Response<User.UserInfo>>("/getCurrentUser");
 }
 
 export function updateBackgroundImage(data: User.UpdateImages) {

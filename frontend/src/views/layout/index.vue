@@ -450,7 +450,7 @@ provide("changeLogin", changeLogin); // 传递方法给下级
 
 const login = () => {
   userStore.logins(
-    { name: userInfo.value.name, password: userInfo.value.password },
+    { username: userInfo.value.name, password: userInfo.value.password },
     (imageString: string) => {
       if (!!imageString) {
         colorSet.value = `url(${
@@ -547,19 +547,19 @@ onMounted(() => {
   const token = localStorage.getItem("token");
   if (token) {
     userStore.getUser((head_img: string) => {
-      if (userStore.currentUser.user.ID !== 0) {
-        getImages().then((resp) => {
-          if (resp) {
-            bgImage.value = resp.data;
-          }
-        });
+      getImages().then((resp) => {
+        if (resp?.code === 0) {
+          bgImage.value = resp.data;
+        }
+      });
+      if (head_img !== "") {
+        colorSet.value = `url(${
+          new URL(
+            head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`,
+            import.meta.url
+          ).href
+        })`;
       }
-      colorSet.value = `url(${
-        new URL(
-          head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`,
-          import.meta.url
-        ).href
-      })`;
     });
   }
 });

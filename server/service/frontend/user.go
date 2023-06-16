@@ -79,6 +79,13 @@ func (u *FrontendUser) GetUser(tokenString string) (userInter frontendResponse.L
 	return
 }
 
+func (u *FrontendUser) GetUserInfo(id uint) (frontend.User, error) {
+	var userInfo frontend.User
+	err := global.DB.Where("id = ?", id).First(&userInfo).Error
+
+	return userInfo, err
+}
+
 func (u *FrontendUser) UpdateUserBackgroudImage(data frontend.User) (err error) {
 	err = global.DB.Model(&frontend.User{}).Where("id = ?", data.ID).Update("head_img", data.HeadImg).Error
 	return
