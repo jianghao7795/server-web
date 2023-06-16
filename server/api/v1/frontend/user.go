@@ -2,6 +2,7 @@ package frontend
 
 import (
 	"errors"
+	"log"
 	"server/global"
 	"server/model/common/response"
 	"server/model/frontend"
@@ -18,6 +19,7 @@ type FrontendUser struct{}
 func (u *FrontendUser) Login(c *gin.Context) {
 	var user loginRequest.LoginForm
 	_ = c.ShouldBindJSON(&user)
+	log.Println("user: ", user)
 	if err := utils.Verify(user, utils.LoginVerifyFrontend); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

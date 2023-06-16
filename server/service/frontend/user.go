@@ -33,7 +33,7 @@ type FrontendUser struct{}
 func (u *FrontendUser) Login(data frontendRequest.LoginForm) (userInter frontendResponse.LoginResponse, err error) {
 	var user frontend.User
 	data.Password = utils.MD5V([]byte(data.Password))
-	err = global.DB.Where("name = ? and password = ?", data.Name, data.Password).First(&user).Error
+	err = global.DB.Where("username = ? and password = ?", data.Name, data.Password).First(&user).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return userInter, errors.New("密码错误")
 	}

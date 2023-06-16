@@ -16,8 +16,8 @@ var (
 	OldAuthorityVerify          = Rules{"OldAuthorityId": {NotEmpty()}}
 	ChangePasswordVerify        = Rules{"Username": {NotEmpty()}, "Password": {NotEmpty()}, "NewPassword": {NotEmpty()}}
 	SetUserAuthorityVerify      = Rules{"AuthorityId": {NotEmpty()}}
-	LoginVerifyFrontend         = Rules{"Username": {NotEmpty()}, "Password": {NotEmpty()}}                                               // 前台页面登录验证
-	RegisterVerifyFrontend      = Rules{"Username": {NotEmpty()}, "Password": {NotEmpty(), Ge("6")}, "RePassword": {NotEmpty(), Ge("6")}} // 前台页面登录验证
+	LoginVerifyFrontend         = Rules{"Name": {NotEmpty()}, "Password": {NotEmpty()}}                                               // 前台页面登录验证
+	RegisterVerifyFrontend      = Rules{"Name": {NotEmpty()}, "Password": {NotEmpty(), Ge("6")}, "RePassword": {NotEmpty(), Ge("6")}} // 前台页面登录验证
 	ResetPasswordVerifyFrontend = Rules{"Password": {NotEmpty(), Ge("6")}, "NewPassword": {NotEmpty(), Ge("6")}, "RepeatNewPassword": {NotEmpty(), Ge("6")}}
 	UpdateUserVerify            = Rules{"Name": {NotEmpty(), Ge("2")}, "HeadImg": {NotEmpty()}, "Header": {NotEmpty()}}
 )

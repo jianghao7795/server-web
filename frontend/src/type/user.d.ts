@@ -16,7 +16,7 @@ declare namespace User {
   };
 
   export type Login = {
-    username: string;
+    name: string;
     password: string;
   };
 

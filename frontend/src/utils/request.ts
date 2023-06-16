@@ -14,9 +14,8 @@ export interface Result<T = any> {
   msg: string;
   data: T;
 }
-
 const service: AxiosInstance = axios.create({
-  baseURL: "/api",
+  baseURL: "http://127.0.0.1:3100/api",
   timeout: 0,
 });
 

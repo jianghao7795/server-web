@@ -450,7 +450,7 @@ provide("changeLogin", changeLogin); // 传递方法给下级
 
 const login = () => {
   userStore.logins(
-    { username: userInfo.value.name, password: userInfo.value.password },
+    { name: userInfo.value.name, password: userInfo.value.password },
     (imageString: string) => {
       if (!!imageString) {
         colorSet.value = `url(${
