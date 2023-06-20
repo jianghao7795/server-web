@@ -12,6 +12,7 @@ import (
 // Gorm 初始化数据库并产生数据库全局变量
 // Author SliverHorn
 func Gorm() *gorm.DB {
+	// global.Logger.Println("普通日志")
 	switch global.CONFIG.System.DbType {
 	case "mysql":
 		return GormMysql()
