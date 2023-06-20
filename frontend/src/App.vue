@@ -59,7 +59,7 @@ const NaiveProviderContent = defineComponent({
 </script>
 
 <template>
-  <NConfigProvider :theme="theme as GlobalTheme">
+  <NConfigProvider :theme="theme">
     <NLoadingBarProvider
       :loading-bar-style="{ loading: { height: '4px', background: '#1e80ff' } }"
     >
