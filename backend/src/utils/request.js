@@ -6,7 +6,7 @@ import router from "@/router/index";
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
-  timeout: 99999,
+  timeout: 5000,
 });
 // let acitveAxios = 0;
 // let timer;
@@ -77,7 +77,7 @@ service.interceptors.request.use(
       message: error,
       type: "error",
     });
-    return error;
+    return Promise.reject(error);
   },
 );
 

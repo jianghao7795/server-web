@@ -69,13 +69,13 @@ db-list:
     log-mode: ""
     log-zap: false
 email:
-  to: 978561120@qq.com
+  to: 760986739@qq.com
   port: 465
-  from: 760986739@qq.com
+  from: 978561120@qq.com
   host: smtp.qq.com
   is-ssl: true
-  secret: evyqrjfqsvczbegc
-  nickname: "760986739"
+  secret: bwxrwofxhqapbahg
+  nickname: "C"
 excel:
   dir: ./resource/excel/
 hua-wei-obs:
