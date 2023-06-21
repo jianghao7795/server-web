@@ -1,12 +1,11 @@
 <script setup lang="ts">
-const props = defineProps();
-console.log(props);
-// import WelcomeItem from "./components/WelcomeItem.vue";
-import { Button } from "vant";
+import { ConfigProvider } from "vant";
 </script>
 
 <template>
-  <div><router-view /></div>
+  <div>
+    <ConfigProvider theme="dark"><router-view /></ConfigProvider>
+  </div>
 </template>
 
 <style scoped></style>
