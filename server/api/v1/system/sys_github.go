@@ -1,12 +1,17 @@
 package system
 
 import (
+	"encoding/json"
+	"io"
+	"log"
+	"net/http"
 	"server/global"
 	"server/model/common/request"
 	"server/model/common/response"
 	"server/model/system"
 	"server/service"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -105,6 +110,83 @@ type SystemGithubApi struct{}
 
 var githubService = service.ServiceGroupApp.SystemServiceGroup.GithubService
 
+type GithubCommit struct {
+	URL         string `json:"url"`
+	Sha         string `json:"sha"`
+	NodeID      string `json:"node_id"`
+	HTMLURL     string `json:"html_url"`
+	CommentsURL string `json:"comments_url"`
+	Commit      struct {
+		URL    string `json:"url"`
+		Author struct {
+			Name  string    `json:"name"`
+			Email string    `json:"email"`
+			Date  time.Time `json:"date"`
+		} `json:"author"`
+		Committer struct {
+			Name  string    `json:"name"`
+			Email string    `json:"email"`
+			Date  time.Time `json:"date"`
+		} `json:"committer"`
+		Message string `json:"message"`
+		Tree    struct {
+			URL string `json:"url"`
+			Sha string `json:"sha"`
+		} `json:"tree"`
+		CommentCount int `json:"comment_count"`
+		Verification struct {
+			Verified  bool        `json:"verified"`
+			Reason    string      `json:"reason"`
+			Signature interface{} `json:"signature"`
+			Payload   interface{} `json:"payload"`
+		} `json:"verification"`
+	} `json:"commit"`
+	Author struct {
+		Login             string `json:"login"`
+		ID                int    `json:"id"`
+		NodeID            string `json:"node_id"`
+		AvatarURL         string `json:"avatar_url"`
+		GravatarID        string `json:"gravatar_id"`
+		URL               string `json:"url"`
+		HTMLURL           string `json:"html_url"`
+		FollowersURL      string `json:"followers_url"`
+		FollowingURL      string `json:"following_url"`
+		GistsURL          string `json:"gists_url"`
+		StarredURL        string `json:"starred_url"`
+		SubscriptionsURL  string `json:"subscriptions_url"`
+		OrganizationsURL  string `json:"organizations_url"`
+		ReposURL          string `json:"repos_url"`
+		EventsURL         string `json:"events_url"`
+		ReceivedEventsURL string `json:"received_events_url"`
+		Type              string `json:"type"`
+		SiteAdmin         bool   `json:"site_admin"`
+	} `json:"author"`
+	Committer struct {
+		Login             string `json:"login"`
+		ID                int    `json:"id"`
+		NodeID            string `json:"node_id"`
+		AvatarURL         string `json:"avatar_url"`
+		GravatarID        string `json:"gravatar_id"`
+		URL               string `json:"url"`
+		HTMLURL           string `json:"html_url"`
+		FollowersURL      string `json:"followers_url"`
+		FollowingURL      string `json:"following_url"`
+		GistsURL          string `json:"gists_url"`
+		StarredURL        string `json:"starred_url"`
+		SubscriptionsURL  string `json:"subscriptions_url"`
+		OrganizationsURL  string `json:"organizations_url"`
+		ReposURL          string `json:"repos_url"`
+		EventsURL         string `json:"events_url"`
+		ReceivedEventsURL string `json:"received_events_url"`
+		Type              string `json:"type"`
+		SiteAdmin         bool   `json:"site_admin"`
+	} `json:"committer"`
+	Parents []struct {
+		URL string `json:"url"`
+		Sha string `json:"sha"`
+	} `json:"parents"`
+}
+
 func (g *SystemGithubApi) GetGithubList(c *gin.Context) {
 	var searchInfo request.PageInfo
 	page := c.DefaultQuery("page", "1")
@@ -126,8 +208,21 @@ func (g *SystemGithubApi) GetGithubList(c *gin.Context) {
 
 func (g *SystemGithubApi) CreateGithub(c *gin.Context) {
 	var data []system.SysGithub
-	_ = c.ShouldBindJSON(&data)
-	// log.Println(data)
+
+	page := "1"
+	per_page := "5"
+	resp, err := http.Get("https://api.github.com/repos/JiangHaoCode/server-web/commits?page=" + page + "&per_page=" + per_page)
+	defer resp.Body.Close()
+	if err != nil {
+		global.LOG.Error("请求Commit错误", zap.Error(err))
+		response.FailWithMessage("请求Commit错误", c)
+		log.Println(resp.Body)
+		return
+	}
+	body, _ := io.ReadAll(resp.Body)
+	respData := new([]GithubCommit)
+	json.Unmarshal(body, respData)
+
 	if total, err := githubService.CreateApi(data); err != nil {
 		global.LOG.Error("创建commit有错误!", zap.Error(err))
 		response.FailWithMessage("创建commit有错误!", c)
@@ -135,18 +230,5 @@ func (g *SystemGithubApi) CreateGithub(c *gin.Context) {
 		response.OkWithData(gin.H{"total": total}, c)
 	}
 
-	// page := "1"
-	// per_page := "5"
-	// resp, err := http.Get("https://api.github.com/repos/JiangHaoCode/server-web/commits?page=" + page + "&per_page=" + per_page)
-	// if err != nil {
-	// 	fmt.Printf("get failed, err:%v\n", err)
-	// 	return
-	// }
-	// defer resp.Body.Close()
-	// body, err := io.ReadAll(resp.Body)
-	// if err != nil {
-	// 	fmt.Printf("read from resp.Body failed, err:%v\n", err)
-	// 	return
-	// }
 	// fmt.Print(string(body))
 }

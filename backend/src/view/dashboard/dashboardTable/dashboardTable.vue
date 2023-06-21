@@ -44,19 +44,6 @@ import { ref, onMounted } from "vue";
 import { ElMessage, ElNotification } from "element-plus";
 import { LoadingFour } from "@icon-park/vue-next";
 
-const commitData = [
-  { commit_time: "2023-06-14 14:13:07", author: "jianghao", message: "fix: update sql" },
-  { commit_time: "2023-06-14 11:52:03", author: "jianghao", message: "fix: 修改css" },
-  { commit_time: "2023-06-14 11:47:53", author: "jianghao", message: "fix: 修复后台的github查询和insert" },
-  { commit_time: "2023-06-13 18:25:03", author: "jianghao", message: "feat: github commit 存入本地" },
-  { commit_time: "2023-06-13 18:23:48", author: "jianghao", message: "feat: github commit 存入本地" },
-  { commit_time: "2023-06-13 18:22:28", author: "jianghao", message: "feat: github commit 存入本地" },
-  { commit_time: "2023-06-11 15:48:27", author: "jianghao", message: "feat: 更新提交记录" },
-  { commit_time: "2023-06-09 15:29:30", author: "jianghao", message: "feat: 图片增加是否为裁剪图" },
-  { commit_time: "2023-06-09 15:27:52", author: "jianghao", message: "feat: 图片增加是否为裁剪图" },
-  { commit_time: "2023-06-09 14:02:56", author: "jianghao", message: "feat: 设置个人信息裁剪头像图片" },
-];
-
 const dataTimeline = ref([]);
 const page = ref(1);
 const loading = ref(false);
@@ -85,39 +72,18 @@ const handleCreateGithub = (status = false) => {
 
 const loadCommits = () => {
   loadingPlue.value = true;
-  Commits({ page: 1, per_page: 10 })
-    .then(({ data }) => {
-      const line = data.map((element) => {
-        return {
-          commit_time: formatTimeToStr(element.commit.author.date, "yyyy-MM-dd hh:mm:ss"),
-          author: element.commit.author.name,
-          message: element.commit.message,
-        };
-      });
-      // console.log(line);
-      // createCommit(commitData)
-      //   .then((resp) => {
-      //     if (resp.code === 0) {
-      //       ElMessage({
-      //         type: "success",
-      //       });
-      //     }
-      //   })
-      //   .finally(() => {
-      //     loadingPlue.value = false;
-      //   });
-      createCommit(line)
-        .then((resp) => {
-          if (resp.code === 0) {
-            ElMessage({
-              type: "success",
-              message: "更新 " + resp.data.total + " commit",
-            });
-          }
-        })
-        .finally(() => {
-          loadingPlue.value = false;
+  createCommit()
+    .then((resp) => {
+      if (resp.code === 0) {
+        handleCreateGithub(true);
+        ElMessage({
+          type: "success",
+          message: "更新 " + resp.data.total + " commit",
         });
+      }
+    })
+    .finally(() => {
+      loadingPlue.value = false;
     })
     .catch((e) => {
       ElNotification({

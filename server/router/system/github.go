@@ -15,7 +15,7 @@ func (g *GithubRouter) InitGithubRouter(Router *gin.RouterGroup) {
 
 	githubRouterApi := v1.ApiGroupApp.SystemApiGroup.SystemGithubApi
 	{
-		githubRouter.POST("createGithub", githubRouterApi.CreateGithub) // 创建github
+		githubRouter.GET("createGithub", githubRouterApi.CreateGithub) // 创建github
 	}
 	{
 		githubRouterRecord.GET("getGithubList", githubRouterApi.GetGithubList)
