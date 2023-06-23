@@ -9,7 +9,7 @@ const fakeUserList = [
     password: '123456',
     nickname: '一条咸鱼',
     realname: 'administrator',
-    avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
+    avatar: '/cat.jpeg',
     cover: '',
     sign: '一年精通三年熟练五年入门',
     industry: 4,
@@ -37,7 +37,7 @@ const fakeUserList = [
 export default [
   {
     url: '/api/login',
-    timeout: 1000,
+    timeout: 300,
     method: 'post',
     response: ({ body }) => {
       const { username, password } = body;

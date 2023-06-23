@@ -6,11 +6,13 @@ export interface BasicResponseModel<T = any> {
   result: T;
 }
 
+export type UserType = {};
+
 /**
  * @description: 用户登录
  */
 export function login(params: any) {
-  return http.request<BasicResponseModel>(
+  return http.request<BasicResponseModel<UserType>>(
     {
       url: '/login',
       method: 'POST',
