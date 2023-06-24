@@ -6,7 +6,20 @@ export interface BasicResponseModel<T = any> {
   result: T;
 }
 
-export type UserType = {};
+export type UserType = {
+  userId: number;
+  username: string;
+  password: string;
+  nickname: string;
+  realname: string;
+  avatar: string;
+  cover: string;
+  sign: string;
+  industry: number;
+  gender: 0 | 1;
+  phone: string;
+  token: string;
+};
 
 /**
  * @description: 用户登录
