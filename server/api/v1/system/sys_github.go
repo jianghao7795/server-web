@@ -225,10 +225,11 @@ func (g *SystemGithubApi) CreateGithub(c *gin.Context) {
 	respData := new([]GithubCommit)
 	json.Unmarshal(body, respData)
 	// log.Println(respData)
+	time.LoadLocation("Asia/Shanghai")
 	for _, val := range *respData {
 		var temp system.SysGithub
 		temp.Author = val.Commit.Author.Name
-		temp.CommitTime = val.Commit.Author.Date.Format("YYYY-MM-DD HH:mm:ss")
+		temp.CommitTime = val.Commit.Author.Date.Format("2006-01-02 15:04:05")
 		temp.Message = val.Commit.Message
 		data = append(data, temp)
 	}
