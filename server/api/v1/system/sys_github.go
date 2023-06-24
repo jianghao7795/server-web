@@ -3,7 +3,6 @@ package system
 import (
 	"encoding/json"
 	"io"
-	"log"
 	"net/http"
 	"server/global"
 	"server/model/common/request"
@@ -207,22 +206,33 @@ func (g *SystemGithubApi) GetGithubList(c *gin.Context) {
 }
 
 func (g *SystemGithubApi) CreateGithub(c *gin.Context) {
-	var data []system.SysGithub
+	data := make([]system.SysGithub, 5)
 
 	page := "1"
 	per_page := "5"
 	resp, err := http.Get("https://api.github.com/repos/JiangHaoCode/server-web/commits?page=" + page + "&per_page=" + per_page)
-	defer resp.Body.Close()
+	defer func() {
+		_ = resp.Body.Close()
+
+	}()
 	if err != nil {
 		global.LOG.Error("请求Commit错误", zap.Error(err))
 		response.FailWithMessage("请求Commit错误", c)
-		log.Println(resp.Body)
+		// log.Println(resp.Body)
 		return
 	}
 	body, _ := io.ReadAll(resp.Body)
 	respData := new([]GithubCommit)
 	json.Unmarshal(body, respData)
-
+	// log.Println(respData)
+	for _, val := range *respData {
+		var temp system.SysGithub
+		temp.Author = val.Commit.Author.Name
+		temp.CommitTime = val.Commit.Author.Date.Format("YYYY-MM-DD HH:mm:ss")
+		temp.Message = val.Commit.Message
+		data = append(data, temp)
+	}
+	// log.Println("data: ", data)
 	if total, err := githubService.CreateApi(data); err != nil {
 		global.LOG.Error("创建commit有错误!", zap.Error(err))
 		response.FailWithMessage("创建commit有错误!", c)

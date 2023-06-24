@@ -38,7 +38,7 @@ export default {
 </script>
 <script setup>
 // import { Commits } from "@/api/github";
-import { formatTimeToStr } from "@/utils/date.js";
+// import { formatTimeToStr } from "@/utils/date.js";
 import { getGithubCommitList, createCommit, Commits } from "@/api/github";
 import { ref, onMounted } from "vue";
 import { ElMessage, ElNotification } from "element-plus";
@@ -79,6 +79,11 @@ const loadCommits = () => {
         ElMessage({
           type: "success",
           message: "更新 " + resp.data.total + " commit",
+        });
+      } else {
+        ElMessage({
+          type: "error",
+          message: resp.msg,
         });
       }
     })
