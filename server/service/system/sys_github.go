@@ -43,7 +43,7 @@ func (g *GithubService) CreateApi(github []system.SysGithub) (total int, err err
 		}
 	}
 
-	return
+	return len(dataInsert), err
 
 }
 
