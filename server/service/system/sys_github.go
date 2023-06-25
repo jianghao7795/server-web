@@ -34,17 +34,18 @@ func (g *GithubService) CreateApi(github []system.SysGithub) (total int, err err
 			isExist = true
 		}
 	}
+	insertNumber := 0
 	if len(dataInsert) != 0 {
 		for _, item := range dataInsert {
 			dataItem := item
 			if dataItem.CommitTime != "" {
+				insertNumber++
 				err = db.Create(&dataItem).Error
 			}
 		}
 	}
 
-	return len(dataInsert), err
-
+	return insertNumber, err
 }
 
 func (g *GithubService) GetGithubList(info request.PageInfo) (list []system.SysGithub, err error) {
