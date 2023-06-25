@@ -5,15 +5,6 @@
       <el-button link @click="() => scrollChange(1)" type="success" :loading="loading" :loading-icon="LoadingFour">更新commit</el-button>
     </div>
     <div class="log">
-      <!-- <el-scrollbar @scroll="scrollChange" height="400px">
-        <div v-for="(item, key) in dataTimeline" :key="item.message" class="log-item">
-          <div class="flex-1 flex key-box">
-            <span class="key" :class="key < 3 && 'top'">{{ key + 1 }}</span>
-          </div>
-          <div class="flex-5 flex message" :title="item.message">{{ item.message }}</div>
-          <div class="flex-3 flex form" :title="item.from">{{ item.from }}</div>
-        </div>
-      </el-scrollbar> -->
       <div>
         <ul v-infinite-scroll="scrollChange" class="infinite-list log" :infinite-scroll-delay="500" :infinite-scroll-immediate="false" style="overflow: auto">
           <li v-for="(item, key) in dataTimeline" :key="item.commit_time" class="infinite-list-item log-item">
@@ -52,6 +43,7 @@ const loadingPlue = ref(false);
 const scrollChange = (pageValue) => {
   if (pageValue) {
     page.value = pageValue;
+    loading.value = true;
   } else {
     page.value = page.value + 1;
   }
@@ -59,15 +51,19 @@ const scrollChange = (pageValue) => {
   handleCreateGithub(!!pageValue);
 };
 const handleCreateGithub = (status = false) => {
-  getGithubCommitList({ page: page.value, pageSize: 10 }).then((resp) => {
-    if (resp?.code === 0) {
-      if (status) {
-        dataTimeline.value = resp.data.list || [];
-      } else {
-        dataTimeline.value = [...dataTimeline.value, ...resp.data.list];
+  getGithubCommitList({ page: page.value, pageSize: 10 })
+    .then((resp) => {
+      if (resp?.code === 0) {
+        if (status) {
+          dataTimeline.value = resp.data.list || [];
+        } else {
+          dataTimeline.value = [...dataTimeline.value, ...resp.data.list];
+        }
       }
-    }
-  });
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 };
 
 const loadCommits = () => {
