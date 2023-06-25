@@ -4,6 +4,7 @@ export interface BasicResponseModel<T = any> {
   code: number;
   message: string;
   result: T;
+  type?: string;
 }
 
 export type UserType = {
@@ -41,7 +42,7 @@ export function login(params: any) {
  * @description: 获取用户信息
  */
 export function getUserInfo() {
-  return http.request({
+  return http.request<UserType>({
     url: '/getUserInfo',
     method: 'get',
   });
@@ -51,7 +52,7 @@ export function getUserInfo() {
  * @description: 用户登出
  */
 export function doLogout() {
-  return http.request({
+  return http.request<{}>({
     url: '/logout',
     method: 'POST',
   });

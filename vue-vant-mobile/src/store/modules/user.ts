@@ -79,6 +79,7 @@ export const useUserStore = defineStore({
       return new Promise((resolve, reject) => {
         getUserInfo()
           .then((res) => {
+            // console.log(res);
             this.setUserInfo(res);
             resolve(res);
           })

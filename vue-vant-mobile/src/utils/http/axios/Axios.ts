@@ -5,7 +5,6 @@ import qs from 'qs';
 import { AxiosCanceler } from './axiosCancel';
 import { isFunction } from '@/utils/is';
 import { cloneDeep } from 'lodash-es';
-
 import type { RequestOptions, CreateAxiosOptions, Result, UploadFileParams } from './types';
 import { ContentTypeEnum, RequestEnum } from '@/enums/httpEnum';
 
