@@ -12,12 +12,13 @@ func (g *GithubService) CreateApi(github []system.SysGithub) (total int, err err
 	db := global.DB.Model(&system.SysGithub{})
 	var data []system.SysGithub
 	for _, item := range github {
-		db = db.Or("commit_time = ?", item.CommitTime)
-
+		if item.CommitTime != "" {
+			db = db.Or("commit_time = ?", item.CommitTime)
+		}
 	}
 	db.Find(&data)
 	dataInsert := []system.SysGithub{}
-	var isExist = false
+	var isExist = true
 	for _, item := range github {
 		for _, itemGithub := range data {
 			if itemGithub.CommitTime == item.CommitTime {
@@ -30,12 +31,16 @@ func (g *GithubService) CreateApi(github []system.SysGithub) (total int, err err
 		}
 		if isExist {
 			dataInsert = append(dataInsert, item)
-			isExist = false
+			isExist = true
 		}
 	}
-	// log.Println(dataInsert)
 	if len(dataInsert) != 0 {
-		err = db.Create(&dataInsert).Error
+		for _, item := range dataInsert {
+			dataItem := item
+			if dataItem.CommitTime != "" {
+				err = db.Create(&dataItem).Error
+			}
+		}
 	}
 
 	return
