@@ -51,7 +51,7 @@
   import { reactive } from 'vue';
   import { useUserStore } from '@/store/modules/user';
 
-  const pattern = /\S{6}/g;
+  const pattern = /\S{8}/;
   const pwdDetail = reactive<ResetPassword.Password>({
     password: '',
     newPassword: '',
