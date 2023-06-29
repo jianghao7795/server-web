@@ -9,12 +9,15 @@
               <!-- changeVNode() -->
             </div>
           </template>
-          <el-descriptions :column="3" v-bind:border="true" class="margin-top" direction="vertical" size="default">
+          <el-descriptions :column="4" v-bind:border="true" class="margin-top" direction="vertical" size="default">
             <el-descriptions-item label="项目名称">
               <el-tag type="success">{{ pkg.name }}</el-tag>
             </el-descriptions-item>
             <el-descriptions-item label="版本">
               <el-tag type="success">{{ pkg.version }}</el-tag>
+            </el-descriptions-item>
+            <el-descriptions-item label="vue版本">
+              <el-tag type="success">{{ version }}</el-tag>
             </el-descriptions-item>
             <el-descriptions-item label="Github地址">
               <a href="https://github.com/JiangHaoCode/server-web" style="color: #606266" target="_blank">Github地址</a>
@@ -99,6 +102,7 @@ import { onMounted, ref } from "vue";
 import { Like, BankCardOne } from "@icon-park/vue-next";
 import { useI18n } from "vue-i18n";
 import { useBtnAuth } from "@/utils/btnAuth";
+import { version } from "vue";
 
 const btnAuth = useBtnAuth();
 
