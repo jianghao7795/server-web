@@ -1,6 +1,7 @@
-import { isReactive, isRef } from 'vue';
+import { isReactive, isRef, reactive } from 'vue';
+import type { Ref } from 'vue';
 
-function setLoading(loading, val) {
+function setLoading(loading?: Ref | { loading?: boolean }, val?: boolean) {
   if (loading != undefined && isRef(loading)) {
     loading.value = val;
   } else if (loading != undefined && isReactive(loading)) {

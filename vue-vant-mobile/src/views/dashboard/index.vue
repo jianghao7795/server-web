@@ -6,7 +6,7 @@
         欢迎来到 {{ title }}
       </div>
       <div class="w-full mt-4 mb-6">
-        <van-swipe class="h-30" :autoplay="3000" :indicator-color="designStore.appTheme">
+        <van-swipe class="h-30" :autoplay="1000" :indicator-color="designStore.appTheme">
           <van-swipe-item
             class="text-gray-700 dark:text-gray-400 leading-relaxed text-center"
             v-for="(text, index) in getSwipeText"
