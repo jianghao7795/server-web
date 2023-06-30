@@ -48,9 +48,9 @@ func (mobileUserApi *MobileUserApi) CreateMoblieUser(c *gin.Context) {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /moblieUser/deleteMoblieUser [delete]
 func (mobileUserApi *MobileUserApi) DeleteMoblieUser(c *gin.Context) {
-	var moblieUser mobile.MobileUser
-	_ = c.ShouldBindJSON(&moblieUser)
-	if err := moblieUserService.DeleteMoblieUser(moblieUser); err != nil {
+	idString := c.Param("id")
+	id, _ := strconv.Atoi(idString)
+	if err := moblieUserService.DeleteMoblieUser(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败", c)
 	} else {

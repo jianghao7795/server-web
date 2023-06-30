@@ -10,17 +10,17 @@ import (
 type MobileUserRouter struct{}
 
 func (m *MobileUserRouter) InitMobileRouter(Router *gin.RouterGroup) {
-	moblieUserRouter := Router.Group("moblieUser").Use(middleware.OperationRecord())
-	moblieUserRouterWithoutRecord := Router.Group("moblieUser")
-	var moblieUserApi = v1.ApiGroupApp.MobileApiGroup.MobileUserApi
+	moblieUserRouter := Router.Group("mobile").Use(middleware.OperationRecord())
+	moblieUserRouterWithoutRecord := Router.Group("mobile")
+	var mobileUserApi = v1.ApiGroupApp.MobileApiGroup.MobileUserApi
 	{
-		moblieUserRouter.POST("createMoblieUser", moblieUserApi.CreateMoblieUser)             // 新建MoblieUser
-		moblieUserRouter.DELETE("deleteMoblieUser/:id", moblieUserApi.DeleteMoblieUser)       // 删除MoblieUser
-		moblieUserRouter.DELETE("deleteMoblieUserByIds", moblieUserApi.DeleteMoblieUserByIds) // 批量删除MoblieUser
-		moblieUserRouter.PUT("updateMoblieUser/:id", moblieUserApi.UpdateMoblieUser)          // 更新MoblieUser
+		moblieUserRouter.POST("createMobileUser", mobileUserApi.CreateMoblieUser)             // 新建MoblieUser
+		moblieUserRouter.DELETE("deleteMobileUser/:id", mobileUserApi.DeleteMoblieUser)       // 删除MoblieUser
+		moblieUserRouter.DELETE("deleteMobileUserByIds", mobileUserApi.DeleteMoblieUserByIds) // 批量删除MoblieUser
+		moblieUserRouter.PUT("updateMobileUser/:id", mobileUserApi.UpdateMoblieUser)          // 更新MoblieUser
 	}
 	{
-		moblieUserRouterWithoutRecord.GET("findMoblieUser/:id", moblieUserApi.FindMoblieUser)   // 根据ID获取MoblieUser
-		moblieUserRouterWithoutRecord.GET("getMoblieUserList", moblieUserApi.GetMoblieUserList) // 获取MoblieUser列表
+		moblieUserRouterWithoutRecord.GET("findMobileUser/:id", mobileUserApi.FindMoblieUser)   // 根据ID获取MoblieUser
+		moblieUserRouterWithoutRecord.GET("getMobileUserList", mobileUserApi.GetMoblieUserList) // 获取MoblieUser列表
 	}
 }

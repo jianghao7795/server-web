@@ -19,8 +19,8 @@ func (moblieUserService *MobileUserService) CreateMoblieUser(moblieUser mobile.M
 
 // DeleteMoblieUser 删除MoblieUser记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (moblieUserService *MobileUserService) DeleteMoblieUser(moblieUser mobile.MobileUser) (err error) {
-	err = global.DB.Delete(&moblieUser).Error
+func (moblieUserService *MobileUserService) DeleteMoblieUser(id uint) (err error) {
+	err = global.DB.Delete(&mobile.MobileUser{}, id).Error
 	return err
 }
 
@@ -52,6 +52,9 @@ func (moblieUserService *MobileUserService) GetMoblieUserInfoList(info mobileReq
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
 	db := global.DB.Model(&mobile.MobileUser{})
+	if info.Username != "" {
+		db = db.Where("username like ?", "%"+info.Username+"%")
+	}
 	var moblieUsers []mobile.MobileUser
 	// 如果有条件搜索 下方会自动创建搜索语句
 	err = db.Count(&total).Error

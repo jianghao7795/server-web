@@ -2,16 +2,7 @@
   <div :style="{ background: userStore.sideMode }">
     <el-scrollbar style="height: calc(100vh - 60px)">
       <transition :duration="{ enter: 800, leave: 100 }" mode="out-in" name="el-fade-in-linear">
-        <el-menu
-          :collapse="isCollapse"
-          :collapse-transition="false"
-          :default-active="active"
-          :background-color="theme.background"
-          :active-text-color="theme.active"
-          class="el-menu-vertical"
-          unique-opened
-          @select="selectMenuItem"
-        >
+        <el-menu :collapse="isCollapse" :collapse-transition="false" :default-active="active" :background-color="theme.background" :active-text-color="theme.active" class="el-menu-vertical" unique-opened @select="selectMenuItem">
           <template v-for="item in routerStore.asyncRouters[0].children">
             <aside-component v-if="!item.hidden" :key="item.name" :is-collapse="isCollapse" :router-info="item" :theme="theme" />
           </template>
