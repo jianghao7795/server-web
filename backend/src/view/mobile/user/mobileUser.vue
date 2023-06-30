@@ -2,6 +2,9 @@
   <div>
     <div class="search-box">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
+        <el-form-item label="用户名">
+          <el-input v-model="searchInfo.username" />
+        </el-form-item>
         <el-form-item>
           <el-button size="small" type="primary" icon="search" @click="onSubmit">查询</el-button>
           <el-button size="small" icon="refresh" @click="onReset">重置</el-button>
@@ -108,7 +111,7 @@ export default {
 import { createMobileUser, deleteMobileUser, deleteMobileUserByIds, updateMobileUser, findMobileUser, getMobileUserList } from "@/api/mobileUser";
 
 // 全量引入格式化工具 请按需保留
-import { formatDate, formatBoolean } from "@/utils/format";
+// import { formatDate, formatBoolean } from "@/utils/format";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { ref } from "vue";
 
