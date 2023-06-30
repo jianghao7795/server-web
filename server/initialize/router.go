@@ -26,7 +26,7 @@ func Routers() *gin.Engine {
 	appRouter := router.RouterGroupApp.App
 	systemRouter := router.RouterGroupApp.System
 	exampleRouter := router.RouterGroupApp.Example
-	frontendRouter := router.RouterGroupApp.Frontend
+
 	// 如果想要不使用nginx代理前端网页，可以修改 web/.env.production 下的
 	// VUE_APP_BASE_API = /
 	// VUE_APP_BASE_PATH = http://localhost
@@ -52,6 +52,12 @@ func Routers() *gin.Engine {
 
 	// Router.Use(middleware.GinRecovery(true)) // recover掉项目可能出现的panic，并使用zap记录相关日志
 
+	mobile := router.RouterGroupApp.Mobile
+	MobileGroup := Router.Group("mobile")
+	{
+		mobile.InitMobileRouter(MobileGroup)
+	}
+
 	PublicGroup := Router.Group("api")
 	{
 		// 健康监测
@@ -66,6 +72,7 @@ func Routers() *gin.Engine {
 			})
 		})
 	}
+	frontendRouter := router.RouterGroupApp.Frontend
 	{
 		// 前台的API
 		frontendRouter.InitFrontendRouter(PublicGroup)
@@ -77,7 +84,7 @@ func Routers() *gin.Engine {
 		systemRouter.InitBaseRouter(PrivateGroup) // 注册基础功能路由 不做鉴权
 		systemRouter.InitInitRouter(PrivateGroup) // 自动初始化相关
 	}
-	// 页面管理
+	// 后台页面管理
 	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler()) // casbin的拦截规则
 	{
 		systemRouter.InitApiRouter(PrivateGroup)                 // 注册功能api路由
