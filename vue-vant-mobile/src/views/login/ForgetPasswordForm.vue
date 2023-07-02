@@ -121,13 +121,14 @@
       .then(async () => {
         try {
           loading.value = true;
-          // do something
+          throw '密码错误';
         } finally {
           loading.value = false;
         }
       })
-      .catch(() => {
+      .catch((e: Error) => {
         console.error('验证失败');
+        showToast(e);
       });
   }
 </script>
