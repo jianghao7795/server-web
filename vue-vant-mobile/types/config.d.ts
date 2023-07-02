@@ -1,4 +1,4 @@
-export interface GlobConfig {
+export type GlobConfig = {
   title: string;
   titleCN: string;
   apiUrl: string;
@@ -7,9 +7,9 @@ export interface GlobConfig {
   uploadUrl?: string;
   prodMock: boolean;
   imgUrl?: string;
-}
+};
 
-export interface GlobEnvConfig {
+export type GlobEnvConfig = {
   // 标题
   VITE_GLOB_APP_TITLE: string;
   // 中文标题
@@ -26,4 +26,4 @@ export interface GlobEnvConfig {
   VITE_GLOB_IMG_URL?: string;
   // 生产环境开启mock
   VITE_GLOB_PROD_MOCK: boolean;
-}
+};

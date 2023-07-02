@@ -8,7 +8,7 @@ export interface CreateAxiosOptions extends AxiosRequestConfig {
 }
 
 // 上传文件
-export interface UploadFileParams {
+export type UploadFileParams = {
   // 其他参数
   data?: Recordable;
   // 文件参数接口字段名
@@ -18,9 +18,9 @@ export interface UploadFileParams {
   // 文件名称
   filename?: string;
   [key: string]: any;
-}
+};
 
-export interface RequestOptions {
+export type RequestOptions = {
   // 请求参数拼接到url
   joinParamsToUrl?: boolean;
   // 格式化请求参数时间
@@ -55,11 +55,11 @@ export interface RequestOptions {
   ignoreCancelToken?: boolean;
   // 是否携带token
   withToken?: boolean;
-}
+};
 
-export interface Result<T = any> {
+export type Result<T = any> = {
   code: number;
   type?: 'success' | 'error' | 'warning';
   message: string;
   result?: T;
-}
+};

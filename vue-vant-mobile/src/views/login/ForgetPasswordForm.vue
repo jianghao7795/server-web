@@ -38,11 +38,22 @@
     >
       <template #left-icon>
         <Icon>
-          <EditOutlined />
+          <MessageOutlined />
         </Icon>
       </template>
       <template #button>
-        <van-button size="small" type="primary">发送验证码</van-button>
+        <van-count-down ref="timeRef" :time="timeDown" :auto-start="false" @finish="onFinish">
+          <template #default="timeData">
+            <van-button
+              size="small"
+              :type="timeBoolean ? 'default' : 'primary'"
+              :disabled="timeBoolean"
+              @click="handleSendMessage"
+            >
+              {{ timeBoolean ? `(${timeData.seconds})已发送` : '发送短信' }}
+            </van-button>
+          </template>
+        </van-count-down>
       </template>
     </van-field>
 
@@ -70,22 +81,39 @@
 
 <script setup lang="ts">
   import { computed, reactive, ref, unref } from 'vue';
-  import type { FormInstance } from 'vant';
+  import type { CountDownInstance, FormInstance } from 'vant';
+  import { showToast } from 'vant';
   import { Icon } from '@vicons/utils';
-  import { UserOutlined, MobileOutlined, EditOutlined } from '@vicons/antd';
+  import { UserOutlined, MobileOutlined, MessageOutlined } from '@vicons/antd';
   import { LoginStateEnum, useLoginState, useFormRules } from './useLogin';
 
   const { handleBackLogin, getLoginState } = useLoginState();
   const { getFormRules } = useFormRules();
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.RESET_PASSWORD);
 
-  const loading = ref(false);
+  const timeRef = ref<CountDownInstance>();
+  const timeDown = ref<number>(60000);
+  const timeBoolean = ref<boolean>(false);
+
+  const loading = ref<boolean>(false);
   const formRef = ref<FormInstance>();
   const formData = reactive({
     username: '',
     mobile: '',
     sms: '',
   });
+
+  const handleSendMessage = () => {
+    timeBoolean.value = true;
+    timeRef.value?.start();
+  };
+
+  const onFinish = () => {
+    timeBoolean.value = false;
+    // console.log(timeBoolean.value);
+    showToast('倒计时结束');
+    timeRef.value?.reset();
+  };
 
   function handleReset() {
     formRef.value
