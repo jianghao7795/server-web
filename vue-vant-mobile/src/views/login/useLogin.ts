@@ -1,10 +1,11 @@
 import type { FieldRule } from 'vant';
 import { computed, ref, unref } from 'vue';
 
+// enum 自增1 表示常数
 export enum LoginStateEnum {
-  LOGIN,
-  REGISTER,
-  RESET_PASSWORD,
+  LOGIN, //0
+  REGISTER, //1
+  RESET_PASSWORD, //2
 }
 
 const currentState = ref(LoginStateEnum.LOGIN);

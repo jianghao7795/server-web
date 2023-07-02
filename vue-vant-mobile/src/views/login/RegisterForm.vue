@@ -29,7 +29,7 @@
         </template>
       </van-field>
 
-      <van-field
+      <!-- <van-field
         class="enter-y items-center !rounded-md"
         v-model="formData.sms"
         center
@@ -45,8 +45,8 @@
         <template #button>
           <van-button size="small" type="primary">发送验证码</van-button>
         </template>
-      </van-field>
-
+      </van-field> -->
+      <SendMessage :data="formData.sms" @updateData="(v:string) => formData.sms = v" />
       <van-field
         class="enter-y items-center !rounded-md"
         v-model="formData.password"
@@ -137,12 +137,12 @@
   import {
     UserOutlined,
     MobileOutlined,
-    EditOutlined,
     LockOutlined,
     EyeOutlined,
     EyeInvisibleOutlined,
   } from '@vicons/antd';
   import { LoginStateEnum, useLoginState, useFormRules } from './useLogin';
+  import SendMessage from './components/SendMessage.vue';
 
   const { handleBackLogin, getLoginState } = useLoginState();
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.REGISTER);
@@ -180,6 +180,7 @@
         }
       })
       .catch(() => {
+        console.log(formData);
         console.error('验证失败');
       });
   }

@@ -27,8 +27,8 @@
         </Icon>
       </template>
     </van-field>
-
-    <van-field
+    <SendMessage :data="formData.sms" @updateData="(v:string) => formData.sms = v" />
+    <!-- <van-field
       class="enter-y items-center mb-70px !rounded-md"
       v-model="formData.sms"
       center
@@ -55,7 +55,7 @@
           </template>
         </van-count-down>
       </template>
-    </van-field>
+    </van-field> -->
 
     <van-button
       class="enter-y !mb-25px !rounded-md"
@@ -82,6 +82,7 @@
 <script setup lang="ts">
   import { computed, reactive, ref, unref } from 'vue';
   import type { CountDownInstance, FormInstance } from 'vant';
+  import SendMessage from './components/SendMessage.vue';
   import { showToast } from 'vant';
   import { Icon } from '@vicons/utils';
   import { UserOutlined, MobileOutlined, MessageOutlined } from '@vicons/antd';
@@ -90,6 +91,7 @@
   const { handleBackLogin, getLoginState } = useLoginState();
   const { getFormRules } = useFormRules();
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.RESET_PASSWORD);
+  // console.log(LoginStateEnum.RESET_PASSWORD);
 
   const timeRef = ref<CountDownInstance>();
   const timeDown = ref<number>(60000);
