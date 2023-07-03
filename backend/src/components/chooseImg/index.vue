@@ -81,7 +81,9 @@ const path = ref(import.meta.env.VITE_BASE_API);
 const chooseImg = (url, target, targetKey, item) => {
   if (target && targetKey) {
     target[targetKey] = url;
+    return;
   }
+  // console.log(url, target, targetKey, item);
   emit("enterImg", url, item);
   // drawer.value = false;
 };

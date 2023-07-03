@@ -30,7 +30,11 @@
         <el-table-column align="left" label="用户名" prop="username" width="120" />
         <el-table-column align="left" label="昵称" prop="nickname" width="120" />
         <el-table-column align="left" label="真实姓名" prop="realname" width="120" />
-        <el-table-column align="left" label="头像" prop="avatar" width="120" />
+        <el-table-column label="头像" prop="avatar" width="120" align="center">
+          <template #default="scope">
+            <CustomPic style="margin-top: 8px; text-align: left" :pic-src="scope.row.avatar" />
+          </template>
+        </el-table-column>
         <el-table-column align="left" label="简介" prop="sign" width="120" />
         <el-table-column align="left" label="主页封面" prop="cover" width="120" />
         <el-table-column align="left" label="用户信息" prop="content" width="120" />
@@ -64,7 +68,10 @@
           <el-input v-model="formData.realname" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="头像:">
-          <el-input v-model="formData.avatar" clearable placeholder="请输入" />
+          <div style="display: inline-block" @click="openHeaderChange">
+            <img v-if="!!formData.avatar" class="header-img-box" :src="formData.avatar ? path + `/${formData.avatar}` : formData.avatar" />
+            <div v-else class="header-img-box">从媒体库选择</div>
+          </div>
         </el-form-item>
         <el-form-item label="简介:">
           <el-input v-model="formData.sign" clearable placeholder="请输入" />
@@ -98,6 +105,7 @@
         </div>
       </template>
     </el-dialog>
+    <ChooseImg ref="chooseImg" @enter-img="enterImage" />
   </div>
 </template>
 
@@ -109,11 +117,16 @@ export default {
 
 <script setup>
 import { createMobileUser, deleteMobileUser, deleteMobileUserByIds, updateMobileUser, findMobileUser, getMobileUserList } from "@/api/mobileUser";
+import ChooseImg from "@/components/chooseImg/index.vue";
+import CustomPic from "@/components/customPic/index.vue";
 
 // 全量引入格式化工具 请按需保留
 // import { formatDate, formatBoolean } from "@/utils/format";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { ref } from "vue";
+
+const path = ref(import.meta.env.VITE_BASE_API);
+const chooseImg = ref(null);
 
 const options = [
   { text: "不展示", value: 0 },
@@ -183,6 +196,16 @@ const total = ref(0);
 const pageSize = ref(10);
 const tableData = ref([]);
 const searchInfo = ref({});
+
+const enterImage = (url, _item) => {
+  // console.log(url, item);
+  formData.value.avatar = url;
+};
+
+// 选择图片
+const openHeaderChange = () => {
+  chooseImg.value.open();
+};
 
 // 重置
 const onReset = () => {
@@ -333,8 +356,8 @@ const closeDialog = () => {
     cover: "",
     content: "",
     password: "",
-    industry: false,
-    gender: false,
+    industry: 0,
+    gender: 0,
   };
 };
 // 弹窗确定
