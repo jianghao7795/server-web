@@ -57,8 +57,32 @@
       </template>
     </van-field> -->
 
+    <van-field
+      class="enter-y items-center !rounded-md"
+      v-model="formData.confirmPassword"
+      :type="switchConfirmPassType ? 'password' : 'text'"
+      name="confirmPassword"
+      placeholder="确认密码"
+      :rules="getFormRules.confirmPassword"
+      @click-right-icon="switchConfirmPassType = !switchConfirmPassType"
+    >
+      <template #left-icon>
+        <Icon>
+          <LockOutlined />
+        </Icon>
+      </template>
+      <template #right-icon>
+        <Icon v-if="switchConfirmPassType">
+          <EyeInvisibleOutlined />
+        </Icon>
+        <Icon v-else>
+          <EyeOutlined />
+        </Icon>
+      </template>
+    </van-field>
+
     <van-button
-      class="enter-y !mb-25px !rounded-md"
+      class="enter-y !mb-25px !rounded-md prominent"
       type="primary"
       block
       native-type="submit"
@@ -85,7 +109,7 @@
   import SendMessage from './components/SendMessage.vue';
   import { showToast } from 'vant';
   import { Icon } from '@vicons/utils';
-  import { UserOutlined, MobileOutlined, MessageOutlined } from '@vicons/antd';
+  import { UserOutlined, MobileOutlined } from '@vicons/antd';
   import { LoginStateEnum, useLoginState, useFormRules } from './useLogin';
 
   const { handleBackLogin, getLoginState } = useLoginState();
@@ -93,29 +117,30 @@
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.RESET_PASSWORD);
   // console.log(LoginStateEnum.RESET_PASSWORD);
 
-  const timeRef = ref<CountDownInstance>();
-  const timeDown = ref<number>(60000);
-  const timeBoolean = ref<boolean>(false);
+  // const timeRef = ref<CountDownInstance>();
+  // const timeBoolean = ref<boolean>(false);
 
   const loading = ref<boolean>(false);
+  const switchConfirmPassType = ref<boolean>(false);
   const formRef = ref<FormInstance>();
   const formData = reactive({
     username: '',
     mobile: '',
     sms: '',
+    confirmPassword: '',
   });
 
-  const handleSendMessage = () => {
-    timeBoolean.value = true;
-    timeRef.value?.start();
-  };
+  // const handleSendMessage = () => {
+  //   timeBoolean.value = true;
+  //   timeRef.value?.start();
+  // };
 
-  const onFinish = () => {
-    timeBoolean.value = false;
-    // console.log(timeBoolean.value);
-    showToast('倒计时结束');
-    timeRef.value?.reset();
-  };
+  // const onFinish = () => {
+  //   timeBoolean.value = false;
+  //   // console.log(timeBoolean.value);
+  //   showToast('倒计时结束');
+  //   timeRef.value?.reset();
+  // };
 
   function handleReset() {
     formRef.value

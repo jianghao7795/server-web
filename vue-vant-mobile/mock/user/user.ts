@@ -4,7 +4,7 @@ import { ResultEnum } from '@/enums/httpEnum';
 
 const fakeUserList = [
   {
-    userId: 1,
+    ID: 1,
     username: 'admin',
     password: '123456',
     nickname: '一条咸鱼',
@@ -18,7 +18,7 @@ const fakeUserList = [
     token: 'fakeToken1',
   },
   {
-    userId: 2,
+    ID: 2,
     username: 'test',
     password: '123456',
     nickname: '萝卜头',
@@ -47,9 +47,9 @@ export default [
       if (!checkUser) {
         return resultError('帐号或密码不正确');
       }
-      const { userId, username: _username, token, realname, sign } = checkUser;
+      const { ID, username: _username, token, realname, sign } = checkUser;
       return resultSuccess({
-        userId,
+        ID,
         username: _username,
         token,
         realname,

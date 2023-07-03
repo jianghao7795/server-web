@@ -9,7 +9,7 @@ import { PageEnum } from '@/enums/pageEnum';
 import router from '@/router';
 
 interface UserInfo {
-  userId: string | number;
+  ID: string | number;
   username: string;
   realname: string;
   nickname: string;

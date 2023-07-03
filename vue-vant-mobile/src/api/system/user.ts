@@ -8,7 +8,7 @@ export interface BasicResponseModel<T = any> {
 }
 
 export type UserType = {
-  id: number;
+  ID: number;
   username: string;
   password: string;
   nickname: string;

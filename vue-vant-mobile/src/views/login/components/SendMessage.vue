@@ -1,6 +1,6 @@
 <template>
   <van-field
-    class="enter-y items-center mb-70px !rounded-md"
+    class="enter-y items-center !rounded-md"
     v-model="sms"
     center
     clearable
