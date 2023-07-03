@@ -28,35 +28,6 @@
       </template>
     </van-field>
     <SendMessage :data="formData.sms" @updateData="(v:string) => formData.sms = v" />
-    <!-- <van-field
-      class="enter-y items-center mb-70px !rounded-md"
-      v-model="formData.sms"
-      center
-      clearable
-      placeholder="请输入短信验证码"
-      :rules="getFormRules.sms"
-    >
-      <template #left-icon>
-        <Icon>
-          <MessageOutlined />
-        </Icon>
-      </template>
-      <template #button>
-        <van-count-down ref="timeRef" :time="timeDown" :auto-start="false" @finish="onFinish">
-          <template #default="timeData">
-            <van-button
-              size="small"
-              :type="timeBoolean ? 'default' : 'primary'"
-              :disabled="timeBoolean"
-              @click="handleSendMessage"
-            >
-              {{ timeBoolean ? `(${timeData.seconds})已发送` : '发送短信' }}
-            </van-button>
-          </template>
-        </van-count-down>
-      </template>
-    </van-field> -->
-
     <van-field
       class="enter-y items-center !rounded-md"
       v-model="formData.confirmPassword"
@@ -105,16 +76,24 @@
 
 <script setup lang="ts">
   import { computed, reactive, ref, unref } from 'vue';
-  import type { CountDownInstance, FormInstance } from 'vant';
+  import type { FormInstance } from 'vant';
   import SendMessage from './components/SendMessage.vue';
   import { showToast } from 'vant';
   import { Icon } from '@vicons/utils';
-  import { UserOutlined, MobileOutlined } from '@vicons/antd';
+  import {
+    UserOutlined,
+    MobileOutlined,
+    EyeOutlined,
+    EyeInvisibleOutlined,
+    LockOutlined,
+  } from '@vicons/antd';
   import { LoginStateEnum, useLoginState, useFormRules } from './useLogin';
 
   const { handleBackLogin, getLoginState } = useLoginState();
   const { getFormRules } = useFormRules();
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.RESET_PASSWORD);
+  // const expose = defineExpose(); // 父级获取子组件的 expose 暴露的值和函数
+  // console.log(version);
   // console.log(LoginStateEnum.RESET_PASSWORD);
 
   // const timeRef = ref<CountDownInstance>();

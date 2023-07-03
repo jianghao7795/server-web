@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-center">
+  <div class="flex flex-col items-center justify-center" v-once>
     <div class="logo my-35px enter-y">
       <SvgIcon class="!h-250px !w-250px" name="logo" />
     </div>

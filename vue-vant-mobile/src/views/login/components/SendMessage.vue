@@ -37,9 +37,7 @@
   import { MessageOutlined } from '@vicons/antd';
   import { Icon } from '@vicons/utils';
 
-  const props = defineProps<{
-    data: string;
-  }>();
+  const props = defineProps<{ data: string }>();
 
   const emit = defineEmits<{
     (e: 'updateData', value: string): void;
@@ -47,7 +45,7 @@
 
   const sms = computed({
     get: () => props.data,
-    set: (val) => {
+    set: (val: string) => {
       emit('updateData', val);
     },
   });

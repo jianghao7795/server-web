@@ -1,5 +1,5 @@
 <template>
-  <div class="enter-y fixed bottom-0 w-full !-z-5 wave-wrapper">
+  <div class="enter-y fixed bottom-0 w-full !-z-5 wave-wrapper" v-once>
     <svg
       class="ignore-waves"
       xmlns="http://www.w3.org/2000/svg"
