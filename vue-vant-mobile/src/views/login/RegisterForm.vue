@@ -102,11 +102,33 @@
       >
         <template #input>
           <van-checkbox v-model="formData.policy" icon-size="14px" shape="square">
-            我同意 xxx 隐私政策
+            我同意 xxx <a @click="viewPrivacyPolicy">隐私政策</a>
           </van-checkbox>
         </template>
       </van-field>
     </van-cell-group>
+
+    <van-action-sheet v-model:show="show" title="隐私政策">
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+      <div class="content">内容</div>
+    </van-action-sheet>
 
     <van-button
       class="enter-y !mb-25px !rounded-md"
@@ -149,6 +171,12 @@
 
   const loading = ref(false);
   const formRef = ref<FormInstance>();
+
+  const show = ref(false);
+
+  const viewPrivacyPolicy = () => {
+    show.value = true;
+  };
 
   const formData = reactive({
     username: '',
