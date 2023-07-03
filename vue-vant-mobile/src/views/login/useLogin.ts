@@ -54,7 +54,7 @@ export function useFormRules(formData?: Recordable) {
 
     const mobileRule = {
       sms: smsFormRule,
-      mobile: mobileFormRule,
+      mobile: [...mobileFormRule, { pattern: /1\d{10}/, message: '请输入正确的手机号' }],
     };
     switch (unref(currentState)) {
       // register form rules
