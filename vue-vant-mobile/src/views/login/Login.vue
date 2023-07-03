@@ -6,6 +6,7 @@
         <LoginForm />
         <ForgetPasswordForm />
         <RegisterForm />
+        <DomNode />
       </div>
     </div>
     <LoginWave />
@@ -18,6 +19,9 @@
   import ForgetPasswordForm from './ForgetPasswordForm.vue';
   import RegisterForm from './RegisterForm.vue';
   import LoginWave from './LoginWave.vue';
+  import { h } from 'vue';
+
+  const DomNode = h('div', { class: 'prominent', style: 'text-align: center' }, ['默默支持']);
 </script>
 
 <style scoped lang="less">
