@@ -4,6 +4,8 @@ import (
 	"server/global"
 	"server/model/common/request"
 	"server/model/system"
+	"sort"
+	"time"
 )
 
 type GithubService struct{}
@@ -16,7 +18,7 @@ func (g *GithubService) CreateApi(github []system.SysGithub) (total int, err err
 			db = db.Or("commit_time = ?", item.CommitTime)
 		}
 	}
-	db.Find(&data)
+	db.Order("id desc").Find(&data)
 	dataInsert := []system.SysGithub{}
 	var isExist = true
 	for _, item := range github {
@@ -36,6 +38,9 @@ func (g *GithubService) CreateApi(github []system.SysGithub) (total int, err err
 	}
 	insertNumber := 0
 	if len(dataInsert) != 0 {
+		sort.Slice(dataInsert, func(i, j int) bool {
+			return timeStrTime(dataInsert[i].CommitTime) < timeStrTime(dataInsert[j].CommitTime)
+		})
 		for _, item := range dataInsert {
 			dataItem := item
 			if dataItem.CommitTime != "" {
@@ -54,4 +59,11 @@ func (g *GithubService) GetGithubList(info request.PageInfo) (list []system.SysG
 	offset := info.PageSize * (info.Page - 1)
 	err = db.Order("id desc").Limit(limit).Offset(offset).Find(&list).Error
 	return
+}
+
+func timeStrTime(valueStr string) int64 {
+	loc := time.Local
+	fmtStr := "2006-01-02 15:04:05"
+	t, _ := time.ParseInLocation(fmtStr, valueStr, loc)
+	return t.Unix()
 }
