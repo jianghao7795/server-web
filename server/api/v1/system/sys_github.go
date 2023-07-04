@@ -139,7 +139,7 @@ func (g *SystemGithubApi) CreateGithub(c *gin.Context) {
 	for _, val := range *respData {
 		var temp system.SysGithub
 		temp.Author = val.Commit.Author.Name
-		temp.CommitTime = val.Commit.Author.Date.Format("2006-01-02 15:04:05")
+		temp.CommitTime = val.Commit.Author.Date.Add(8 * time.Hour).Format("2006-01-02 15:04:05")
 		temp.Message = val.Commit.Message
 		data = append(data, temp)
 	}
