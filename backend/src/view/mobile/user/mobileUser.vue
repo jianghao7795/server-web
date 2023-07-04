@@ -38,7 +38,7 @@
         <el-table-column align="left" label="简介" prop="sign" width="120" />
         <el-table-column align="left" label="主页封面" prop="cover" width="120" />
         <el-table-column align="left" label="用户信息" prop="content" width="120" />
-        <el-table-column align="left" label="密码" prop="password" width="120" />
+        <!-- <el-table-column align="left" label="密码" prop="password" width="120" /> -->
         <el-table-column align="left" label="行业" prop="industry" width="120">
           <template #default="scope">{{ viewOption[scope.row.industry] }}</template>
         </el-table-column>
@@ -82,9 +82,9 @@
         <el-form-item label="用户信息:">
           <el-input v-model="formData.content" clearable placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="密码:">
+        <!-- <el-form-item label="密码:">
           <el-input v-model="formData.password" clearable placeholder="请输入" />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="行业:">
           <el-select v-model="formData.industry">
             <el-option v-for="item in options" :key="item.value" :label="item.text" :value="item.value" />

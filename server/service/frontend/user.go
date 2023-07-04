@@ -111,9 +111,9 @@ func MakeToken(data frontendRequest.LoginForm, id uint) (tokenString string, exp
 		Name:     data.Name,
 		Password: data.Password,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour * time.Duration(1))), // 过期时间3小时
-			IssuedAt:  jwt.NewNumericDate(time.Now()),                                        // 签发时间
-			NotBefore: jwt.NewNumericDate(time.Now()),                                        // 生效时间
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(global.CONFIG.JWT.ExpiresTime) * time.Hour)), // 过期时间24小时
+			IssuedAt:  jwt.NewNumericDate(time.Now()),                                                               // 签发时间
+			NotBefore: jwt.NewNumericDate(time.Now()),                                                               // 生效时间
 		}}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim) // 使用HS256算法
 	tokenString, err = token.SignedString(MySecret)

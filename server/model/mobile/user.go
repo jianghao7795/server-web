@@ -15,9 +15,9 @@ type MobileUser struct {
 	Sign     string `json:"sign" form:"sign" gorm:"column:sign;comment:简介;size:255;"`
 	Cover    string `json:"cover" form:"cover" gorm:"column:cover;comment:主页封面;size:255;"`
 	Content  string `json:"content" form:"content" gorm:"column:content;comment:用户信息;"`
-	Password string `json:"password" form:"password" gorm:"column:password;comment:密码;size:100;"`
-	Industry uint8  `json:"industry" form:"industry" gorm:"column:industry;comment:行业;"`
-	Gender   uint8  `json:"gender" form:"gender" gorm:"column:gender;comment:性别;"`
+	// Password string `json:"password" form:"password" gorm:"column:password;comment:密码;size:100;"`
+	Industry uint8 `json:"industry" form:"industry" gorm:"column:industry;comment:行业;"`
+	Gender   uint8 `json:"gender" form:"gender" gorm:"column:gender;comment:性别;"`
 }
 
 // TableName MoblieUser 表名
