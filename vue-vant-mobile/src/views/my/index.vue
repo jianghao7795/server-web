@@ -8,7 +8,7 @@
         class="border-4 !absolute -top-90px h-170px w-170px"
         round
         fit="cover"
-        :src="avatar"
+        :src="`/api/mobile/${avatar}`"
       />
       <div class="flex flex-col items-center mt-90px">
         <p class="font-black text-40px mb-20px">{{ nickname }}</p>
@@ -93,7 +93,7 @@
   ];
 
   const getUserCoverBg = computed(() => {
-    return { backgroundImage: `url(${cover ? cover : avatar})` };
+    return { backgroundImage: `url(${cover ? cover : `/api/mobile/${avatar}`})` };
   });
 </script>
 <style lang="less" scoped>

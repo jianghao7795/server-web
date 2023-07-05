@@ -13,7 +13,7 @@
     >
       <template #input>
         <UploaderImage>
-          <van-image class="avatar" round fit="cover" :src="avatar" />
+          <van-image class="avatar" round fit="cover" :src="`/api/mobile/${avatar}`" />
         </UploaderImage>
       </template>
     </van-field>
@@ -65,7 +65,7 @@
     >
       <template #input>
         <UploaderImage>
-          <van-image class="cover" fit="cover" :src="cover ? cover : avatar" />
+          <van-image class="cover" fit="cover" :src="cover ? cover : `/api/mobile/${avatar}`" />
         </UploaderImage>
       </template>
     </van-field>
