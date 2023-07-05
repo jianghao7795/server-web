@@ -2,9 +2,8 @@ import { http } from '@/utils/http/axios';
 
 export interface BasicResponseModel<T = any> {
   code: number;
-  message: string;
-  result: T;
-  type?: string;
+  msg: string;
+  data: T;
 }
 
 export type UserType = {
@@ -19,6 +18,11 @@ export type UserType = {
   industry: number;
   gender: 0 | 1;
   phone: string;
+};
+
+export type LoginResponse = {
+  user: UserType;
+  expiresAt: string;
   token: string;
 };
 
@@ -26,9 +30,9 @@ export type UserType = {
  * @description: 用户登录
  */
 export function login(params: any) {
-  return http.request<BasicResponseModel<UserType>>(
+  return http.request<BasicResponseModel<LoginResponse>>(
     {
-      url: '/login',
+      url: '/mobile/login',
       method: 'POST',
       params,
     },
@@ -43,7 +47,7 @@ export function login(params: any) {
  */
 export function getUserInfo() {
   return http.request<UserType>({
-    url: '/getUserInfo',
+    url: '/mobile/getUserInfo',
     method: 'get',
   });
 }
