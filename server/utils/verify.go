@@ -20,4 +20,5 @@ var (
 	RegisterVerifyFrontend      = Rules{"Name": {NotEmpty()}, "Password": {NotEmpty(), Ge("6")}, "RePassword": {NotEmpty(), Ge("6")}} // 前台页面登录验证
 	ResetPasswordVerifyFrontend = Rules{"Password": {NotEmpty(), Ge("6")}, "NewPassword": {NotEmpty(), Ge("6")}, "RepeatNewPassword": {NotEmpty(), Ge("6")}}
 	UpdateUserVerify            = Rules{"Name": {NotEmpty(), Ge("2")}, "HeadImg": {NotEmpty()}, "Header": {NotEmpty()}}
+	MobileLoginVerify           = Rules{"Username": {NotEmpty()}, "Password": {NotEmpty(), Ge("6")}}
 )

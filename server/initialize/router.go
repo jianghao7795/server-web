@@ -37,6 +37,7 @@ func Routers() *gin.Engine {
 	// Router.StaticFile("/", "./dist/index.html") // 前端网页入口页面
 	Router.StaticFS("/api/uploads/", http.Dir("uploads/"))     // 本地的frontend api文件路由转化
 	Router.StaticFS("/backend/uploads/", http.Dir("uploads/")) // 本地的backend文件路由转化
+	Router.StaticFS("/mobile/uploads/", http.Dir("uploads/"))  // 本地的mobile文件路由转化
 	// Router.StaticFS(global.CONFIG.Local.Path, http.Dir(global.CONFIG.Local.Path)) // 为用户头像和文件提供静态地址
 	Router.StaticFS("/backend/form-generator", http.Dir("resource/page"))
 	// Router.Use(middleware.LoadTls())  // 如果需要使用https 请打开此中间件 然后前往 core/server.go 将启动模式 更变为 Router.RunTLS("端口","你的cre/pem文件","你的key文件")
@@ -53,10 +54,10 @@ func Routers() *gin.Engine {
 	// Router.Use(middleware.GinRecovery(true)) // recover掉项目可能出现的panic，并使用zap记录相关日志
 
 	mobile := router.RouterGroupApp.Mobile
-	// MobileGroup := Router.Group("mobile")
-	// {
-	// 	mobile.InitMobileRouter(MobileGroup)
-	// }
+	MobileGroup := Router.Group("mobile")
+	{
+		mobile.InitMobileLoginRouter(MobileGroup)
+	}
 
 	PublicGroup := Router.Group("api")
 	{
