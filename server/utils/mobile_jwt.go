@@ -11,7 +11,7 @@ import (
 
 var MySecret = []byte(global.CONFIG.JWT.SigningKey)
 
-type MyClaims struct {
+type MobileClaims struct {
 	ID                   uint   `json:"id"`
 	Username             string `json:"username"`
 	Realname             string `json:"realname"`
@@ -19,7 +19,7 @@ type MyClaims struct {
 }
 
 func MakeToken(data mobile.Login, id uint) (tokenString string, expiresAt int64, err error) {
-	claim := MyClaims{
+	claim := MobileClaims{
 		ID:       id,
 		Username: data.Username,
 		Realname: data.Realname,
@@ -39,8 +39,8 @@ func Secret() jwt.Keyfunc {
 	}
 }
 
-func ParseToken(tokenss string) (*MyClaims, error) {
-	token, err := jwt.ParseWithClaims(tokenss, &MyClaims{}, Secret())
+func ParseToken(tokenss string) (*MobileClaims, error) {
+	token, err := jwt.ParseWithClaims(tokenss, &MobileClaims{}, Secret())
 	if err != nil {
 		if ve, ok := err.(*jwt.ValidationError); ok {
 			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
@@ -54,7 +54,7 @@ func ParseToken(tokenss string) (*MyClaims, error) {
 			}
 		}
 	}
-	if claims, ok := token.Claims.(*MyClaims); ok && token.Valid {
+	if claims, ok := token.Claims.(*MobileClaims); ok && token.Valid {
 		return claims, nil
 	}
 	return nil, errors.New("couldn't handle this token")
