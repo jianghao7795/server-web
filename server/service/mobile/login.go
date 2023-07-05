@@ -24,9 +24,13 @@ func (*MobileLoginService) Login(data mobile.Login) (m response.LoginResponse, e
 	if err != nil {
 		return
 	}
-
-	m.User = user
 	m.Token = tokenString
 	m.ExpiresAt = expiresAt
 	return
+}
+
+func (*MobileLoginService) GetUserInfo(id uint) (u mobile.MobileUser, err error) {
+	var user mobile.MobileUser
+	err = global.DB.Model(&mobile.MobileUser{}).Where("id = ?", id).First(&user).Error
+	return user, err
 }

@@ -2,6 +2,7 @@ package mobile
 
 import (
 	v1 "server/api/v1"
+	"server/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,6 +14,10 @@ func (m *MobileUserRouter) InitMobileLoginRouter(Router *gin.RouterGroup) {
 	var mobileLoginApi = v1.ApiGroupApp.MobileApiGroup.MobileLoginApi
 	{
 		moblieLoginRouter.POST("login", mobileLoginApi.Login)
+	}
+	mobileGetUserApi := Router.Group("").Use(middleware.JWTAuthMobileMiddleware())
+	{
+		mobileGetUserApi.GET("getUserInfo", mobileLoginApi.GetUserInfo)
 	}
 
 }

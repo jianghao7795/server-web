@@ -3,6 +3,7 @@ package middleware
 import (
 	"server/model/common/response"
 	"server/utils"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -24,13 +25,14 @@ func JWTAuthMobileMiddleware() func(c *gin.Context) {
 			return
 		}
 
-		_, err := utils.ParseToken(parts[1])
+		user, err := utils.ParseToken(parts[1])
 		if err != nil {
+
 			response.FailWithMessage("token 失效， 请重新登录", c)
 			c.Abort()
 			return
 		}
-
+		c.Request.Header.Set("user_id", strconv.FormatUint(uint64(user.ID), 10))
 		c.Next() // 后续的处理函数可以用过c.Get("username")来获取当前请求的用户信息
 	}
 }

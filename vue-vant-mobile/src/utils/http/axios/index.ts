@@ -233,7 +233,8 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
     deepMerge(
       {
         timeout: 10 * 1000,
-        authenticationScheme: '',
+        // Bearer 前缀
+        authenticationScheme: 'Bearer',
         // 接口前缀
         prefixUrl: urlPrefix,
 

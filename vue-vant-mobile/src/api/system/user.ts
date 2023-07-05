@@ -46,7 +46,7 @@ export function login(params: any) {
  * @description: 获取用户信息
  */
 export function getUserInfo() {
-  return http.request<UserType>({
+  return http.request<BasicResponseModel<UserType>>({
     url: '/mobile/getUserInfo',
     method: 'get',
   });

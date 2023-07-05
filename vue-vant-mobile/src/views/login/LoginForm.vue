@@ -102,7 +102,7 @@
         try {
           loading.value = true;
           showLoadingToast('登录中...');
-          const { code, message: msg } = await userStore.Login({
+          const { code, msg } = await userStore.Login({
             username: formData.username,
             password: formData.password,
           });
