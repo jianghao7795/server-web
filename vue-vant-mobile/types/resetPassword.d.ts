@@ -4,4 +4,10 @@ declare namespace ResetPassword {
     newPassword: string;
     repeatPassword: string;
   };
+
+  export type Phone = {
+    phone: string;
+    newPhone: string;
+    verification: string;
+  };
 }

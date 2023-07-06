@@ -19,6 +19,7 @@
       :center="true"
       :border="false"
       v-model="afterPhone"
+      to="/changePhone"
     />
     <van-field
       label="修改登录密码"
@@ -42,6 +43,7 @@
   const { username, phone } = userStore.getUserInfo;
 
   const phoneDesensitize = (phone: string) => {
+    // return phone;
     const reg = /(\d{3})\d{4}(\d{4})/;
     return phone.replace(reg, '$1****$2');
   };

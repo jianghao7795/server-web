@@ -113,6 +113,15 @@ const routeModuleList: Array<RouteRecordRaw> = [
     component: () => import('@/views/my/ChangePassword.vue'),
   },
   {
+    path: '/changePhone',
+    name: 'ChangePhone',
+    meta: {
+      title: '修改手机号码',
+      innerPage: true,
+    },
+    component: () => import('@/views/my/ChangePhone.vue'),
+  },
+  {
     path: '/themeSetting',
     name: 'ThemeSetting',
     meta: {
