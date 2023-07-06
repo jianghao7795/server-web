@@ -4,6 +4,7 @@ import (
 	"errors"
 	"server/global"
 	"server/model/mobile"
+	"server/model/mobile/request"
 	"server/model/mobile/response"
 	"server/utils"
 
@@ -33,4 +34,8 @@ func (*MobileLoginService) GetUserInfo(id uint) (u mobile.MobileUser, err error)
 	var user mobile.MobileUser
 	err = global.DB.Model(&mobile.MobileUser{}).Where("id = ?", id).First(&user).Error
 	return user, err
+}
+
+func (*MobileLoginService) UpdateUser(data request.MobileUpdate, id uint) (err error) {
+	return global.DB.Model(&mobile.MobileUser{}).Where("id = ?", id).Update(data.Field, data.Value).Error
 }

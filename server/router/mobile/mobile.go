@@ -18,6 +18,7 @@ func (m *MobileUserRouter) InitMobileLoginRouter(Router *gin.RouterGroup) {
 	mobileGetUserApi := Router.Group("").Use(middleware.JWTAuthMobileMiddleware())
 	{
 		mobileGetUserApi.GET("getUserInfo", mobileLoginApi.GetUserInfo)
+		mobileGetUserApi.PUT("updateUser", mobileLoginApi.UpdateMobileUser)
 	}
 	exaFileUploadAndDownloadApi := v1.ApiGroupApp.ExampleApiGroup.FileUploadAndDownloadApi
 	{

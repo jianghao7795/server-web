@@ -25,8 +25,8 @@
   import NavBar from './components/NavBar.vue';
   import { useUserStore } from '@/store/modules/user';
   import { onMounted, reactive, ref } from 'vue';
-  import type { FormInstance } from 'vant';
-  import { showToast } from 'vant';
+  import { closeToast, FormInstance, showLoadingToast, showToast } from 'vant';
+  import { updateUser } from '@/api/system/user';
 
   const userStore = useUserStore();
 
@@ -43,9 +43,18 @@
       .then(async () => {
         try {
           const formValue = formRef.value?.getValues();
-          showToast({
-            message: `当前表单值：${JSON.stringify(formValue)}`,
+          showLoadingToast({
+            duration: 0,
+            forbidClick: true,
+            message: '更新中',
           });
+          const response = await updateUser({ field: 'sign', value: formValue?.sign as string });
+          if (response?.code === 0) {
+            const changeUser = userStore.getUserInfo;
+            userStore.setUserInfo({ ...changeUser, sign: response.data.value as string });
+            closeToast();
+            showToast('更新成功');
+          }
           // do something
         } finally {
           // after successful

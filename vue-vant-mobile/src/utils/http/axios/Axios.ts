@@ -90,6 +90,7 @@ export class VAxios {
           resolve(res as unknown as Promise<T>);
         })
         .catch((e: Error) => {
+          showToast(e);
           if (requestCatch && isFunction(requestCatch)) {
             reject(requestCatch(e));
             return;

@@ -93,7 +93,7 @@
   ];
 
   const getUserCoverBg = computed(() => {
-    return { backgroundImage: `url(${cover ? cover : `/api/mobile/${avatar}`})` };
+    return { backgroundImage: `url(${cover ? `/api/mobile/${cover}` : `/api/mobile/${avatar}`})` };
   });
 </script>
 <style lang="less" scoped>

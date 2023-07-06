@@ -5,6 +5,7 @@ import (
 	"server/global"
 	"server/model/common/response"
 	"server/model/mobile"
+	"server/model/mobile/request"
 	"server/service"
 	"server/utils"
 	"strconv"
@@ -43,6 +44,25 @@ func (*MobileLoginApi) GetUserInfo(c *gin.Context) {
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(user, "获取成功", c)
+	}
+
+}
+
+func (*MobileLoginApi) UpdateMobileUser(c *gin.Context) {
+	var data request.MobileUpdate
+	_ = c.ShouldBindJSON(&data)
+	authorization := c.Request.Header.Get("user_id")
+	id, _ := strconv.Atoi(authorization)
+	if data.Field == "" {
+		response.FailWithMessage("无更新", c)
+		return
+	}
+	log.Println(data)
+	if err := mobileService.UpdateUser(data, uint(id)); err != nil {
+		global.LOG.Error("更新用户失败!", zap.Error(err))
+		response.FailWithMessage("更新用户失败", c)
+	} else {
+		response.OkWithDetailed(data, "获取成功", c)
 	}
 
 }

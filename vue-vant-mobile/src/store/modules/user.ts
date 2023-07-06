@@ -3,8 +3,7 @@ import { createStorage } from '@/utils/Storage';
 import { store } from '@/store';
 import { ACCESS_TOKEN, CURRENT_USER } from '@/store/mutation-types';
 import { ResultEnum } from '@/enums/httpEnum';
-const Storage = createStorage({ storage: localStorage });
-import { getUserInfo, login, doLogout } from '@/api/system/user';
+import { getUserInfo, login } from '@/api/system/user';
 import { PageEnum } from '@/enums/pageEnum';
 import router from '@/router';
 
@@ -31,6 +30,8 @@ interface LoginParams {
   username: string;
   password: string;
 }
+
+const Storage = createStorage({ storage: localStorage });
 
 export const useUserStore = defineStore({
   id: 'app-user',
@@ -90,13 +91,13 @@ export const useUserStore = defineStore({
     },
 
     async Logout() {
-      if (this.getToken) {
-        try {
-          await doLogout();
-        } catch {
-          console.error('注销Token失败');
-        }
-      }
+      // if (this.getToken) {
+      //   try {
+      //     await doLogout();
+      //   } catch {
+      //     console.error('注销Token失败');
+      //   }
+      // }
       this.setToken(undefined);
       this.setUserInfo(null);
       Storage.remove(ACCESS_TOKEN);

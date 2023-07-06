@@ -94,3 +94,16 @@ export function uploadImage(formData: File, filename: string) {
     }
   );
 }
+
+// 更新个人信息
+export function updateUser(data: { field: string; value: number | string }) {
+  console.log(data);
+  return http.request<BasicResponseModel<{ field: string; value: number | string }>>(
+    {
+      url: '/mobile/updateUser',
+      method: 'PUT',
+      data,
+    },
+    { isTransformResponse: false }
+  );
+}

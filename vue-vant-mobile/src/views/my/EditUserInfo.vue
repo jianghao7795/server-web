@@ -12,7 +12,7 @@
       readonly
     >
       <template #input>
-        <UploaderImage @update-img="onChangeImage" name="avatar">
+        <UploaderImage @update-img="onChangeImage" name="avatar" @updateUser="changeUser">
           <van-image class="avatar" round fit="cover" :src="`/api/mobile/${state.avatar}`" />
         </UploaderImage>
       </template>
@@ -64,7 +64,7 @@
       readonly
     >
       <template #input>
-        <UploaderImage @update-img="onChangeImage" name="cover">
+        <UploaderImage @update-img="onChangeImage" name="cover" @updateUser="changeUser">
           <van-image
             class="cover"
             fit="cover"
@@ -113,13 +113,25 @@
   import UploaderImage from './components/UploaderImage.vue';
   import { useUserStore } from '@/store/modules/user';
   import { FormColumns, genderColumns, industryColumns } from './pickColumns';
-  import { showToast } from 'vant';
+  import { showFailToast, showToast } from 'vant';
+  import { updateUser } from '@/api/system/user';
 
   const userStore = useUserStore();
   // const { avatar, gender, industry, cover } = userStore.getUserInfo;
 
   const showGenderPicker = ref(false);
   const showIndustryPicker = ref(false);
+
+  const changeUser = async (data: { field: string; value: string | number }) => {
+    const response = await updateUser(data);
+    if (response?.code === 0) {
+      showToast('更新成功');
+      return true;
+    } else {
+      showFailToast('更新失败');
+      return false;
+    }
+  };
 
   const state = reactive({
     nickname: '',
@@ -141,11 +153,14 @@
     showGenderPicker.value = false;
   };
 
-  const handleIndustry = ({ selectedOptions }) => {
-    state.industryText = selectedOptions[0].text;
-    showToast(JSON.stringify(selectedOptions));
-    // do something
-    showIndustryPicker.value = false;
+  const handleIndustry = async ({ selectedValues, selectedOptions }) => {
+    const response = await updateUser({ field: 'industry', value: selectedValues[0] });
+    if (response?.code === 0) {
+      state.industryText = selectedOptions[0].text;
+      showToast('更新成功');
+      // do something
+      showIndustryPicker.value = false;
+    }
   };
 
   const getFromText = (columns: FormColumns[], value = 0) =>
