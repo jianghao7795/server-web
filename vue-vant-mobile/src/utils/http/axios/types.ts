@@ -63,3 +63,9 @@ export type Result<T = any> = {
   message: string;
   data?: T;
 };
+
+export type FileType = {
+  url: string;
+  is_cropper: number;
+  name: string;
+};

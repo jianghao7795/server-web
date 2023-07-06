@@ -7,6 +7,7 @@ import { isFunction } from '@/utils/is';
 import { cloneDeep } from 'lodash-es';
 import type { RequestOptions, CreateAxiosOptions, Result, UploadFileParams } from './types';
 import { ContentTypeEnum, RequestEnum } from '@/enums/httpEnum';
+import { showToast } from 'vant';
 
 export * from './axiosTransform';
 
@@ -113,7 +114,7 @@ export class VAxios {
   /**
    * @description:  文件上传
    */
-  uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams) {
+  async uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams) {
     const formData = new window.FormData();
     const customFilename = params.name || 'file';
 
@@ -137,15 +138,20 @@ export class VAxios {
       });
     }
 
-    return this.axiosInstance.request<T>({
-      method: 'POST',
-      data: formData,
-      headers: {
-        'Content-type': ContentTypeEnum.FORM_DATA,
-        ignoreCancelToken: true,
-      },
-      ...config,
-    });
+    try {
+      const resp = await this.axiosInstance.request<T>({
+        method: 'POST',
+        data: formData,
+        headers: {
+          'Content-type': ContentTypeEnum.FORM_DATA,
+          ignoreCancelToken: true,
+        },
+        ...config,
+      });
+      return resp.data;
+    } catch (e) {
+      showToast('上传错误: ' + e);
+    }
   }
 
   // support form-data

@@ -19,5 +19,9 @@ func (m *MobileUserRouter) InitMobileLoginRouter(Router *gin.RouterGroup) {
 	{
 		mobileGetUserApi.GET("getUserInfo", mobileLoginApi.GetUserInfo)
 	}
+	exaFileUploadAndDownloadApi := v1.ApiGroupApp.ExampleApiGroup.FileUploadAndDownloadApi
+	{
+		mobileGetUserApi.POST("uploadImage", exaFileUploadAndDownloadApi.UploadFile)
+	}
 
 }

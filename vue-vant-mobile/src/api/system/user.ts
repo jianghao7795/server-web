@@ -1,4 +1,5 @@
 import { http } from '@/utils/http/axios';
+import { FileType } from '@/utils/http/axios/types';
 
 export interface BasicResponseModel<T = any> {
   code: number;
@@ -29,12 +30,13 @@ export type LoginResponse = {
 /**
  * @description: 用户登录
  */
-export function login(params: any) {
+export function login(params: { username: string; password: string }) {
   return http.request<BasicResponseModel<LoginResponse>>(
     {
       url: '/mobile/login',
       method: 'POST',
-      params,
+      data: params,
+      // params,
     },
     {
       isTransformResponse: false,
@@ -66,7 +68,7 @@ export function doLogout() {
  * @description: 用户修改密码
  */
 export function changePassword(params: any, uid: any) {
-  return http.request(
+  return http.request<BasicResponseModel<{}>>(
     {
       url: `/user/u${uid}/changepw`,
       method: 'POST',
@@ -74,6 +76,21 @@ export function changePassword(params: any, uid: any) {
     },
     {
       isTransformResponse: false,
+    }
+  );
+}
+
+// 上传图片
+export function uploadImage(formData: File, filename: string) {
+  return http.uploadFile<BasicResponseModel<{ file: FileType }>>(
+    {
+      url: '/mobile/uploadImage?is_cropper=4',
+      method: 'POST',
+      baseURL: '/api',
+    },
+    {
+      filename,
+      file: formData,
     }
   );
 }

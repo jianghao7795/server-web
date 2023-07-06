@@ -13,20 +13,37 @@
 </template>
 
 <script setup lang="ts">
+  import { uploadImage } from '@/api/system/user';
   import { showFailToast } from 'vant';
+  import type { UploaderAfterRead, UploaderBeforeRead } from 'vant/lib/uploader/types';
 
-  function beforeRead(file) {
+  const emit = defineEmits<{
+    (e: 'update-img', imgUrl: string, field: string): void;
+  }>();
+
+  const props = defineProps<{ name: string }>();
+
+  const beforeRead: UploaderBeforeRead = (file) => {
+    if (Array.isArray(file)) {
+      return false;
+    }
     if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') {
       return true;
     }
     showFailToast('请上传正确格式的图片');
     return false;
-  }
+  };
 
-  function afterRead(file) {
+  const afterRead: UploaderAfterRead = async (file) => {
+    if (Array.isArray(file)) {
+      showFailToast('只能上传一张图片');
+      return;
+    }
     console.log('%c [ file ]-43', 'font-size:13px; background:pink; color:#bf2c9f;', file);
     // 这里写上传逻辑
-  }
+    const response = await uploadImage(file.file as File, file?.file?.name || '');
+    emit('update-img', response?.data.file.url as string, props.name);
+  };
 </script>
 
 <style scoped lang="less"></style>

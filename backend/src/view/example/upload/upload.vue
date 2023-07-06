@@ -49,10 +49,10 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column align="left" label="截图" props="is_cropper" width="100">
+        <el-table-column align="left" label="类型" props="is_cropper" width="100">
           <template #default="scope">
             <el-tag :type="scope.row.is_cropper ? 'warning' : 'success'" disable-transitions>
-              {{ scope.row.is_cropper === 2 ? "是" : "否" }}
+              {{ imageType[scope.row.is_cropper] }}
             </el-tag>
           </template>
         </el-table-column>
@@ -146,6 +146,13 @@ const option = ref({
   high: true,
   max: 99999,
 });
+
+const imageType = {
+  1: "后台图片",
+  2: "后台截图",
+  3: "前端图片",
+  4: "移动端图片",
+};
 
 const page = ref(1);
 const total = ref(0);

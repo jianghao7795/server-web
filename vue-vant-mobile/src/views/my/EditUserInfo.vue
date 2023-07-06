@@ -12,8 +12,8 @@
       readonly
     >
       <template #input>
-        <UploaderImage>
-          <van-image class="avatar" round fit="cover" :src="`/api/mobile/${avatar}`" />
+        <UploaderImage @update-img="onChangeImage" name="avatar">
+          <van-image class="avatar" round fit="cover" :src="`/api/mobile/${state.avatar}`" />
         </UploaderImage>
       </template>
     </van-field>
@@ -64,8 +64,12 @@
       readonly
     >
       <template #input>
-        <UploaderImage>
-          <van-image class="cover" fit="cover" :src="cover ? cover : `/api/mobile/${avatar}`" />
+        <UploaderImage @update-img="onChangeImage" name="cover">
+          <van-image
+            class="cover"
+            fit="cover"
+            :src="state.cover ? `/api/mobile/${state.cover}` : `/api/mobile/${state.avatar}`"
+          />
         </UploaderImage>
       </template>
     </van-field>
@@ -112,7 +116,7 @@
   import { showToast } from 'vant';
 
   const userStore = useUserStore();
-  const { avatar, gender, industry, cover } = userStore.getUserInfo;
+  // const { avatar, gender, industry, cover } = userStore.getUserInfo;
 
   const showGenderPicker = ref(false);
   const showIndustryPicker = ref(false);
@@ -120,12 +124,14 @@
   const state = reactive({
     nickname: '',
     sign: '',
-    // the field v-model
     genderText: '',
     industryText: '',
-    // the pick v-model
     industryValues: [0],
     genderValues: [0],
+    gender: 0,
+    industry: 0,
+    cover: '',
+    avatar: '',
   });
 
   const handleGender = ({ selectedOptions }) => {
@@ -150,12 +156,18 @@
       state[key] = userStore.getUserInfo[key];
     });
     // set field text value.
-    state.genderText = getFromText(genderColumns, gender) ?? '';
-    state.industryText = getFromText(industryColumns, industry) ?? '';
+    state.genderText = getFromText(genderColumns, state.gender) ?? '';
+    state.industryText = getFromText(industryColumns, state.industry) ?? '';
     // set the pick selected value.
-    state.industryValues = [industry ?? 0];
-    state.genderValues = [gender];
+    state.industryValues = [state.industry ?? 0];
+    state.genderValues = [state.gender];
   }
+
+  const onChangeImage = (imgUrl: string, field: string) => {
+    const setUser = { ...userStore.getUserInfo, [field]: imgUrl };
+    userStore.setUserInfo(setUser);
+    initState();
+  };
 
   onMounted(() => {
     initState();
