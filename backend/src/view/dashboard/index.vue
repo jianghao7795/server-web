@@ -96,8 +96,8 @@
                 <h3 class="py-24px text-24px font-bold">{{ swiperUploadFile.label }}</h3>
                 <swiper v-bind="swiperUploadFile.options">
                   <swiper-slide v-for="i in uploadedFile" :key="i.id">
-                    <div class="centerFloat">
-                      <el-image :src="path + i.url" fit="contain"></el-image>
+                    <div class="centerText">
+                      <el-image class="centerFloat" :src="path + i.url" fit="contain"></el-image>
                     </div>
                   </swiper-slide>
                 </swiper>
@@ -174,7 +174,7 @@ onMounted(() => {
   getReading().then((resp) => {
     readingQuantity.value = resp.data.reading_quantity || 0;
   });
-  getFileList({ pageSize: 10 }).then((resp) => {
+  getFileList({ pageSize: 10, proportion: 1.5 }).then((resp) => {
     if (resp?.code === 0) {
       uploadedFile.value = resp.data.list;
     }
@@ -365,12 +365,11 @@ export default {
 }
 
 .centerFloat {
-  text-align: center;
-  width: 99.5%;
-  height: 256px;
-  line-height: 256px;
-  margin: 10px 0;
+  height: 300px;
   border: #eee solid 1px;
+}
+.centerText {
+  text-align: center;
 }
 .page {
   background: #f0f2f5;

@@ -79,6 +79,10 @@ func (e *FileUploadAndDownloadService) GetFileRecordInfoList(info request.PageIn
 		db = db.Where("is_cropper = ?", info.IsCropper)
 	}
 
+	if info.Proportion != "" {
+		db = db.Where("proportion >= ?", info.Proportion)
+	}
+
 	err = db.Count(&total).Error
 	if err != nil {
 		return
