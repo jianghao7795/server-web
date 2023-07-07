@@ -17,22 +17,22 @@ import (
 )
 
 var (
-	DB     *gorm.DB
+	DB     *gorm.DB // gorm
 	DBList map[string]*gorm.DB
-	REDIS  *redis.Client
+	REDIS  *redis.Client // redis
 	CONFIG config.Server
 	VIP    *viper.Viper // 读取配置文件
 	// LOG    *oplogging.Logger
 	LOG                *zap.Logger // 日志
 	Timer              = timer.NewTimerTask()
-	ConcurrencyControl = &singleflight.Group{}
+	ConcurrencyControl = &singleflight.Group{} // 记录token
 
-	BlackCache local_cache.Cache
+	BlackCache local_cache.Cache // 缓存
 	lock       sync.RWMutex
 	Validate   ut.Translator
 	// 缓存
 	// Cache config.Cache
-	Logger *log.Logger
+	Logger *log.Logger // 用处 打印log
 )
 
 // GetGlobalDBByDBName 通过名称获取db list中的db

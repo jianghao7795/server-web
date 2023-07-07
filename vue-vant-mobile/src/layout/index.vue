@@ -36,11 +36,11 @@
   const getTitle = computed(() => currentRoute.meta.title as string);
 
   // 菜单
-  const getMenus = computed(() =>
-    routeStore.menus.filter((item) => {
+  const getMenus = computed(() => {
+    return routeStore.menus.filter((item) => {
       return !item.meta?.innerPage;
-    })
-  );
+    });
+  });
 
   const getShowHeader = computed(() => !currentRoute.meta.hiddenHeader);
 </script>

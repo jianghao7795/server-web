@@ -71,7 +71,7 @@ const routeModuleList: Array<RouteRecordRaw> = [
     name: 'EditUserInfo',
     meta: {
       title: '编辑个人信息',
-      innerPage: true,
+      innerPage: true, // 忽略layout
     },
     component: () => import('@/views/my/EditUserInfo.vue'),
   },

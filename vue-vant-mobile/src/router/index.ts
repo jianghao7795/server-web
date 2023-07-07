@@ -11,7 +11,7 @@ import routeModuleList from './modules';
 export const constantRouter: RouteRecordRaw[] = [LoginRoute, RootRoute, ErrorPageRoute];
 
 const routeStore = useRouteStoreWidthOut();
-
+// console.log(routeModuleList);
 routeStore.setMenus(routeModuleList);
 routeStore.setRouters(constantRouter.concat(routeModuleList));
 

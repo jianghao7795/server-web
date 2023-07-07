@@ -42,7 +42,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   return {
     base: VITE_PUBLIC_PATH,
     root,
-
     // 别名
     resolve: {
       alias: [
@@ -57,7 +56,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           replacement: pathResolve('types') + '/',
         },
       ],
-      dedupe: ['vue'],
+      // dedupe: ['vue'],
     },
 
     // 定义全局常量替换方式
