@@ -200,6 +200,10 @@ const transform: AxiosTransform = {
       response && response.data && response.data.message ? response.data.message : '';
     const err: string = error.toString();
     try {
+      if (err.includes('500')) {
+        showFailToast('服务器错误,请稍后再试');
+        return;
+      }
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
         showFailToast('接口请求超时，请刷新页面重试!');
         return;

@@ -103,7 +103,7 @@ export const useUserStore = defineStore({
       Storage.remove(ACCESS_TOKEN);
       Storage.remove(CURRENT_USER);
       router.push(PageEnum.BASE_LOGIN);
-      location.reload();
+      // location.reload();
     },
   },
 });
