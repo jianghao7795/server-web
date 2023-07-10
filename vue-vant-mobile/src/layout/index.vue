@@ -24,11 +24,13 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, onMounted } from 'vue';
   import { useRoute } from 'vue-router';
   import { useRouteStore } from '@/store/modules/route';
+  import { useUserStore } from '@/store/modules/user';
 
   const routeStore = useRouteStore();
+  const userStore = useUserStore();
   // 需要缓存的路由组件
   const keepAliveComponents = computed(() => routeStore.keepAliveComponents);
   const currentRoute = useRoute();
@@ -43,6 +45,10 @@
   });
 
   const getShowHeader = computed(() => !currentRoute.meta.hiddenHeader);
+
+  onMounted(() => {
+    userStore.GetUserInfo();
+  });
 </script>
 
 <style scoped lang="less">

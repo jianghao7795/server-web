@@ -1,9 +1,9 @@
 package middleware
 
 import (
+	"server/global"
 	"server/model/common/response"
 	"server/utils"
-	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -32,7 +32,8 @@ func JWTAuthMobileMiddleware() func(c *gin.Context) {
 			c.Abort()
 			return
 		}
-		c.Request.Header.Set("user_id", strconv.FormatUint(uint64(user.ID), 10))
+		global.Logger.Println("user :", user.ID)
+		c.Set("user_id", uint(user.ID))
 		c.Next() // 后续的处理函数可以用过c.Get("username")来获取当前请求的用户信息
 	}
 }

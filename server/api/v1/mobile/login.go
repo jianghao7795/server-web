@@ -1,6 +1,7 @@
 package mobile
 
 import (
+	"errors"
 	"log"
 	"server/global"
 	"server/model/common/response"
@@ -26,20 +27,26 @@ func (*MobileLoginApi) Login(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-
-	if user, err := mobileService.Login(l); err != nil {
+	token, err := mobileService.Login(l)
+	if err != nil {
 		global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
 		response.FailWithMessage("用户名不存在或者密码错误", c)
 	} else {
-		response.OkWithDetailed(user, "登录成功", c)
+		response.OkWithDetailed(token, "登录成功", c)
 	}
 
 }
 
 func (*MobileLoginApi) GetUserInfo(c *gin.Context) {
-	authorization := c.Request.Header.Get("user_id")
-	id, _ := strconv.Atoi(authorization)
-	if user, err := mobileService.GetUserInfo(uint(id)); err != nil {
+	authorization, err1 := c.Get("user_id")
+	// global.Logger.Println(authorization, err1)
+	global.Logger.Printf("authorization is %T\n", authorization)
+	if !err1 {
+		global.LOG.Error("获取user_id失败!", zap.Error(errors.New("失败")))
+		response.FailWithMessage("获取失败", c)
+		return
+	}
+	if user, err := mobileService.GetUserInfo(authorization.(uint)); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
