@@ -19,6 +19,7 @@ func (m *MobileUserRouter) InitMobileLoginRouter(Router *gin.RouterGroup) {
 	{
 		mobileGetUserApi.GET("getUserInfo", mobileLoginApi.GetUserInfo)
 		mobileGetUserApi.PUT("updateUser", mobileLoginApi.UpdateMobileUser)
+		mobileGetUserApi.PUT("updatePassword", mobileLoginApi.UpdatePassword)
 	}
 	exaFileUploadAndDownloadApi := v1.ApiGroupApp.ExampleApiGroup.FileUploadAndDownloadApi
 	{

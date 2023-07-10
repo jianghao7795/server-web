@@ -50,8 +50,10 @@
   import NavBar from './components/NavBar.vue';
   import { reactive } from 'vue';
   import { useUserStore } from '@/store/modules/user';
+  import { showSuccessToast, showFailToast } from 'vant';
+  import { updatePassword } from '@/api/system/user';
 
-  const pattern = /\S{8}/;
+  const pattern = /\S{6}/;
   const pwdDetail = reactive<ResetPassword.Password>({
     password: '',
     newPassword: '',
@@ -68,9 +70,18 @@
     return false;
   };
 
-  const submit = (value: ResetPassword.Password) => {
-    console.log('submit', value);
-    console.log('user is ', userStore);
+  const submit = async (value: ResetPassword.Password) => {
+    const resp = await updatePassword({
+      id: userStore.getUserInfo.ID as number,
+      password: value.password,
+      newPassword: value.newPassword,
+    });
+    if (resp?.code === 0) {
+      showSuccessToast('更新成功，请重新登录');
+      await userStore.Logout();
+    } else {
+      showFailToast(resp.msg);
+    }
   };
 </script>
 

@@ -22,7 +22,7 @@ var mobileService = service.ServiceGroupApp.MobileServiceGroup.MobileLoginServic
 func (*MobileLoginApi) Login(c *gin.Context) {
 	var l mobile.Login
 	_ = c.ShouldBindJSON(&l)
-	log.Println(l)
+	// log.Println(l)
 	if err := utils.Verify(l, utils.MobileLoginVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -72,4 +72,23 @@ func (*MobileLoginApi) UpdateMobileUser(c *gin.Context) {
 		response.OkWithDetailed(data, "获取成功", c)
 	}
 
+}
+
+func (*MobileLoginApi) UpdatePassword(c *gin.Context) {
+	var data request.MobileUpdatePassword
+	_ = c.ShouldBindJSON(&data)
+
+	if err := utils.Verify(data, utils.MobileUpdatePasswordVerify); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	if err := mobileService.UpdatePassword(data); err != nil {
+		global.LOG.Error("更新密码失败!", zap.Error(err))
+		response.FailWithMessage("更新用户密码失败", c)
+	} else {
+		response.OkWithDetailed(gin.H{
+			"password": data.NewPassword,
+		}, "更新成功", c)
+	}
 }

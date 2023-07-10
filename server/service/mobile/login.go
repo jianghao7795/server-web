@@ -39,3 +39,18 @@ func (*MobileLoginService) GetUserInfo(id uint) (u mobile.MobileUser, err error)
 func (*MobileLoginService) UpdateUser(data request.MobileUpdate, id uint) (err error) {
 	return global.DB.Model(&mobile.MobileUser{}).Where("id = ?", id).Update(data.Field, data.Value).Error
 }
+
+func (*MobileLoginService) UpdatePassword(data request.MobileUpdatePassword) (err error) {
+	var user mobile.MobileUser
+	passwordMoken := utils.MD5V([]byte(data.Password))
+	db := global.DB.Model(&mobile.MobileUser{})
+	err = db.Where("id = ? and password = ?", data.ID, passwordMoken).First(&user).Error
+	if err != nil {
+		return err
+	}
+	if user.ID == 0 {
+		return errors.New("未找到用户，请更新请求")
+	}
+	err = db.Update("password", utils.MD5V([]byte(data.NewPassword))).Error
+	return err
+}

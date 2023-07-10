@@ -21,4 +21,5 @@ var (
 	ResetPasswordVerifyFrontend = Rules{"Password": {NotEmpty(), Ge("6")}, "NewPassword": {NotEmpty(), Ge("6")}, "RepeatNewPassword": {NotEmpty(), Ge("6")}}
 	UpdateUserVerify            = Rules{"Name": {NotEmpty(), Ge("2")}, "HeadImg": {NotEmpty()}, "Header": {NotEmpty()}}
 	MobileLoginVerify           = Rules{"Username": {NotEmpty()}, "Password": {NotEmpty(), Ge("6")}}
+	MobileUpdatePasswordVerify  = Rules{"ID": {NotEmpty()}, "Password": {NotEmpty(), Ge("6")}, "NewPassword": {NotEmpty(), Ge("6")}}
 )
