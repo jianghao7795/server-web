@@ -43,7 +43,7 @@ const transform: AxiosTransform = {
 
     if (typeof res?.data?.code === 'number' && res?.data?.code !== 0) {
       showFailToast(res.data.msg);
-      return { msg: '错误' };
+      return res?.data;
     }
 
     // 是否返回原生响应头 比如：需要获取响应头时使用该属性
