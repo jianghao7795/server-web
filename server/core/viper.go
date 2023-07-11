@@ -52,6 +52,8 @@ func Viper(path ...string) *viper.Viper {
 		fmt.Println("config file changed:", e.Name)
 		if err := v.Unmarshal(&global.CONFIG); err != nil {
 			fmt.Println(err)
+		} else {
+			fmt.Println(global.CONFIG)
 		}
 	})
 	if err := v.Unmarshal(&global.CONFIG); err != nil {
