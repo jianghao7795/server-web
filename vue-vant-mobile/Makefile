@@ -1,4 +1,4 @@
 dev:
-	npm run dev
+	npm start
 build:
 	npm run build
