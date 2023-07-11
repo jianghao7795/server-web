@@ -51,7 +51,7 @@ export function useECharts(
     removeResizeFn = removeEvent;
     const { widthRef, screenEnum } = useBreakpoint();
     if (unref(widthRef) <= screenEnum.MD || el.offsetHeight === 0) {
-      useTimeoutFn(() => {
+      useTimeoutFn<any>(() => {
         resizeFn();
       }, 30);
     }
@@ -60,13 +60,13 @@ export function useECharts(
   function setOptions(options: EChartsOption, clear = true) {
     cacheOptions.value = options;
     if (unref(elRef)?.offsetHeight === 0) {
-      useTimeoutFn(() => {
+      useTimeoutFn<any>(() => {
         setOptions(unref(getOptions));
       }, 30);
       return;
     }
     nextTick(() => {
-      useTimeoutFn(() => {
+      useTimeoutFn<any>(() => {
         if (!chartInstance) {
           initCharts(getDarkMode.value as 'default');
 
