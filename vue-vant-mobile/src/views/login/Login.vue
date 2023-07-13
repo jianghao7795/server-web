@@ -19,9 +19,8 @@
   import ForgetPasswordForm from './ForgetPasswordForm.vue';
   import RegisterForm from './RegisterForm.vue';
   import LoginWave from './LoginWave.vue';
-  import { h } from 'vue';
-
-  const DomNode = h('div', { class: 'prominent', style: 'text-align: center' }, ['默默支持']);
+  import { h, version } from 'vue';
+  const DomNode = h('div', { class: 'prominent', style: 'text-align: center' }, [version]);
 </script>
 
 <style scoped lang="less">
