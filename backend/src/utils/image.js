@@ -13,11 +13,11 @@ export default class ImageCompress {
       const reader = new FileReader();
       reader.readAsDataURL(this.file);
       reader.onload = () => {
-        const canvas = document.createElement('canvas');
-        const img = document.createElement('img');
+        const canvas = document.createElement("canvas");
+        const img = document.createElement("img");
         img.src = reader.result;
         img.onload = () => {
-          const ctx = canvas.getContext('2d');
+          const ctx = canvas.getContext("2d");
           const _dWH = this.dWH(img.width, img.height, this.maxWH);
           canvas.width = _dWH.width;
           canvas.height = _dWH.height;
@@ -32,7 +32,7 @@ export default class ImageCompress {
           const newImgSize = this.fileSizeKB(newImgData);
 
           if (newImgSize > this.fileSize) {
-            console.log('图片尺寸太大!' + fileSize + ' >> ' + newImgSize);
+            console.log("图片尺寸太大!" + fileSize + " >> " + newImgSize);
           }
 
           const blob = this.dataURLtoBlob(newImgData, fileType);
@@ -69,7 +69,7 @@ export default class ImageCompress {
 
   fileSizeKB(dataURL) {
     let sizeKB = 0;
-    sizeKB = Math.round((dataURL.split(',')[1].length * 3) / 4 / 1024);
+    sizeKB = Math.round((dataURL.split(",")[1].length * 3) / 4 / 1024);
     return sizeKB;
   }
 
@@ -77,8 +77,8 @@ export default class ImageCompress {
    * 转为Blob
    */
   dataURLtoBlob(dataURL, fileType) {
-    const byteString = atob(dataURL.split(',')[1]);
-    let mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+    const byteString = atob(dataURL.split(",")[1]);
+    let mimeString = dataURL.split(",")[0].split(":")[1].split(";")[0];
     const ab = new ArrayBuffer(byteString.length);
     const ia = new Uint8Array(ab);
     for (let i = 0; i < byteString.length; i++) {
