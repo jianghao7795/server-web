@@ -2,7 +2,10 @@ package middleware
 
 import (
 	"bytes"
-	"encoding/json"
+
+	json "github.com/bytedance/sonic"
+
+	// "encoding/json"
 	"fmt"
 
 	ioutil "io"

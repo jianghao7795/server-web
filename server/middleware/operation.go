@@ -2,13 +2,15 @@ package middleware
 
 import (
 	"bytes"
-	"encoding/json"
+	// "encoding/json"
 	ioutil "io"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 	"time"
+
+	json "github.com/bytedance/sonic"
 
 	"server/global"
 	"server/model/common/response"

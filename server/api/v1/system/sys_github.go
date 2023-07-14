@@ -1,7 +1,8 @@
 package system
 
 import (
-	"encoding/json"
+	json "github.com/bytedance/sonic"
+	// "encoding/json"
 	"io"
 	"net/http"
 	"server/global"
@@ -133,10 +134,11 @@ func (g *SystemGithubApi) CreateGithub(c *gin.Context) {
 		return
 	}
 	body, _ := io.ReadAll(resp.Body)
-	respData := new([]GithubCommit)
-	json.Unmarshal(body, respData)
+	// respData := new([]GithubCommit)
+	var respData []GithubCommit
+	json.Unmarshal(body, &respData)
 	time.LoadLocation("Asia/Shanghai")
-	for _, val := range *respData {
+	for _, val := range respData {
 		var temp system.SysGithub
 		temp.Author = val.Commit.Author.Name
 		temp.CommitTime = val.Commit.Author.Date.Add(8 * time.Hour).Format("2006-01-02 15:04:05")

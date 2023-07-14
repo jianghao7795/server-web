@@ -2,7 +2,7 @@ package system
 
 import (
 	"bytes"
-	"encoding/json"
+	// "encoding/json"
 	"errors"
 	"fmt"
 	"go/ast"
@@ -17,10 +17,11 @@ import (
 	"strings"
 	"text/template"
 
-	"server/resource/template/subcontract"
+	json "github.com/bytedance/sonic"
 
 	"server/global"
 	"server/model/system"
+	"server/resource/template/subcontract"
 	"server/utils"
 
 	"golang.org/x/text/cases"

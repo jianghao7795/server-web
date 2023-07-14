@@ -1,12 +1,14 @@
 package frontend
 
 import (
-	"encoding/json"
+	// "encoding/json"
 	"errors"
 	"server/global"
 	"server/model/frontend"
 	"strconv"
 	"time"
+
+	json "github.com/bytedance/sonic"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
