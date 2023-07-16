@@ -146,11 +146,13 @@
     avatar: '',
   });
 
-  const handleGender = ({ selectedOptions }) => {
-    state.genderText = selectedOptions[0].text;
-    showToast(JSON.stringify(selectedOptions));
-    // do something
-    showGenderPicker.value = false;
+  const handleGender = async ({ selectedOptions, selectedValues }) => {
+    const response = await updateUser({ field: 'gender', value: selectedValues[0] });
+    if (response?.code === 0) {
+      state.genderText = selectedOptions[0].text;
+      showToast('更新成功');
+      showGenderPicker.value = false;
+    }
   };
 
   const handleIndustry = async ({ selectedValues, selectedOptions }) => {
