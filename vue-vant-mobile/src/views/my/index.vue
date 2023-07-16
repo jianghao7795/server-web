@@ -8,11 +8,11 @@
         class="border-4 !absolute -top-90px h-170px w-170px"
         round
         fit="cover"
-        :src="`/api/mobile/${avatar}`"
+        :src="`/api/mobile/${userStore.getUserInfo.avatar}`"
       />
       <div class="flex flex-col items-center mt-90px">
-        <p class="font-black text-40px mb-20px">{{ nickname }}</p>
-        <p class="text-30px px-36px">{{ sign }}</p>
+        <p class="font-black text-40px mb-20px">{{ userStore.getUserInfo.nickname }}</p>
+        <p class="text-30px px-36px">{{ userStore.getUserInfo.sign }}</p>
       </div>
       <van-divider class="w-full" />
 
@@ -75,25 +75,35 @@
   import { Person, ColorPalette, DocumentText, LogOut } from '@vicons/ionicons5';
   import { useUserStore } from '@/store/modules/user';
   import { showToast } from 'vant';
+  import { useRoute } from 'vue-router';
 
   const userStore = useUserStore();
   const showLogoutAction = ref(false);
 
-  const { nickname, avatar, cover, sign } = userStore.getUserInfo;
+  const route = useRoute();
+  // console.log(route.path);
+
+  // const currentUser = userStore.getUserInfo;
 
   const logoutActions = [
     {
       name: '退出登录',
       color: '#ee0a24',
       callback: () => {
-        userStore.Logout();
+        userStore.Logout(route.path);
         showToast('退出成功');
       },
     },
   ];
 
   const getUserCoverBg = computed(() => {
-    return { backgroundImage: `url(${cover ? `/api/mobile/${cover}` : `/api/mobile/${avatar}`})` };
+    return {
+      backgroundImage: `url(${
+        userStore.getUserInfo.cover
+          ? `/api/mobile/${userStore.getUserInfo.cover}`
+          : `/api/mobile/${userStore.getUserInfo.avatar}`
+      })`,
+    };
   });
 </script>
 <style lang="less" scoped>

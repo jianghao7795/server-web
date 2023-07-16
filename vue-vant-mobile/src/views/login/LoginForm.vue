@@ -109,9 +109,13 @@
           if (code == ResultEnum.SUCCESS) {
             const toPath = decodeURIComponent((route.query?.redirect || '/') as string);
             showSuccessToast('登录成功');
-            if (route.name === PageEnum.BASE_LOGIN_NAME) {
-              router.replace('/');
-            } else router.replace(toPath);
+            console.log(toPath);
+            router.push(toPath);
+            // if (route.name === PageEnum.BASE_LOGIN_NAME) {
+            //   router.push('/');
+            // } else {
+
+            // }
           } else {
             showFailToast(msg || '登录失败');
           }

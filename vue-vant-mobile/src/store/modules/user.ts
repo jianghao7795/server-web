@@ -90,7 +90,7 @@ export const useUserStore = defineStore({
       });
     },
 
-    async Logout() {
+    async Logout(url: string) {
       // if (this.getToken) {
       //   try {
       //     await doLogout();
@@ -102,7 +102,12 @@ export const useUserStore = defineStore({
       this.setUserInfo(null);
       Storage.remove(ACCESS_TOKEN);
       Storage.remove(CURRENT_USER);
-      router.push(PageEnum.BASE_LOGIN);
+      router.push({
+        path: PageEnum.BASE_LOGIN,
+        query: {
+          redirect: url,
+        },
+      });
       // location.reload();
     },
   },
