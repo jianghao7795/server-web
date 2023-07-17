@@ -45,16 +45,17 @@ export const useUserStore = defineStore({
       return this.userInfo || Storage.get(CURRENT_USER, '') || {};
     },
     getToken(): string {
-      return this.token || Storage.get(ACCESS_TOKEN, '');
+      const token: string = Storage.get(ACCESS_TOKEN, '');
+      return this.token || token;
     },
     getLastUpdateTime(): number {
       return this.lastUpdateTime;
     },
   },
   actions: {
-    setToken(token: string | undefined) {
+    setToken(token: string | undefined, expire: number) {
       this.token = token ? token : '';
-      Storage.set(ACCESS_TOKEN, token);
+      Storage.set(ACCESS_TOKEN, token, expire);
     },
     setUserInfo(info: UserInfo | null) {
       this.userInfo = info;
@@ -68,7 +69,7 @@ export const useUserStore = defineStore({
         const { data, code } = response;
         if (code === ResultEnum.SUCCESS) {
           // save token
-          this.setToken(data.token);
+          this.setToken(data.token, data.expiresAt);
         }
         return Promise.resolve(response);
       } catch (error) {
@@ -98,7 +99,7 @@ export const useUserStore = defineStore({
       //     console.error('注销Token失败');
       //   }
       // }
-      this.setToken(undefined);
+      this.setToken(undefined, 0);
       this.setUserInfo(null);
       Storage.remove(ACCESS_TOKEN);
       Storage.remove(CURRENT_USER);

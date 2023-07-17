@@ -23,7 +23,7 @@ export type UserType = {
 
 export type LoginResponse = {
   user: UserType;
-  expiresAt: string;
+  expiresAt: number;
   token: string;
 };
 

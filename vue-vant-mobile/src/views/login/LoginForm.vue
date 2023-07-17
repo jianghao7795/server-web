@@ -75,7 +75,7 @@
   import { UserOutlined, LockOutlined, EyeOutlined, EyeInvisibleOutlined } from '@vicons/antd';
   import { useUserStore } from '@/store/modules/user';
   import { ResultEnum } from '@/enums/httpEnum';
-  import { PageEnum } from '@/enums/pageEnum';
+  // import { PageEnum } from '@/enums/pageEnum';
   import { LoginStateEnum, useLoginState, useFormRules } from './useLogin';
 
   const { setLoginState, getLoginState } = useLoginState();
@@ -109,13 +109,8 @@
           if (code == ResultEnum.SUCCESS) {
             const toPath = decodeURIComponent((route.query?.redirect || '/') as string);
             showSuccessToast('登录成功');
-            console.log(toPath);
+            // console.log(toPath);
             router.push(toPath);
-            // if (route.name === PageEnum.BASE_LOGIN_NAME) {
-            //   router.push('/');
-            // } else {
-
-            // }
           } else {
             showFailToast(msg || '登录失败');
           }
