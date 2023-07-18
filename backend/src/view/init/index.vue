@@ -15,8 +15,7 @@
           </p>
         </div>
       </div>
-      <div v-if="hello > 0" :class="[hello > 0 && !out ? 'slide-in-left' : '', out ? 'slide-out-right' : '']"
-        class="form">
+      <div v-if="hello > 0" :class="[hello > 0 && !out ? 'slide-in-left' : '', out ? 'slide-out-right' : '']" class="form">
         <el-form ref="formRef" :model="form" label-width="100px">
           <el-form-item label="数据库类型">
             <el-select v-model="form.dbType" placeholder="请选择" @change="changeDB">

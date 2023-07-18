@@ -16,7 +16,7 @@
                   今日流量 {{ flowmeter }} M
                 </div>
               </el-col>
-              <el-col :span="6" :xs="24" :sm="6">
+              <el-col :span="6" :xs="24" :sm="6" v-auth="[888]">
                 <div class="flex-center">
                   <el-icon class="dasboard-icon">
                     <avatar />
