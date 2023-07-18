@@ -63,11 +63,7 @@
                                 <span style="font-weight: 600">当前角色：{{ userStore.userInfo.authority?.authorityName }}</span>
                               </el-dropdown-item>
                               <template v-if="userStore.userInfo.authorities">
-                                <el-dropdown-item
-                                  v-for="item in userStore.userInfo.authorities.filter((i) => i.authorityId !== userStore.userInfo.authorityId)"
-                                  :key="item.authorityId"
-                                  @click="changeUserAuth(item.authorityId)"
-                                >
+                                <el-dropdown-item v-for="item in userStore.userInfo.authorities.filter((i) => i.authorityId !== userStore.userInfo.authorityId)" :key="item.authorityId" @click="changeUserAuth(item.authorityId)">
                                   <span>切换为：{{ item.authorityName }}</span>
                                 </el-dropdown-item>
                               </template>
@@ -123,6 +119,7 @@ import { emitter } from "@/utils/bus.js";
 import { computed, ref, onMounted, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
+import { useAuthorityStore } from "@/pinia/modules/authority";
 import { useRouterStore } from "@/pinia/modules/router";
 import { fmtTitle } from "@/utils/fmtRouterTitle";
 // import { useRefreshStore } from "@/pinia/modules/refresh";
@@ -136,6 +133,7 @@ import { fmtTitle } from "@/utils/fmtRouterTitle";
 const router = useRouter();
 const route = useRoute();
 const routerStore = useRouterStore();
+const authorityStore = useAuthorityStore();
 // 三种窗口适配
 const isCollapse = ref(false);
 const isSider = ref(true);
@@ -182,6 +180,8 @@ onMounted(() => {
   if (userStore.loadingInstance) {
     userStore.loadingInstance.close();
   }
+
+  authorityStore.getAuthority();
 });
 const userStore = useUserStore();
 const textColor = computed(() => {

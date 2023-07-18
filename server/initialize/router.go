@@ -7,7 +7,6 @@
 package initialize
 
 import (
-	"log"
 	"net/http"
 
 	_ "server/docs"
@@ -27,15 +26,6 @@ func Routers() *gin.Engine {
 	appRouter := router.RouterGroupApp.App
 	systemRouter := router.RouterGroupApp.System
 	exampleRouter := router.RouterGroupApp.Example
-
-	Router.GET("/getRouters", func(ctx *gin.Context) {
-		routers := Router.Routes()
-		for _, v := range routers {
-			log.Println(v.Method, v.Path)
-		}
-		ctx.JSON(http.StatusOK, gin.H{})
-
-	})
 
 	// 如果想要不使用nginx代理前端网页，可以修改 web/.env.production 下的
 	// VUE_APP_BASE_API = /

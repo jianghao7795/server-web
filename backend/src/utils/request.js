@@ -3,10 +3,14 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { useUserStore } from "@/pinia/modules/user";
 import { emitter } from "@/utils/bus.js";
 import router from "@/router/index";
+// import { useAuthorityStore } from "@/pinia/modules/authority";
+
+// const authorityStore =
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
-  timeout: 5000,
+  timeout: 9999,
+  timeoutErrorMessage: "",
 });
 // let acitveAxios = 0;
 // let timer;
