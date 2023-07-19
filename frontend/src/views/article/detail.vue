@@ -33,102 +33,7 @@
         :showCodeRowNumber="true"
       ></MdEditor>
     </div>
-    <div>
-      <n-input
-        @click="focusInput(true)"
-        placeholder="留言评论"
-        type="textarea"
-        size="small"
-        :autosize="true"
-        v-model:value="inputRef"
-        ref="inputSelectRef"
-        @scrollTo="scrollTo"
-      />
-      <div class="comment-line" v-show="isComment">
-        <div>
-          <Emoji @changeActive="changeActive" @handleFouces="handleFouces" />
-        </div>
-        <div>
-          <NButton type="primary" @click="submit(0, comment)">发表评论</NButton>
-        </div>
-      </div>
-    </div>
-    <n-card :title="`全部评论 (${comment.length})`" :bordered="false">
-      <n-empty
-        description="快点评论吧！"
-        v-show="comment.length === 0"
-      ></n-empty>
-      <a-comment v-for="items in comment" :key="items.ID">
-        <template #actions>
-          <a
-            key="comment-nested-reply-to"
-            v-if="!isCommentChildren[items.ID]"
-            @click="() => reply(items.ID, true)"
-          >
-            回复
-          </a>
-          <n-input-group v-else>
-            <n-input
-              v-model:value="inputChildren"
-              placeholder="评论"
-              autofocus
-            />
-            <n-button
-              type="primary"
-              ghost
-              @click="submit(items.ID, items.children)"
-              >回复</n-button
-            >
-          </n-input-group>
-        </template>
-        <template #author>
-          <a>{{ items?.user?.nickName || items.user_name }}</a>
-        </template>
-        <template #avatar>
-          <a-avatar
-            v-if="items.user_id === 0"
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            alt="Han Solo"
-          />
-          <a-avatar
-            v-else
-            :src="
-              items.user.headerImg ? `${Base_URL}/${items.user.headerImg}` : ''
-            "
-            alt="Han Solo"
-          />
-        </template>
-        <template #content>
-          <div>
-            <div v-html="items.content"></div>
-          </div>
-        </template>
-        <a-comment v-for="item in items.children" :key="item.ID">
-          <template #author>
-            <a>{{ item?.user?.nickName || item?.user_name }}</a>
-          </template>
-          <template #avatar>
-            <a-avatar
-              v-if="item.user_id === 0"
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-              alt="Han Solo"
-            />
-            <a-avatar
-              v-else
-              :src="
-                item.user.headerImg ? `${Base_URL}/${item.user.headerImg}` : ''
-              "
-              alt="Han Solo"
-            />
-          </template>
-          <template #content>
-            <div>
-              <div v-html="item.content"></div>
-            </div>
-          </template>
-        </a-comment>
-      </a-comment>
-    </n-card>
+    <div><Comment /></div>
   </div>
 </template>
 
@@ -146,113 +51,113 @@ import dayjs from "dayjs";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 import { useArticleStore } from "@/stores/article";
-import { getArticleComment, createdComment } from "@/services/comment";
-import { useMessage, type GlobalTheme } from "naive-ui";
-import { useUserStore } from "@/stores/user";
-import Emoji from "@/components/emoji/index.vue";
+import { getArticleComment } from "@/services/comment";
+import type { GlobalTheme } from "naive-ui";
+// import { useUserStore } from "@/stores/user";
+import Comment from "@/components/comments/index.vue";
 
-const Base_URL = ref<string>(import.meta.env.VITE_BASE_API);
+// const Base_URL = ref<string>(import.meta.env.VITE_BASE_API);
 
-const inputSelectRef = ref<any>(null);
-const message = useMessage();
-const userStroe = useUserStore();
+// const inputSelectRef = ref<any>(null);
+// const message = useMessage();
+// const userStroe = useUserStore();
 const route = useRoute();
 const theme = inject<Ref<GlobalTheme | null>>("theme");
 const articleStore = useArticleStore();
-const isComment = ref<boolean>(false);
-const isCommentChildren = ref<{ [id: number]: boolean }>({});
+// const isComment = ref<boolean>(false);
+// const isCommentChildren = ref<{ [id: number]: boolean }>({});
 
 const comment = ref<Comment.comment[]>([]);
-const inputRef = ref<string>("");
-const inputChildren = ref<string>("");
-const changeLogin = inject<(status: boolean) => void>("changeLogin");
+// const inputRef = ref<string>("");
+// const inputChildren = ref<string>("");
+// const changeLogin = inject<(status: boolean) => void>("changeLogin");
 
-const focusInput = (isFouse: boolean) => {
-  isComment.value = isFouse;
-};
+// const focusInput = (isFouse: boolean) => {
+//   isComment.value = isFouse;
+// };
 
-const changeActive = (n: EmojiType.emoji) => {
-  inputSelectRef.value.focus();
-  const selectStart =
-    inputSelectRef.value.getTextareaScrollContainer().selectionStart;
-  // console.log(inputSelectRef.value);
-  inputRef.value =
-    inputRef.value.substring(0, selectStart) +
-    n.char +
-    inputRef.value.substring(selectStart);
-};
+// const changeActive = (n: EmojiType.emoji) => {
+//   inputSelectRef.value.focus();
+//   const selectStart =
+//     inputSelectRef.value.getTextareaScrollContainer().selectionStart;
+//   // console.log(inputSelectRef.value);
+//   inputRef.value =
+//     inputRef.value.substring(0, selectStart) +
+//     n.char +
+//     inputRef.value.substring(selectStart);
+// };
 
-const handleFouces = () => {
-  inputSelectRef.value.focus();
-};
+// const handleFouces = () => {
+//   inputSelectRef.value.focus();
+// };
 
-const reply = (id: number, status: boolean) => {
-  isCommentChildren.value = { [id]: status };
-  // console.log(userStroe.currentUser.user);
-};
+// const reply = (id: number, status: boolean) => {
+//   isCommentChildren.value = { [id]: status };
+//   // console.log(userStroe.currentUser.user);
+// };
 
-const submit = async (parentId: number, children: Comment.comment[]) => {
-  if (userStroe.currentUser.user.ID === 0) {
-    message.warning("请登录");
-    changeLogin?.(true);
-    return;
-  }
-  if (parentId === 0 && inputRef.value === "") {
-    message.warning("请输入评论");
-    return;
-  }
-  if (parentId !== 0 && inputChildren.value === "") {
-    message.warning("请输入评论");
-    return;
-  }
-  // console.log(inputRef.value);
-  // setTimeout(() => {
-  //   inputRef.value = '';
-  //   focusInput(false);
-  // }, 3000);
-  const resp = await createdComment({
-    content: inputRef.value || inputChildren.value,
-    articleId: Number(route.params.id).valueOf(),
-    parentId,
-    user_id: userStroe.currentUser.user.ID || 0,
-    user_name: userStroe.currentUser.user.nickName || "测试",
-  } as Comment.comment);
-  if (resp?.code === 0) {
-    message.success("评论成功");
-    setTimeout(() => {
-      let child = undefined;
-      if (parentId === 0) {
-        child = [];
-      }
-      isComment.value = false;
-      isCommentChildren.value[parentId] = false;
-      children.unshift({
-        user: userStroe.currentUser.user,
-        content: inputRef.value || inputChildren.value,
-        articleId: Number(route.params.id).valueOf(),
-        parentId,
-        user_id: userStroe.currentUser.user.ID || 0,
-        user_name: userStroe.currentUser.user.nickName || "测试",
-        ID: resp.data.id,
-        children: child,
-      } as Comment.comment);
-      inputRef.value = "";
-      inputChildren.value = "";
-    }, 1000);
-  }
-};
+// const submit = async (parentId: number, children: Comment.comment[]) => {
+//   if (userStroe.currentUser.user.ID === 0) {
+//     message.warning("请登录");
+//     changeLogin?.(true);
+//     return;
+//   }
+//   if (parentId === 0 && inputRef.value === "") {
+//     message.warning("请输入评论");
+//     return;
+//   }
+//   if (parentId !== 0 && inputChildren.value === "") {
+//     message.warning("请输入评论");
+//     return;
+//   }
+//   // console.log(inputRef.value);
+//   // setTimeout(() => {
+//   //   inputRef.value = '';
+//   //   focusInput(false);
+//   // }, 3000);
+//   const resp = await createdComment({
+//     content: inputRef.value || inputChildren.value,
+//     articleId: Number(route.params.id).valueOf(),
+//     parentId,
+//     user_id: userStroe.currentUser.user.ID || 0,
+//     user_name: userStroe.currentUser.user.nickName || "测试",
+//   } as Comment.comment);
+//   if (resp?.code === 0) {
+//     message.success("评论成功");
+//     setTimeout(() => {
+//       let child = undefined;
+//       if (parentId === 0) {
+//         child = [];
+//       }
+//       isComment.value = false;
+//       isCommentChildren.value[parentId] = false;
+//       children.unshift({
+//         user: userStroe.currentUser.user,
+//         content: inputRef.value || inputChildren.value,
+//         articleId: Number(route.params.id).valueOf(),
+//         parentId,
+//         user_id: userStroe.currentUser.user.ID || 0,
+//         user_name: userStroe.currentUser.user.nickName || "测试",
+//         ID: resp.data.id,
+//         children: child,
+//       } as Comment.comment);
+//       inputRef.value = "";
+//       inputChildren.value = "";
+//     }, 1000);
+//   }
+// };
 
 const changeDate = (timeData?: string): string => {
   return !!timeData ? dayjs(timeData).format("YYYY-MM-DD") : "";
 };
 
-const scrollTo = (options: {
-  left?: number;
-  top?: number;
-  behavior?: "auto" | "smooth";
-}): void => {
-  // console.log(options);
-};
+// const scrollTo = (options: {
+//   left?: number;
+//   top?: number;
+//   behavior?: "auto" | "smooth";
+// }): void => {
+//   // console.log(options);
+// };
 
 onMounted(async () => {
   const params = route.params;

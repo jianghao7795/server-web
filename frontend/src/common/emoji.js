@@ -2,7 +2,7 @@ const raw = "/static";
 
 const faceList = [`${raw}/emoji/smile.webp`, `${raw}/emoji/tv/tv.webp`];
 
-const emojiList: {}[] = [
+const emojiList = [
   {
     "[口罩]": `${raw}/emoji/kouzhao.webp`,
     "[狗头]": `${raw}/emoji/goutou.webp`,
@@ -128,7 +128,7 @@ const emojiList: {}[] = [
 ];
 
 //把emojiList数组中的每一个对象，放到emojiMap中方便取用
-function allEmoji(): {} {
+function allEmoji() {
   let emojiMap = {};
   emojiList.map((emojis) => (emojiMap = { ...emojiMap, ...emojis }));
   return emojiMap;

@@ -10,6 +10,10 @@ import {
   useOsTheme,
 } from "naive-ui";
 import { emitter } from "./utils/common";
+import { useDark, useToggle } from "@vueuse/core";
+
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 // import { loadEnv } from "vite";
 
 // const env = loadEnv("production", process.cwd());
@@ -25,10 +29,12 @@ const colorComment = computed(() => (theme.value === null ? "#999" : "#aaa"));
 provide("theme", theme);
 emitter.on("darkMode", () => {
   theme.value = darkTheme;
+  toggleDark();
 });
 
 emitter.on("lightMode", () => {
   theme.value = null;
+  toggleDark();
 });
 
 onMounted(() => {

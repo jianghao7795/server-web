@@ -3,7 +3,7 @@ import vuePlugin from "@vitejs/plugin-vue";
 import { defineConfig, loadEnv } from "vite";
 import legacyPlugin from "@vitejs/plugin-legacy";
 import {
-  AntDesignVueResolver,
+  // AntDesignVueResolver,
   NaiveUiResolver,
 } from "unplugin-vue-components/resolvers";
 import AutoImport from "unplugin-auto-import/vite";
@@ -53,7 +53,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
         ],
       }),
       Components({
-        resolvers: [NaiveUiResolver(), AntDesignVueResolver()],
+        resolvers: [NaiveUiResolver()],
       }),
     ],
     css: {
