@@ -28,22 +28,24 @@
                   :rail-style="railStyle"
                 >
                   <template #checked-icon>
-                    <NIcon
-                      ><moon
+                    <NIcon style="line-height: 0.7rem">
+                      <moon
                         theme="filled"
                         size="26"
                         fill="#333"
                         :strokeWidth="3"
-                    /></NIcon>
+                      />
+                    </NIcon>
                   </template>
                   <template #unchecked-icon>
-                    <NIcon
-                      ><sun-one
+                    <NIcon style="line-height: 0.7rem">
+                      <sun-one
                         theme="outline"
                         size="26"
                         fill="#333"
                         :strokeWidth="3"
-                    /></NIcon>
+                      />
+                    </NIcon>
                   </template>
                 </n-switch>
               </NSpace>
@@ -477,7 +479,7 @@ const login = () => {
 };
 
 const railStyle = ({ checked }: { checked: boolean }) => {
-  const style: CSSProperties = {};
+  const style: CSSProperties = { lineHeight: "0.7rem" };
   if (checked) {
     style.background = "#222";
   } else {
