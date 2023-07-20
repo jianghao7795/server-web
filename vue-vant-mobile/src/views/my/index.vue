@@ -8,7 +8,7 @@
         class="border-4 !absolute -top-90px h-170px w-170px"
         round
         fit="cover"
-        :src="`/api/mobile/${userStore.getUserInfo.avatar}`"
+        :src="userStore.getUserInfo.avatar && `/api/mobile/${userStore.getUserInfo.avatar}`"
       />
       <div class="flex flex-col items-center mt-90px">
         <p class="font-black text-40px mb-20px">{{ userStore.getUserInfo.nickname }}</p>
@@ -97,13 +97,17 @@
   ];
 
   const getUserCoverBg = computed(() => {
-    return {
-      backgroundImage: `url(${
-        userStore.getUserInfo.cover
-          ? `/api/mobile/${userStore.getUserInfo.cover}`
-          : `/api/mobile/${userStore.getUserInfo.avatar}`
-      })`,
-    };
+    if (userStore.getUserInfo.cover || userStore.getUserInfo.avatar) {
+      return {
+        backgroundImage: `url(${
+          userStore.getUserInfo.cover
+            ? `/api/mobile/${userStore.getUserInfo.cover}`
+            : `/api/mobile/${userStore.getUserInfo.avatar}`
+        })`,
+      };
+    }
+
+    return '';
   });
 </script>
 <style lang="less" scoped>

@@ -78,17 +78,15 @@ export const useUserStore = defineStore({
     },
 
     async GetUserInfo() {
-      return new Promise((resolve, reject) => {
-        getUserInfo()
-          .then((res) => {
-            // console.log(res);
-            this.setUserInfo(res);
-            resolve(res);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
+      getUserInfo()
+        .then((res) => {
+          // console.log(res);
+          this.setUserInfo(res);
+        })
+        .catch((error) => {
+          console.log(error.toString());
+          throw error;
+        });
     },
 
     async Logout(url: string) {
