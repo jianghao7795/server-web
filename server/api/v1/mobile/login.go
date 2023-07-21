@@ -43,12 +43,12 @@ func (*MobileLoginApi) GetUserInfo(c *gin.Context) {
 	global.Logger.Printf("authorization is %T\n", authorization)
 	if !err1 {
 		global.LOG.Error("获取user_id失败!", zap.Error(errors.New("失败")))
-		response.FailWithMessage("获取失败", c)
+		response.FailWithMessage400("获取失败", c)
 		return
 	}
 	if user, err := mobileService.GetUserInfo(authorization.(uint)); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
-		response.FailWithMessage("获取失败", c)
+		response.FailWithMessage400("获取失败", c)
 	} else {
 		response.OkWithDetailed(user, "获取成功", c)
 	}

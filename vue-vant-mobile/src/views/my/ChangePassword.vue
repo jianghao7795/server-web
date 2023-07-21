@@ -78,7 +78,7 @@
     });
     if (resp?.code === 0) {
       showSuccessToast('更新成功，请重新登录');
-      await userStore.Logout();
+      await userStore.Logout('/');
     } else {
       showFailToast(resp.msg);
     }

@@ -6,7 +6,9 @@ import { ResultEnum } from '@/enums/httpEnum';
 import { getUserInfo, login } from '@/api/system/user';
 import { PageEnum } from '@/enums/pageEnum';
 import router from '@/router';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 interface UserInfo {
   ID: string | number;
   username: string;
@@ -84,7 +86,6 @@ export const useUserStore = defineStore({
           this.setUserInfo(res);
         })
         .catch((error) => {
-          console.log(error.toString());
           throw error;
         });
     },

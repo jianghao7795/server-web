@@ -7,6 +7,9 @@ import { cloneDeep } from 'lodash-es';
 import type { RequestOptions, CreateAxiosOptions, Result, UploadFileParams } from './types';
 import { ContentTypeEnum, RequestEnum } from '@/enums/httpEnum';
 import { showToast } from 'vant';
+import { useUserStore } from '@/store/modules/user';
+import { useRoute } from 'vue-router';
+const route = useRoute();
 
 export * from './axiosTransform';
 
@@ -79,7 +82,6 @@ export class VAxios {
           if (transformRequestData && isFunction(transformRequestData) && !isCancel) {
             try {
               const ret = transformRequestData(res, opt);
-              // console.log(transformRequestData);
               resolve(ret);
             } catch (err) {
               reject(err || new Error('request error!'));
@@ -88,8 +90,14 @@ export class VAxios {
           }
           resolve(res as unknown as Promise<T>);
         })
-        .catch((e: Error) => {
-          showToast(e);
+        .catch((e: Error & { msg: string; code: number }) => {
+          const userStore = useUserStore();
+          showToast(e.msg);
+          if (e.code === 401) {
+            userStore.Logout('/');
+            return;
+          }
+
           if (requestCatch && isFunction(requestCatch)) {
             reject(requestCatch(e));
             return;

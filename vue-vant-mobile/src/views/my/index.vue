@@ -75,22 +75,16 @@
   import { Person, ColorPalette, DocumentText, LogOut } from '@vicons/ionicons5';
   import { useUserStore } from '@/store/modules/user';
   import { showToast } from 'vant';
-  import { useRoute } from 'vue-router';
 
   const userStore = useUserStore();
   const showLogoutAction = ref(false);
-
-  const route = useRoute();
-  // console.log(route.path);
-
-  // const currentUser = userStore.getUserInfo;
 
   const logoutActions = [
     {
       name: '退出登录',
       color: '#ee0a24',
       callback: () => {
-        userStore.Logout(route.path);
+        userStore.Logout('/');
         showToast('退出成功');
       },
     },
