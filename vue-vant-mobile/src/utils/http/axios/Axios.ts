@@ -94,7 +94,7 @@ export class VAxios {
           const userStore = useUserStore();
           showToast(e.msg);
           if (e.code === 401) {
-            userStore.Logout('/');
+            userStore.Logout('/dashboard/index');
             return;
           }
 
