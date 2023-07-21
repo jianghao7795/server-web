@@ -84,7 +84,7 @@
       name: '退出登录',
       color: '#ee0a24',
       callback: () => {
-        userStore.Logout('/');
+        userStore.Logout('/dashboard/index');
         showToast('退出成功');
       },
     },
