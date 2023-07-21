@@ -142,6 +142,7 @@ import { getFileList } from "@/api/fileUploadAndDownload";
 const path = import.meta.env.VITE_BASE_API + "/";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
+// const swiperRef = useSwiper();
 
 const weatherInfo = useWeatherInfo();
 const userStore = useUserStore();
@@ -150,7 +151,6 @@ const period = ref("");
 const userNumber = ref(0);
 const flowmeter = ref(0);
 const readingQuantity = ref(0);
-// console.log("上午好");
 
 onMounted(() => {
   const nowHours = useNow().value.getHours();
@@ -185,7 +185,10 @@ const swiperUploadFile = ref({
   id: 8,
   label: "最新图片",
   options: {
-    navigation: true,
+    // navigation: {
+    //   nextEl: ".swiper-button-next",
+    //   prevEl: ".swiper-button-prev",
+    // },
     pagination: {
       clickable: true,
     },
