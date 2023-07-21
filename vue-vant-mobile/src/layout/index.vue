@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted } from 'vue';
+  import { computed } from 'vue';
   import { useRoute } from 'vue-router';
   import { useRouteStore } from '@/store/modules/route';
   import { useUserStore } from '@/store/modules/user';
@@ -46,9 +46,9 @@
 
   const getShowHeader = computed(() => !currentRoute.meta.hiddenHeader);
 
-  onMounted(() => {
-    userStore.GetUserInfo();
-  });
+  // onMounted(() => {
+  //   userStore.GetUserInfo();
+  // });
 </script>
 
 <style scoped lang="less">
