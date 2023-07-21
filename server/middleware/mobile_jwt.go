@@ -23,8 +23,8 @@ func JWTAuthMobileMiddleware() func(c *gin.Context) {
 			c.Abort()
 			return
 		}
-
-		user, err := utils.ParseToken(parts[1])
+		j := utils.NewJWT()
+		user, err := j.ParseTokenMobile(parts[1])
 		if err != nil {
 
 			response.FailWithMessage("token 失效， 请重新登录", c)

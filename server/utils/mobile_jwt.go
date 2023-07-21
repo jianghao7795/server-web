@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"crypto/rsa"
 	"errors"
 	"server/global"
 	"server/model/mobile"
@@ -10,9 +9,6 @@ import (
 	jwt "github.com/golang-jwt/jwt/v4"
 )
 
-var MySecret *rsa.PrivateKey = global.CONFIG.JWT.PrivateKey
-var MyPublicSecret *rsa.PublicKey = global.CONFIG.JWT.PublicKey
-
 type MobileClaims struct {
 	ID                   uint   `json:"id"`
 	Username             string `json:"username"`
@@ -20,7 +16,7 @@ type MobileClaims struct {
 	jwt.RegisteredClaims        // 注意!这是jwt-go的v4版本新增的，原先是jwt.StandardClaims
 }
 
-func MakeToken(data mobile.Login, id uint) (tokenString string, expiresAt int64, err error) {
+func (j *JWT) MakeToken(data mobile.Login, id uint) (tokenString string, expiresAt int64, err error) {
 	claim := MobileClaims{
 		ID:       id,
 		Username: data.Username,
@@ -33,18 +29,22 @@ func MakeToken(data mobile.Login, id uint) (tokenString string, expiresAt int64,
 		}}
 	// token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim) // 使用HS256算法
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claim) // 使用RS256算法
-	tokenString, err = token.SignedString(MySecret)
+	// global.Logger.Println(j.PrivateKey)
+	tokenString, err = token.SignedString(j.PrivateKey)
+	// global.Logger.Println(err)
 	return tokenString, claim.ExpiresAt.Unix(), err
 }
 
-func Secret() jwt.Keyfunc {
+func (j *JWT) Secret() jwt.Keyfunc {
 	return func(token *jwt.Token) (interface{}, error) {
-		return MyPublicSecret, nil // 这是我的secret
+		return j.PublicKey, nil // 这是我的secret
 	}
 }
 
-func ParseToken(tokenss string) (*MobileClaims, error) {
-	token, err := jwt.ParseWithClaims(tokenss, &MobileClaims{}, Secret())
+func (j *JWT) ParseTokenMobile(tokenss string) (*MobileClaims, error) {
+	token, err := jwt.ParseWithClaims(tokenss, &MobileClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return j.PublicKey, nil // 这是我的secret
+	})
 	if err != nil {
 		if ve, ok := err.(*jwt.ValidationError); ok {
 			if ve.Errors&jwt.ValidationErrorMalformed != 0 {

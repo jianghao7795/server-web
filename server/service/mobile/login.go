@@ -21,7 +21,9 @@ func (*MobileLoginService) Login(data mobile.Login) (m response.LoginResponse, e
 		return m, errors.New("密码错误")
 	}
 
-	tokenString, expiresAt, err := utils.MakeToken(data, user.ID)
+	j := utils.NewJWT()
+
+	tokenString, expiresAt, err := j.MakeToken(data, user.ID)
 	if err != nil {
 		return
 	}
