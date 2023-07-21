@@ -1,6 +1,7 @@
 package frontend
 
 import (
+	"crypto/rsa"
 	"errors"
 	"server/global"
 	"server/model/app"
@@ -26,7 +27,7 @@ type UpdateImage struct {
 	HeapImage string
 }
 
-var MySecret = []byte(global.CONFIG.JWT.SigningKey)
+var MySecret *rsa.PrivateKey = global.CONFIG.JWT.PrivateKey
 
 type FrontendUser struct{}
 
@@ -114,8 +115,10 @@ func MakeToken(data frontendRequest.LoginForm, id uint) (tokenString string, exp
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(global.CONFIG.JWT.ExpiresTime) * time.Hour)), // 过期时间24小时
 			IssuedAt:  jwt.NewNumericDate(time.Now()),                                                               // 签发时间
 			NotBefore: jwt.NewNumericDate(time.Now()),                                                               // 生效时间
+			Issuer:    global.CONFIG.JWT.Issuer,
 		}}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim) // 使用HS256算法
+	// token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim) // 使用HS256算法
+	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claim) // 使用RS256算法
 	tokenString, err = token.SignedString(MySecret)
 	return tokenString, claim.ExpiresAt.Unix(), err
 }

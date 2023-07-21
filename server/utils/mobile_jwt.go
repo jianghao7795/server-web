@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"crypto/rsa"
 	"errors"
 	"server/global"
 	"server/model/mobile"
@@ -9,7 +10,8 @@ import (
 	jwt "github.com/golang-jwt/jwt/v4"
 )
 
-var MySecret = []byte(global.CONFIG.JWT.SigningKey)
+var MySecret *rsa.PrivateKey = global.CONFIG.JWT.PrivateKey
+var MyPublicSecret *rsa.PublicKey = global.CONFIG.JWT.PublicKey
 
 type MobileClaims struct {
 	ID                   uint   `json:"id"`
@@ -27,15 +29,17 @@ func MakeToken(data mobile.Login, id uint) (tokenString string, expiresAt int64,
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)), // 过期时间24小时
 			IssuedAt:  jwt.NewNumericDate(time.Now()),                     // 签发时间
 			NotBefore: jwt.NewNumericDate(time.Now()),                     // 生效时间
+			Issuer:    global.CONFIG.JWT.Issuer,
 		}}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim) // 使用HS256算法
+	// token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim) // 使用HS256算法
+	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claim) // 使用RS256算法
 	tokenString, err = token.SignedString(MySecret)
 	return tokenString, claim.ExpiresAt.Unix(), err
 }
 
 func Secret() jwt.Keyfunc {
 	return func(token *jwt.Token) (interface{}, error) {
-		return MySecret, nil // 这是我的secret
+		return MyPublicSecret, nil // 这是我的secret
 	}
 }
 

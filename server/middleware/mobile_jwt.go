@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"server/global"
 	"server/model/common/response"
 	"server/utils"
 	"strings"
@@ -32,7 +31,7 @@ func JWTAuthMobileMiddleware() func(c *gin.Context) {
 			c.Abort()
 			return
 		}
-		global.Logger.Println("user :", user.ID)
+		// global.Logger.Println("user :", user.ID)
 		c.Set("user_id", uint(user.ID))
 		c.Next() // 后续的处理函数可以用过c.Get("username")来获取当前请求的用户信息
 	}

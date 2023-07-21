@@ -44,7 +44,7 @@ func (b *BaseApi) Login(c *gin.Context) {
 
 // 登录以后签发jwt
 func (b *BaseApi) tokenNext(c *gin.Context, user system.SysUser) {
-	j := &utils.JWT{SigningKey: []byte(global.CONFIG.JWT.SigningKey)} // 唯一签名
+	j := &utils.JWT{PrivateKey: global.CONFIG.JWT.PrivateKey} // 唯一签名
 	claims := j.CreateClaims(systemReq.BaseClaims{
 		UUID:        user.UUID,
 		ID:          user.ID,
@@ -202,7 +202,7 @@ func (b *BaseApi) SetUserAuthority(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 	} else {
 		claims := utils.GetUserInfo(c)
-		j := &utils.JWT{SigningKey: []byte(global.CONFIG.JWT.SigningKey)} // 唯一签名
+		j := &utils.JWT{PrivateKey: global.CONFIG.JWT.PrivateKey} // 唯一签名
 		claims.AuthorityId = sua.AuthorityId
 		if token, err := j.CreateToken(*claims); err != nil {
 			global.LOG.Error("修改失败!", zap.Error(err))

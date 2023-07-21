@@ -7,11 +7,14 @@ import (
 	"server/global"
 	"server/model/system/request"
 
+	"crypto/rsa"
+
 	jwt "github.com/golang-jwt/jwt/v4"
 )
 
 type JWT struct {
-	SigningKey []byte
+	PrivateKey *rsa.PrivateKey
+	PublicKey  *rsa.PublicKey
 }
 
 var (
@@ -23,7 +26,8 @@ var (
 
 func NewJWT() *JWT {
 	return &JWT{
-		[]byte(global.CONFIG.JWT.SigningKey),
+		PrivateKey: global.CONFIG.JWT.PrivateKey,
+		PublicKey:  global.CONFIG.JWT.PublicKey,
 	}
 }
 
@@ -48,8 +52,8 @@ func (j *JWT) CreateClaims(baseClaims request.BaseClaims) request.CustomClaims {
 
 // 创建一个token
 func (j *JWT) CreateToken(claims request.CustomClaims) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(j.SigningKey)
+	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims) // 使用RS256算法
+	return token.SignedString(j.PrivateKey)
 }
 
 // CreateTokenByOldToken 旧token 换新token 使用归并回源避免并发问题
@@ -63,8 +67,9 @@ func (j *JWT) CreateTokenByOldToken(oldToken string, claims request.CustomClaims
 // 解析 token
 func (j *JWT) ParseToken(tokenString string) (*request.CustomClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &request.CustomClaims{}, func(token *jwt.Token) (i interface{}, e error) {
-		return j.SigningKey, nil
+		return j.PublicKey, nil
 	})
+	// global.Logger.Println(err)
 	if err != nil {
 		if ve, ok := err.(*jwt.ValidationError); ok {
 			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
@@ -79,6 +84,7 @@ func (j *JWT) ParseToken(tokenString string) (*request.CustomClaims, error) {
 			}
 		}
 	}
+	// global.Logger.Println(err)
 	if token != nil {
 		if claims, ok := token.Claims.(*request.CustomClaims); ok && token.Valid {
 			return claims, nil

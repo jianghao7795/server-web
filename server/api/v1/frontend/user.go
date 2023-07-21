@@ -58,7 +58,7 @@ func (b *FrontendUser) Login(c *gin.Context) {
 
 // 登录以后签发jwt
 func (u *FrontendUser) tokenNext(c *gin.Context, user system.SysUser) {
-	j := &utils.JWT{SigningKey: []byte(global.CONFIG.JWT.SigningKey)} // 唯一签名
+	j := &utils.JWT{PrivateKey: global.CONFIG.JWT.PrivateKey} // 唯一签名
 	claims := j.CreateClaims(systemReq.BaseClaims{
 		UUID:        user.UUID,
 		ID:          user.ID,
