@@ -6,9 +6,9 @@ import { ResultEnum } from '@/enums/httpEnum';
 import { getUserInfo, login } from '@/api/system/user';
 import { PageEnum } from '@/enums/pageEnum';
 import router from '@/router';
-import { useRoute } from 'vue-router';
+// import { useRoute } from 'vue-router';
 
-const route = useRoute();
+// const route = useRoute();
 interface UserInfo {
   ID: string | number;
   username: string;
@@ -61,7 +61,12 @@ export const useUserStore = defineStore({
     },
     setUserInfo(info: UserInfo | null) {
       this.userInfo = info;
-      this.lastUpdateTime = new Date().getTime();
+      if (!!info) {
+        this.lastUpdateTime = new Date().getTime();
+      } else {
+        this.lastUpdateTime = 0;
+      }
+
       Storage.set(CURRENT_USER, info);
     },
 

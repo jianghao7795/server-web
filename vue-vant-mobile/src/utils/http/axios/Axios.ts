@@ -8,8 +8,8 @@ import type { RequestOptions, CreateAxiosOptions, Result, UploadFileParams } fro
 import { ContentTypeEnum, RequestEnum } from '@/enums/httpEnum';
 import { showToast } from 'vant';
 import { useUserStore } from '@/store/modules/user';
-import { useRoute } from 'vue-router';
-const route = useRoute();
+// import { useRoute } from 'vue-router';
+// const route = useRoute();
 
 export * from './axiosTransform';
 
