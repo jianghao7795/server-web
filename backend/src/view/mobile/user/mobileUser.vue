@@ -36,7 +36,11 @@
           </template>
         </el-table-column>
         <el-table-column align="left" label="简介" prop="sign" width="120" />
-        <el-table-column align="left" label="主页封面" prop="cover" width="120" />
+        <el-table-column align="left" label="主页封面" prop="cover" width="120">
+          <template #default="scope">
+            <CustomPic picType="file" :pic-src="scope.row.cover" />
+          </template>
+        </el-table-column>
         <el-table-column align="left" label="用户信息" prop="content" width="120" />
         <!-- <el-table-column align="left" label="密码" prop="password" width="120" /> -->
         <el-table-column align="left" label="行业" prop="industry" width="120">
