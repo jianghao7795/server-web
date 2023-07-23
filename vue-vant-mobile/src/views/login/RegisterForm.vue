@@ -17,7 +17,7 @@
 
       <van-field
         class="enter-y items-center !rounded-md"
-        v-model="formData.mobile"
+        v-model="formData.phone"
         name="password"
         placeholder="手机号码"
         :rules="getFormRules.mobile"
@@ -136,6 +136,7 @@
       block
       native-type="submit"
       :loading="loading"
+      @click="handleRegister"
     >
       注 册
     </van-button>
@@ -165,6 +166,7 @@
   } from '@vicons/antd';
   import { LoginStateEnum, useLoginState, useFormRules } from './useLogin';
   import SendMessage from './components/SendMessage.vue';
+  import { register } from '@/api/system/user';
 
   const { handleBackLogin, getLoginState } = useLoginState();
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.REGISTER);
@@ -180,7 +182,7 @@
 
   const formData = reactive({
     username: '',
-    mobile: '',
+    phone: '',
     sms: '',
     password: '',
     confirmPassword: '',
@@ -199,12 +201,13 @@
         try {
           loading.value = true;
           // do something
-
-          console.log('%c [  ]-167', 'font-size:13px; background:pink; color:#bf2c9f;');
+          const resp = await register(formData);
+          handleBackLogin();
+          // console.log('%c [  ]-167', 'font-size:13px; background:pink; color:#bf2c9f;');
         } finally {
           loading.value = false;
 
-          console.log('%c [  ]-171', 'font-size:13px; background:pink; color:#bf2c9f;');
+          // console.log('%c [  ]-171', 'font-size:13px; background:pink; color:#bf2c9f;');
         }
       })
       .catch(() => {

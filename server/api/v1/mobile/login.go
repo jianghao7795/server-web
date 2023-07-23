@@ -7,7 +7,6 @@ import (
 	"server/model/common/response"
 	"server/model/mobile"
 	"server/model/mobile/request"
-	"server/service"
 	"server/utils"
 	"strconv"
 
@@ -16,8 +15,6 @@ import (
 )
 
 type MobileLoginApi struct{}
-
-var mobileService = service.ServiceGroupApp.MobileServiceGroup.MobileLoginService
 
 func (*MobileLoginApi) Login(c *gin.Context) {
 	var l mobile.Login
@@ -30,7 +27,7 @@ func (*MobileLoginApi) Login(c *gin.Context) {
 	token, err := mobileService.Login(l)
 	if err != nil {
 		global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
-		response.FailWithMessage("用户名不存在或者密码错误", c)
+		response.FailWithMessage400("用户名不存在或者密码错误", c)
 	} else {
 		response.OkWithDetailed(token, "登录成功", c)
 	}

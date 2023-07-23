@@ -7,8 +7,7 @@ import (
 	mobileReq "server/model/mobile/request"
 )
 
-type MobileUserService struct {
-}
+type MobileUserService struct{}
 
 // CreateMoblieUser 创建MoblieUser记录
 // Author [piexlmax](https://github.com/piexlmax)

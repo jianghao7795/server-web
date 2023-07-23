@@ -27,6 +27,13 @@ export type LoginResponse = {
   token: string;
 };
 
+export type RegisterType = {
+  username: string;
+  phone: string;
+  sms: string;
+  password: string;
+  confirmPassword: string;
+};
 /**
  * @description: 用户登录
  */
@@ -115,5 +122,20 @@ export function updatePassword(data: { id: number; password: string; newPassword
       data,
     },
     { isTransformResponse: false }
+  );
+}
+
+// 注册
+export function register(params: RegisterType) {
+  return http.request<BasicResponseModel<{}>>(
+    {
+      url: '/mobile/register',
+      method: 'POST',
+      data: params,
+      // params,
+    },
+    {
+      isTransformResponse: false,
+    }
   );
 }
