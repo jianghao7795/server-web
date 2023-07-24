@@ -31,6 +31,7 @@ export type RegisterType = {
   username: string;
   phone: string;
   sms: string;
+  realname: string;
   password: string;
   confirmPassword: string;
 };

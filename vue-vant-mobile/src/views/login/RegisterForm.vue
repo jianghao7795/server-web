@@ -17,6 +17,20 @@
 
       <van-field
         class="enter-y items-center !rounded-md"
+        v-model="formData.realname"
+        name="realname"
+        placeholder="真实姓名"
+        :rules="getFormRules.username"
+      >
+        <template #left-icon>
+          <Icon>
+            <UserOutlined />
+          </Icon>
+        </template>
+      </van-field>
+
+      <van-field
+        class="enter-y items-center !rounded-md"
         v-model="formData.phone"
         name="password"
         placeholder="手机号码"
@@ -136,7 +150,6 @@
       block
       native-type="submit"
       :loading="loading"
-      @click="handleRegister"
     >
       注 册
     </van-button>
@@ -155,7 +168,7 @@
 
 <script setup lang="ts">
   import { computed, reactive, ref, unref } from 'vue';
-  import type { FormInstance } from 'vant';
+  import { FormInstance, showToast } from 'vant';
   import { Icon } from '@vicons/utils';
   import {
     UserOutlined,
@@ -183,6 +196,7 @@
   const formData = reactive({
     username: '',
     phone: '',
+    realname: '',
     sms: '',
     password: '',
     confirmPassword: '',
@@ -202,6 +216,7 @@
           loading.value = true;
           // do something
           const resp = await register(formData);
+          showToast('注册成功，请登录');
           handleBackLogin();
           // console.log('%c [  ]-167', 'font-size:13px; background:pink; color:#bf2c9f;');
         } finally {
