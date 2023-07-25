@@ -13,7 +13,7 @@ import (
 	"gorm.io/gorm"
 )
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: [jianghao](https://github.com/JiangHaoCode)
 //@function: Register
 //@description: 用户注册
 //@param: u model.SysUser
@@ -33,7 +33,7 @@ func (userService *UserService) Register(u system.SysUser) (userInter system.Sys
 	return u, err
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: [jianghao](https://github.com/JiangHaoCode)
 //@function: Login
 //@description: 用户登录
 //@param: u *model.SysUser
@@ -57,7 +57,7 @@ func (userService *UserService) Login(u *system.SysUser) (userInter *system.SysU
 	return &user, err
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: [jianghao](https://github.com/JiangHaoCode)
 //@function: ChangePassword
 //@description: 修改用户密码
 //@param: u *model.SysUser, newPassword string
@@ -70,7 +70,7 @@ func (userService *UserService) ChangePassword(u *system.SysUser, newPassword st
 	return u, err
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: [jianghao](https://github.com/JiangHaoCode)
 //@function: GetUserInfoList
 //@description: 分页获取数据
 //@param: info request.PageInfo
@@ -92,7 +92,7 @@ func (userService *UserService) GetUserInfoList(info request.SearchInfo) (list i
 	return userList, total, err
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: [jianghao](https://github.com/JiangHaoCode)
 //@function: SetUserAuthority
 //@description: 设置一个用户的权限
 //@param: uuid uuid.UUID, authorityId string
@@ -107,7 +107,7 @@ func (userService *UserService) SetUserAuthority(id uint, uuid uuid.UUID, author
 	return err
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: [jianghao](https://github.com/JiangHaoCode)
 //@function: SetUserAuthorities
 //@description: 设置一个用户的权限
 //@param: id uint, authorityIds []string
@@ -139,7 +139,7 @@ func (userService *UserService) SetUserAuthorities(id uint, authorityIds []strin
 	})
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: [jianghao](https://github.com/JiangHaoCode)
 //@function: DeleteUser
 //@description: 删除用户
 //@param: id float64
@@ -155,7 +155,7 @@ func (userService *UserService) DeleteUser(id int) (err error) {
 	return err
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: [jianghao](https://github.com/JiangHaoCode)
 //@function: SetUserInfo
 //@description: 设置用户信息
 //@param: reqUser model.SysUser
@@ -165,7 +165,7 @@ func (userService *UserService) SetUserInfo(req system.SysUser) error {
 	return global.DB.Updates(&req).Error
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: [jianghao](https://github.com/JiangHaoCode)
 //@function: GetUserInfo
 //@description: 获取用户信息
 //@param: uuid uuid.UUID
@@ -211,7 +211,7 @@ func (userService *UserService) FindUserByUuid(uuid string) (user *system.SysUse
 	return &u, nil
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: [jianghao](https://github.com/JiangHaoCode)
 //@function: resetPassword
 //@description: 修改用户密码
 //@param: ID uint

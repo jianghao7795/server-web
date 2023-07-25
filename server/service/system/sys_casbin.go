@@ -12,7 +12,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//
 //@function: UpdateCasbin
 //@description: 更新casbin权限
 //@param: authorityId string, casbinInfos []request.CasbinInfo
@@ -36,7 +36,7 @@ func (casbinService *CasbinService) UpdateCasbin(authorityId string, casbinInfos
 	return nil
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//
 //@function: UpdateCasbinApi
 //@description: API更新随动
 //@param: oldPath string, newPath string, oldMethod string, newMethod string
@@ -50,7 +50,7 @@ func (casbinService *CasbinService) UpdateCasbinApi(oldPath string, newPath stri
 	return err
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//
 //@function: GetPolicyPathByAuthorityId
 //@description: 获取权限列表
 //@param: authorityId string
@@ -68,7 +68,7 @@ func (casbinService *CasbinService) GetPolicyPathByAuthorityId(authorityId strin
 	return pathMaps
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//
 //@function: ClearCasbin
 //@description: 清除匹配的权限
 //@param: v int, p ...string
@@ -80,7 +80,7 @@ func (casbinService *CasbinService) ClearCasbin(v int, p ...string) bool {
 	return success
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//
 //@function: Casbin
 //@description: 持久化到数据库  引入自定义规则
 //@return: *casbin.Enforcer

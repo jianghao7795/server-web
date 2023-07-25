@@ -15,7 +15,7 @@ var AutoCodePgsql = new(autoCodePgsql)
 type autoCodePgsql struct{}
 
 // GetDB 获取数据库的所有数据库名
-// Author [piexlmax](https://github.com/piexlmax)
+// Author
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (a *autoCodePgsql) GetDB() (data []response.Db, err error) {
 	var entities []response.Db
@@ -25,7 +25,7 @@ func (a *autoCodePgsql) GetDB() (data []response.Db, err error) {
 }
 
 // GetTables 获取数据库的所有表名
-// Author [piexlmax](https://github.com/piexlmax)
+// Author
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (a *autoCodePgsql) GetTables(dbName string) (data []response.Table, err error) {
 	var entities []response.Table
@@ -39,7 +39,7 @@ func (a *autoCodePgsql) GetTables(dbName string) (data []response.Table, err err
 }
 
 // GetColumn 获取指定数据库和指定数据表的所有字段名,类型值等
-// Author [piexlmax](https://github.com/piexlmax)
+// Author
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (a *autoCodePgsql) GetColumn(tableName string, dbName string) (data []response.Column, err error) {
 	// todo 数据获取不全, 待完善sql
