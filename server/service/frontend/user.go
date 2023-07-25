@@ -93,7 +93,7 @@ func (u *FrontendUser) UpdateUserBackgroudImage(data frontend.User) (err error) 
 }
 
 func (u *FrontendUser) UpdateUser(data frontend.User) (err error) {
-	err = global.DB.Save(&data).Error
+	err = global.DB.Model(&data).Updates(map[string]interface{}{"header_img": data.HeaderImg, "introduction": data.Introduction, "content": data.Content}).Error
 	return
 }
 
