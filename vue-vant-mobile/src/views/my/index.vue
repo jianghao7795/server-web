@@ -40,7 +40,7 @@
         </template>
       </van-cell>
 
-      <van-cell :border="false" title="隐私政策" is-link>
+      <van-cell :border="false" title="隐私政策" is-link @click="showPrivacyPolicy = true">
         <template #icon>
           <Icon>
             <DocumentText />
@@ -64,6 +64,12 @@
         description="确认退出登录吗"
         close-on-click-action
       />
+      <van-action-sheet v-model:show="showPrivacyPolicy" title="隐私政策" teleport="body">
+        <div
+          ><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p
+          ><p>内容</p><p>内容</p><p>内容</p></div
+        >
+      </van-action-sheet>
     </div>
   </div>
 </template>
@@ -77,7 +83,8 @@
   import { showToast } from 'vant';
 
   const userStore = useUserStore();
-  const showLogoutAction = ref(false);
+  const showLogoutAction = ref<boolean>(false);
+  const showPrivacyPolicy = ref<boolean>(false);
 
   const logoutActions = [
     {
