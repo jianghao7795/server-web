@@ -40,7 +40,7 @@
         </template>
       </van-cell>
 
-      <van-cell :border="false" title="隐私政策" is-link @click="showPrivacyPolicy = true">
+      <van-cell :border="false" title="隐私政策" is-link @click="handleView(true)">
         <template #icon>
           <Icon>
             <DocumentText />
@@ -64,12 +64,7 @@
         description="确认退出登录吗"
         close-on-click-action
       />
-      <van-action-sheet v-model:show="showPrivacyPolicy" title="隐私政策" teleport="body">
-        <div
-          ><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p
-          ><p>内容</p><p>内容</p><p>内容</p></div
-        >
-      </van-action-sheet>
+      <PrivacyPolicy :show="showPrivacyPolicy" @handleView="handleView"></PrivacyPolicy>
     </div>
   </div>
 </template>
@@ -81,10 +76,15 @@
   import { Person, ColorPalette, DocumentText, LogOut } from '@vicons/ionicons5';
   import { useUserStore } from '@/store/modules/user';
   import { showToast } from 'vant';
+  import PrivacyPolicy from '@/components/privacy_policy/PrivacyPolicy.vue';
 
   const userStore = useUserStore();
   const showLogoutAction = ref<boolean>(false);
   const showPrivacyPolicy = ref<boolean>(false);
+
+  const handleView = (view = false) => {
+    showPrivacyPolicy.value = view;
+  };
 
   const logoutActions = [
     {
