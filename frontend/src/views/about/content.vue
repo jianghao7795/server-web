@@ -9,7 +9,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { onMounted, computed } from "vue";
+import { onMounted } from "vue";
 
 const props = defineProps<{ imgUrl: string }>();
 

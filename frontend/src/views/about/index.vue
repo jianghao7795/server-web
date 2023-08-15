@@ -4,7 +4,7 @@
       <h4>介绍: {{ userStore.currentUser.user.nickName }}</h4>
       <div class="about-content">
         <p>描述：</p>
-        <Content :imgUrl="userStore.currentUser.user.headerImg" />
+        <Content :imgUrl="userStore.currentUser.user.introduction" />
       </div>
     </div>
     <div v-else>请登录！</div>
