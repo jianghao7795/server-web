@@ -1,9 +1,5 @@
 <template>
   <u-comment :config="config" @submit="submit" @like="like" relative-time>
-    <!-- <template>导航栏卡槽</template> -->
-    <!-- <template #info>用户信息卡槽</template> -->
-    <!-- <template #card>用户信息卡片卡槽</template> -->
-    <!-- <template #opearte>操作栏卡槽</template> -->
   </u-comment>
 </template>
 
@@ -12,6 +8,11 @@ import emoji from "@/common/emoji";
 import { reactive } from "vue";
 import { UToast, createObjectURL, dayjs } from "undraw-ui";
 import type { CommentApi, ConfigApi, SubmitParamApi } from "undraw-ui";
+import { useUserStore } from "@/stores/user";
+
+const userStroe = useUserStore();
+
+console.log(userStroe.currentUser.user.ID);
 
 const config = reactive<ConfigApi>({
   user: {
@@ -52,11 +53,11 @@ const submit = ({
   let contentImg = files?.map((e) => createObjectURL(e)).join("||");
 
   temp_id += 1;
-  const comment: CommentApi = {
+  const comment = {
     id: String(temp_id),
     parentId: parentId,
     uid: config.user.id,
-    address: "来自江苏",
+    // address: "",
     content: content,
     likes: 0,
     createTime: dayjs().subtract(5, "seconds").toString(),
@@ -64,11 +65,11 @@ const submit = ({
     user: {
       username: config.user.username,
       avatar: config.user.avatar,
-      level: 6,
-      homeLink: `/${temp_id}`,
+      // level: 0,
+      // homeLink: "",
     },
     reply: null,
-  };
+  } as CommentApi;
   setTimeout(() => {
     finish(comment);
     UToast({ message: "评论成功!", type: "info" });

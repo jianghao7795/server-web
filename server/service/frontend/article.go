@@ -87,7 +87,7 @@ func (s *FrontendArticle) GetAricleDetail(articleId int, c *gin.Context) (articl
 			return articleDetail, err
 		}
 	}
-	err = db.Where("id = ?", articleId).Preload("Tags").First(&articleDetail).Error
+	err = db.Where("id = ?", articleId).Preload("Tags").Preload("User").First(&articleDetail).Error
 	return articleDetail, err
 	// var cacheTime = global.CONFIG.Cache.Time
 	// var articleDetailStr string

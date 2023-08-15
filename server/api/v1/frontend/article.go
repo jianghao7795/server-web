@@ -42,7 +42,9 @@ func (s *FrontendArticleApi) GetArticleDetail(c *gin.Context) {
 	id := c.Param("id")
 	aritcleId, err := strconv.Atoi(id)
 	if err != nil {
+		global.LOG.Error("获取Id失败!", zap.Error(err))
 		response.FailWithMessage("获取Id失败", c)
+		return
 	}
 
 	articleDetail, err := frontendService.FrontendArticle.GetAricleDetail(aritcleId, c)

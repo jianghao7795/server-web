@@ -6,11 +6,17 @@ declare namespace API {
     content: string;
     desc: string;
     state: 1 | 0;
-    user?: User;
+    user?: ArticleUser;
     tags?: Tag[];
     title: string;
     user_id: number;
     reading_quantity: number;
+  };
+
+  export type ArticleUser = {
+    userName: string;
+    nickName: string;
+    headerImg: string;
   };
 
   export interface User {

@@ -53,7 +53,7 @@ func (*ArticleService) UpdateArticle(article app.Article) (err error) {
 
 // getDetail by id
 func (*ArticleService) GetArticle(id uint) (article app.Article, err error) {
-	err = global.DB.Preload("Tags").Where("id = ?", id).First(&article).Error
+	err = global.DB.Preload("Tags").Preload("User").Where("id = ?", id).First(&article).Error
 	return
 }
 

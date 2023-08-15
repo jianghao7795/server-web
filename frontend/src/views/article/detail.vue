@@ -7,7 +7,7 @@
       <h3>简介：{{ articleStore.detail?.title }}</h3>
       <h4>
         <NSpace style="width: 80%">
-          标签：&#129409;
+          标签：
           <n-tag
             size="small"
             round
@@ -18,7 +18,13 @@
           </n-tag>
         </NSpace>
       </h4>
-      <!-- <div>作者：{{ detail?.user?.nick_name }}</div> -->
+      <div>
+        <n-space justify="start">
+          作者：
+          <n-avatar round size="small" :src="avatar" />
+          {{ articleStore.detail?.user?.userName }}
+        </n-space>
+      </div>
       <NSpace vertical>
         <div>日期：{{ changeDate(articleStore.detail?.CreatedAt) }}</div>
         <div>阅读量：{{ articleStore.detail?.reading_quantity }}</div>
@@ -33,7 +39,6 @@
         :showCodeRowNumber="true"
       ></MdEditor>
     </div>
-    <div><Comment /></div>
   </div>
 </template>
 
@@ -44,30 +49,34 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { onMounted, inject, ref, type Ref } from "vue";
+import { onMounted, inject, ref, type Ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
 import dayjs from "dayjs";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 import { useArticleStore } from "@/stores/article";
-import { getArticleComment } from "@/services/comment";
+// import { getArticleComment } from "@/services/comment";
 import type { GlobalTheme } from "naive-ui";
 // import { useUserStore } from "@/stores/user";
-import Comment from "@/components/comments/index.vue";
+// import Comment from "@/components/comments/index.vue";
 
-// const Base_URL = ref<string>(import.meta.env.VITE_BASE_API);
-
+const Base_URL = import.meta.env.VITE_BASE_API + "/";
 // const inputSelectRef = ref<any>(null);
 // const message = useMessage();
 // const userStroe = useUserStore();
 const route = useRoute();
 const theme = inject<Ref<GlobalTheme | null>>("theme");
 const articleStore = useArticleStore();
+const avatar = computed(() =>
+  articleStore.detail?.user?.headerImg
+    ? Base_URL + articleStore.detail?.user?.headerImg
+    : ""
+);
 // const isComment = ref<boolean>(false);
 // const isCommentChildren = ref<{ [id: number]: boolean }>({});
 
-const comment = ref<Comment.comment[]>([]);
+// const comment = ref<Comment.comment[]>([]);
 // const inputRef = ref<string>("");
 // const inputChildren = ref<string>("");
 // const changeLogin = inject<(status: boolean) => void>("changeLogin");
@@ -159,11 +168,11 @@ const changeDate = (timeData?: string): string => {
 //   // console.log(options);
 // };
 
-onMounted(async () => {
+onMounted(() => {
   const params = route.params;
   articleStore.getDetail({ id: params.id as string });
-  const resp = await getArticleComment({ articleId: params.id as string });
-  comment.value = resp.data;
+  // const resp = await getArticleComment({ articleId: params.id as string });
+  // comment.value = resp.data;
   // console.log(route.params, params);
   //   console.log(resp);
 });

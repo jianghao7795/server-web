@@ -19,6 +19,13 @@ type User struct {
 	Content      string `json:"content" gorm:"comment:介绍"`
 }
 
+type ArticleUser struct {
+	global.MODEL
+	Username  string `json:"userName" gorm:"comment:用户登录名"`
+	NickName  string `json:"nickName" gorm:"default:系统用户;comment:用户昵称"`
+	HeaderImg string `json:"headerImg" gorm:"default:https://qmplusimg.henrongyi.top/header.jpg;comment:用户头像"`
+}
+
 type ResetPassword struct {
 	ID                uint   `json:"id" form:"id"`
 	Password          string `json:"password" form:"password"`
@@ -27,5 +34,9 @@ type ResetPassword struct {
 }
 
 func (User) TableName() string {
+	return "sys_users"
+}
+
+func (ArticleUser) TableName() string {
 	return "sys_users"
 }
