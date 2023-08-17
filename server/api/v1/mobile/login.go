@@ -35,7 +35,7 @@ func (*MobileLoginApi) Login(c *gin.Context) {
 func (*MobileLoginApi) GetUserInfo(c *gin.Context) {
 	authorization, err1 := c.Get("user_id")
 	// global.Logger.Println(authorization, err1)
-	global.Logger.Printf("authorization is %T\n", authorization)
+	global.Logger.Info("authorization is %T\n", authorization)
 	if !err1 {
 		global.LOG.Error("获取user_id失败!", zap.Error(errors.New("失败")))
 		response.FailWithMessage400("获取失败", c)
