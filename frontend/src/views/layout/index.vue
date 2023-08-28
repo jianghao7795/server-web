@@ -133,6 +133,7 @@
           <span>Copyright © {{ dayjs().format("YYYY") }}</span>
         </footer>
       </n-layout-footer>
+      <n-back-top :right="50" />
     </n-layout>
     <n-drawer v-model:show="active" placement="bottom" :height="400">
       <n-drawer-content title="更换背景图片">
