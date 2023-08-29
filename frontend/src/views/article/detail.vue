@@ -1,6 +1,6 @@
 <template>
   <div class="view-content">
-    <div class="view-margin">
+    <div class="view-margin" ref="scrollScreen">
       <h1 class="view-center">
         <b>{{ articleStore.detail?.title }}</b>
       </h1>
@@ -49,17 +49,14 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { onMounted, inject, ref, type Ref, computed } from "vue";
+import { onMounted, inject, type Ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
 import dayjs from "dayjs";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 import { useArticleStore } from "@/stores/article";
-// import { getArticleComment } from "@/services/comment";
 import type { GlobalTheme } from "naive-ui";
-// import { useUserStore } from "@/stores/user";
-// import Comment from "@/components/comments/index.vue";
 
 const Base_URL = import.meta.env.VITE_BASE_API + "/";
 // const inputSelectRef = ref<any>(null);

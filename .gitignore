@@ -8,7 +8,7 @@
 /vant-mobile/dist
 /vant-mobile/pnpm-lock.yaml
 .DS_Store
-
+.vscode
 # local env files
 .env.local
 .env.*.local

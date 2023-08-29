@@ -21,33 +21,35 @@
                   <n-tab-pane name="/tags" tab="标签"></n-tab-pane>
                   <n-tab-pane name="/about" tab="关于"></n-tab-pane>
                 </n-tabs>
-                <n-switch
-                  v-model:value="darkTheme"
-                  v-bind:on-update:value="changeTheme"
-                  size="medium"
-                  :rail-style="railStyle"
-                >
-                  <template #checked-icon>
-                    <NIcon style="line-height: 0.7rem">
-                      <moon
-                        theme="filled"
-                        size="26"
-                        fill="#333"
-                        :strokeWidth="3"
-                      />
-                    </NIcon>
-                  </template>
-                  <template #unchecked-icon>
-                    <NIcon style="line-height: 0.7rem">
-                      <sun-one
-                        theme="outline"
-                        size="26"
-                        fill="#333"
-                        :strokeWidth="3"
-                      />
-                    </NIcon>
-                  </template>
-                </n-switch>
+                <div style="margin-top: 2px">
+                  <n-switch
+                    v-model:value="darkTheme"
+                    v-bind:on-update:value="changeTheme"
+                    size="medium"
+                    :rail-style="railStyle"
+                  >
+                    <template #checked-icon>
+                      <NIcon style="line-height: 0.7rem">
+                        <moon
+                          theme="filled"
+                          size="26"
+                          fill="#333"
+                          :strokeWidth="3"
+                        />
+                      </NIcon>
+                    </template>
+                    <template #unchecked-icon>
+                      <NIcon style="line-height: 0.7rem">
+                        <sun-one
+                          theme="outline"
+                          size="26"
+                          fill="#333"
+                          :strokeWidth="3"
+                        />
+                      </NIcon>
+                    </template>
+                  </n-switch>
+                </div>
               </NSpace>
             </div>
           </template>
@@ -133,6 +135,7 @@
           <span>Copyright © {{ dayjs().format("YYYY") }}</span>
         </footer>
       </n-layout-footer>
+      <n-back-top :right="50" />
     </n-layout>
     <n-drawer v-model:show="active" placement="bottom" :height="400">
       <n-drawer-content title="更换背景图片">
@@ -479,7 +482,7 @@ const login = () => {
 };
 
 const railStyle = ({ checked }: { checked: boolean }) => {
-  const style: CSSProperties = { lineHeight: "0.7rem" };
+  const style: CSSProperties = { lineHeight: "1rem" };
   if (checked) {
     style.background = "#222";
   } else {

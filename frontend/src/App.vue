@@ -19,7 +19,6 @@ const toggleDark = useToggle(isDark);
 // const env = loadEnv("production", process.cwd());
 // console.log(env);
 const isDarkTheme = useOsTheme();
-
 const theme = ref<GlobalTheme | null>(
   isDarkTheme.value === "dark" ? darkTheme : null
 );
