@@ -13,7 +13,6 @@ export default {
     app.directive("auth", {
       // 当被绑定的元素插入到 DOM 中时……
       mounted: function (el, binding) {
-        console.log(el, binding, Object.prototype.toString.call(binding.value));
         const userInfo = userStore.userInfo;
         let type = "";
         switch (Object.prototype.toString.call(binding.value)) {
@@ -36,7 +35,6 @@ export default {
         }
         const waitUse = binding.value.toString().split(",");
         let flag = waitUse.some((item) => item === userInfo.authorityId);
-        console.log(binding.modifiers.not);
         if (binding.modifiers.not) {
           flag = !flag;
         }

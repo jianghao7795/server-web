@@ -129,7 +129,7 @@ const changeShake = () => {
 };
 
 onMounted(() => {
-  if (btnAuth.about.includes(userStore.userInfo.authorityId)) {
+  if (btnAuth.about?.includes(userStore.userInfo.authorityId)) {
     getGithubCommitList({ page: page.value }).then((resp) => {
       commits.value = resp.data.list.map((i) => ({
         name: i.author,

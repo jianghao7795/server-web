@@ -119,7 +119,7 @@
 
 <script setup>
 import { getSystemState } from "@/api/system";
-import { onUnmounted, ref } from "vue";
+import { onUnmounted, ref, onMounted } from "vue";
 const timer = ref(null);
 const state = ref({});
 const colors = ref([
@@ -133,10 +133,12 @@ const reload = async () => {
   state.value = data.server;
 };
 
-reload();
-timer.value = setInterval(() => {
+onMounted(() => {
   reload();
-}, 1000 * 60);
+  timer.value = setInterval(() => {
+    reload();
+  }, 1000 * 60);
+});
 
 onUnmounted(() => {
   clearInterval(timer.value);
