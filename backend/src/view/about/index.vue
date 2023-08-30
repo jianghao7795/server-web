@@ -1,11 +1,11 @@
 <template>
   <div>
     <el-row :gutter="10">
-      <el-col :span="24">
+      <el-col :span="24" v-auth="btnAuth.about">
         <el-card>
           <template #header>
             <div class="card-header">
-              <span v-auth="btnAuth.about">项目信息</span>
+              <span>项目信息</span>
               <!-- changeVNode() -->
             </div>
           </template>
@@ -47,7 +47,7 @@
       <el-col :span="24">
         <Draggable />
       </el-col>
-      <el-col :span="24">
+      <el-col :span="24" v-auth="btnAuth.about">
         <el-card class="box-card">
           <template #header>
             <div class="card-header">
@@ -103,6 +103,7 @@ import { Like, BankCardOne } from "@icon-park/vue-next";
 import { useI18n } from "vue-i18n";
 import { useBtnAuth } from "@/utils/btnAuth";
 import { version } from "vue";
+import { useUserStore } from "@/pinia/modules/user";
 
 const btnAuth = useBtnAuth();
 
@@ -116,7 +117,9 @@ const isLoading = ref(false);
 const isShow = ref(false);
 const page = ref(1);
 
-const templateComponent = "active";
+const userStore = useUserStore();
+
+// const templateComponent = "active";
 
 const changeShake = () => {
   isShake.value = true;
@@ -126,13 +129,15 @@ const changeShake = () => {
 };
 
 onMounted(() => {
-  getGithubCommitList({ page: page.value }).then((resp) => {
-    commits.value = resp.data.list.map((i) => ({
-      name: i.author,
-      date: i.commit_time,
-      message: i.message,
-    }));
-  });
+  if (btnAuth.about.includes(userStore.userInfo.authorityId)) {
+    getGithubCommitList({ page: page.value }).then((resp) => {
+      commits.value = resp.data.list.map((i) => ({
+        name: i.author,
+        date: i.commit_time,
+        message: i.message,
+      }));
+    });
+  }
 
   // Members().then((resp) => {
   //   console.log(resp);
