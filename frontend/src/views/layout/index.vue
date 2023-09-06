@@ -205,8 +205,9 @@
               type="primary"
               :block="true"
               @click="() => login()"
-              >登录</n-button
             >
+              登录
+            </n-button>
           </div>
         </n-form>
       </n-drawer-content>
@@ -270,7 +271,7 @@ import ResetPassord from "./components/reset_password.vue";
 const Base_URL = import.meta.env.VITE_BASE_API;
 
 const headImage = computed(
-  () => `${Base_URL}/${userStore.currentUser.user.headerImg}`
+  () => `${Base_URL}/${userStore.currentUser.user.headerImg}`,
 );
 
 const userStore = useUserStore();
@@ -282,7 +283,7 @@ const loadingFlag = ref<boolean>(false);
 const isMouseOver = ref<boolean>(false);
 const viewPage = ref<string>(route.fullPath);
 const colorSet = ref<string>(
-  `url(${new URL("/home-bg.png", import.meta.url).href})`
+  `url(${new URL("/home-bg.png", import.meta.url).href})`,
 );
 const bgImage = ref<User.Images[]>([]);
 const active = ref<boolean>(false);
@@ -304,8 +305,8 @@ const revisePassword = ref<boolean>(false);
 // 是否登录
 const isLogin = computed(() => !!userStore.currentUser.user.ID);
 const userInfo = ref<{ name: string; password: string }>({
-  name: "",
-  password: "",
+  name: "admin_user",
+  password: "123456",
 });
 
 const rules = {
@@ -439,7 +440,7 @@ const changeImages = async (data: User.Images) => {
   colorSet.value = `url(${
     new URL(
       data.url.includes("http") ? data.url : `${Base_URL}/${data.url}`,
-      import.meta.url
+      import.meta.url,
     ).href
   })`;
 };
@@ -463,7 +464,7 @@ const login = () => {
             imageString.includes("http")
               ? imageString
               : `${Base_URL}/${imageString}`,
-            import.meta.url
+            import.meta.url,
           ).href
         })`;
       }
@@ -477,7 +478,7 @@ const login = () => {
         name: "",
         password: "",
       };
-    }
+    },
   );
 };
 
@@ -520,7 +521,7 @@ watch(
       default:
         currentRouter.value = "首页";
     }
-  }
+  },
 );
 
 onMounted(() => {
@@ -561,7 +562,7 @@ onMounted(() => {
         colorSet.value = `url(${
           new URL(
             head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`,
-            import.meta.url
+            import.meta.url,
           ).href
         })`;
       }

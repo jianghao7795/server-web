@@ -3,7 +3,7 @@
     v-model:show="props.registerStatus"
     :width="502"
     placement="left"
-    :on-update:show="(show:boolean) => emits('changeStatus', show)"
+    :on-update:show="(show: boolean) => emits('changeStatus', show)"
   >
     <n-drawer-content title="注册" closable>
       <n-form
@@ -106,8 +106,8 @@ const emits = defineEmits<{
   (e: "changeStatus", status: boolean): void;
 }>();
 const userRegister = ref<User.Register>({
-  name: "",
-  password: "",
+  name: "admin_user",
+  password: "123456",
   content: "",
   introduction: "",
   re_password: "",
