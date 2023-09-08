@@ -2,13 +2,7 @@
 import { computed, defineComponent, h, onMounted, provide, ref } from "vue";
 import { RouterView } from "vue-router";
 import type { GlobalTheme } from "naive-ui";
-import {
-  darkTheme,
-  useLoadingBar,
-  useMessage,
-  useNotification,
-  useOsTheme,
-} from "naive-ui";
+import { darkTheme, useLoadingBar, useMessage, useNotification, useOsTheme } from "naive-ui";
 import { emitter } from "./utils/common";
 import { useDark, useToggle } from "@vueuse/core";
 
@@ -19,9 +13,7 @@ const toggleDark = useToggle(isDark);
 // const env = loadEnv("production", process.cwd());
 // console.log(env);
 const isDarkTheme = useOsTheme();
-const theme = ref<GlobalTheme | null>(
-  isDarkTheme.value === "dark" ? darkTheme : null
-);
+const theme = ref<GlobalTheme | null>(isDarkTheme.value === "dark" ? darkTheme : null);
 const color = computed(() => (theme.value === null ? "#000" : "#fff"));
 const colorComment = computed(() => (theme.value === null ? "#999" : "#aaa"));
 
@@ -65,9 +57,7 @@ const NaiveProviderContent = defineComponent({
 
 <template>
   <NConfigProvider :theme="theme">
-    <NLoadingBarProvider
-      :loading-bar-style="{ loading: { height: '4px', background: '#1e80ff' } }"
-    >
+    <NLoadingBarProvider :loading-bar-style="{ loading: { height: '4px', background: '#1e80ff' } }">
       <div class="view-dark view-comment">
         <NNotificationProvider>
           <NMessageProvider>
