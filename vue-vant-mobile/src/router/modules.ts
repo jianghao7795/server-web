@@ -23,26 +23,26 @@ const routeModuleList: Array<RouteRecordRaw> = [
       },
     ],
   },
-  {
-    path: '/message',
-    name: 'Message',
-    redirect: '/message/index',
-    component: Layout,
-    meta: {
-      title: '消息',
-      icon: 'chat',
-    },
-    children: [
-      {
-        path: 'index',
-        name: 'MessagePage',
-        meta: {
-          keepAlive: false,
-        },
-        component: () => import('@/views/message/index.vue'),
-      },
-    ],
-  },
+  // {
+  //   path: '/message',
+  //   name: 'Message',
+  //   redirect: '/message/index',
+  //   component: Layout,
+  //   meta: {
+  //     title: '消息',
+  //     icon: 'chat',
+  //   },
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'MessagePage',
+  //       meta: {
+  //         keepAlive: false,
+  //       },
+  //       component: () => import('@/views/message/index.vue'),
+  //     },
+  //   ],
+  // },
   {
     path: '/my',
     name: 'My',
