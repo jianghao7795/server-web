@@ -1,12 +1,3 @@
-/backend/node_modules
-/backend/dist
-/frontend/node_modules
-/frontend/dist
-/frontend/pnpm-lock.yaml
-/frontend/auto-imports.d.ts
-/frontend/components.d.ts
-/vant-mobile/dist
-/vant-mobile/pnpm-lock.yaml
 .DS_Store
 .vscode
 # local env files
@@ -25,12 +16,3 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
-
-/server/log/
-/server/latest_log
-/server/tmp
-/server/fileDir
-# /server/uploads/file/*
-
-*.iml
-/server/server
