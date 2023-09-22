@@ -1,21 +1,15 @@
 <template>
   <div class="article-list">
     <n-h4 class="sortH4">
-      <a
-        v-bind:style="{
-          color: colorRef.time ? '#70a1ff' : undefined,
-        }"
-        @click="() => changeSort('time')"
-      >
+      <a v-bind:style="{
+        color: colorRef.time ? '#70a1ff' : undefined,
+      }" @click="() => changeSort('time')">
         时间排序
       </a>
       <n-divider vertical />
-      <a
-        v-bind:style="{
-          color: colorRef.read ? '#70a1ff' : undefined,
-        }"
-        @click="() => changeSort('read')"
-      >
+      <a v-bind:style="{
+        color: colorRef.read ? '#70a1ff' : undefined,
+      }" @click="() => changeSort('read')">
         阅读排序
       </a>
     </n-h4>
@@ -31,7 +25,8 @@
             <div>
               简述:
               <b>{{ item.desc }}</b>
-              &nbsp;&nbsp; 阅读量: {{ item.reading_quantity }}
+              &nbsp;&nbsp; <preview-open theme="outline" size="24" fill="#333" />: {{ item.reading_quantity }}
+              &nbsp;&nbsp; : {{ item.reading_quantity }}
             </div>
           </template>
           <!-- <md-editor v-model="item.content" preview-only /> -->
@@ -79,7 +74,7 @@ export default {
 // import { NList, NThing, NListItem, NSpace, NTag, NButton, NEmpty } from "naive-ui";
 import { ref, onMounted, computed, watch } from "vue";
 import { getArticleSearch } from "@/services/article";
-import { Right } from "@icon-park/vue-next";
+import { Right, PreviewOpen } from "@icon-park/vue-next";
 import { useRouter, useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
 
@@ -140,6 +135,7 @@ watch(
   a {
     color: #999999;
   }
+
   a:hover {
     color: #70a1ff;
   }

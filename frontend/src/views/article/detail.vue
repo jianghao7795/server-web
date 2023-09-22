@@ -1,44 +1,39 @@
 <template>
   <div class="view-content">
-    <div class="view-margin" ref="scrollScreen">
-      <h1 class="view-center">
-        <b>{{ articleStore.detail?.title }}</b>
-      </h1>
-      <h3>简介：{{ articleStore.detail?.title }}</h3>
-      <h4>
-        <NSpace style="width: 80%">
-          标签：
-          <n-tag
-            size="small"
-            round
-            v-for="(item, index) in articleStore.detail?.tags"
-            :type="colorIndex(index)"
-          >
-            {{ item.name }}
-          </n-tag>
+    <n-page-header @back="handleBack">
+      <template #title>
+        <n-button type="info" v-on:click="handleBack">返回</n-button>
+      </template>
+      <div class="view-margin" ref="scrollScreen">
+        <h1 class="view-center">
+          <b>{{ articleStore.detail?.title }}</b>
+        </h1>
+        <h3>简介：{{ articleStore.detail?.title }}</h3>
+        <h4>
+          <NSpace style="width: 80%">
+            标签：
+            <n-tag size="small" round v-for="(item, index) in articleStore.detail?.tags" :type="colorIndex(index)">
+              {{ item.name }}
+            </n-tag>
+          </NSpace>
+        </h4>
+        <div>
+          <n-space justify="start">
+            作者：
+            <n-avatar round size="small" :src="avatar" />
+            {{ articleStore.detail?.user?.userName }}
+          </n-space>
+        </div>
+        <NSpace vertical>
+          <div>日期：{{ changeDate(articleStore.detail?.CreatedAt) }}</div>
+          <div>阅读量：{{ articleStore.detail?.reading_quantity }}</div>
         </NSpace>
-      </h4>
-      <div>
-        <n-space justify="start">
-          作者：
-          <n-avatar round size="small" :src="avatar" />
-          {{ articleStore.detail?.user?.userName }}
-        </n-space>
-      </div>
-      <NSpace vertical>
-        <div>日期：{{ changeDate(articleStore.detail?.CreatedAt) }}</div>
-        <div>阅读量：{{ articleStore.detail?.reading_quantity }}</div>
-      </NSpace>
 
-      <n-divider />
-      <MdEditor
-        :model-value="articleStore.detail?.content"
-        :theme="theme ? 'dark' : 'light'"
-        :pageFullscreen="false"
-        :previewOnly="true"
-        :showCodeRowNumber="true"
-      ></MdEditor>
-    </div>
+        <n-divider />
+        <MdEditor :model-value="articleStore.detail?.content" :theme="theme ? 'dark' : 'light'" :pageFullscreen="false"
+          :previewOnly="true" :showCodeRowNumber="true"></MdEditor>
+      </div>
+    </n-page-header>
   </div>
 </template>
 
@@ -50,7 +45,7 @@ export default {
 
 <script lang="ts" setup>
 import { onMounted, inject, type Ref, computed } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { colorIndex } from "@/common/article";
 import dayjs from "dayjs";
 import MdEditor from "md-editor-v3";
@@ -63,6 +58,7 @@ const Base_URL = import.meta.env.VITE_BASE_API + "/";
 // const message = useMessage();
 // const userStroe = useUserStore();
 const route = useRoute();
+const router = useRouter();
 const theme = inject<Ref<GlobalTheme | null>>("theme");
 const articleStore = useArticleStore();
 const avatar = computed(() =>
@@ -152,6 +148,10 @@ const avatar = computed(() =>
 //     }, 1000);
 //   }
 // };
+
+const handleBack = () => {
+  router.go(-1);
+};
 
 const changeDate = (timeData?: string): string => {
   return !!timeData ? dayjs(timeData).format("YYYY-MM-DD") : "";

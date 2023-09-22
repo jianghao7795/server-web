@@ -3,6 +3,7 @@ package frontend
 import (
 	// "encoding/json"
 	"errors"
+	"strconv"
 	"strings"
 	"time"
 
@@ -19,19 +20,24 @@ import (
 
 type FrontendArticle struct{}
 
-func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *gin.Context) (list []frontend.Article, err error) {
+func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *gin.Context) (list []frontend.Article, total int64, err error) {
 	var cacheTime = global.CONFIG.Cache.Time
 	var articleStr string
+	db := global.DB.Model(&frontend.Article{})
+	err = db.Count(&total).Error
+	if err != nil {
+		return list, 0, errors.New("总数请求失败")
+	}
 	if info.IsImportant != 0 {
 		articleStr, err = global.REDIS.Get(c, "article-list-home").Result()
 	} else {
-		articleStr, err = global.REDIS.Get(c, "article-list").Result()
+		articleStr, err = global.REDIS.Get(c, "article-list"+strconv.Itoa(info.Page)).Result()
 	}
 
 	if err == redis.Nil {
 		limit := info.PageSize
 		offset := info.PageSize * (info.Page - 1)
-		db := global.DB.Model(&frontend.Article{})
+
 		if info.IsImportant != 0 {
 			db = db.Where("is_important = ?", info.IsImportant)
 		}
@@ -40,28 +46,34 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *gin.
 		}
 		err = db.Limit(limit).Offset(offset).Order("id desc").Preload("Tags").Find(&list).Error
 		if err != nil {
-			return list, err
+			return list, 0, err
 		}
+
 		strList, _ := json.Marshal(list)
+		totalStr, _ := json.Marshal(total)
+
 		if info.IsImportant != 0 {
 			// articleStr, err = global.REDIS.Get(c, "article-list-home").Result()
 			err = global.REDIS.Set(c, "article-list-home", strList, time.Duration(cacheTime)*time.Second).Err()
 		} else {
-			err = global.REDIS.Set(c, "article-list", strList, time.Duration(cacheTime)*time.Second).Err()
+			_ = global.REDIS.Set(c, "article-list-total", totalStr, time.Duration(cacheTime)*time.Second).Err()
+			err = global.REDIS.Set(c, "article-list-"+strconv.Itoa(info.Page), strList, time.Duration(cacheTime)*time.Second).Err()
 		}
 
 		if err != nil {
-			return list, errors.New("redis 存储失败")
+			return list, 0, errors.New("redis 存储失败")
 		}
+
 	} else if err != nil {
-		return list, err
+		return list, 0, err
 	} else {
 		if articleStr != "" {
 			err = json.Unmarshal([]byte(articleStr), &list)
-			return list, err
+			return list, 0, err
 		}
 	}
-	return list, err
+
+	return list, total, err
 }
 
 func (s *FrontendArticle) GetAricleDetail(articleId int, c *gin.Context) (articleDetail frontend.Article, err error) {

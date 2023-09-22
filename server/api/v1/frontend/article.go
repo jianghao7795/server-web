@@ -25,15 +25,16 @@ func (s *FrontendArticleApi) GetArticleList(c *gin.Context) {
 		pageInfo.PageSize = 10
 	}
 
-	if list, err := frontendService.FrontendArticle.GetArticleList(pageInfo, c); err != nil {
+	if list, total, err := frontendService.FrontendArticle.GetArticleList(pageInfo, c); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
+		// log.Println("total is ", total)
 		response.OkWithDetailed(response.PageResult{
-			List: list,
-			// Total:    total,
-			// Page:     pageInfo.Page,
-			// PageSize: pageInfo.PageSize,
+			List:     list,
+			Total:    total,
+			Page:     pageInfo.Page,
+			PageSize: pageInfo.PageSize,
 		}, "获取成功", c)
 	}
 }

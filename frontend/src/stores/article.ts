@@ -33,10 +33,12 @@ export const useArticleStore = defineStore("article", {
   state: (): {
     list: API.Article[];
     detail: API.Article;
+    total: number;
   } => {
     return {
       list: [],
       detail: {} as API.Article,
+      total: 0,
     };
   },
   getters: {},
@@ -44,6 +46,7 @@ export const useArticleStore = defineStore("article", {
     async getList(payload?: API.SearchArticle) {
       const resp = await getArticleList(payload);
       this.list = resp.data?.list;
+      this.total = resp.data?.total;
     },
 
     async getDetail(payload: { id: string }) {

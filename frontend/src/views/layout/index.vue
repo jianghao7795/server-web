@@ -1,51 +1,29 @@
 <template>
   <div>
     <n-layout position="absolute">
-      <n-layout-header position="static">
+      <n-layout-header position="static" v-once>
         <n-card :bordered="false" header-style="headerStyle" class="darkStyle">
           <template #header-extra>
             <div class="headerStyleLine">
               <NSpace>
-                <n-tabs
-                  type="bar"
-                  animated
-                  :value="viewPage"
-                  size="small"
-                  :bar-width="28"
-                  justify-content="space-evenly"
-                  :tab-style="{ margin: '0 5px', fontWeight: 'bold' }"
-                  :on-update:value="(e: string) => changePath(e)"
-                >
+                <n-tabs type="bar" animated :value="viewPage" size="small" :bar-width="28" justify-content="space-evenly"
+                  :tab-style="{ margin: '0 5px', fontWeight: 'bold' }" :on-update:value="(e: string) => changePath(e)">
                   <n-tab-pane name="/" tab="首页"></n-tab-pane>
                   <n-tab-pane name="/articles" tab="文章"></n-tab-pane>
                   <n-tab-pane name="/tags" tab="标签"></n-tab-pane>
                   <n-tab-pane name="/about" tab="关于"></n-tab-pane>
                 </n-tabs>
                 <div style="margin-top: 2px">
-                  <n-switch
-                    v-model:value="darkTheme"
-                    v-bind:on-update:value="changeTheme"
-                    size="medium"
-                    :rail-style="railStyle"
-                  >
+                  <n-switch v-model:value="darkTheme" v-bind:on-update:value="changeTheme" size="medium"
+                    :rail-style="railStyle">
                     <template #checked-icon>
                       <NIcon style="line-height: 0.7rem">
-                        <moon
-                          theme="filled"
-                          size="26"
-                          fill="#333"
-                          :strokeWidth="3"
-                        />
+                        <moon theme="filled" size="26" fill="#333" :strokeWidth="3" />
                       </NIcon>
                     </template>
                     <template #unchecked-icon>
                       <NIcon style="line-height: 0.7rem">
-                        <sun-one
-                          theme="outline"
-                          size="26"
-                          fill="#333"
-                          :strokeWidth="3"
-                        />
+                        <sun-one theme="outline" size="26" fill="#333" :strokeWidth="3" />
                       </NIcon>
                     </template>
                   </n-switch>
@@ -55,60 +33,33 @@
           </template>
           <template #header>
             <span class="headerStyleLine">
-              <b
-                @click="() => changePath('/')"
-                v-if="isLogin"
-                style="cursor: pointer"
-              >
-                <n-dropdown
-                  :options="options"
-                  placement="bottom-end"
-                  trigger="click"
-                  :show-arrow="true"
-                  @select="userLogout"
-                >
+              <b @click="() => changePath('/')" v-if="isLogin" style="cursor: pointer">
+                <n-dropdown :options="options" placement="bottom-end" trigger="click" :show-arrow="true"
+                  @select="userLogout">
                   <n-avatar round size="small" :src="headImage"></n-avatar>
                 </n-dropdown>
               </b>
               <span v-else>
-                <b @click="() => changeLogin(true)" style="cursor: pointer"
-                  >登录</b
-                >
+                <b @click="() => changeLogin(true)" style="cursor: pointer">登录</b>
                 <NDivider vertical />
-                <b
-                  @click="() => changeRegisterStatus(true)"
-                  style="cursor: pointer"
-                  >注册</b
-                >
+                <b @click="() => changeRegisterStatus(true)" style="cursor: pointer">注册</b>
               </span>
             </span>
           </template>
           <div style="height: 300px; text-align: center">
+            <span class="subheading">{{ currentRouter }}</span>
             <div v-if="!isMouseOver">
               <n-popover trigger="hover">
                 <template #trigger>
-                  <Search
-                    size="24"
-                    theme="outline"
-                    @click="() => changeBlur(true)"
-                    :strokeWidth="3"
-                  />
+                  <Search size="24" theme="outline" @click="() => changeBlur(true)" :strokeWidth="3" />
                 </template>
                 <span>搜索文章</span>
               </n-popover>
             </div>
-            <NInput
-              v-else
-              :autofocus="true"
-              ref="searchInputRef"
-              v-model:value="searchInput"
-              style="max-width: 30%; margin: 0"
-              placeholder="搜索文章"
-              type="text"
-              @blur="() => changeBlur(false)"
-              @keyup.enter="submit"
-            />
-            <span class="subheading">{{ currentRouter }}</span>
+            <NInput v-else :autofocus="true" ref="searchInputRef" v-model:value="searchInput"
+              style="max-width: 30%; margin: 0" placeholder="搜索文章" type="text" @blur="() => changeBlur(false)"
+              @keyup.enter="submit" />
+
           </div>
         </n-card>
       </n-layout-header>
@@ -116,12 +67,7 @@
       <n-layout-content position="static" class="middle-view">
         <NSpin :show="loadingFlag">
           <RouterView v-slot="{ Component, route }">
-            <transition
-              mode="out-in"
-              name="fade-in-linear"
-              type="transition"
-              :appear="true"
-            >
+            <transition mode="out-in" name="fade-in-linear" type="transition" :appear="true">
               <keep-alive v-bind:exclude="['ArticleDetail', 'Article']">
                 <component :is="Component" :key="route.name" />
               </keep-alive>
@@ -129,7 +75,7 @@
           </RouterView>
         </NSpin>
       </n-layout-content>
-      <n-layout-footer position="static">
+      <n-layout-footer position="static" v-once>
         <!-- style="width: 100%; height: 100px; position: absolute; bottom: 0px; left: 0px" -->
         <footer class="footerStyle">
           <span>Copyright © {{ dayjs().format("YYYY") }}</span>
@@ -139,32 +85,14 @@
     </n-layout>
     <n-drawer v-model:show="active" placement="bottom" :height="400">
       <n-drawer-content title="更换背景图片">
-        <n-carousel
-          :space-between="30"
-          :loop="false"
-          slides-per-view="auto"
-          draggable
-        >
-          <n-carousel-item
-            style="width: 30%"
-            v-for="item in bgImage"
-            :key="item.ID"
-          >
-            <n-popconfirm
-              positive-text="确认"
-              negative-text="取消"
-              :on-positive-click="() => changeImages(item)"
-            >
+        <n-carousel :space-between="30" :loop="false" slides-per-view="auto" draggable>
+          <n-carousel-item style="width: 30%" v-for="item in bgImage" :key="item.ID">
+            <n-popconfirm positive-text="确认" negative-text="取消" :on-positive-click="() => changeImages(item)">
               <template #trigger>
-                <img
-                  :src="
-                    item.url.includes('http')
-                      ? item.url
-                      : `${Base_URL}/${item.url}`
-                  "
-                  :title="item.name"
-                  class="carousel-img"
-                />
+                <img :src="item.url.includes('http')
+                  ? item.url
+                  : `${Base_URL}/${item.url}`
+                  " :title="item.name" class="carousel-img" />
               </template>
               确定更换背景图片？
             </n-popconfirm>
@@ -174,57 +102,25 @@
     </n-drawer>
     <n-drawer v-model:show="loginStatus" :width="502" placement="left">
       <n-drawer-content title="登录">
-        <n-form
-          ref="formRef"
-          :model="userInfo"
-          :rules="rules"
-          label-placement="left"
-          label-width="auto"
-          require-mark-placement="right-hanging"
-          size="large"
-          @keyup.enter.native="login"
-        >
+        <n-form ref="formRef" :model="userInfo" :rules="rules" label-placement="left" label-width="auto"
+          require-mark-placement="right-hanging" size="large" @keyup.enter.native="login">
           <n-form-item path="name">
-            <n-input
-              type="text"
-              v-model:value="userInfo.name"
-              placeholder="账号"
-            />
+            <n-input type="text" v-model:value="userInfo.name" placeholder="账号" />
           </n-form-item>
           <n-form-item path="password">
-            <n-input
-              type="password"
-              show-password-on="click"
-              v-model:value="userInfo.password"
-              placeholder="密码"
-            />
+            <n-input type="password" show-password-on="click" v-model:value="userInfo.password" placeholder="密码" />
           </n-form-item>
           <div>
-            <n-button
-              :loading="userStore.loading"
-              type="primary"
-              :block="true"
-              @click="() => login()"
-            >
+            <n-button :loading="userStore.loading" type="primary" :block="true" @click="() => login()">
               登录
             </n-button>
           </div>
         </n-form>
       </n-drawer-content>
     </n-drawer>
-    <register
-      :register-status="registerStatus"
-      @change-status="changeRegisterStatus"
-    />
-    <ResetPassord
-      :active="revisePassword"
-      @change-status="changeResetPasswordStatus"
-      @resetStore="resetStore"
-    />
-    <Person
-      :active="personalInformationStatus"
-      @changeStatus="changePersonalInformationStatus"
-    />
+    <register :register-status="registerStatus" @change-status="changeRegisterStatus" />
+    <ResetPassord :active="revisePassword" @change-status="changeResetPasswordStatus" @resetStore="resetStore" />
+    <Person :active="personalInformationStatus" @changeStatus="changePersonalInformationStatus" />
   </div>
 </template>
 
@@ -437,12 +333,11 @@ const changeImages = async (data: User.Images) => {
   });
   window.$message.success("更换成功");
   active.value = false;
-  colorSet.value = `url(${
-    new URL(
-      data.url.includes("http") ? data.url : `${Base_URL}/${data.url}`,
-      import.meta.url,
-    ).href
-  })`;
+  colorSet.value = `url(${new URL(
+    data.url.includes("http") ? data.url : `${Base_URL}/${data.url}`,
+    import.meta.url,
+  ).href
+    })`;
 };
 
 const changeActive = (status: boolean) => {
@@ -459,14 +354,13 @@ const login = () => {
     { username: userInfo.value.name, password: userInfo.value.password },
     (imageString: string) => {
       if (!!imageString) {
-        colorSet.value = `url(${
-          new URL(
-            imageString.includes("http")
-              ? imageString
-              : `${Base_URL}/${imageString}`,
-            import.meta.url,
-          ).href
-        })`;
+        colorSet.value = `url(${new URL(
+          imageString.includes("http")
+            ? imageString
+            : `${Base_URL}/${imageString}`,
+          import.meta.url,
+        ).href
+          })`;
       }
       getImages().then((resp) => {
         if (resp) {
@@ -559,12 +453,11 @@ onMounted(() => {
         }
       });
       if (head_img !== "") {
-        colorSet.value = `url(${
-          new URL(
-            head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`,
-            import.meta.url,
-          ).href
-        })`;
+        colorSet.value = `url(${new URL(
+          head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`,
+          import.meta.url,
+        ).href
+          })`;
       }
     });
   }
@@ -591,6 +484,7 @@ const submit = () => {
   // height: 240px;
   object-fit: cover;
 }
+
 .headerStyleLine {
   font-size: 15px;
 }
