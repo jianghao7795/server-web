@@ -24,9 +24,9 @@
           <template #description>
             <div>
               简述:
-              <b>{{ item.desc }}</b>
-              &nbsp;&nbsp; <preview-open theme="outline" size="24" fill="#333" />: {{ item.reading_quantity }}
-              &nbsp;&nbsp; : {{ item.reading_quantity }}
+              <span>{{ item.desc }}</span>
+              <div>阅读量: {{ item.reading_quantity }}</div>
+              <div>发布于：{{ calculationTime(item.CreatedAt) }}</div>
             </div>
           </template>
           <!-- <md-editor v-model="item.content" preview-only /> -->
@@ -77,6 +77,7 @@ import { getArticleSearch } from "@/services/article";
 import { Right, PreviewOpen } from "@icon-park/vue-next";
 import { useRouter, useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
+import { calculationTime } from "@/utils/date";
 
 const colorRef = ref<{ time?: boolean; read?: boolean }>({});
 const router = useRouter();

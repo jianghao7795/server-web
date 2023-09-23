@@ -6,6 +6,13 @@
           <template #header-extra>
             <div class="headerStyleLine">
               <NSpace>
+                <n-input-group>
+                  <NInput :autofocus="true" ref="searchInputRef" v-model:value="searchInput" placeholder="搜索文章"
+                    type="text" @keyup.enter="submit" />
+                  <n-button type="primary">
+                    <Find round size="24" theme="outline" @click="submit" :strokeWidth="3" />
+                  </n-button>
+                </n-input-group>
                 <n-tabs type="bar" animated :value="viewPage" size="small" :bar-width="28" justify-content="space-evenly"
                   :tab-style="{ margin: '0 5px', fontWeight: 'bold' }" :on-update:value="(e: string) => changePath(e)">
                   <n-tab-pane name="/" tab="首页"></n-tab-pane>
@@ -46,21 +53,7 @@
               </span>
             </span>
           </template>
-          <div style="height: 300px; text-align: center">
-            <span class="subheading">{{ currentRouter }}</span>
-            <div v-if="!isMouseOver">
-              <n-popover trigger="hover">
-                <template #trigger>
-                  <Search size="24" theme="outline" @click="() => changeBlur(true)" :strokeWidth="3" />
-                </template>
-                <span>搜索文章</span>
-              </n-popover>
-            </div>
-            <NInput v-else :autofocus="true" ref="searchInputRef" v-model:value="searchInput"
-              style="max-width: 30%; margin: 0" placeholder="搜索文章" type="text" @blur="() => changeBlur(false)"
-              @keyup.enter="submit" />
-
-          </div>
+          <div style="height: 350px"></div>
         </n-card>
       </n-layout-header>
       <!-- include exclude 包含和不包含 字符串是组件的name -->
@@ -147,7 +140,7 @@ import type { GlobalTheme, FormInst } from "naive-ui";
 import { NIcon } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
 import {
-  Search,
+  Find,
   Logout,
   Change,
   Moon,
@@ -473,8 +466,6 @@ const submit = () => {
     return;
   }
   router.push(`/articles/search/${searchInput.value}`);
-  isMouseOver.value = false;
-  searchInput.value = "";
 };
 </script>
 
@@ -526,14 +517,6 @@ hr.small {
 
 hr {
   border: 0;
-}
-
-.subheading {
-  font-size: 24px;
-  line-height: 1.1;
-  display: block;
-  font-weight: 300;
-  margin: 10px 0 0;
 }
 
 a::before {

@@ -31,11 +31,14 @@ import { defineStore } from "pinia";
 // })
 export const useArticleStore = defineStore("article", {
   state: (): {
+    page: number,
+    
     list: API.Article[];
     detail: API.Article;
     total: number;
   } => {
     return {
+      page: 1,
       list: [],
       detail: {} as API.Article,
       total: 0,

@@ -1,6 +1,6 @@
 <template>
   <div class="article-list">
-    <n-list clickable hoverable>
+    <n-list clickable hoverable v-bind:style="{ marginButton: 10 }">
       <n-list-item v-for="item in article.list" :key="item.ID" @click="changeUrl(item.ID)">
         <n-thing content-style="margin-top: 10px;">
           <template #header>
@@ -28,7 +28,7 @@
       </n-list-item>
     </n-list>
     <div class="page">
-      <n-pagination v-model:page="page" :item-count="article.total" :on-update:page="changePage" />
+      <n-pagination v-model:page="article.page" :item-count="article.total" :on-update:page="changePage" />
     </div>
   </div>
 </template>
@@ -49,20 +49,19 @@ import { calculationTime } from "@/utils/date";
 
 const article = useArticleStore();
 const router = useRouter();
-const page = ref<number>(1);
 
 const changeUrl = (id: number) => {
   router.push(`/articles/${id}`);
 };
 
 const changePage = (p: number) => {
-  page.value = p;
-  article.getList({ page: page.value, pageSize: 10 });
+  article.page = p;
+  article.getList({ page: article.page, pageSize: 10 });
 };
 
 onMounted(async () => {
   try {
-    await article.getList({ page: page.value, pageSize: 10 });
+    await article.getList({ page: article.page, pageSize: 10 });
   } catch (e) {
     console.log(e);
   }
@@ -75,6 +74,7 @@ onMounted(async () => {
 }
 
 .page {
+  margin: 50px;
   display: flex;
   justify-content: flex-end;
 }
