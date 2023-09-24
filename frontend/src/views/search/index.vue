@@ -79,7 +79,7 @@ import { useRouter, useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
 import { calculationTime } from "@/utils/date";
 
-const colorRef = ref<{ time?: boolean; read?: boolean }>({});
+const colorRef = ref<{ time?: boolean; read?: boolean }>({ time: true });
 const router = useRouter();
 const route = useRoute();
 const data = ref<API.Article[]>([]);
