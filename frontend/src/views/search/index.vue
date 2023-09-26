@@ -74,7 +74,7 @@ export default {
 // import { NList, NThing, NListItem, NSpace, NTag, NButton, NEmpty } from "naive-ui";
 import { ref, onMounted, computed, watch } from "vue";
 import { getArticleSearch } from "@/services/article";
-import { Right, PreviewOpen } from "@icon-park/vue-next";
+import { Right } from "@icon-park/vue-next";
 import { useRouter, useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
 import { calculationTime } from "@/utils/date";
