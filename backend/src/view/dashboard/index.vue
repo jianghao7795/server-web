@@ -3,7 +3,7 @@
     <div class="card-box">
       <div class="card top-card">
         <div class="top-card-left">
-          <div class="top-card-left-title">{{ period }}，{{ userStore.userInfo.nickName }}，请开始一天的工作吧</div>
+          <div class="top-card-left-title">{{ period }}，{{ userStore.userInfo.nickName }}，请开始{{ timeNow }}的工作吧</div>
           <div class="top-card-left-dot">当前时间：{{ formatted }}</div>
           <div class="top-card-left-dot">{{ weatherInfo }}</div>
           <div class="top-card-left-rows">
@@ -54,7 +54,8 @@
           </div>
         </template>
         <el-row :gutter="20">
-          <el-col v-for="(card, key) in toolCards" :key="key" :span="4" :xs="8" class="quick-entrance-items" @click="toTarget(card.name)">
+          <el-col v-for="(card, key) in toolCards" :key="key" :span="4" :xs="8" class="quick-entrance-items"
+            @click="toTarget(card.name)">
             <div class="quick-entrance-item">
               <div class="quick-entrance-item-icon" :style="{ backgroundColor: card.bg }">
                 <el-icon>
@@ -151,17 +152,22 @@ const period = ref("");
 const userNumber = ref(0);
 const flowmeter = ref(0);
 const readingQuantity = ref(0);
+const timeNow = ref("");
 
 onMounted(() => {
   const nowHours = useNow().value.getHours();
   if (nowHours <= 6) {
     period.value = "凌晨好";
+    timeNow.value = '一天'
   } else if (nowHours <= 12) {
     period.value = "上午好";
+    timeNow.value = '一天';
   } else if (nowHours <= 18) {
     period.value = "下午好";
+    timeNow.value = '下午';
   } else {
     period.value = "晚上好";
+    timeNow.value = '晚上';
   }
   userCount().then((resp) => {
     if (resp?.code === 0) {
@@ -371,18 +377,23 @@ export default {
   height: 300px;
   border: #eee solid 1px;
 }
+
 .centerText {
   text-align: center;
 }
+
 .page {
   background: #f0f2f5;
   padding: 0;
+
   .card-box {
     padding: 12px 16px;
-    & + .card-box {
+
+    &+.card-box {
       padding-top: 0px;
     }
   }
+
   .card {
     box-sizing: border-box;
     background-color: #fff;
@@ -392,24 +403,29 @@ export default {
     overflow: hidden;
     box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.03);
   }
+
   .top-card {
     height: 260px;
     @include flex-center;
     justify-content: space-between;
     color: #777;
+
     &-left {
       height: 100%;
       display: flex;
       flex-direction: column;
+
       &-title {
         font-size: 22px;
         color: #343844;
       }
+
       &-dot {
         font-size: 14px;
         color: #6b7687;
         margin-top: 24px;
       }
+
       &-rows {
         // margin-top: 15px;
         margin-top: 18px;
@@ -417,27 +433,33 @@ export default {
         width: 600px;
         align-items: center;
       }
+
       &-item {
-        + .top-card-left-item {
+        +.top-card-left-item {
           margin-top: 24px;
         }
+
         margin-top: 14px;
       }
     }
+
     &-right {
       height: 600px;
       width: 600px;
       margin-top: 28px;
     }
   }
+
   ::v-deep(.el-card__header) {
     padding: 0;
     border-bottom: none;
   }
+
   .card-header {
     padding-bottom: 20px;
     border-bottom: 1px solid #e8e8e8;
   }
+
   .quick-entrance-title {
     height: 30px;
     font-size: 22px;
@@ -445,23 +467,28 @@ export default {
     width: 100%;
     border-bottom: 1px solid #eee;
   }
+
   .quick-entrance-items {
     @include flex-center;
     justify-content: center;
     text-align: center;
     color: #333;
+
     .quick-entrance-item {
       padding: 16px 28px;
       margin-top: -16px;
       margin-bottom: -16px;
       border-radius: 4px;
       transition: all 0.2s;
+
       &:hover {
         box-shadow: 0px 0px 7px 0px rgba(217, 217, 217, 0.55);
       }
+
       cursor: pointer;
       height: auto;
       text-align: center;
+
       // align-items: center;
       &-icon {
         width: 50px;
@@ -470,19 +497,23 @@ export default {
         @include flex-center;
         justify-content: center;
         margin: 0 auto;
+
         i {
           font-size: 24px;
         }
       }
+
       p {
         margin-top: 10px;
       }
     }
   }
+
   .echart-box {
     padding: 14px;
   }
 }
+
 .dasboard-icon {
   font-size: 20px;
   color: rgb(85, 160, 248);
@@ -491,6 +522,7 @@ export default {
   margin-right: 10px;
   @include flex-center;
 }
+
 .flex-center {
   @include flex-center;
 }
@@ -499,26 +531,32 @@ export default {
 @media (max-width: 750px) {
   .card {
     padding: 20px 10px !important;
+
     .top-card {
       height: auto;
+
       &-left {
         &-title {
           font-size: 20px !important;
         }
+
         &-rows {
           margin-top: 15px;
           align-items: center;
         }
       }
+
       &-right {
         display: none;
       }
     }
+
     .middle-card {
       &-item {
         line-height: 20px;
       }
     }
+
     .dasboard-icon {
       font-size: 18px;
     }

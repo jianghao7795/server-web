@@ -16,8 +16,9 @@ type ExcelService struct{}
 func (exa *ExcelService) ParseInfoList2Excel(infoList []system.SysBaseMenu, filePath string) error {
 	excel := excelize.NewFile()
 	excel.SetSheetRow("Sheet1", "A1", &[]string{"ID", "路由Name", "路由Path", "是否隐藏", "父节点", "排序", "文件名称"})
+	b := 0
 	for i, menu := range infoList {
-		axis := fmt.Sprintf("A%d", i+2)
+		axis := fmt.Sprintf("A%d", i+b+2)
 		excel.SetSheetRow("Sheet1", axis, &[]interface{}{
 			menu.ID,
 			menu.Name,
@@ -27,6 +28,23 @@ func (exa *ExcelService) ParseInfoList2Excel(infoList []system.SysBaseMenu, file
 			menu.Sort,
 			menu.Component,
 		})
+		if menu.Children != nil {
+			for _, m := range menu.Children {
+				b += 1
+				a := fmt.Sprintf("A%d", i+b+2)
+				excel.SetSheetRow("Sheet1", a, &[]interface{}{
+					m.ID,
+					m.Name,
+					m.Path,
+					m.Hidden,
+					m.ParentId,
+					m.Sort,
+					m.Component,
+				})
+
+			}
+
+		}
 	}
 	err := excel.SaveAs(filePath)
 	return err
