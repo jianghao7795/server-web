@@ -30,8 +30,15 @@
         </NSpace>
 
         <n-divider />
-        <MdEditor :model-value="articleStore.detail?.content" :theme="theme ? 'dark' : 'light'" :pageFullscreen="false"
-          :previewOnly="true" :showCodeRowNumber="true"></MdEditor>
+        <MdPreview
+          :model-value="articleStore.detail?.content"
+          :theme="theme ? 'dark' : 'light'"
+          :pageFullscreen="false"
+          :preview="true"
+          :readOnly="true"
+          :showCodeRowNumber="true"
+          previewOnly
+        ></MdPreview>
       </div>
     </n-page-header>
   </div>
@@ -48,7 +55,7 @@ import { onMounted, inject, type Ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { colorIndex } from "@/common/article";
 import dayjs from "dayjs";
-import MdEditor from "md-editor-v3";
+import { MdPreview } from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 import { useArticleStore } from "@/stores/article";
 import type { GlobalTheme } from "naive-ui";
@@ -61,11 +68,7 @@ const route = useRoute();
 const router = useRouter();
 const theme = inject<Ref<GlobalTheme | null>>("theme");
 const articleStore = useArticleStore();
-const avatar = computed(() =>
-  articleStore.detail?.user?.headerImg
-    ? Base_URL + articleStore.detail?.user?.headerImg
-    : ""
-);
+const avatar = computed(() => (articleStore.detail?.user?.headerImg ? Base_URL + articleStore.detail?.user?.headerImg : ""));
 // const isComment = ref<boolean>(false);
 // const isCommentChildren = ref<{ [id: number]: boolean }>({});
 
