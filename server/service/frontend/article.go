@@ -146,24 +146,28 @@ func (s *FrontendArticle) GetSearchArticle(info frontendReq.ArticleSearch) (list
 	//     Name  string
 	//     Users []*User `gorm:"many2many:user_languages;"`
 	// }
+	var sortField = make(map[string]string)
+	sortField["read"] = "reading_quantity"
+	sortField["time"] = "created_at"
 
 	if info.Name == "tags" {
 		// 多对多关联 Association
 		var id uint
 		global.DB.Model(&frontend.Tag{}).Select("id").Where("name = ?", info.Value).First(&id)
 		dbTag := &frontend.Tag{MODEL: global.MODEL{ID: id}}
-		err = global.DB.Model(dbTag).Preload("Tags").Association("Articles").Find(&list)
-	}
+		if info.Sort != "" {
+			err = global.DB.Model(dbTag).Preload("Tags").Order(sortField[info.Sort] + " desc").Association("Articles").Find(&list)
+		} else {
+			err = global.DB.Model(dbTag).Preload("Tags").Order("created_at desc").Association("Articles").Find(&list)
+		}
 
-	var sortField = make(map[string]string)
-	sortField["read"] = "reading_quantity"
-	sortField["time"] = "created_at"
+	}
 
 	if info.Name == "articles" {
 		if info.Sort != "" {
 			err = db.Where("title like ?", strings.Join([]string{"%", info.Value, "%"}, "")).Preload("Tags").Order(sortField[info.Sort] + " desc").Find(&list).Error
 		} else {
-			err = db.Where("title like ?", strings.Join([]string{"%", info.Value, "%"}, "")).Preload("Tags").Order("id desc").Find(&list).Error
+			err = db.Where("title like ?", strings.Join([]string{"%", info.Value, "%"}, "")).Preload("Tags").Order("created_at desc").Find(&list).Error
 		}
 	}
 

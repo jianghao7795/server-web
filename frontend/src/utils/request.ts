@@ -1,10 +1,5 @@
 import axios from "axios";
-import type {
-  AxiosInstance,
-  AxiosError,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from "axios";
+import type { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { emitter } from "./common";
 import { useUserStore } from "@/stores/user";
 
@@ -47,7 +42,7 @@ service.interceptors.response.use(
       emitter.emit("closeLoading");
       return Promise.reject(new Error("服务器错误"));
     }
-    const { code, msg } = response.data;
+    const { code, msg, data } = response.data;
     emitter.emit("closeLoading");
     // 根据自定义错误码判断请求是否成功
     if (code === 0) {
@@ -60,7 +55,7 @@ service.interceptors.response.use(
         duration: 10000,
         keepAliveOnHover: true,
         content: `返回错误: ${msg ? 400 : 500}`,
-        meta: msg,
+        meta: data?.msg || msg,
       });
       return Promise.reject(new Error(msg));
     }
@@ -95,7 +90,7 @@ service.interceptors.response.use(
       keepAliveOnHover: true,
     });
     return;
-  }
+  },
 );
 
 /* 导出封装的请求方法 */
@@ -106,19 +101,11 @@ export const http = {
     return service.get(url, config);
   },
 
-  post<T = any, R = any>(
-    url: string,
-    data?: R,
-    config?: AxiosRequestConfig
-  ): Promise<T> {
+  post<T = any, R = any>(url: string, data?: R, config?: AxiosRequestConfig): Promise<T> {
     return service.post(url, data, config);
   },
 
-  put<T = any, R = any>(
-    url: string,
-    data?: R,
-    config?: AxiosRequestConfig
-  ): Promise<T> {
+  put<T = any, R = any>(url: string, data?: R, config?: AxiosRequestConfig): Promise<T> {
     return service.put(url, data, config);
   },
 
