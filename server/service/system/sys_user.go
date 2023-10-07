@@ -45,7 +45,7 @@ func (userService *UserService) Login(u *system.SysUser) (userInter *system.SysU
 	}
 
 	var user system.SysUser
-	u.Password = utils.MD5V([]byte(u.Password))
+	// u.Password = utils.MD5V([]byte(u.Password))
 	err = global.DB.Where("username = ? AND password = ?", u.Username, u.Password).Preload("Authorities").Preload("Authority").First(&user).Error
 	if err == nil {
 		var am system.SysMenu
