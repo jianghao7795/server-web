@@ -161,9 +161,9 @@ func (u *FrontendUser) UpdatePassword(c *gin.Context) {
 		response.FailWithMessage("密码不一致", c)
 		return
 	}
-	resetPassword.Password = utils.MD5V([]byte(resetPassword.Password))
-	resetPassword.NewPassword = utils.MD5V([]byte(resetPassword.NewPassword))
-	resetPassword.RepeatNewPassword = utils.MD5V([]byte(resetPassword.RepeatNewPassword))
+	// resetPassword.Password = utils.MD5V([]byte(resetPassword.Password))
+	// resetPassword.NewPassword = utils.MD5V([]byte(resetPassword.NewPassword))
+	// resetPassword.RepeatNewPassword = utils.MD5V([]byte(resetPassword.RepeatNewPassword))
 	if err := frontendService.ResetPassword(resetPassword); err != nil {
 		response.FailWithMessage("重置密码失败："+err.Error(), c)
 		return

@@ -65,8 +65,8 @@ func (userService *UserService) Login(u *system.SysUser) (userInter *system.SysU
 
 func (userService *UserService) ChangePassword(u *system.SysUser, newPassword string) (userInter *system.SysUser, err error) {
 	var user system.SysUser
-	u.Password = utils.MD5V([]byte(u.Password))
-	err = global.DB.Where("username = ? AND password = ?", u.Username, u.Password).First(&user).Update("password", utils.MD5V([]byte(newPassword))).Error
+	// u.Password = utils.MD5V([]byte(u.Password))
+	err = global.DB.Where("username = ? AND password = ?", u.Username, u.Password).First(&user).Update("password", newPassword).Error
 	return u, err
 }
 

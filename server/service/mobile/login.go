@@ -15,7 +15,7 @@ type MobileLoginService struct{}
 
 func (*MobileLoginService) Login(data mobile.Login) (m response.LoginResponse, err error) {
 	var user mobile.MobileUser
-	data.Password = utils.MD5V([]byte(data.Password))
+	// data.Password = utils.MD5V([]byte(data.Password))
 	err = global.DB.Where("username = ? and password = ?", data.Username, data.Password).First(&user).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return m, errors.New("密码错误")
@@ -44,15 +44,15 @@ func (*MobileLoginService) UpdateUser(data request.MobileUpdate, id uint) (err e
 
 func (*MobileLoginService) UpdatePassword(data request.MobileUpdatePassword) (err error) {
 	var user mobile.MobileUser
-	passwordMoken := utils.MD5V([]byte(data.Password))
+	// passwordMoken := utils.MD5V([]byte(data.Password))
 	db := global.DB.Model(&mobile.MobileUser{})
-	err = db.Where("id = ? and password = ?", data.ID, passwordMoken).First(&user).Error
+	err = db.Where("id = ? and password = ?", data.ID, data.Password).First(&user).Error
 	if err != nil {
 		return err
 	}
 	if user.ID == 0 {
 		return errors.New("未找到用户，请更新请求")
 	}
-	err = db.Update("password", utils.MD5V([]byte(data.NewPassword))).Error
+	err = db.Update("password", data.NewPassword).Error
 	return err
 }

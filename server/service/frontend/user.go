@@ -8,7 +8,6 @@ import (
 	"server/model/frontend"
 	frontendRequest "server/model/frontend/request"
 	frontendResponse "server/model/frontend/response"
-	"server/utils"
 	"time"
 
 	jwt "github.com/golang-jwt/jwt/v4"
@@ -33,7 +32,7 @@ type FrontendUser struct{}
 
 func (u *FrontendUser) Login(data frontendRequest.LoginForm) (userInter frontendResponse.LoginResponse, err error) {
 	var user frontend.User
-	data.Password = utils.MD5V([]byte(data.Password))
+	// data.Password = utils.MD5V([]byte(data.Password))
 	err = global.DB.Where("username = ? and password = ?", data.Name, data.Password).First(&user).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return userInter, errors.New("密码错误")
@@ -56,7 +55,7 @@ func (u *FrontendUser) RegisterUser(data frontendRequest.RegisterUser) (err erro
 		Content:      data.Content,
 		Header:       data.Header,
 	}
-	user.Password = utils.MD5V([]byte(data.Password))
+	// user.Password = utils.MD5V([]byte(data.Password))
 	if user.Header == "" {
 		user.Header = "uploads/file/2023/04/10/b53b3a3d6ab90ce0268229151c9bde11_162839.jpeg"
 	}

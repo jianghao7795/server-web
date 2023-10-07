@@ -71,6 +71,7 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
 import dayjs from "dayjs";
 import { setLocalStorage } from "@/utils/date";
+import md5 from "md5";
 
 const router = useRouter();
 
@@ -143,7 +144,7 @@ const rules = reactive({
 
 const userStore = useUserStore();
 const login = async () => {
-  return await userStore.LoginIn(loginFormData);
+  return await userStore.LoginIn({ ...loginFormData, password: md5(loginFormData.password) });
 };
 const submitForm = () => {
   loginForm.value.validate(async (v) => {
