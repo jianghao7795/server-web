@@ -8,7 +8,6 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "bootstrap": "pnpm install",
-    "start": "npm run dev",
     "dev": "vite",
     "build": "cross-env NODE_ENV=production vite build  && esno ./build/script/postBuild.ts",
     "build:no-cache": "pnpm clean:cache && npm run build",
