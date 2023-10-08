@@ -34,7 +34,7 @@ func (s *SystemApiApi) CreateApi(c *gin.Context) {
 	}
 	if err := apiService.CreateApi(api); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
-		response.FailWithMessage("创建失败", c)
+		response.FailWithDetailed(map[string]string{"msg": err.Error()}, "创建失败", c)
 	} else {
 		response.OkWithMessage("创建成功", c)
 	}
