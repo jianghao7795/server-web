@@ -6,16 +6,19 @@
           <template #header-extra>
             <div class="headerStyleLine">
               <NSpace>
-                <n-input-group>
-                  <NInput
-                    :autofocus="true"
-                    ref="searchInputRef"
-                    v-model:value="searchInput"
-                    placeholder="搜索文章"
-                    type="text"
-                    @keyup.enter="submit"
-                  />
-                </n-input-group>
+                <NInput
+                  round
+                  :autofocus="true"
+                  ref="searchInputRef"
+                  v-model:value="searchInput"
+                  placeholder="搜索文章"
+                  type="text"
+                  @keyup.enter="submit"
+                >
+                  <template #suffix>
+                    <n-icon :component="Search" />
+                  </template>
+                </NInput>
                 <n-tabs
                   type="bar"
                   animated
@@ -141,7 +144,7 @@ import type { CSSProperties, Ref } from "vue";
 import type { GlobalTheme, FormInst } from "naive-ui";
 import { NIcon } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
-import { Logout, Change, Moon, SunOne, SettingTwo, Lock } from "@icon-park/vue-next";
+import { Search, Logout, Change, Moon, SunOne, SettingTwo, Lock } from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import { emitter } from "@/utils/common";
 import { getImages } from "@/services/image";
@@ -388,14 +391,10 @@ watch(
   },
 );
 
-onMounted(() => {
+onMounted(async () => {
   emitter.on("showLoading", () => {
     loadingFlag.value = true;
   });
-  emitter.on("closeLoading", () => {
-    loadingFlag.value = false;
-  });
-
   const pathArray = route.fullPath.split("/");
   viewPage.value = `/${pathArray[1]}`;
   switch (pathArray[1]) {
@@ -416,8 +415,8 @@ onMounted(() => {
   }
   const token = localStorage.getItem("token");
   if (token) {
-    userStore.getUser((head_img: string) => {
-      getImages().then((resp) => {
+    await userStore.getUser(async (head_img: string) => {
+      await getImages().then((resp) => {
         if (resp?.code === 0) {
           bgImage.value = resp.data;
         }
@@ -427,6 +426,9 @@ onMounted(() => {
       }
     });
   }
+  emitter.on("closeLoading", () => {
+    loadingFlag.value = false;
+  });
 });
 
 const changePath = (url: string) => {
@@ -438,7 +440,9 @@ const submit = () => {
     window.$message.warning("请输入");
     return;
   }
-  router.push(`/articles/search/${searchInput.value}`);
+  const searchValue = searchInput.value;
+  router.push(`/articles/search/${searchValue}`);
+  searchInput.value = "";
 };
 </script>
 
