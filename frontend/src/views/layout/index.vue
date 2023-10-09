@@ -15,9 +15,6 @@
                     type="text"
                     @keyup.enter="submit"
                   />
-                  <n-button type="primary">
-                    <Find round size="24" theme="outline" @click="submit" :strokeWidth="3" />
-                  </n-button>
                 </n-input-group>
                 <n-tabs
                   type="bar"
@@ -144,7 +141,7 @@ import type { CSSProperties, Ref } from "vue";
 import type { GlobalTheme, FormInst } from "naive-ui";
 import { NIcon } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
-import { Find, Logout, Change, Moon, SunOne, SettingTwo, Lock } from "@icon-park/vue-next";
+import { Logout, Change, Moon, SunOne, SettingTwo, Lock } from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import { emitter } from "@/utils/common";
 import { getImages } from "@/services/image";
@@ -156,7 +153,6 @@ import ResetPassord from "./components/reset_password.vue";
 import md5 from "md5";
 
 const Base_URL = import.meta.env.VITE_BASE_API;
-
 const headImage = computed(() => `${Base_URL}/${userStore.currentUser.user.headerImg}`);
 
 const userStore = useUserStore();

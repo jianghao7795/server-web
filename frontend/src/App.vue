@@ -57,7 +57,7 @@ const NaiveProviderContent = defineComponent({
 
 <template>
   <NConfigProvider :theme="theme">
-    <NLoadingBarProvider :loading-bar-style="{ loading: { height: '4px', background: '#1e80ff' } }">
+    <NLoadingBarProvider :loading-bar-style="{ loading: { height: '4px' } }">
       <div class="view-dark view-comment">
         <NNotificationProvider>
           <NMessageProvider>

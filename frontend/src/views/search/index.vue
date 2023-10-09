@@ -84,6 +84,7 @@ import { Right } from "@icon-park/vue-next";
 import { useRouter, useRoute } from "vue-router";
 import { colorIndex } from "@/common/article";
 import { calculationTime } from "@/utils/date";
+import { useLoadingBar } from "naive-ui";
 
 const colorRef = ref<{ time?: boolean; read?: boolean }>({ time: true });
 const router = useRouter();
@@ -111,10 +112,33 @@ const changeLookOther = () => {
   router.push("/tags");
 };
 
+//加载
+const loadingBar = useLoadingBar();
+const disabledRef = ref(true);
+
+const handleStartAndStop = (status: boolean, err?: boolean) => {
+  if (err) {
+    disabledRef.value = true;
+    loadingBar.error();
+  } else {
+    if (status) {
+      loadingBar.start();
+      disabledRef.value = status;
+    } else {
+      loadingBar.finish();
+      disabledRef.value = true;
+    }
+  }
+};
+
 onMounted(async () => {
+  handleStartAndStop(false);
   const response = await getArticleSearch({ page: 1, ...route.params });
   if (response?.code === 0) {
     data.value = (response.data?.list as API.Article[]) || [];
+    handleStartAndStop(true);
+  } else {
+    handleStartAndStop(true, true);
   }
 });
 
