@@ -6,17 +6,9 @@
           <template #header-extra>
             <div class="headerStyleLine">
               <NSpace>
-                <NInput
-                  round
-                  :autofocus="true"
-                  ref="searchInputRef"
-                  v-model:value="searchInput"
-                  placeholder="搜索文章"
-                  type="text"
-                  @keyup.enter="submit"
-                >
+                <NInput round ref="searchInputRef" v-model:value="searchInput" placeholder="搜索文章" type="text" @keyup.enter="submit">
                   <template #suffix>
-                    <n-icon :component="Search" />
+                    <n-icon v-bind:style="{ lineHeight: 0.5 }" :component="Search" />
                   </template>
                 </NInput>
                 <n-tabs
@@ -303,14 +295,14 @@ const changeResetPasswordStatus = (status: boolean): void => {
   revisePassword.value = status;
 };
 
-const changeBlur = (status: boolean) => {
-  isMouseOver.value = status;
-  if (status) {
-    setTimeout(() => {
-      searchInputRef.value?.focus();
-    });
-  }
-};
+// const changeBlur = (status: boolean) => {
+//   isMouseOver.value = status;
+//   if (status) {
+//     setTimeout(() => {
+//       searchInputRef.value?.focus();
+//     });
+//   }
+// };
 
 const changeImages = async (data: User.Images) => {
   await updateBackgroundImage({
@@ -438,11 +430,13 @@ const changePath = (url: string) => {
 const submit = () => {
   if (searchInput.value === "") {
     window.$message.warning("请输入");
+    searchInputRef?.value?.focus();
     return;
   }
   const searchValue = searchInput.value;
   router.push(`/articles/search/${searchValue}`);
   searchInput.value = "";
+  // searchInputRef.value?.
 };
 </script>
 
