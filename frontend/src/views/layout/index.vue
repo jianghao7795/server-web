@@ -156,7 +156,7 @@ const router = useRouter();
 const searchInputRef = ref<HTMLInputElement>();
 const searchInput = ref<string>("");
 const loadingFlag = ref<boolean>(false);
-const isMouseOver = ref<boolean>(false);
+// const isMouseOver = ref<boolean>(false);
 const viewPage = ref<string>(route.fullPath);
 const colorSet = ref<string>(`url(${new URL("/home-bg.png", import.meta.url).href})`);
 const bgImage = ref<User.Images[]>([]);
@@ -263,6 +263,10 @@ const resetStore = () => {
   localStorage.removeItem("token");
   colorSet.value = `url(${new URL("/home-bg.png", import.meta.url).href})`;
   loginStatus.value = true;
+  userInfo.value = {
+    name: "admin_user",
+    password: "123456",
+  };
 };
 
 const changePersonalInformationStatus = (status: boolean) => {
