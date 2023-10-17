@@ -30,7 +30,7 @@
                   </n-list>
                 </div>
                 <n-tabs
-                  type="bar"
+                  type="line"
                   animated
                   :value="viewPage"
                   size="small"
