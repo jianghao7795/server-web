@@ -2,15 +2,33 @@
   <div>
     <n-layout position="absolute">
       <n-layout-header position="static" v-once>
-        <n-card :bordered="false" header-style="headerStyle" class="darkStyle">
+        <n-card :bordered="false" class="darkStyle">
           <template #header-extra>
             <div class="headerStyleLine">
               <NSpace>
-                <NInput round ref="searchInputRef" v-model:value="searchInput" placeholder="搜索文章" type="text" @keyup.enter="submit">
-                  <template #suffix>
-                    <n-icon v-bind:style="{ lineHeight: 0.5 }" :component="Search" />
-                  </template>
-                </NInput>
+                <div class="toopli">
+                  <NInput
+                    round
+                    ref="searchInputRef"
+                    v-model:value="searchInput"
+                    placeholder="搜索文章"
+                    type="text"
+                    @keyup.enter="submit"
+                    @focus="updateIsSeach(true)"
+                  >
+                    <template #suffix>
+                      <n-icon v-bind:style="{ lineHeight: 0.5 }" :component="Search" />
+                    </template>
+                  </NInput>
+                  <n-list v-show="isSearch">
+                    <n-list-item>
+                      <n-thing v-if="searchHistoryAfter.length !== 0">
+                        <div class="sarch-history-detail" v-for="item in searchHistoryAfter" key="item" @click="selectMark">{{ item }}</div>
+                      </n-thing>
+                      <div v-else>暂无搜索历史</div>
+                    </n-list-item>
+                  </n-list>
+                </div>
                 <n-tabs
                   type="bar"
                   animated
@@ -146,6 +164,7 @@ import Register from "./components/register.vue";
 import Person from "./components/person.vue";
 import ResetPassord from "./components/reset_password.vue";
 import md5 from "md5";
+import { getToSession, saveToSession } from "@/utils/util";
 
 const Base_URL = import.meta.env.VITE_BASE_API;
 const headImage = computed(() => `${Base_URL}/${userStore.currentUser.user.headerImg}`);
@@ -175,6 +194,7 @@ const darkTheme = computed(() => !(theme?.value === null));
 const formRef = ref<FormInst | null>(null);
 // 修改密码status
 const revisePassword = ref<boolean>(false);
+const isSearch = ref<boolean>(false);
 
 // 是否登录
 const isLogin = computed(() => !!userStore.currentUser.user.ID);
@@ -195,7 +215,7 @@ const rules = {
     message: "请输入密码",
   },
 };
-//
+
 const options = [
   {
     label: "个人信息",
@@ -258,6 +278,29 @@ const options = [
   },
 ];
 
+const selectMark = (e: MouseEvent) => {
+  const htmlElement = e.target as HTMLDivElement;
+  const search = htmlElement.innerText;
+
+  router.push(`/articles/search/${search}`);
+  if (!searchHistoryAfter.value.includes(search)) {
+    const searchTotal = [search, ...searchHistoryAfter.value];
+    searchHistoryAfter.value = searchTotal;
+    saveToSession("history", searchTotal);
+  } else {
+    const sessionTotal = getToSession("history");
+    saveToSession("history", sessionTotal);
+  }
+
+  searchInput.value = search;
+
+  isSearch.value = false;
+};
+
+const updateIsSeach = (status: boolean) => {
+  isSearch.value = status;
+};
+
 const resetStore = () => {
   userStore.$reset();
   localStorage.removeItem("token");
@@ -299,14 +342,7 @@ const changeResetPasswordStatus = (status: boolean): void => {
   revisePassword.value = status;
 };
 
-// const changeBlur = (status: boolean) => {
-//   isMouseOver.value = status;
-//   if (status) {
-//     setTimeout(() => {
-//       searchInputRef.value?.focus();
-//     });
-//   }
-// };
+const searchHistoryAfter = ref<string[]>(getToSession("history") || []);
 
 const changeImages = async (data: User.Images) => {
   await updateBackgroundImage({
@@ -439,8 +475,9 @@ const submit = () => {
   }
   const searchValue = searchInput.value;
   router.push(`/articles/search/${searchValue}`);
-  searchInput.value = "";
-  // searchInputRef.value?.
+
+  const searchTotal = [searchValue, ...searchHistoryAfter.value];
+  searchHistoryAfter.value = searchTotal;
 };
 </script>
 
@@ -453,10 +490,10 @@ const submit = () => {
 
 .headerStyleLine {
   font-size: 15px;
+  height: 30px;
 }
 
 .darkStyle {
-  // background: url("/home-bg.png") no-repeat center center;
   background-image: v-bind(colorSet);
   background-position: center;
   height: auto;
@@ -465,7 +502,6 @@ const submit = () => {
   background-attachment: scroll;
   z-index: 1;
   margin-bottom: 20px;
-  // color: #fff;
 }
 
 .footerStyle {
@@ -474,30 +510,33 @@ const submit = () => {
   flex: 0 0 auto;
   line-height: 40px;
 }
-
-hr.small {
-  max-width: 150px;
-  margin: 15px auto;
-  border-width: 4px;
+.toopli {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
 }
 
-.small {
-  font-size: 85%;
+.toopli > ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  // background-color: #fff;
+  height: 0;
+  margin: 0;
+}
+.toopli > ul > li {
+  cursor: default;
+  // background-color: aqua;
 }
 
-.small-h1 {
-  font-size: 21px;
-  margin-right: 5px;
+.sarch-history-detail {
+  width: 100%;
+  // background-color: #999;
 }
 
-hr {
-  border: 0;
+.sarch-history-detail:hover {
+  background-color: #999;
 }
-
-a::before {
-  cursor: pointer;
-}
-
 .middle-view {
   min-height: calc(100% - 460px);
 }
