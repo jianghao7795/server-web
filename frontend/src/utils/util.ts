@@ -3,7 +3,7 @@ export function saveToSession(key: string, value: any) {
 }
 
 export function getToSession(key: string) {
-  return JSON.parse(sessionStorage.getItem(key) || "");
+  return JSON.parse(sessionStorage.getItem(key) || "[]");
 }
 
 export function deleteSession(key = "") {

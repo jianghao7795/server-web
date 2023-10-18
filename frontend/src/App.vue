@@ -8,10 +8,6 @@ import { useDark, useToggle } from "@vueuse/core";
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
-// import { loadEnv } from "vite";
-
-// const env = loadEnv("production", process.cwd());
-// console.log(env);
 const isDarkTheme = useOsTheme();
 const theme = ref<GlobalTheme | null>(isDarkTheme.value === "dark" ? darkTheme : null);
 const color = computed(() => (theme.value === null ? "#000" : "#fff"));
@@ -29,9 +25,8 @@ emitter.on("lightMode", () => {
 });
 
 onMounted(() => {
-  //  const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)"); // 是深色
-
-  if (isDarkTheme.value === "dark") {
+  const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)"); // 是深色
+  if (isDarkTheme.media.includes("dark")) {
     theme.value = darkTheme;
   } else {
     theme.value = null;

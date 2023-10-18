@@ -286,7 +286,7 @@ const selectMark = (e: MouseEvent) => {
   if (!searchHistoryAfter.value.includes(search)) {
     const searchTotal = [search, ...searchHistoryAfter.value];
     searchHistoryAfter.value = searchTotal;
-    saveToSession("history", searchTotal);
+    saveToSession("history", searchTotal.slice(0, 5));
   } else {
     const sessionTotal = getToSession("history");
     saveToSession("history", sessionTotal);
@@ -342,7 +342,7 @@ const changeResetPasswordStatus = (status: boolean): void => {
   revisePassword.value = status;
 };
 
-const searchHistoryAfter = ref<string[]>(getToSession("history") || []);
+const searchHistoryAfter = ref<string[]>((getToSession("history") || []).slice(0, 5));
 
 const changeImages = async (data: User.Images) => {
   await updateBackgroundImage({
@@ -448,11 +448,10 @@ onMounted(async () => {
   const token = localStorage.getItem("token");
   if (token) {
     await userStore.getUser(async (head_img: string) => {
-      await getImages().then((resp) => {
-        if (resp?.code === 0) {
-          bgImage.value = resp.data;
-        }
-      });
+      const resp = await getImages();
+      if (resp?.code === 0) {
+        bgImage.value = resp.data;
+      }
       if (head_img !== "") {
         colorSet.value = `url(${new URL(head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`, import.meta.url).href})`;
       }
@@ -475,9 +474,14 @@ const submit = () => {
   }
   const searchValue = searchInput.value;
   router.push(`/articles/search/${searchValue}`);
-
-  const searchTotal = [searchValue, ...searchHistoryAfter.value];
-  searchHistoryAfter.value = searchTotal;
+  if (!searchHistoryAfter.value.includes(searchValue)) {
+    const searchTotal = [searchValue, ...searchHistoryAfter.value];
+    searchHistoryAfter.value = searchTotal.slice(0, 5);
+    saveToSession("history", searchTotal.slice(0, 5));
+  }
+  searchInputRef.value?.blur();
+  isSearch.value = false;
+  // saveToSession();
 };
 </script>
 
