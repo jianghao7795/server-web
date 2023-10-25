@@ -41,7 +41,7 @@ export default {
 
 <script lang="ts" setup>
 // import { NList, NThing, NListItem, NSpace, NTag, NButton } from "naive-ui";
-import { ref, onMounted, computed } from "vue";
+import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { colorIndex } from "@/common/article";
 import { useArticleStore } from "@/stores/article";

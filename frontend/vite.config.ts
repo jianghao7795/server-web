@@ -2,14 +2,14 @@ import * as path from "path";
 import vuePlugin from "@vitejs/plugin-vue";
 import { defineConfig, loadEnv } from "vite";
 import legacyPlugin from "@vitejs/plugin-legacy";
-import {
-  // AntDesignVueResolver,
-  NaiveUiResolver,
-} from "unplugin-vue-components/resolvers";
+import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 
 const rollupOptions = {
+  input: {
+    index: path.resolve(__dirname, "index.html"),
+  },
   output: {
     entryFileNames: `static/[name].[hash].js`,
     chunkFileNames: `js/[name].[hash].js`,
@@ -20,21 +20,14 @@ const rollupOptions = {
 // https://vitejs.dev/config/
 
 // mode 什么环境
-export default defineConfig(({ mode }: { mode: string }) => {
+export default defineConfig((userConfig) => {
   // console.log(mode);
-  const env = loadEnv(mode, process.cwd());
+  const env = loadEnv(userConfig.mode, process.cwd());
   return {
     plugins: [
       legacyPlugin({
         // targets: ["defaults", "not IE 11"],
-        targets: [
-          "Android > 39",
-          "Chrome >= 60",
-          "Safari >= 10.1",
-          "iOS >= 10.3",
-          "Firefox >= 54",
-          "Edge >= 15",
-        ],
+        targets: ["Android > 39", "Chrome >= 60", "Safari >= 10.1", "iOS >= 10.3", "Firefox >= 54", "Edge >= 15"],
         renderLegacyChunks: false,
       }),
       // vue(),
@@ -43,12 +36,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
         imports: [
           "vue",
           {
-            "naive-ui": [
-              "useDialog",
-              "useMessage",
-              "useNotification",
-              "useLoadingBar",
-            ],
+            "naive-ui": ["useDialog", "useMessage", "useNotification", "useLoadingBar"],
           },
         ],
       }),
@@ -79,8 +67,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
           target: `${env.VITE_BASE_PATH}:${env.VITE_SERVER_PORT}`, // 代理到 目标路径
           changeOrigin: true,
           secure: true,
-          rewrite: (path) =>
-            path.replace(new RegExp(`^${env.VITE_BASE_API}`), "/api"),
+          rewrite: (path: string) => path.replace(new RegExp(`^${env.VITE_BASE_API}`), "/api"),
           // rewrite: (path) => path.replace("", ""),
         },
       },
@@ -99,6 +86,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
       alias: {
         "@": path.resolve(__dirname, "./src/"),
       },
+      extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json", ".vue"],
     },
   };
 });
