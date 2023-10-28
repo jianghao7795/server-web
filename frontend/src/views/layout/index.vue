@@ -4,7 +4,7 @@
       <n-layout-header position="static" v-once>
         <n-card :bordered="false" class="darkStyle">
           <template #header-extra>
-            <div class="headerStyleLine">
+            <div class="headerStyleLine" ref="searchRef">
               <NSpace>
                 <div class="toopli">
                   <NInput
@@ -15,6 +15,7 @@
                     type="text"
                     @keyup.enter="submit"
                     @focus="updateIsSeach(true)"
+                    @blur="clearSoom"
                   >
                     <template #suffix>
                       <n-icon v-bind:style="{ lineHeight: 0.5 }" :component="Search" />
@@ -149,7 +150,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { KeepAlive, Transition, onMounted, ref, watch, inject, provide, computed, h } from "vue";
+import { KeepAlive, Transition, onMounted, ref, watch, inject, provide, computed, h, onBeforeUnmount } from "vue";
 import type { CSSProperties, Ref } from "vue";
 import type { GlobalTheme, FormInst } from "naive-ui";
 import { NIcon } from "naive-ui";
@@ -166,7 +167,7 @@ import ResetPassord from "./components/reset_password.vue";
 import md5 from "md5";
 import { getToSession, saveToSession } from "@/utils/util";
 
-const Base_URL = import.meta.env.VITE_BASE_API;
+const Base_URL = import.meta.env.VITE_BASE_API as string;
 const headImage = computed(() => `${Base_URL}/${userStore.currentUser.user.headerImg}`);
 
 const userStore = useUserStore();
@@ -299,6 +300,12 @@ const selectMark = (e: MouseEvent) => {
 
 const updateIsSeach = (status: boolean) => {
   isSearch.value = status;
+};
+
+const clearSoom = () => {
+  setTimeout(() => {
+    isSearch.value = false;
+  }, 500);
 };
 
 const resetStore = () => {
