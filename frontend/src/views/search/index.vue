@@ -112,7 +112,8 @@ const changeLookOther = () => {
 };
 
 onMounted(async () => {
-  const response = await getArticleSearch({ page: 1, ...route.params });
+  const sort = Object.keys(colorRef.value)[0];
+  const response = await getArticleSearch({ page: 1, ...route.params, sort });
   if (response?.code === 0) {
     data.value = (response.data?.list as API.Article[]) || [];
   }
@@ -121,7 +122,8 @@ onMounted(async () => {
 watch(
   () => route.params.value,
   async (changeValue) => {
-    const response = await getArticleSearch({ page: 1, ...route.params, value: changeValue as string });
+    const sort = Object.keys(colorRef.value)[0];
+    const response = await getArticleSearch({ page: 1, ...route.params, value: changeValue as string, sort });
     if (response?.code === 0) {
       data.value = response.data?.list || [];
     }

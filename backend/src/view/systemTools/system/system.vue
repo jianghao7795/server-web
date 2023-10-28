@@ -360,7 +360,7 @@
       </el-collapse>
     </el-form>
     <div class="btn-list">
-      <el-button type="primary" size="small" @click="update">立即更新</el-button>
+      <el-button size="small" @click="update" disabled>立即更新</el-button>
       <el-button type="primary" size="small" @click="reload">重启服务（开发中）</el-button>
     </div>
   </div>

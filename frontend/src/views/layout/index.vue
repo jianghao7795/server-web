@@ -2,27 +2,50 @@
   <div>
     <n-layout position="absolute">
       <n-layout-header position="static" v-once>
-        <n-card :bordered="false" header-style="headerStyle" class="darkStyle">
+        <n-card :bordered="false" class="darkStyle">
           <template #header-extra>
             <div class="headerStyleLine">
               <NSpace>
-                <n-input-group>
-                  <NInput :autofocus="true" ref="searchInputRef" v-model:value="searchInput" placeholder="搜索文章"
-                    type="text" @keyup.enter="submit" />
-                  <n-button type="primary">
-                    <Find round size="24" theme="outline" @click="submit" :strokeWidth="3" />
-                  </n-button>
-                </n-input-group>
-                <n-tabs type="bar" animated :value="viewPage" size="small" :bar-width="28" justify-content="space-evenly"
-                  :tab-style="{ margin: '0 5px', fontWeight: 'bold' }" :on-update:value="(e: string) => changePath(e)">
+                <div class="toopli">
+                  <NInput
+                    round
+                    ref="searchInputRef"
+                    v-model:value="searchInput"
+                    placeholder="搜索文章"
+                    type="text"
+                    @keyup.enter="submit"
+                    @focus="updateIsSeach(true)"
+                  >
+                    <template #suffix>
+                      <n-icon v-bind:style="{ lineHeight: 0.5 }" :component="Search" />
+                    </template>
+                  </NInput>
+                  <n-list v-show="isSearch">
+                    <n-list-item>
+                      <n-thing v-if="searchHistoryAfter.length !== 0">
+                        <div class="sarch-history-detail" v-for="item in searchHistoryAfter" key="item" @click="selectMark">{{ item }}</div>
+                      </n-thing>
+                      <div v-else>暂无搜索历史</div>
+                    </n-list-item>
+                  </n-list>
+                </div>
+                <n-tabs
+                  type="line"
+                  animated
+                  :value="viewPage"
+                  size="small"
+                  :bar-width="28"
+                  justify-content="space-evenly"
+                  :tab-style="{ margin: '0 5px', fontWeight: 'bold' }"
+                  :on-update:value="(e: string) => changePath(e)"
+                >
                   <n-tab-pane name="/" tab="首页"></n-tab-pane>
                   <n-tab-pane name="/articles" tab="文章"></n-tab-pane>
                   <n-tab-pane name="/tags" tab="标签"></n-tab-pane>
                   <n-tab-pane name="/about" tab="关于"></n-tab-pane>
                 </n-tabs>
                 <div style="margin-top: 2px">
-                  <n-switch v-model:value="darkTheme" v-bind:on-update:value="changeTheme" size="medium"
-                    :rail-style="railStyle">
+                  <n-switch v-model:value="darkTheme" v-bind:on-update:value="changeTheme" size="medium" :rail-style="railStyle">
                     <template #checked-icon>
                       <NIcon style="line-height: 0.7rem">
                         <moon theme="filled" size="26" fill="#333" :strokeWidth="3" />
@@ -41,8 +64,7 @@
           <template #header>
             <span class="headerStyleLine">
               <b @click="() => changePath('/')" v-if="isLogin" style="cursor: pointer">
-                <n-dropdown :options="options" placement="bottom-end" trigger="click" :show-arrow="true"
-                  @select="userLogout">
+                <n-dropdown :options="options" placement="bottom-end" trigger="click" :show-arrow="true" @select="userLogout">
                   <n-avatar round size="small" :src="headImage"></n-avatar>
                 </n-dropdown>
               </b>
@@ -82,10 +104,7 @@
           <n-carousel-item style="width: 30%" v-for="item in bgImage" :key="item.ID">
             <n-popconfirm positive-text="确认" negative-text="取消" :on-positive-click="() => changeImages(item)">
               <template #trigger>
-                <img :src="item.url.includes('http')
-                  ? item.url
-                  : `${Base_URL}/${item.url}`
-                  " :title="item.name" class="carousel-img" />
+                <img :src="item.url.includes('http') ? item.url : `${Base_URL}/${item.url}`" :title="item.name" class="carousel-img" />
               </template>
               确定更换背景图片？
             </n-popconfirm>
@@ -95,8 +114,16 @@
     </n-drawer>
     <n-drawer v-model:show="loginStatus" :width="502" placement="left">
       <n-drawer-content title="登录">
-        <n-form ref="formRef" :model="userInfo" :rules="rules" label-placement="left" label-width="auto"
-          require-mark-placement="right-hanging" size="large" @keyup.enter.native="login">
+        <n-form
+          ref="formRef"
+          :model="userInfo"
+          :rules="rules"
+          label-placement="left"
+          label-width="auto"
+          require-mark-placement="right-hanging"
+          size="large"
+          @keyup.enter.native="login"
+        >
           <n-form-item path="name">
             <n-input type="text" v-model:value="userInfo.name" placeholder="账号" />
           </n-form-item>
@@ -104,9 +131,7 @@
             <n-input type="password" show-password-on="click" v-model:value="userInfo.password" placeholder="密码" />
           </n-form-item>
           <div>
-            <n-button :loading="userStore.loading" type="primary" :block="true" @click="() => login()">
-              登录
-            </n-button>
+            <n-button :loading="userStore.loading" type="primary" :block="true" @click="() => login()">登录</n-button>
           </div>
         </n-form>
       </n-drawer-content>
@@ -124,30 +149,12 @@ export default {
 </script>
 
 <script setup lang="ts">
-import {
-  KeepAlive,
-  Transition,
-  onMounted,
-  ref,
-  watch,
-  inject,
-  provide,
-  computed,
-  h,
-} from "vue";
+import { KeepAlive, Transition, onMounted, ref, watch, inject, provide, computed, h } from "vue";
 import type { CSSProperties, Ref } from "vue";
 import type { GlobalTheme, FormInst } from "naive-ui";
 import { NIcon } from "naive-ui";
 import { RouterView, useRouter, useRoute } from "vue-router";
-import {
-  Find,
-  Logout,
-  Change,
-  Moon,
-  SunOne,
-  SettingTwo,
-  Lock,
-} from "@icon-park/vue-next";
+import { Search, Logout, Change, Moon, SunOne, SettingTwo, Lock } from "@icon-park/vue-next";
 import dayjs from "dayjs";
 import { emitter } from "@/utils/common";
 import { getImages } from "@/services/image";
@@ -156,12 +163,11 @@ import { updateBackgroundImage } from "@/services/user";
 import Register from "./components/register.vue";
 import Person from "./components/person.vue";
 import ResetPassord from "./components/reset_password.vue";
+import md5 from "md5";
+import { getToSession, saveToSession } from "@/utils/util";
 
 const Base_URL = import.meta.env.VITE_BASE_API;
-
-const headImage = computed(
-  () => `${Base_URL}/${userStore.currentUser.user.headerImg}`,
-);
+const headImage = computed(() => `${Base_URL}/${userStore.currentUser.user.headerImg}`);
 
 const userStore = useUserStore();
 const route = useRoute();
@@ -169,11 +175,9 @@ const router = useRouter();
 const searchInputRef = ref<HTMLInputElement>();
 const searchInput = ref<string>("");
 const loadingFlag = ref<boolean>(false);
-const isMouseOver = ref<boolean>(false);
+// const isMouseOver = ref<boolean>(false);
 const viewPage = ref<string>(route.fullPath);
-const colorSet = ref<string>(
-  `url(${new URL("/home-bg.png", import.meta.url).href})`,
-);
+const colorSet = ref<string>(`url(${new URL("/home-bg.png", import.meta.url).href})`);
 const bgImage = ref<User.Images[]>([]);
 const active = ref<boolean>(false);
 const currentRouter = ref<string>("");
@@ -190,6 +194,7 @@ const darkTheme = computed(() => !(theme?.value === null));
 const formRef = ref<FormInst | null>(null);
 // 修改密码status
 const revisePassword = ref<boolean>(false);
+const isSearch = ref<boolean>(false);
 
 // 是否登录
 const isLogin = computed(() => !!userStore.currentUser.user.ID);
@@ -210,7 +215,7 @@ const rules = {
     message: "请输入密码",
   },
 };
-//
+
 const options = [
   {
     label: "个人信息",
@@ -273,11 +278,38 @@ const options = [
   },
 ];
 
+const selectMark = (e: MouseEvent) => {
+  const htmlElement = e.target as HTMLDivElement;
+  const search = htmlElement.innerText;
+
+  router.push(`/articles/search/${search}`);
+  if (!searchHistoryAfter.value.includes(search)) {
+    const searchTotal = [search, ...searchHistoryAfter.value];
+    searchHistoryAfter.value = searchTotal;
+    saveToSession("history", searchTotal.slice(0, 5));
+  } else {
+    const sessionTotal = getToSession("history");
+    saveToSession("history", sessionTotal);
+  }
+
+  searchInput.value = search;
+
+  isSearch.value = false;
+};
+
+const updateIsSeach = (status: boolean) => {
+  isSearch.value = status;
+};
+
 const resetStore = () => {
   userStore.$reset();
   localStorage.removeItem("token");
   colorSet.value = `url(${new URL("/home-bg.png", import.meta.url).href})`;
   loginStatus.value = true;
+  userInfo.value = {
+    name: "admin_user",
+    password: "123456",
+  };
 };
 
 const changePersonalInformationStatus = (status: boolean) => {
@@ -310,14 +342,7 @@ const changeResetPasswordStatus = (status: boolean): void => {
   revisePassword.value = status;
 };
 
-const changeBlur = (status: boolean) => {
-  isMouseOver.value = status;
-  if (status) {
-    setTimeout(() => {
-      searchInputRef.value?.focus();
-    });
-  }
-};
+const searchHistoryAfter = ref<string[]>((getToSession("history") || []).slice(0, 5));
 
 const changeImages = async (data: User.Images) => {
   await updateBackgroundImage({
@@ -326,11 +351,7 @@ const changeImages = async (data: User.Images) => {
   });
   window.$message.success("更换成功");
   active.value = false;
-  colorSet.value = `url(${new URL(
-    data.url.includes("http") ? data.url : `${Base_URL}/${data.url}`,
-    import.meta.url,
-  ).href
-    })`;
+  colorSet.value = `url(${new URL(data.url.includes("http") ? data.url : `${Base_URL}/${data.url}`, import.meta.url).href})`;
 };
 
 const changeActive = (status: boolean) => {
@@ -343,30 +364,21 @@ const changeLogin = (status: boolean): void => {
 provide("changeLogin", changeLogin); // 传递方法给下级
 
 const login = () => {
-  userStore.logins(
-    { username: userInfo.value.name, password: userInfo.value.password },
-    (imageString: string) => {
-      if (!!imageString) {
-        colorSet.value = `url(${new URL(
-          imageString.includes("http")
-            ? imageString
-            : `${Base_URL}/${imageString}`,
-          import.meta.url,
-        ).href
-          })`;
+  userStore.logins({ username: userInfo.value.name, password: md5(userInfo.value.password) }, (imageString: string) => {
+    if (!!imageString) {
+      colorSet.value = `url(${new URL(imageString.includes("http") ? imageString : `${Base_URL}/${imageString}`, import.meta.url).href})`;
+    }
+    getImages().then((resp) => {
+      if (resp) {
+        bgImage.value = resp.data;
       }
-      getImages().then((resp) => {
-        if (resp) {
-          bgImage.value = resp.data;
-        }
-      });
-      loginStatus.value = false;
-      userInfo.value = {
-        name: "",
-        password: "",
-      };
-    },
-  );
+    });
+    loginStatus.value = false;
+    userInfo.value = {
+      name: "",
+      password: "",
+    };
+  });
 };
 
 const railStyle = ({ checked }: { checked: boolean }) => {
@@ -411,14 +423,10 @@ watch(
   },
 );
 
-onMounted(() => {
+onMounted(async () => {
   emitter.on("showLoading", () => {
     loadingFlag.value = true;
   });
-  emitter.on("closeLoading", () => {
-    loadingFlag.value = false;
-  });
-
   const pathArray = route.fullPath.split("/");
   viewPage.value = `/${pathArray[1]}`;
   switch (pathArray[1]) {
@@ -439,21 +447,19 @@ onMounted(() => {
   }
   const token = localStorage.getItem("token");
   if (token) {
-    userStore.getUser((head_img: string) => {
-      getImages().then((resp) => {
-        if (resp?.code === 0) {
-          bgImage.value = resp.data;
-        }
-      });
+    await userStore.getUser(async (head_img: string) => {
+      const resp = await getImages();
+      if (resp?.code === 0) {
+        bgImage.value = resp.data;
+      }
       if (head_img !== "") {
-        colorSet.value = `url(${new URL(
-          head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`,
-          import.meta.url,
-        ).href
-          })`;
+        colorSet.value = `url(${new URL(head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`, import.meta.url).href})`;
       }
     });
   }
+  emitter.on("closeLoading", () => {
+    loadingFlag.value = false;
+  });
 });
 
 const changePath = (url: string) => {
@@ -463,9 +469,19 @@ const changePath = (url: string) => {
 const submit = () => {
   if (searchInput.value === "") {
     window.$message.warning("请输入");
+    searchInputRef?.value?.focus();
     return;
   }
-  router.push(`/articles/search/${searchInput.value}`);
+  const searchValue = searchInput.value;
+  router.push(`/articles/search/${searchValue}`);
+  if (!searchHistoryAfter.value.includes(searchValue)) {
+    const searchTotal = [searchValue, ...searchHistoryAfter.value];
+    searchHistoryAfter.value = searchTotal.slice(0, 5);
+    saveToSession("history", searchTotal.slice(0, 5));
+  }
+  searchInputRef.value?.blur();
+  isSearch.value = false;
+  // saveToSession();
 };
 </script>
 
@@ -478,10 +494,10 @@ const submit = () => {
 
 .headerStyleLine {
   font-size: 15px;
+  height: 30px;
 }
 
 .darkStyle {
-  // background: url("/home-bg.png") no-repeat center center;
   background-image: v-bind(colorSet);
   background-position: center;
   height: auto;
@@ -490,7 +506,6 @@ const submit = () => {
   background-attachment: scroll;
   z-index: 1;
   margin-bottom: 20px;
-  // color: #fff;
 }
 
 .footerStyle {
@@ -499,30 +514,33 @@ const submit = () => {
   flex: 0 0 auto;
   line-height: 40px;
 }
-
-hr.small {
-  max-width: 150px;
-  margin: 15px auto;
-  border-width: 4px;
+.toopli {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
 }
 
-.small {
-  font-size: 85%;
+.toopli > ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  // background-color: #fff;
+  height: 0;
+  margin: 0;
+}
+.toopli > ul > li {
+  cursor: default;
+  // background-color: aqua;
 }
 
-.small-h1 {
-  font-size: 21px;
-  margin-right: 5px;
+.sarch-history-detail {
+  width: 100%;
+  // background-color: #999;
 }
 
-hr {
-  border: 0;
+.sarch-history-detail:hover {
+  background-color: #999;
 }
-
-a::before {
-  cursor: pointer;
-}
-
 .middle-view {
   min-height: calc(100% - 460px);
 }

@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"bytes"
+
 	// "encoding/json"
 	ioutil "io"
 	"net/http"
@@ -92,7 +93,6 @@ func OperationRecord() gin.HandlerFunc {
 		record.Status = c.Writer.Status()
 		record.Latency = latency
 		record.Resp = writer.body.String()
-
 		if err := operationRecordService.CreateSysOperationRecord(record); err != nil {
 			global.LOG.Error("create operation record error:", zap.Error(err))
 		}

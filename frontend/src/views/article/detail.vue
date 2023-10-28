@@ -153,7 +153,13 @@ const avatar = computed(() => (articleStore.detail?.user?.headerImg ? Base_URL +
 // };
 
 const handleBack = () => {
-  router.go(-1);
+  if (window.history.length <= 1) {
+    router.push({
+      path: "/articles",
+    });
+  } else {
+    router.go(-1);
+  }
 };
 
 const changeDate = (timeData?: string): string => {

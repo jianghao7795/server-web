@@ -8,7 +8,6 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "bootstrap": "pnpm install",
-    "start": "npm run dev",
     "dev": "vite",
     "build": "cross-env NODE_ENV=production vite build  && esno ./build/script/postBuild.ts",
     "build:no-cache": "pnpm clean:cache && npm run build",
@@ -23,11 +22,6 @@
     "lint:stylelint": "stylelint --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/"
   },
   "dependencies": {
-    "@types/lodash-es": "^4.17.7",
-    "@vicons/antd": "^0.12.0",
-    "@vicons/ionicons5": "^0.12.0",
-    "@vicons/utils": "^0.1.4",
-    "@vueuse/core": "^9.13.0",
     "axios": "^0.26.1",
     "date-fns": "^2.30.0",
     "echarts": "^5.4.2",
@@ -36,12 +30,17 @@
     "pinia": "^2.1.4",
     "pinia-plugin-persist": "^1.0.0",
     "qs": "^6.11.2",
-    "vant": "4.0.0-beta.0",
+    "vant": "^4.0.0",
     "vue": "^3.3.4",
     "vue-router": "4.1.5",
     "vue-types": "^4.2.1"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.7",
+    "@vicons/antd": "^0.12.0",
+    "@vicons/ionicons5": "^0.12.0",
+    "@vicons/utils": "^0.1.4",
+    "@vueuse/core": "^9.13.0",
     "@commitlint/cli": "^17.6.6",
     "@commitlint/config-conventional": "^17.6.6",
     "@types/fs-extra": "^9.0.13",
