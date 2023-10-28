@@ -1,9 +1,9 @@
 <template>
   <div class="view-content">
     <n-page-header @back="handleBack">
-      <template #title>
+      <!-- <template #title>
         <n-button type="info" v-on:click="handleBack">返回</n-button>
-      </template>
+      </template> -->
       <div class="view-margin" ref="scrollScreen">
         <h1 class="view-center">
           <b>{{ articleStore.detail?.title }}</b>
