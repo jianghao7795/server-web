@@ -294,7 +294,6 @@ const selectMark = (e: MouseEvent) => {
   }
 
   searchInput.value = search;
-
   isSearch.value = false;
 };
 
