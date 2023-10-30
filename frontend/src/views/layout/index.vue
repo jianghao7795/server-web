@@ -304,7 +304,9 @@ const updateIsSeach = (status: boolean) => {
 
 const clearSoom = () => {
   setTimeout(() => {
-    isSearch.value = false;
+    if (!isSearch.value) {
+      isSearch.value = false;
+    }
   }, 500);
 };
 
