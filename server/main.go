@@ -33,8 +33,14 @@ func main() {
 	global.LOG = core.Zap()   // 初始化zap日志库
 	// global.Logger = core.InitLogger() // 初始化 log 让log标准输出
 	zap.ReplaceGlobals(global.LOG) // 部署到全局
-	global.DB = initialize.Gorm()  // gorm连接数据库
-	initialize.Timer()             //定时清除数据库数据
+
+	db, err := initialize.Gorm() // gorm连接数据库
+	if err == nil {
+		global.DB = db
+	} else {
+		global.LOG.Error(err.Error() + ": 数据库链接失败")
+	}
+	initialize.Timer() //定时清除数据库数据
 	// conn, err := global.Timer.FindCron("ClearDB")
 	initialize.Tasks() //定时 执行任务
 	// initialize.DBList()

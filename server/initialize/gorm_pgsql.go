@@ -1,6 +1,7 @@
 package initialize
 
 import (
+	"errors"
 	"server/config"
 	"server/global"
 	"server/initialize/internal"
@@ -12,22 +13,22 @@ import (
 // GormPgSql 初始化 Postgresql 数据库
 // Author [piexlmax](https://github.com/piexlmax)
 // Author [SliverHorn](https://github.com/SliverHorn)
-func GormPgSql() *gorm.DB {
+func GormPgSql() (*gorm.DB, error) {
 	p := global.CONFIG.Pgsql
 	if p.Dbname == "" {
-		return nil
+		return nil, errors.New("没设置数据库名")
 	}
 	pgsqlConfig := postgres.Config{
 		DSN:                  p.Dsn(), // DSN data source name
 		PreferSimpleProtocol: false,
 	}
 	if db, err := gorm.Open(postgres.New(pgsqlConfig), internal.Gorm.Config()); err != nil {
-		return nil
+		return nil, err
 	} else {
 		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(p.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(p.MaxOpenConns)
-		return db
+		return db, nil
 	}
 }
 

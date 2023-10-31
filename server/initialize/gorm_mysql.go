@@ -1,6 +1,7 @@
 package initialize
 
 import (
+	"errors"
 	"server/config"
 	"server/global"
 	"server/initialize/internal"
@@ -12,10 +13,10 @@ import (
 // GormMysql 初始化Mysql数据库
 // Author [piexlmax](https://github.com/piexlmax)
 // Author [SliverHorn](https://github.com/SliverHorn)
-func GormMysql() *gorm.DB {
+func GormMysql() (*gorm.DB, error) {
 	m := global.CONFIG.Mysql
 	if m.Dbname == "" {
-		return nil
+		return nil, errors.New("没设置数据库名")
 	}
 	mysqlConfig := mysql.Config{
 		DSN:                       m.Dsn(), // DSN data source name
@@ -24,7 +25,7 @@ func GormMysql() *gorm.DB {
 		// SkipDefaultTransaction:    true,
 	}
 	if db, err := gorm.Open(mysql.New(mysqlConfig), internal.Gorm.Config()); err != nil {
-		return nil
+		return nil, err
 	} else {
 
 		sqlDB, _ := db.DB()
@@ -34,7 +35,7 @@ func GormMysql() *gorm.DB {
 		if m.Debug {
 			db = db.Debug()
 		}
-		return db
+		return db, nil
 	}
 }
 
