@@ -26,6 +26,6 @@ coverage
 *.njsproj
 *.sln
 *.sw?
-/components.d.ts
+./components.d.ts
 pnpm-lock.yaml
-/auto-imports.d.ts
+./auto-imports.d.ts
