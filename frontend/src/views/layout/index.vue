@@ -31,7 +31,7 @@
                   </n-list>
                 </div>
                 <n-tabs
-                  type="line"
+                  type="bar"
                   animated
                   :value="viewPage"
                   size="small"
@@ -40,10 +40,10 @@
                   :tab-style="{ margin: '0 5px', fontWeight: 'bold' }"
                   :on-update:value="(e: string) => changePath(e)"
                 >
-                  <n-tab-pane name="/" tab="首页"></n-tab-pane>
-                  <n-tab-pane name="/articles" tab="文章"></n-tab-pane>
-                  <n-tab-pane name="/tags" tab="标签"></n-tab-pane>
-                  <n-tab-pane name="/about" tab="关于"></n-tab-pane>
+                  <n-tab name="/" tab="首页"></n-tab>
+                  <n-tab name="/articles" tab="文章"></n-tab>
+                  <n-tab name="/tags" tab="标签"></n-tab>
+                  <n-tab name="/about" tab="关于"></n-tab>
                 </n-tabs>
                 <div style="margin-top: 2px">
                   <n-switch v-model:value="darkTheme" v-bind:on-update:value="changeTheme" size="medium" :rail-style="railStyle">
