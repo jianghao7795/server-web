@@ -64,7 +64,7 @@
           </template>
           <template #header>
             <span class="headerStyleLine">
-              <b @click="() => changePath('/')" v-if="isLogin" style="cursor: pointer">
+              <b v-if="isLogin" style="cursor: pointer">
                 <n-dropdown :options="options" placement="bottom-end" trigger="click" :show-arrow="true" @select="userLogout">
                   <n-avatar round size="small" :src="headImage"></n-avatar>
                 </n-dropdown>
