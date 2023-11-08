@@ -17,14 +17,14 @@
             </n-tag>
           </NSpace>
         </h4>
-        <div>
-          <n-space justify="start">
-            作者：
-            <n-avatar round size="small" :src="avatar" />
-            {{ articleStore.detail?.user?.userName }}
-          </n-space>
-        </div>
+
         <NSpace vertical>
+          <div class="img-txt">
+            作者：
+            <n-avatar round size="small" :src="avatar" object-fit="cover" />
+            &nbsp;
+            {{ articleStore.detail?.user?.userName }}
+          </div>
           <div>日期：{{ changeDate(articleStore.detail?.CreatedAt) }}</div>
           <div>阅读量：{{ articleStore.detail?.reading_quantity }}</div>
         </NSpace>
@@ -185,10 +185,9 @@ onMounted(() => {
 </script>
 
 <style scoped lang="less">
-.comment-line {
-  margin-top: 5px;
+.img-txt {
+  max-height: 34px;
   display: flex;
-  justify-content: space-between;
-  padding-bottom: 5px;
+  align-items: center; /*垂直居中*/
 }
 </style>
