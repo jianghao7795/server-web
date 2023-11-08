@@ -2,33 +2,24 @@
   <div>
     <n-layout position="absolute">
       <n-layout-header position="static" v-once>
-        <n-card :bordered="false" class="darkStyle">
+        <n-card :bordered="false" class="darkStyle" header-style="background-image: linear-gradient(rgba(75, 75, 75, 1), rgba(255, 255, 255, 0));">
           <template #header-extra>
             <div class="headerStyleLine" ref="searchRef">
               <NSpace>
                 <div class="toopli">
-                  <NInput
-                    round
-                    ref="searchInputRef"
-                    v-model:value="searchInput"
-                    placeholder="搜索文章"
-                    type="text"
-                    @keyup.enter="submit"
-                    @focus="updateIsSeach(true)"
-                    @blur="clearSoom"
-                  >
+                  <NInput round ref="searchInputRef" v-model:value="searchInput" placeholder="搜索文章" type="text" @keyup.enter="submit">
                     <template #suffix>
                       <n-icon v-bind:style="{ lineHeight: 0.5 }" :component="Search" />
                     </template>
                   </NInput>
-                  <n-list v-show="isSearch">
+                  <!-- <n-list v-show="isSearch">
                     <n-list-item>
                       <n-thing v-if="searchHistoryAfter.length !== 0">
                         <div class="sarch-history-detail" v-for="item in searchHistoryAfter" key="item" @click="selectMark">{{ item }}</div>
                       </n-thing>
                       <div v-else>暂无搜索历史</div>
                     </n-list-item>
-                  </n-list>
+                  </n-list> -->
                 </div>
                 <n-tabs
                   type="bar"
@@ -45,7 +36,7 @@
                   <n-tab name="/tags" tab="标签"></n-tab>
                   <n-tab name="/about" tab="关于"></n-tab>
                 </n-tabs>
-                <div style="margin-top: 2px">
+                <div>
                   <n-switch v-model:value="darkTheme" v-bind:on-update:value="changeTheme" size="medium" :rail-style="railStyle">
                     <template #checked-icon>
                       <NIcon style="line-height: 0.7rem">
@@ -195,7 +186,7 @@ const darkTheme = computed(() => !(theme?.value === null));
 const formRef = ref<FormInst | null>(null);
 // 修改密码status
 const revisePassword = ref<boolean>(false);
-const isSearch = ref<boolean>(false);
+// const isSearch = ref<boolean>(false);
 
 // 是否登录
 const isLogin = computed(() => !!userStore.currentUser.user.ID);
@@ -279,35 +270,35 @@ const options = [
   },
 ];
 
-const selectMark = (e: MouseEvent) => {
-  const htmlElement = e.target as HTMLDivElement;
-  const search = htmlElement.innerText;
+// const selectMark = (e: MouseEvent) => {
+//   const htmlElement = e.target as HTMLDivElement;
+//   const search = htmlElement.innerText;
 
-  router.push(`/articles/search/${search}`);
-  if (!searchHistoryAfter.value.includes(search)) {
-    const searchTotal = [search, ...searchHistoryAfter.value];
-    searchHistoryAfter.value = searchTotal;
-    saveToSession("history", searchTotal.slice(0, 5));
-  } else {
-    const sessionTotal = getToSession("history");
-    saveToSession("history", sessionTotal);
-  }
+//   router.push(`/articles/search/${search}`);
+//   if (!searchHistoryAfter.value.includes(search)) {
+//     const searchTotal = [search, ...searchHistoryAfter.value];
+//     searchHistoryAfter.value = searchTotal;
+//     saveToSession("history", searchTotal.slice(0, 5));
+//   } else {
+//     const sessionTotal = getToSession("history");
+//     saveToSession("history", sessionTotal);
+//   }
 
-  searchInput.value = search;
-  isSearch.value = false;
-};
+//   searchInput.value = search;
+//   isSearch.value = false;
+// };
 
-const updateIsSeach = (status: boolean) => {
-  isSearch.value = status;
-};
+// const updateIsSeach = (status: boolean) => {
+//   isSearch.value = status;
+// };
 
-const clearSoom = () => {
-  setTimeout(() => {
-    if (!isSearch.value) {
-      isSearch.value = false;
-    }
-  }, 500);
-};
+// const clearSoom = () => {
+//   setTimeout(() => {
+//     if (!isSearch.value) {
+//       isSearch.value = false;
+//     }
+//   }, 500);
+// };
 
 const resetStore = () => {
   userStore.$reset();
@@ -488,7 +479,6 @@ const submit = () => {
     saveToSession("history", searchTotal.slice(0, 5));
   }
   searchInputRef.value?.blur();
-  isSearch.value = false;
   // saveToSession();
 };
 </script>
@@ -502,7 +492,7 @@ const submit = () => {
 
 .headerStyleLine {
   font-size: 15px;
-  height: 30px;
+  line-height: 37px;
 }
 
 .darkStyle {
@@ -514,6 +504,10 @@ const submit = () => {
   background-attachment: scroll;
   z-index: 1;
   margin-bottom: 20px;
+}
+
+.darkStyle > div {
+  background-image: linear-gradient(rgba(75, 75, 75, 1), rgba(255, 255, 255, 0));
 }
 
 .footerStyle {
