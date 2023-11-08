@@ -2,7 +2,7 @@
   <div>
     <n-layout position="absolute">
       <n-layout-header position="static" v-once>
-        <n-card :bordered="false" class="darkStyle" header-style="background-image: linear-gradient(rgba(75, 75, 75, 1), rgba(255, 255, 255, 0));">
+        <n-card :bordered="false" class="darkStyle" header-style="background-image: linear-gradient(rgba(75, 75, 75, 1), rgba(0, 0, 0, 0));">
           <template #header-extra>
             <div class="headerStyleLine" ref="searchRef">
               <NSpace>
