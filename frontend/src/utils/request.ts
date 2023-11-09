@@ -32,6 +32,7 @@ service.interceptors.request.use((config: AxiosRequestConfig) => {
 service.interceptors.response.use(
   (response: AxiosResponse<Result>) => {
     // console.log(response);
+    emitter.emit("closeLoading");
     if (!response?.data) {
       window.$notification.error({
         duration: 10000,
@@ -43,7 +44,6 @@ service.interceptors.response.use(
       return Promise.reject(new Error("服务器错误"));
     }
     const { code, msg, data } = response.data;
-    emitter.emit("closeLoading");
     // 根据自定义错误码判断请求是否成功
     if (code === 0) {
       // 将组件用的数据返回

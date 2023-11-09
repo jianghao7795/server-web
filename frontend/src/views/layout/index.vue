@@ -141,7 +141,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { KeepAlive, Transition, onMounted, ref, watch, inject, provide, computed, h, onBeforeUnmount } from "vue";
+import { KeepAlive, Transition, onMounted, ref, watch, inject, provide, computed, h } from "vue";
 import type { CSSProperties, Ref } from "vue";
 import type { GlobalTheme, FormInst } from "naive-ui";
 import { NIcon } from "naive-ui";
