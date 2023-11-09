@@ -48,7 +48,7 @@
     </n-list>
     <n-empty size="large" description="你什么也没找到" v-else>
       <template #extra>
-        <n-button size="small" type="primary" @click="changeLookOther">看看别的</n-button>
+        <n-button size="small" type="primary" @click="changeLookOther">看看别的文章</n-button>
       </template>
     </n-empty>
     <div class="pageNext">
@@ -108,7 +108,7 @@ const changeUrl = (id: number) => {
 };
 
 const changeLookOther = () => {
-  router.push("/tags");
+  router.push("/articles");
 };
 
 onMounted(async () => {
