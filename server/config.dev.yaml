@@ -115,12 +115,12 @@ pgsql:
   log-mode: ""
   log-zap: false
 qiniu:
-  zone: ZoneHuaDong
-  bucket: ""
+  zone: ZoneHuadong
+  bucket: "jianghaoimages"
   img-path: ""
   use-https: false
-  access-key: ""
-  secret-key: ""
+  access-key: "bLwYhR1boJaw77pjh6TOTZ4XmHwDF35SZJwInOg6"
+  secret-key: "cCg2OgCmdlgTmHu40prSXDN78H8LEusNFD_vezeN"
   use-cdn-domains: false
 redis:
   db: 0
