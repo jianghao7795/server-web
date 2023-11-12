@@ -3,7 +3,6 @@
     <div v-if="userStore.currentUser.user.ID !== 0">
       <h4>介绍: {{ userStore.currentUser.user.nickName }}</h4>
       <div class="about-content">
-        <p>描述：</p>
         <Content :imgUrl="userStore.currentUser.user.introduction" />
       </div>
     </div>
