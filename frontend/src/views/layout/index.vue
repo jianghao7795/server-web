@@ -2,7 +2,7 @@
   <div>
     <n-layout position="absolute">
       <n-layout-header position="static" v-once>
-        <n-card :bordered="false" class="darkStyle" header-style="background-image: linear-gradient(rgba(75, 75, 75, 1), rgba(0, 0, 0, 0));">
+        <n-card :bordered="false" class="darkStyle" :header-style="headerStyle">
           <template #header-extra>
             <div class="headerStyleLine" ref="searchRef">
               <NSpace>
@@ -157,6 +157,14 @@ import Person from "./components/person.vue";
 import ResetPassord from "./components/reset_password.vue";
 import md5 from "md5";
 import { getToSession, saveToSession } from "@/utils/util";
+
+const headerStyle = {
+  backgroundImage: "linear-gradient(rgba(75, 75, 75, 1), rgba(0, 0, 0, 0))",
+  position: "fixed",
+  left: "0",
+  top: "0",
+  width: "100%",
+};
 
 const Base_URL = import.meta.env.VITE_BASE_API as string;
 const headImage = computed(() => `${Base_URL}/${userStore.currentUser.user.headerImg}`);
