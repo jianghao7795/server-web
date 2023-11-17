@@ -105,6 +105,7 @@ func InitRAM() (r Ram, err error) {
 //@return: d Disk, err error
 
 func InitDisk() (d Disk, err error) {
+	percent := 0
 	if u, err := disk.Usage("/"); err != nil {
 		return d, err
 	} else {
@@ -112,8 +113,19 @@ func InitDisk() (d Disk, err error) {
 		d.UsedGB = int(u.Used) / GB
 		d.TotalMB = int(u.Total) / MB
 		d.TotalGB = int(u.Total) / GB
-		d.UsedPercent = int(u.UsedPercent)
+		percent = percent + int(u.UsedPercent)
 	}
+	if u, err := disk.Usage("/home"); err != nil {
+		return d, err
+	} else {
+		d.UsedMB = d.UsedMB + int(u.Used)/MB
+		d.UsedGB = d.UsedGB + int(u.Used)/GB
+		d.TotalMB = d.TotalMB + int(u.Total)/MB
+		d.TotalGB = d.TotalGB + int(u.Total)/GB
+		percent = percent + int(u.UsedPercent)
+	}
+	percent = percent / 2
+	d.UsedPercent = percent
 	return d, nil
 }
 
