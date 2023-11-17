@@ -158,13 +158,11 @@ import ResetPassord from "./components/reset_password.vue";
 import md5 from "md5";
 import { getToSession, saveToSession } from "@/utils/util";
 
-const headerStyle = {
-  backgroundImage: "linear-gradient(rgba(75, 75, 75, 1), rgba(0, 0, 0, 0))",
-  position: "fixed",
-  left: "0",
-  top: "0",
-  width: "100%",
-};
+const headerStyle = `background-image: linear-gradient(rgba(75, 75, 75, 1), rgba(0, 0, 0, 0));
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%`;
 
 const Base_URL = import.meta.env.VITE_BASE_API as string;
 const headImage = computed(() => `${Base_URL}/${userStore.currentUser.user.headerImg}`);
