@@ -58,8 +58,24 @@ const router = createRouter({
             title: "搜索结果",
           },
         },
+        {
+          path: "/:pathMatch(.*)*",
+          name: "NotFound",
+          component: () => import("@/views/404.vue"),
+          meta: {
+            title: "404",
+          },
+        },
       ],
     },
+    // {
+    //   path: "/:pathMatch(.*)*",
+    //   name: "NotFound",
+    //   component: () => import("@/views/404.vue"),
+    //   meta: {
+    //     title: "404",
+    //   },
+    // },
     // {
     //   path: '/about',
     //   name: 'about',

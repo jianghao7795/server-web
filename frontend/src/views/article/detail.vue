@@ -8,7 +8,7 @@
         <h1 class="view-center">
           <b>{{ articleStore.detail?.title }}</b>
         </h1>
-        <h3>简介：{{ articleStore.detail?.title }}</h3>
+        <h3>简介：{{ articleStore.detail?.desc }}</h3>
         <h4>
           <NSpace style="width: 80%">
             标签：

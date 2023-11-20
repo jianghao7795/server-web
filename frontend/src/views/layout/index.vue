@@ -82,13 +82,13 @@
           </RouterView>
         </NSpin>
       </n-layout-content>
+      <n-back-top :right="50" />
       <n-layout-footer position="static" v-once>
         <!-- style="width: 100%; height: 100px; position: absolute; bottom: 0px; left: 0px" -->
         <footer class="footerStyle">
           <span>Copyright © {{ dayjs().format("YYYY") }}</span>
         </footer>
       </n-layout-footer>
-      <n-back-top :right="50" />
     </n-layout>
     <n-drawer v-model:show="active" placement="bottom" :height="400">
       <n-drawer-content title="更换背景图片">
@@ -519,8 +519,10 @@ const submit = () => {
 .footerStyle {
   text-align: center;
   height: 40px;
-  flex: 0 0 auto;
   line-height: 40px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
 }
 .toopli {
   display: inline-block;
