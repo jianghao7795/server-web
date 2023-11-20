@@ -451,6 +451,9 @@ onMounted(async () => {
       currentRouter.value = "首页";
   }
   const token = localStorage.getItem("token");
+  emitter.on("closeLoading", () => {
+    loadingFlag.value = false;
+  });
   if (token) {
     await userStore.getUser(async (head_img: string) => {
       const resp = await getImages();
@@ -462,9 +465,6 @@ onMounted(async () => {
       }
     });
   }
-  emitter.on("closeLoading", () => {
-    loadingFlag.value = false;
-  });
 });
 
 const changePath = (url: string) => {
