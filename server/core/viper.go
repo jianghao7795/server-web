@@ -11,7 +11,7 @@ import (
 	"github.com/songzhibin97/gkit/cache/local_cache"
 
 	"server/global"
-	_ "server/packfile"
+	// _ "server/packfile"
 	"server/utils"
 
 	"github.com/fsnotify/fsnotify"
