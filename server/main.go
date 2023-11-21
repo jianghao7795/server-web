@@ -40,7 +40,7 @@ func main() {
 	} else {
 		global.LOG.Error(err.Error() + ": 数据库链接失败")
 	}
-	initialize.Timer() //定时清除数据库数据
+	// initialize.Timer() //定时清除数据库数据
 	// conn, err := global.Timer.FindCron("ClearDB")
 	initialize.Tasks() //定时 执行任务
 	// initialize.DBList()
