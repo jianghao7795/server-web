@@ -64,22 +64,3 @@ const NaiveProviderContent = defineComponent({
     </NLoadingBarProvider>
   </NConfigProvider>
 </template>
-
-<style lang="less">
-.view-dark {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: v-bind(color);
-  }
-}
-
-.view-comment {
-  .ant-comment-content-author-name > * {
-    color: v-bind(colorComment);
-  }
-}
-</style>
