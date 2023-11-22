@@ -1,10 +1,10 @@
 <template>
   <div>
-    <n-layout position="absolute">
+    <n-layout position="absolute" v-bind:on-scroll="changeScroll">
       <n-layout-header position="static" v-once>
         <n-card :bordered="false" class="darkStyle" :header-style="headerStyle">
           <template #header-extra>
-            <div class="headerStyleLine" ref="searchRef">
+            <div class="headerStyleLine" ref="searchRef" :class="{ visible: visible }">
               <NSpace>
                 <div class="toopli">
                   <NInput round ref="searchInputRef" v-model:value="searchInput" placeholder="搜索文章" type="text" @keyup.enter="submit">
@@ -54,7 +54,7 @@
             </div>
           </template>
           <template #header>
-            <span class="headerStyleLine">
+            <div class="headerStyleLine" :class="{ visible: visible }">
               <b v-if="isLogin" style="cursor: pointer">
                 <n-dropdown :options="options" placement="bottom-end" trigger="click" :show-arrow="true" @select="userLogout">
                   <n-avatar round size="small" :src="headImage"></n-avatar>
@@ -65,7 +65,7 @@
                 <NDivider vertical />
                 <b @click="() => changeRegisterStatus(true)" style="cursor: pointer">注册</b>
               </span>
-            </span>
+            </div>
           </template>
           <div style="height: 350px"></div>
         </n-card>
@@ -157,12 +157,32 @@ import Person from "./components/person.vue";
 import ResetPassord from "./components/reset_password.vue";
 import md5 from "md5";
 import { getToSession, saveToSession } from "@/utils/util";
+let scrollSize = 0;
 
 const headerStyle = `background-image: linear-gradient(rgba(75, 75, 75, 1), rgba(0, 0, 0, 0));
   position: fixed;
   left: 0;
   top: 0;
   width: 100%`;
+
+const visible = ref<boolean>(false);
+
+const changeScroll = (e: Event) => {
+  // console.log(e.target.scrollTop);
+  if ((e.target as HTMLElement).scrollTop - scrollSize > 150) {
+    console.log((e.target as HTMLElement).scrollTop - scrollSize < 150);
+    scrollSize = (e.target as HTMLElement).scrollTop;
+    console.log("向下滚动", scrollSize, (e.target as HTMLElement).scrollTop);
+    visible.value = true;
+    return;
+  }
+  if ((e.target as HTMLElement).scrollTop - scrollSize < -100) {
+    scrollSize = (e.target as HTMLElement).scrollTop;
+    console.log("向上滚动", scrollSize);
+    visible.value = false;
+    return;
+  }
+};
 
 const Base_URL = import.meta.env.VITE_BASE_API as string;
 const headImage = computed(() => `${Base_URL}/${userStore.currentUser.user.headerImg}`);
@@ -498,7 +518,7 @@ const submit = () => {
 
 .headerStyleLine {
   font-size: 15px;
-  line-height: 37px;
+  line-height: 41px;
 }
 
 .darkStyle {
@@ -553,5 +573,15 @@ const submit = () => {
 }
 .middle-view {
   min-height: calc(100% - 460px);
+}
+.visible {
+  transition: transform 2s;
+  transform: translate3d(0, -200%, 0);
+}
+.visible > div {
+  transform: translateZ(0);
+}
+.visible > b span {
+  transform: translateZ(0);
 }
 </style>

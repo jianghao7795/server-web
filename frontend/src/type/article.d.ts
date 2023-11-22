@@ -61,4 +61,8 @@ declare namespace API {
   export type AboutMe = {
     aboutMe: string;
   };
+
+  export interface ScrollBehavior extends Event {
+    scrollTop: number;
+  }
 }
