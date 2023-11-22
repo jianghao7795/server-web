@@ -170,15 +170,15 @@ const visible = ref<boolean>(false);
 const changeScroll = (e: Event) => {
   // console.log(e.target.scrollTop);
   if ((e.target as HTMLElement).scrollTop - scrollSize > 150) {
-    console.log((e.target as HTMLElement).scrollTop - scrollSize < 150);
+    // console.log((e.target as HTMLElement).scrollTop - scrollSize < 150);
     scrollSize = (e.target as HTMLElement).scrollTop;
-    console.log("向下滚动", scrollSize, (e.target as HTMLElement).scrollTop);
+    // console.log("向下滚动", scrollSize, (e.target as HTMLElement).scrollTop);
     visible.value = true;
     return;
   }
   if ((e.target as HTMLElement).scrollTop - scrollSize < -100) {
     scrollSize = (e.target as HTMLElement).scrollTop;
-    console.log("向上滚动", scrollSize);
+    // console.log("向上滚动", scrollSize);
     visible.value = false;
     return;
   }
@@ -186,6 +186,12 @@ const changeScroll = (e: Event) => {
 
 const Base_URL = import.meta.env.VITE_BASE_API as string;
 const headImage = computed(() => `${Base_URL}/${userStore.currentUser.user.headerImg}`);
+const colorSet = computed(
+  () =>
+    `url(${
+      new URL(userStore.currentUser.user.head_img ? `${Base_URL}/${userStore.currentUser.user.head_img}` : "/home-bg.png", import.meta.url).href
+    })`,
+);
 
 const userStore = useUserStore();
 const route = useRoute();
@@ -195,7 +201,7 @@ const searchInput = ref<string>("");
 const loadingFlag = ref<boolean>(false);
 // const isMouseOver = ref<boolean>(false);
 const viewPage = ref<string>(route.fullPath);
-const colorSet = ref<string>(`url(${new URL("/home-bg.png", import.meta.url).href})`);
+// const colorSet = ref<string>(`url(${new URL("/home-bg.png", import.meta.url).href})`);
 const bgImage = ref<User.Images[]>([]);
 const active = ref<boolean>(false);
 const currentRouter = ref<string>("");
@@ -329,7 +335,7 @@ const options = [
 const resetStore = () => {
   userStore.$reset();
   localStorage.removeItem("token");
-  colorSet.value = `url(${new URL("/home-bg.png", import.meta.url).href})`;
+  // colorSet.value = `url(${new URL("/home-bg.png", import.meta.url).href})`;
   loginStatus.value = true;
   userInfo.value = {
     name: "admin_user",
@@ -376,7 +382,7 @@ const changeImages = async (data: User.Images) => {
   });
   window.$message.success("更换成功");
   active.value = false;
-  colorSet.value = `url(${new URL(data.url.includes("http") ? data.url : `${Base_URL}/${data.url}`, import.meta.url).href})`;
+  // colorSet.value = `url(${new URL(data.url.includes("http") ? data.url : `${Base_URL}/${data.url}`, import.meta.url).href})`;
 };
 
 const changeActive = (status: boolean) => {
@@ -390,9 +396,6 @@ provide("changeLogin", changeLogin); // 传递方法给下级
 
 const login = () => {
   userStore.logins({ username: userInfo.value.name, password: md5(userInfo.value.password) }, (imageString: string) => {
-    if (!!imageString) {
-      colorSet.value = `url(${new URL(imageString.includes("http") ? imageString : `${Base_URL}/${imageString}`, import.meta.url).href})`;
-    }
     getImages().then((resp) => {
       if (resp) {
         bgImage.value = resp.data;
@@ -480,13 +483,11 @@ onMounted(async () => {
       if (resp?.code === 0) {
         bgImage.value = resp.data;
       }
-      if (head_img !== "") {
-        colorSet.value = `url(${new URL(head_img.includes("http") ? head_img : `${Base_URL}/${head_img}`, import.meta.url).href})`;
-      }
     });
   }
 });
 
+// console.log(colorSet.value);
 const changePath = (url: string) => {
   router.push(url);
 };
