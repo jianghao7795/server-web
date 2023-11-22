@@ -4,7 +4,7 @@
       <n-layout-header position="static" v-once>
         <n-card :bordered="false" class="darkStyle" :header-style="headerStyle">
           <template #header-extra>
-            <div class="headerStyleLine" ref="searchRef" :class="{ visible: visible }">
+            <div class="headerStyleLine" ref="searchRef" :class="{ visible: visible, visibleNo: !visible }">
               <NSpace>
                 <div class="toopli">
                   <NInput round ref="searchInputRef" v-model:value="searchInput" placeholder="搜索文章" type="text" @keyup.enter="submit">
@@ -54,7 +54,7 @@
             </div>
           </template>
           <template #header>
-            <div class="headerStyleLine" :class="{ visible: visible }">
+            <div class="headerStyleLine" :class="{ visible: visible, visibleNo: !visible }">
               <b v-if="isLogin" style="cursor: pointer">
                 <n-dropdown :options="options" placement="bottom-end" trigger="click" :show-arrow="true" @select="userLogout">
                   <n-avatar round size="small" :src="headImage"></n-avatar>
@@ -159,7 +159,7 @@ import md5 from "md5";
 import { getToSession, saveToSession } from "@/utils/util";
 let scrollSize = 0;
 
-const headerStyle = `background-image: linear-gradient(rgba(75, 75, 75, 1), rgba(0, 0, 0, 0));
+const headerStyle = `
   position: fixed;
   left: 0;
   top: 0;
@@ -576,13 +576,11 @@ const submit = () => {
   min-height: calc(100% - 460px);
 }
 .visible {
-  transition: transform 2s;
+  transition: transform 1s;
   transform: translate3d(0, -200%, 0);
 }
-.visible > div {
-  transform: translateZ(0);
-}
-.visible > b span {
-  transform: translateZ(0);
+.visibleNo {
+  transition: transform 1s;
+  transform: translate3d(0);
 }
 </style>
