@@ -163,7 +163,9 @@ const headerStyle = `
   position: fixed;
   left: 0;
   top: 0;
-  width: 100%`;
+  width: 100%;
+  padding-top: 10px;  
+`;
 
 const visible = ref<boolean>(false);
 
@@ -521,6 +523,11 @@ const submit = () => {
 .headerStyleLine {
   font-size: 15px;
   line-height: 41px;
+  max-height: 41px;
+}
+
+.headerStyleLine > b > span {
+  margin-top: 8px;
 }
 
 .darkStyle {
