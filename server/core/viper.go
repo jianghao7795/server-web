@@ -19,7 +19,7 @@ import (
 )
 
 // 读取配置 配置文件config.yaml
-func Viper(path ...string) *viper.Viper {
+func Viper(path ...string) (*viper.Viper, error) {
 	var config string
 	if len(path) == 0 {
 		flag.StringVar(&config, "c", "", "choose config file.")
@@ -64,20 +64,25 @@ func Viper(path ...string) *viper.Viper {
 	publicKeyByte, err := os.ReadFile("./rsa_public_key.pem")
 	// global.Logger.Println("public key: ", err)
 	if err != nil {
-		fmt.Println(err)
+		global.Logger.Error(err.Error())
+		return nil, err
 	}
 	publickey, err := jwt.ParseRSAPublicKeyFromPEM(publicKeyByte)
 	if err != nil {
-		fmt.Println(err)
+		global.Logger.Error(err.Error())
+		return nil, err
 	}
 	privatekeyByte, err := os.ReadFile("./private_key.pem")
 	if err != nil {
-		fmt.Println(err)
+		global.Logger.Error(err.Error())
+
+		return nil, err
 	}
 	privatekey, err := jwt.ParseRSAPrivateKeyFromPEM(privatekeyByte)
 	if err != nil {
-		fmt.Println(err)
-		// global.Logger.Println(err)
+		// fmt.Println(err)
+		global.Logger.Error(err.Error())
+		return nil, err
 	}
 	// jwt
 	global.CONFIG.JWT.PrivateKey = privatekey
@@ -88,7 +93,7 @@ func Viper(path ...string) *viper.Viper {
 	global.BlackCache = local_cache.NewCache(
 		local_cache.SetDefaultExpire(time.Second * time.Duration(global.CONFIG.JWT.ExpiresTime)),
 	)
-	return v
+	return v, nil
 }
 
 // func logHandle(w http.ResponseWriter, r *http.Request) {

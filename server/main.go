@@ -16,6 +16,10 @@ import (
 	"go.uber.org/zap"
 )
 
+var (
+	err error
+)
+
 //go:generate go env -w GO111MODULE=on
 //go:generate go env -w GOPROXY=https://goproxy.cn,direct
 //go:generate go mod tidy
@@ -29,9 +33,13 @@ import (
 // @name x-token
 // @BasePath /
 func main() {
-	global.VIP = core.Viper() // 初始化Viper 配置
-	global.LOG = core.Zap()   // 初始化zap日志库
-	// global.Logger = core.InitLogger() // 初始化 log 让log标准输出
+	global.LOG = core.Zap()           // 初始化zap日志库
+	global.Logger = core.InitLogger() // 初始化 log 让log标准输出
+
+	global.VIP, err = core.Viper() // 初始化Viper 配置
+	if err != nil {
+		global.LOG.Error(err.Error() + ": 配置文件读取失败")
+	}
 	zap.ReplaceGlobals(global.LOG) // 部署到全局
 
 	db, err := initialize.Gorm() // gorm连接数据库
