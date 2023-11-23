@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"time"
 
-	jwt "github.com/golang-jwt/jwt/v4"
+	jwt "github.com/golang-jwt/jwt/v5"
 	"github.com/songzhibin97/gkit/cache/local_cache"
 
 	"server/global"

@@ -9,7 +9,7 @@ import (
 
 	"crypto/rsa"
 
-	jwt "github.com/golang-jwt/jwt/v4"
+	jwt "github.com/golang-jwt/jwt/v5"
 )
 
 type JWT struct {
@@ -71,17 +71,29 @@ func (j *JWT) ParseToken(tokenString string) (*request.CustomClaims, error) {
 	})
 	// global.Logger.Println(err)
 	if err != nil {
-		if ve, ok := err.(*jwt.ValidationError); ok {
-			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
-				return nil, ErrTokenMalformed
-			} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
-				// Token is expired
-				return nil, ErrTokenExpired
-			} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
-				return nil, ErrTokenNotValidYet
-			} else {
-				return nil, ErrTokenInvalid
-			}
+		// if ve, ok := err.(*jwt.ValidationError); ok {
+		// 	if ve.Errors&jwt.ErrTokenMalformed != 0 {
+		// 		return nil, ErrTokenMalformed
+		// 	} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
+		// 		// Token is expired
+		// 		return nil, ErrTokenExpired
+		// 	} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
+		// 		return nil, ErrTokenNotValidYet
+		// 	} else {
+		// 		return nil, ErrTokenInvalid
+		// 	}
+		// }
+		switch {
+		case token.Valid:
+			return nil, ErrTokenInvalid
+		case errors.Is(err, jwt.ErrTokenMalformed):
+			return nil, ErrTokenMalformed
+		case errors.Is(err, jwt.ErrTokenExpired):
+			return nil, ErrTokenExpired
+		case errors.Is(err, jwt.ErrTokenNotValidYet):
+			return nil, ErrTokenNotValidYet
+		default:
+			return nil, ErrTokenInvalid
 		}
 	}
 	// global.Logger.Println(err)

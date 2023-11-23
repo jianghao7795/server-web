@@ -10,8 +10,15 @@ import (
 	frontendResponse "server/model/frontend/response"
 	"time"
 
-	jwt "github.com/golang-jwt/jwt/v4"
+	jwt "github.com/golang-jwt/jwt/v5"
 	"gorm.io/gorm"
+)
+
+var (
+	ErrTokenExpired     = errors.New("token is expired")
+	ErrTokenNotValidYet = errors.New("token not active yet")
+	ErrTokenMalformed   = errors.New("that's not even a token")
+	ErrTokenInvalid     = errors.New("couldn't handle this token")
 )
 
 type MyClaims struct {
@@ -131,16 +138,28 @@ func Secret() jwt.Keyfunc {
 func ParseToken(tokenss string) (*MyClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenss, &MyClaims{}, Secret())
 	if err != nil {
-		if ve, ok := err.(*jwt.ValidationError); ok {
-			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
-				return nil, errors.New("that's not even a token")
-			} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
-				return nil, errors.New("token is expired")
-			} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
-				return nil, errors.New("token not active yet")
-			} else {
-				return nil, errors.New("couldn't handle this token")
-			}
+		// if ve, ok := err.(*jwt.ValidationError); ok {
+		// 	if ve.Errors&jwt.ValidationErrorMalformed != 0 {
+		// 		return nil, errors.New("that's not even a token")
+		// 	} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
+		// 		return nil, errors.New("token is expired")
+		// 	} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
+		// 		return nil, errors.New("token not active yet")
+		// 	} else {
+		// 		return nil, errors.New("couldn't handle this token")
+		// 	}
+		// }
+		switch {
+		case token.Valid:
+			return nil, ErrTokenInvalid
+		case errors.Is(err, jwt.ErrTokenMalformed):
+			return nil, ErrTokenMalformed
+		case errors.Is(err, jwt.ErrTokenExpired):
+			return nil, ErrTokenExpired
+		case errors.Is(err, jwt.ErrTokenNotValidYet):
+			return nil, ErrTokenNotValidYet
+		default:
+			return nil, ErrTokenInvalid
 		}
 	}
 	if claims, ok := token.Claims.(*MyClaims); ok && token.Valid {
