@@ -13,4 +13,6 @@ export const viteLogo = (env) => {
   }
 };
 
+export const fileSize = 2; // 上传文件大小限制，单位MB
+
 export default config;

@@ -382,6 +382,7 @@ const changeImages = async (data: User.Images) => {
   });
   window.$message.success("更换成功");
   active.value = false;
+  userStore.updateUserInfo({ ...userStore.currentUser.user, head_img: data.url });
   // colorSet.value = `url(${new URL(data.url.includes("http") ? data.url : `${Base_URL}/${data.url}`, import.meta.url).href})`;
 };
 

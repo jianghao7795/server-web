@@ -35,6 +35,9 @@ export const useUserStore = defineStore("user", {
     getToken: (state) => state.currentUser.token,
   },
   actions: {
+    updateUserInfo(data: User.UserInfo) {
+      this.currentUser.user = data;
+    },
     async register(data: User.Register, callback: () => void) {
       this.loadingRegister = true;
       try {
