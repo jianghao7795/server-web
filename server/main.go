@@ -33,14 +33,13 @@ var (
 // @name x-token
 // @BasePath /
 func main() {
-	global.LOG = core.Zap()           // 初始化zap日志库
-	global.Logger = core.InitLogger() // 初始化 log 让log标准输出
-
 	global.VIP, err = core.Viper() // 初始化Viper 配置
 	if err != nil {
 		global.LOG.Error(err.Error() + ": 配置文件读取失败")
 	}
-	zap.ReplaceGlobals(global.LOG) // 部署到全局
+	global.LOG = core.Zap()           // 初始化zap日志库
+	global.Logger = core.InitLogger() // 初始化 log 让log标准输出
+	zap.ReplaceGlobals(global.LOG)    // 部署到全局
 
 	db, err := initialize.Gorm() // gorm连接数据库
 	if err == nil {
