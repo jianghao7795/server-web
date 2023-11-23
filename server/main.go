@@ -36,6 +36,7 @@ func main() {
 
 	db, err := initialize.Gorm() // gorm连接数据库
 	if err == nil {
+		global.LOG.Info("数据库链接成功")
 		global.DB = db
 	} else {
 		global.LOG.Error(err.Error() + ": 数据库链接失败")
@@ -51,5 +52,5 @@ func main() {
 		db, _ := global.DB.DB()
 		defer db.Close()
 	}
-	core.RunWindowsServer()
+	core.RunServer()
 }

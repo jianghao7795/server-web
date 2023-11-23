@@ -27,8 +27,11 @@ func (w *writer) Printf(message string, data ...interface{}) {
 		logZap = global.CONFIG.Mysql.LogZap
 	case "pgsql":
 		logZap = global.CONFIG.Pgsql.LogZap
+	default:
+		logZap = global.CONFIG.Mysql.LogZap
 	}
 	if logZap {
+		// fmt.Println(message, data)
 		global.LOG.Info(fmt.Sprintf(message+"\n", data...))
 	} else {
 		w.Writer.Printf(message, data...)
