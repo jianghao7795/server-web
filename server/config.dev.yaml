@@ -77,7 +77,7 @@ email:
   secret: bwxrwofxhqapbahg
   nickname: "C"
 excel:
-  dir: ./resource/excel/
+  dir: uploads/excel/
 hua-wei-obs:
   path: you-path
   bucket: you-bucket

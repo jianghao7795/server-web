@@ -6,6 +6,8 @@ import (
 	"strconv"
 
 	"server/global"
+	"server/model/common/request"
+	"server/model/example"
 	"server/model/system"
 
 	"github.com/xuri/excelize/v2"
@@ -110,4 +112,24 @@ func (exa *ExcelService) compareStrSlice(a, b []string) bool {
 		}
 	}
 	return true
+}
+
+func (exa *ExcelService) ImportExcel(data *example.FielUploadImport) error {
+	return global.DB.Create(data).Error
+}
+
+func (exa *ExcelService) GetFileList(pageInfo request.PageInfo) (lists []example.FielUploadImport, total int64, err error) {
+	limit := pageInfo.PageSize
+	offset := pageInfo.PageSize * (pageInfo.Page - 1)
+	db := global.DB.Model(&example.FielUploadImport{})
+	var fileLists []example.FielUploadImport
+	err = db.Count(&total).Error
+	if err != nil {
+		return nil, 0, err
+	}
+	err = db.Limit(limit).Offset(offset).Order("id desc").Find(&fileLists).Error
+	if err != nil {
+		return nil, 0, err
+	}
+	return fileLists, total, nil
 }

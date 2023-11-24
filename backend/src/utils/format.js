@@ -1,19 +1,19 @@
-import { formatTimeToStr } from '@/utils/date';
-import { getDict } from '@/utils/dictionary';
+import { formatTimeToStr } from "@/utils/date";
+import { getDict } from "@/utils/dictionary";
 
 export const formatBoolean = (bool) => {
   if (bool !== null) {
-    return bool ? '开启' : '停用';
+    return bool ? "开启" : "停用";
   } else {
-    return '';
+    return "";
   }
 };
 export const formatDate = (time) => {
-  if (time !== null && time !== '') {
+  if (time !== null && time !== "") {
     var date = new Date(time);
-    return formatTimeToStr(date, 'yyyy-MM-dd hh:mm:ss');
+    return formatTimeToStr(date, "yyyy-MM-dd hh:mm:ss");
   } else {
-    return '';
+    return "";
   }
 };
 
@@ -25,4 +25,25 @@ export const filterDict = (value, options) => {
 export const getDictFunc = async (type) => {
   const dicts = await getDict(type);
   return dicts;
+};
+
+export const fileSizeChange = (value = 0, type = "B") => {
+  if (value === 0) return 0;
+  let size = 0;
+  switch (type) {
+    case "MB":
+      size = value / 1024 / 1024;
+      break;
+    case "GB":
+      size = value / 1024 / 1024 / 1024;
+      break;
+    case "KB":
+      size = value / 1024;
+      break;
+    default:
+      size = value;
+      break;
+  }
+
+  return size.toFixed(2);
 };

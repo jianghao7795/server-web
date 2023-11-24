@@ -3,9 +3,12 @@ package example
 import (
 	"os"
 	"server/global"
+	"server/model/common/request"
 	"server/model/common/response"
 	"server/model/example"
+	"server/utils"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -60,7 +63,34 @@ func (e *ExcelApi) ImportExcel(c *gin.Context) {
 		response.FailWithMessage("接收文件失败", c)
 		return
 	}
-	_ = c.SaveUploadedFile(header, global.CONFIG.Excel.Dir+"ExcelImport.xlsx")
+	var filepath_time = time.Now().Format("2006/01/02")
+	var filenameMd5 = utils.MD5V([]byte(header.Filename)) + "_" + time.Now().Format("20060102150405") + "." + strings.Split(header.Filename, ".")[len(strings.Split(header.Filename, "."))-1]
+	var fileTypeName = strings.Split(header.Filename, ".")[len(strings.Split(header.Filename, "."))-1]
+	importExcel := example.FielUploadImport{
+		FileName:    header.Filename,
+		FileNameMd5: filenameMd5,
+		State:       1,
+		FileSize:    header.Size,
+		FilePath:    global.CONFIG.Excel.Dir + filepath_time + "/" + filenameMd5,
+		FileType:    fileTypeName,
+	}
+	err = excelService.ImportExcel(&importExcel)
+	if err != nil {
+		global.LOG.Error("导入失败!", zap.Error(err))
+		response.FailWithMessage("导入失败", c)
+		return
+	}
+
+	mkdirErr := os.MkdirAll(global.CONFIG.Excel.Dir+filepath_time, os.ModePerm)
+	if mkdirErr != nil {
+		global.LOG.Error("创建目录失败：", zap.Any("err", mkdirErr.Error()))
+		return
+	}
+	err = c.SaveUploadedFile(header, global.CONFIG.Excel.Dir+filepath_time+"/"+filenameMd5)
+	if err != nil {
+		global.LOG.Error("保存文件失败：", zap.Any("err", err.Error()))
+		return
+	}
 	response.OkWithMessage("导入成功", c)
 }
 
@@ -110,4 +140,21 @@ func (e *ExcelApi) DownloadTemplate(c *gin.Context) {
 	}
 	c.Writer.Header().Add("success", "true") // 增加返回头 信息
 	c.File(filePath)
+}
+
+func (e *ExcelApi) GetFileList(c *gin.Context) {
+	var pageInfo request.PageInfo
+	_ = c.ShouldBindQuery(&pageInfo)
+	list, total, err := excelService.GetFileList(pageInfo)
+	if err != nil {
+		global.LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+	} else {
+		response.OkWithDetailed(response.PageResult{
+			List:     list,
+			Total:    total,
+			Page:     pageInfo.Page,
+			PageSize: pageInfo.PageSize,
+		}, "获取成功", c)
+	}
 }

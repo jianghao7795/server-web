@@ -64,6 +64,22 @@ export const loadExcelData = () => {
 };
 
 // @Tags excel
+// @Summary 导入Excel文件
+// @Security ApiKeyAuth
+// @accept multipart/form-data
+// @Produce  application/json
+// @Param file formData file true "导入Excel文件"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"导入成功"}"
+// @Router /excel/importExcel [post]
+export const importExcel = (file) => {
+  return service({
+    url: "/excel/importExcel",
+    method: "post",
+    data: file,
+  });
+};
+
+// @Tags excel
 // @Summary 下载模板
 // @Security ApiKeyAuth
 // @accept multipart/form-data
@@ -81,4 +97,12 @@ export const downloadTemplate = async (fileName) => {
     responseType: "blob", // 返回blob 默认为json
   });
   handleFileError(res, fileName);
+};
+
+export const getFileList = (params) => {
+  return service({
+    url: "/excel/getFileInfoList",
+    method: "get",
+    params,
+  });
 };

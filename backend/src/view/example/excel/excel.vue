@@ -2,25 +2,27 @@
   <div class="upload">
     <div class="table-box">
       <div class="btn-list">
-        <el-upload class="excel-btn" :action="`${path}/excel/importExcel`" :headers="{ Authorization: `Bearer ${userStore.token}` }" :on-success="loadExcel" :show-file-list="false">
+        <el-upload class="excel-btn" :on-success="loadExcel" :show-file-list="false" accept=".xls,.xlsx,.csv" v-bind:http-request="uploadFile" :loading="loadingUpload">
           <el-button size="small" type="primary" icon="upload">导入</el-button>
         </el-upload>
-        <el-button class="excel-btn" size="small" type="primary" icon="download" @click="handleExcelExport('ExcelExport.xlsx')">导出</el-button>
-        <el-button class="excel-btn" size="small" type="success" icon="download" @click="downloadExcelTemplate()">下载模板</el-button>
+        <!-- <el-button class="excel-btn" size="small" type="primary" icon="download" @click="handleExcelExport('ExcelExport.xlsx')">导出</el-button>
+        <el-button class="excel-btn" size="small" type="success" icon="download" @click="downloadExcelTemplate()">下载模板</el-button> -->
       </div>
       <el-table :data="tableData" row-key="ID">
-        <el-table-column align="left" label="ID" min-width="100" prop="ID" />
-        <el-table-column align="left" show-overflow-tooltip label="路由Name" min-width="160" prop="name" />
-        <el-table-column align="left" show-overflow-tooltip label="路由Path" min-width="160" prop="path" />
-        <el-table-column align="left" label="是否隐藏" min-width="100" prop="hidden">
+        <el-table-column align="left" label="ID" width="50" prop="ID" />
+        <el-table-column align="left" show-overflow-tooltip label="文件名" min-width="120" prop="filename" />
+        <el-table-column align="left" show-overflow-tooltip label="文件名MD5" min-width="160" prop="filename_md5" />
+        <el-table-column align="left" label="路径" min-width="100" show-overflow-tooltip prop="file_path"></el-table-column>
+        <el-table-column align="left" label="大小（KB）" min-width="90" prop="file_size">
           <template #default="scope">
-            <span>{{ scope.row.hidden ? "隐藏" : "显示" }}</span>
+            <span>{{ fileSizeChange(scope.row.file_size, "KB") }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="left" label="父节点" min-width="90" prop="parentId" />
-        <el-table-column align="left" label="排序" min-width="70" prop="sort" />
-        <el-table-column align="left" label="文件路径" min-width="360" prop="component" />
+        <el-table-column align="left" label="文件类型" min-width="70" prop="file_type" />
       </el-table>
+      <div class="pagination">
+        <el-pagination :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+      </div>
     </div>
   </div>
 </template>
@@ -32,20 +34,36 @@ export default {
 </script>
 
 <script setup>
-import { useUserStore } from "@/pinia/modules/user";
-import { exportExcel, loadExcelData, downloadTemplate } from "@/api/excel";
-import { getMenuList } from "@/api/menu";
 import { ref, onMounted } from "vue";
-const path = ref(import.meta.env.VITE_BASE_API);
+import { importExcel, getFileList } from "@/api/excel";
+import { fileSizeChange } from "@/utils/format";
 
-const page = ref(1);
-const total = ref(0);
-const pageSize = ref(999);
+const loadingUpload = ref(false);
 const tableData = ref([]);
+const page = ref(1);
+const pageSize = ref(10);
+const total = ref(0);
 
+console.log(fileSizeChange(607, "KB"));
+
+const uploadFile = (file) => {
+  const formData = new FormData();
+  formData.append("file", file.file);
+  loadingUpload.value = true;
+  importExcel(formData).then((res) => {
+    loadingUpload.value = false;
+    if (res.code === 0) {
+      ElMessage({
+        showClose: true,
+        message: "导入成功",
+        type: "success",
+      });
+    }
+  });
+};
 // 查询
 const getTableData = async () => {
-  const table = await getMenuList({ page: page.value, pageSize: pageSize.value });
+  const table = await getFileList({ page: page.value, pageSize: pageSize.value });
   if (table.code === 0) {
     tableData.value = table.data.list;
     total.value = table.data.total;
@@ -57,28 +75,35 @@ onMounted(() => {
   getTableData();
 });
 
-const userStore = useUserStore();
+const handleCurrentChange = (val) => {
+  page.value = val;
+  getTableData();
+};
+const handleSizeChange = (val) => {
+  pageSize.value = val;
+  getTableData();
+};
+// const userStore = useUserStore();
 
-const handleExcelExport = (fileName) => {
-  if (!fileName || typeof fileName !== "string") {
-    fileName = "ExcelExport.xlsx";
-  }
-  exportExcel(tableData.value, fileName);
-};
+// const handleExcelExport = (fileName) => {
+//   if (!fileName || typeof fileName !== "string") {
+//     fileName = "ExcelExport.xlsx";
+//   }
+//   exportExcel(tableData.value, fileName);
+// };
 const loadExcel = async () => {
-  await loadExcelData();
-  await getTableData();
+  getTableData();
 };
-const downloadExcelTemplate = () => {
-  downloadTemplate("ExcelTemplate.xlsx");
-};
+// const downloadExcelTemplate = () => {
+//   downloadTemplate("ExcelTemplate.xlsx");
+// };
 </script>
 
 <style lang="scss" scoped>
 .btn-list {
   display: flex;
   margin-bottom: 12px;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 .excel-btn + .excel-btn {
   margin-left: 10px;
