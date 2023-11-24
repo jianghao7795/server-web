@@ -3,6 +3,7 @@ package example
 import (
 	"errors"
 	"fmt"
+	"os"
 	"strconv"
 
 	"server/global"
@@ -132,4 +133,22 @@ func (exa *ExcelService) GetFileList(pageInfo request.PageInfo) (lists []example
 		return nil, 0, err
 	}
 	return fileLists, total, nil
+}
+
+func (exa *ExcelService) DeleteFile(id int64) error {
+	var file example.FielUploadImport
+	err := global.DB.Model(&example.FielUploadImport{}).Where("id = ?", id).First(&file).Error
+	if err != nil {
+		return err
+	}
+	err = global.DB.Delete(&file).Error
+
+	if err != nil {
+		return err
+	}
+	err = os.Rename("./"+global.CONFIG.Excel.Dir+file.FilePath, "./"+global.CONFIG.Excel.Dir+file.FilePath+".bak")
+	if err != nil {
+		return err
+	}
+	return nil
 }

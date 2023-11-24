@@ -5,13 +5,7 @@
       <div class="btn-list">
         <el-button size="small" type="primary" icon="plus" @click="addAuthority('0')">新增角色</el-button>
       </div>
-      <el-table
-        :data="tableData"
-        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-        row-key="authorityId"
-        style="width: 100%"
-        v-loading="loading"
-      >
+      <el-table :data="tableData" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" row-key="authorityId" style="width: 100%" v-loading="loading">
         <el-table-column label="角色ID" min-width="180" prop="authorityId" />
         <el-table-column align="left" label="角色名称" min-width="180" prop="authorityName" />
         <el-table-column align="left" label="操作" width="460">
@@ -60,7 +54,7 @@
       </template>
     </el-dialog>
 
-    <el-drawer v-if="drawer" v-model="drawer" custom-class="auth-drawer" :with-header="false" size="40%" title="角色配置">
+    <el-drawer v-if="drawer" v-model="drawer" class="auth-drawer" :with-header="false" size="40%" title="角色配置">
       <el-tabs :before-leave="autoEnter" type="border-card">
         <el-tab-pane label="角色菜单">
           <Menus ref="menus" :row="activeRow" @changeRow="changeRow" />

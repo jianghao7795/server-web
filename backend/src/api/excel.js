@@ -106,3 +106,10 @@ export const getFileList = (params) => {
     params,
   });
 };
+
+export const deleteFile = (params) => {
+  return service({
+    url: `/excel/deleteFile/${params.id}`,
+    method: "delete",
+  });
+};

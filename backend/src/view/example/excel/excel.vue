@@ -19,6 +19,14 @@
           </template>
         </el-table-column>
         <el-table-column align="left" label="文件类型" min-width="70" prop="file_type" />
+        <el-table-column align="left" label="操作" min-width="70">
+          <template #default="{ row }">
+            <el-space :size="2" spacer="|">
+              <el-button link type="primary" @click="fileDownload(row.file_path)">下载</el-button>
+              <el-button link type="primary" @click="deleteFileDownload(row)">删除</el-button>
+            </el-space>
+          </template>
+        </el-table-column>
       </el-table>
       <div class="pagination">
         <el-pagination :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
@@ -35,7 +43,7 @@ export default {
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { importExcel, getFileList } from "@/api/excel";
+import { importExcel, getFileList, deleteFile } from "@/api/excel";
 import { fileSizeChange } from "@/utils/format";
 
 const loadingUpload = ref(false);
@@ -44,7 +52,7 @@ const page = ref(1);
 const pageSize = ref(10);
 const total = ref(0);
 
-console.log(fileSizeChange(607, "KB"));
+// console.log(fileSizeChange(607, "KB"));
 
 const uploadFile = (file) => {
   const formData = new FormData();
@@ -92,11 +100,23 @@ const handleSizeChange = (val) => {
 //   exportExcel(tableData.value, fileName);
 // };
 const loadExcel = async () => {
-  getTableData();
+  await getTableData();
 };
-// const downloadExcelTemplate = () => {
-//   downloadTemplate("ExcelTemplate.xlsx");
-// };
+const fileDownload = (path) => {
+  window.open("/" + path);
+};
+
+const deleteFileDownload = async (row) => {
+  const res = await deleteFile({ id: row.ID });
+  if (res.code === 0) {
+    ElMessage({
+      showClose: true,
+      message: "删除成功",
+      type: "success",
+    });
+    getTableData();
+  }
+};
 </script>
 
 <style lang="scss" scoped>

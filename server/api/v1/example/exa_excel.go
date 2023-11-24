@@ -7,6 +7,7 @@ import (
 	"server/model/common/response"
 	"server/model/example"
 	"server/utils"
+	"strconv"
 	"strings"
 	"time"
 
@@ -156,5 +157,16 @@ func (e *ExcelApi) GetFileList(c *gin.Context) {
 			Page:     pageInfo.Page,
 			PageSize: pageInfo.PageSize,
 		}, "获取成功", c)
+	}
+}
+
+func (e *ExcelApi) DeleteFile(c *gin.Context) {
+	id := c.Param("id")
+	fileId, _ := strconv.Atoi(id)
+	if err := excelService.DeleteFile(int64(fileId)); err != nil {
+		global.LOG.Error("删除失败!", zap.Error(err))
+		response.FailWithMessage("删除失败", c)
+	} else {
+		response.OkWithMessage("删除成功", c)
 	}
 }
