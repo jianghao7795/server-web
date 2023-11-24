@@ -8,6 +8,7 @@ import (
 	"server/model/frontend"
 	frontendRequest "server/model/frontend/request"
 	frontendResponse "server/model/frontend/response"
+	"server/utils"
 	"time"
 
 	jwt "github.com/golang-jwt/jwt/v5"
@@ -149,18 +150,7 @@ func ParseToken(tokenss string) (*MyClaims, error) {
 		// 		return nil, errors.New("couldn't handle this token")
 		// 	}
 		// }
-		switch {
-		case token.Valid:
-			return nil, ErrTokenInvalid
-		case errors.Is(err, jwt.ErrTokenMalformed):
-			return nil, ErrTokenMalformed
-		case errors.Is(err, jwt.ErrTokenExpired):
-			return nil, ErrTokenExpired
-		case errors.Is(err, jwt.ErrTokenNotValidYet):
-			return nil, ErrTokenNotValidYet
-		default:
-			return nil, ErrTokenInvalid
-		}
+		return nil, utils.ReportError(err)
 	}
 	if claims, ok := token.Claims.(*MyClaims); ok && token.Valid {
 		return claims, nil

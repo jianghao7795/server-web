@@ -58,18 +58,7 @@ func (j *JWT) ParseTokenMobile(tokenss string) (*MobileClaims, error) {
 		// 		return nil, errors.New("couldn't handle this token")
 		// 	}
 		// }
-		switch {
-		case token.Valid:
-			return nil, ErrTokenInvalid
-		case errors.Is(err, jwt.ErrTokenMalformed):
-			return nil, ErrTokenMalformed
-		case errors.Is(err, jwt.ErrTokenExpired):
-			return nil, ErrTokenExpired
-		case errors.Is(err, jwt.ErrTokenNotValidYet):
-			return nil, ErrTokenNotValidYet
-		default:
-			return nil, ErrTokenInvalid
-		}
+		return nil, ReportError(err)
 	}
 	if claims, ok := token.Claims.(*MobileClaims); ok && token.Valid {
 		return claims, nil

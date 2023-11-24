@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"errors"
 	"time"
 
 	"server/global"
@@ -16,13 +15,6 @@ type JWT struct {
 	PrivateKey *rsa.PrivateKey
 	PublicKey  *rsa.PublicKey
 }
-
-var (
-	ErrTokenExpired     = errors.New("token is expired")
-	ErrTokenNotValidYet = errors.New("token not active yet")
-	ErrTokenMalformed   = errors.New("that's not even a token")
-	ErrTokenInvalid     = errors.New("couldn't handle this token")
-)
 
 func NewJWT() *JWT {
 	return &JWT{
@@ -83,27 +75,28 @@ func (j *JWT) ParseToken(tokenString string) (*request.CustomClaims, error) {
 		// 		return nil, ErrTokenInvalid
 		// 	}
 		// }
-		switch {
-		case token.Valid:
-			return nil, ErrTokenInvalid
-		case errors.Is(err, jwt.ErrTokenMalformed):
-			return nil, ErrTokenMalformed
-		case errors.Is(err, jwt.ErrTokenExpired):
-			return nil, ErrTokenExpired
-		case errors.Is(err, jwt.ErrTokenNotValidYet):
-			return nil, ErrTokenNotValidYet
-		default:
-			return nil, ErrTokenInvalid
-		}
+		// switch {
+		// case token.Valid:
+		// 	return nil, ErrTokenInvalid
+		// case errors.Is(err, jwt.ErrTokenMalformed):
+		// 	return nil, ErrTokenMalformed
+		// case errors.Is(err, jwt.ErrTokenExpired):
+		// 	return nil, ErrTokenExpired
+		// case errors.Is(err, jwt.ErrTokenNotValidYet):
+		// 	return nil, ErrTokenNotValidYet
+		// default:
+		// 	return nil, ErrTokenInvalid
+		// }
+		return nil, ReportError(err)
 	}
 	// global.Logger.Println(err)
 	if token != nil {
 		if claims, ok := token.Claims.(*request.CustomClaims); ok && token.Valid {
 			return claims, nil
 		}
-		return nil, ErrTokenInvalid
+		return nil, ReportError(err)
 
 	} else {
-		return nil, ErrTokenInvalid
+		return nil, ReportError(err)
 	}
 }
