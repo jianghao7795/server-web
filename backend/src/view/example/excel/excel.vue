@@ -2,7 +2,7 @@
   <div class="upload">
     <div class="table-box">
       <div class="btn-list">
-        <el-upload class="excel-btn" :on-success="loadExcel" :show-file-list="false" accept=".xls,.xlsx,.csv" v-bind:http-request="uploadFile" :loading="loadingUpload">
+        <el-upload class="excel-btn" :show-file-list="false" accept=".xls,.xlsx,.csv" v-bind:http-request="uploadFile" :loading="loadingUpload">
           <el-button size="small" type="primary" icon="upload">导入</el-button>
         </el-upload>
         <!-- <el-button class="excel-btn" size="small" type="primary" icon="download" @click="handleExcelExport('ExcelExport.xlsx')">导出</el-button>
@@ -66,6 +66,7 @@ const uploadFile = (file) => {
         message: "导入成功",
         type: "success",
       });
+      getTableData();
     }
   });
 };
@@ -99,11 +100,11 @@ const handleSizeChange = (val) => {
 //   }
 //   exportExcel(tableData.value, fileName);
 // };
-const loadExcel = async () => {
-  await getTableData();
-};
+// const loadExcel = async () => {
+//   await getTableData();
+// };
 const fileDownload = (path) => {
-  window.open("/" + path);
+  window.open("/backend/" + path);
 };
 
 const deleteFileDownload = async (row) => {

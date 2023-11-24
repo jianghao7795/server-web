@@ -146,7 +146,8 @@ func (exa *ExcelService) DeleteFile(id int64) error {
 	if err != nil {
 		return err
 	}
-	err = os.Rename("./"+global.CONFIG.Excel.Dir+file.FilePath, "./"+global.CONFIG.Excel.Dir+file.FilePath+".bak")
+	projectPath, _ := os.Getwd()
+	err = os.Rename(projectPath+"/"+file.FilePath, projectPath+"/"+file.FilePath+".bak")
 	if err != nil {
 		return err
 	}
