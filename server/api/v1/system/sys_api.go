@@ -1,7 +1,6 @@
 package system
 
 import (
-	"fmt"
 	"server/global"
 	"server/model/common/request"
 	"server/model/common/response"
@@ -74,20 +73,22 @@ func (s *SystemApiApi) DeleteApi(c *gin.Context) {
 // @Router /api/getApiList [get]
 func (s *SystemApiApi) GetApiList(c *gin.Context) {
 	var pageInfo systemReq.SearchApiParams
-	// _ = c.ShouldBindQuery(&pageInfo)
+	_ = c.ShouldBindQuery(&pageInfo)
+	// log.Println(pageInfo.OrderKey)
 	// var path = c.Query("path")
 	// var description = c.Query("description")
 	// var page = c.DefaultQuery("page", "1")
 	// var pageSize = c.DefaultQuery("pageSize", "10")
 	// var apiGroup = c.Query("apiGroup")
 	// var method = c.Query("method")
-	var ascDesc = c.DefaultQuery("desc", "false")
+	// var ascDesc = c.DefaultQuery("desc", "false")
 	// var order = c.Query("orderKey")
-	var boolItem = false
-	_ = c.BindQuery(&pageInfo)
-	if ascDesc == "true" {
-		boolItem = true
-	}
+	// log.Println(order)
+	// var boolItem = false
+	// _ = c.BindQuery(&pageInfo)
+	// if ascDesc == "true" {
+	// 	boolItem = true
+	// }
 	// pageInfo.Page, _ = strconv.Atoi(page)
 	// pageInfo.PageSize, _ = strconv.Atoi(pageSize)
 	// if path != "" {
@@ -106,14 +107,13 @@ func (s *SystemApiApi) GetApiList(c *gin.Context) {
 	// 	pageInfo.OrderKey = order
 	// }
 	// fmt.Println("ApiGroup.desc: ", pageInfo.Desc)
-	if err := utils.Verify(pageInfo.PageInfo, utils.PageInfoVerify); err != nil {
-		fmt.Println(err)
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
+	// if err := utils.Verify(pageInfo.PageInfo, utils.PageInfoVerify); err != nil {
+	// 	fmt.Println(err)
+	// 	response.FailWithMessage(err.Error(), c)
+	// 	return
+	// }
 
-	fmt.Println("boolItem: ", boolItem)
-	if list, total, err := apiService.GetAPIInfoList(pageInfo.SysApi, pageInfo.PageInfo, pageInfo.OrderKey, boolItem); err != nil {
+	if list, total, err := apiService.GetAPIInfoList(pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {

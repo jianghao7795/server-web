@@ -56,7 +56,7 @@
           <template #header>
             <div class="headerStyleLine" :class="{ visible: visible, visibleNo: !visible }">
               <b v-if="isLogin" style="cursor: pointer">
-                <n-dropdown :options="options" placement="bottom-end" trigger="click" :show-arrow="true" @select="userLogout">
+                <n-dropdown :options="options" placement="bottom-end" trigger="hover" :show-arrow="true" @select="userLogout">
                   <n-avatar round size="small" :src="headImage"></n-avatar>
                 </n-dropdown>
               </b>

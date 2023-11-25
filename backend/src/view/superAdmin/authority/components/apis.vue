@@ -4,18 +4,7 @@
       <el-input v-model="filterText" class="fitler" placeholder="筛选" />
       <el-button class="fl-right" size="small" type="primary" @click="authApiEnter">确 定</el-button>
     </div>
-    <el-tree
-      ref="apiTree"
-      :data="apiTreeData"
-      :default-checked-keys="apiTreeIds"
-      :props="apiDefaultProps"
-      default-expand-all
-      highlight-current
-      node-key="onlyId"
-      show-checkbox
-      :filter-node-method="filterNode"
-      @check="nodeChange"
-    />
+    <el-tree ref="apiTree" :data="apiTreeData" :default-checked-keys="apiTreeIds" :props="apiDefaultProps" default-expand-all highlight-current node-key="onlyId" show-checkbox :filter-node-method="filterNode" @check="nodeChange" />
   </div>
 </template>
 <script>
@@ -80,6 +69,7 @@ const buildApiTree = (apis) => {
   const apiObj = {};
   apis &&
     apis.forEach((item) => {
+      // console.log(item);
       item.onlyId = "p:" + item.path + "m:" + item.method;
       if (Object.prototype.hasOwnProperty.call(apiObj, item.apiGroup)) {
         apiObj[item.apiGroup].push(item);
@@ -96,6 +86,7 @@ const buildApiTree = (apis) => {
     };
     apiTree.push(treeNode);
   }
+  // console.log(apiTree);
   return apiTree;
 };
 
@@ -132,6 +123,8 @@ const filterNode = (value, data) => {
 };
 
 watch(filterText, (val) => {
-  apiTree.value.filter(val);
+  console.log(val);
+  // apiTree.value.filter(val);
+  console.log(apiTree.value.filter(val));
 });
 </script>
