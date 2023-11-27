@@ -581,7 +581,7 @@ const submit = () => {
   background-color: #999;
 }
 .middle-view {
-  min-height: calc(100% - 460px);
+  min-height: calc(100% - 430px);
 }
 .visible {
   transition: transform 1s;
