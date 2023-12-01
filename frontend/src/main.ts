@@ -6,8 +6,6 @@ import router from "@/router";
 import UndrawUi from "undraw-ui";
 import "undraw-ui/dist/style.css";
 
-// import "./assets/main.css";
-
 const app = createApp(App);
 
 app.use(createPinia());
