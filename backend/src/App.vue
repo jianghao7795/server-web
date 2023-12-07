@@ -22,7 +22,7 @@ import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 @import "@/style/main.scss";
 @import "@/style/base.scss";
 @import "@/style/mobile.scss";
-
+@import "@/style/*.scss"
 #app {
   background: #eee;
   height: 100vh;

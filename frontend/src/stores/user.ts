@@ -61,6 +61,7 @@ export const useUserStore = defineStore("user", {
         this.currentUser = info.data;
         callback(info.data.user.head_img);
         localStorage.setItem("token", info.data.token);
+        window.$message.success("登陆成功");
       } catch (e) {
         this.loading = false;
         window.$message.error("登录失败");
