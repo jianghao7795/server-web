@@ -31,25 +31,37 @@ import { defineStore } from "pinia";
 // })
 export const useArticleStore = defineStore("article", {
   state: (): {
-    page: number,
-    
+    page: number;
     list: API.Article[];
     detail: API.Article;
     total: number;
+    showMore: boolean;
+    loading: boolean;
   } => {
     return {
       page: 1,
       list: [],
       detail: {} as API.Article,
       total: 0,
+      showMore: true,
+      loading: false,
     };
   },
   getters: {},
   actions: {
     async getList(payload?: API.SearchArticle) {
-      const resp = await getArticleList(payload);
-      this.list = resp.data?.list;
+      this.loading = true;
+      const resp = await getArticleList({ ...payload, page: this.page });
+      this.loading = false;
+      this.list = [...this.list, ...resp.data?.list];
       this.total = resp.data?.total;
+      if (resp.data?.list?.length === 10) {
+        this.showMore = true;
+        this.page++;
+      } else {
+        this.showMore = false;
+        this.page = 1;
+      }
     },
 
     async getDetail(payload: { id: string }) {

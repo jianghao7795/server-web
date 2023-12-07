@@ -27,8 +27,8 @@
         </n-thing>
       </n-list-item>
     </n-list>
-    <div class="page">
-      <n-pagination v-model:page="article.page" :item-count="article.total" :on-update:page="changePage" />
+    <div class="article-list-more">
+      <n-button block secondary strong v-if="article.showMore" @click="changePage">{{ isMore }}</n-button>
     </div>
   </div>
 </template>
@@ -41,7 +41,7 @@ export default {
 
 <script lang="ts" setup>
 // import { NList, NThing, NListItem, NSpace, NTag, NButton } from "naive-ui";
-import { onMounted } from "vue";
+import { onMounted, computed, h } from "vue";
 import { useRouter } from "vue-router";
 import { colorIndex } from "@/common/article";
 import { useArticleStore } from "@/stores/article";
@@ -50,18 +50,24 @@ import { calculationTime } from "@/utils/date";
 const article = useArticleStore();
 const router = useRouter();
 
+const isMore = computed(() => {
+  if (article.loading) {
+    return h("span", {}, "加载中...");
+  }
+  return "查看更多";
+});
+
 const changeUrl = (id: number) => {
   router.push(`/articles/${id}`);
 };
 
-const changePage = (p: number) => {
-  article.page = p;
-  article.getList({ page: article.page, pageSize: 10 });
+const changePage = () => {
+  article.getList({ pageSize: 10 });
 };
 
 onMounted(async () => {
   try {
-    await article.getList({ page: article.page, pageSize: 10 });
+    await article.getList({ pageSize: 10 });
   } catch (e) {
     console.log(e);
   }
@@ -71,6 +77,12 @@ onMounted(async () => {
 <style lang="less" scoped>
 .article-list {
   margin: auto 25%;
+}
+
+.article-list-more {
+  width: 100%;
+  text-align: center;
+  border: 1px;
 }
 
 .page {
