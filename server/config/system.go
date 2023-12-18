@@ -1,6 +1,7 @@
 package config
 
 type System struct {
+	Domain        string `mapstructure:"domain" json:"domain" yaml:"domain"`                         // 域名
 	Env           string `mapstructure:"env" json:"env" yaml:"env"`                                  // 环境值
 	Addr          int    `mapstructure:"addr" json:"addr" yaml:"addr"`                               // 端口值
 	DbType        string `mapstructure:"db-type" json:"db-type" yaml:"db-type"`                      // 数据库类型:mysql(默认)|sqlite|sqlserver|postgresql

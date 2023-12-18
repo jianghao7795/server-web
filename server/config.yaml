@@ -69,15 +69,15 @@ db-list:
     log-mode: ""
     log-zap: false
 email:
-  to: 978561120@qq.com
+  to: 760986739@qq.com
   port: 465
-  from: 760986739@qq.com
+  from: 978561120@qq.com
   host: smtp.qq.com
   is-ssl: true
-  secret: evyqrjfqsvczbegc
-  nickname: "760986739"
+  secret: bwxrwofxhqapbahg
+  nickname: "C"
 excel:
-  dir: ./resource/excel/
+  dir: uploads/excel/
 hua-wei-obs:
   path: you-path
   bucket: you-bucket
@@ -86,7 +86,7 @@ hua-wei-obs:
   secret-key: you-secret-key
 jwt:
   signing-key: 519fb1f4-4321-446a-bb7b-bfb13b68b960
-  expires-time: 12
+  expires-time: 24 # jwt token 过期时间
   buffer-time: 60
   issuer: jianghao
 local:
@@ -115,12 +115,12 @@ pgsql:
   log-mode: ""
   log-zap: false
 qiniu:
-  zone: ZoneHuaDong
-  bucket: ""
+  zone: ZoneHuadong
+  bucket: "jianghaoimages"
   img-path: ""
   use-https: false
-  access-key: ""
-  secret-key: ""
+  access-key: "bLwYhR1boJaw77pjh6TOTZ4XmHwDF35SZJwInOg6"
+  secret-key: "cCg2OgCmdlgTmHu40prSXDN78H8LEusNFD_vezeN"
   use-cdn-domains: false
 redis:
   db: 0
@@ -143,7 +143,7 @@ tencent-cos:
   base-url: http://localhost:8080
   path-prefix: server
 timer:
-  start: true
+  start: false
   spec: "@monthly"
   detail:
     - tableName: sys_operation_records

@@ -26,7 +26,7 @@ func RunServer() {
 	Router := initialize.Routers()
 	Router.Static("/form-generator", "./resource/page")
 
-	address := fmt.Sprintf(":%d", global.CONFIG.System.Addr)
+	address := fmt.Sprintf("%s:%d", global.CONFIG.System.Domain, global.CONFIG.System.Addr)
 	s := initServer(address, Router)
 	// 保证文本顺序输出
 	// In order to ensure that the text order output can be deleted
