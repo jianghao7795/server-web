@@ -53,7 +53,7 @@ func main() {
 	// initialize.Timer() //定时清除数据库数据
 	// conn, err := global.Timer.FindCron("ClearDB")
 	initialize.Tasks() //定时 执行任务
-	// initialize.DBList()
+	// initialize.DBList() // 数据库列表
 	utilsInit.TransInit("zh")
 	if global.DB != nil {
 		// initialize.RegisterTables(global.DB) // 初始化表
