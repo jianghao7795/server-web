@@ -17,6 +17,3 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
-
-/frontend/components.d.ts
-/frontend/auto-imports.d.ts

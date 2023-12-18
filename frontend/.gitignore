@@ -19,13 +19,13 @@ coverage
 
 # Editor directories and files
 .vscode/*
-!.vscode/extensions.json
 .idea
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-./components.d.ts
+components.d.ts
 pnpm-lock.yaml
-./auto-imports.d.ts
+auto-imports.d.ts
+Makefile
