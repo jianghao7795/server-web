@@ -19,6 +19,11 @@
           </template>
         </el-table-column>
         <el-table-column align="left" label="文件类型" min-width="70" prop="file_type" />
+        <el-table-column align="left" label="上传时间" min-width="160" prop="CreatedAt">
+          <template #default="scope">
+            <span>{{ formatDate(scope.row.CreatedAt) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column align="left" label="操作" min-width="70">
           <template #default="{ row }">
             <el-space :size="2" spacer="|">
@@ -44,7 +49,7 @@ export default {
 <script setup>
 import { ref, onMounted } from "vue";
 import { importExcel, getFileList, deleteFile } from "@/api/excel";
-import { fileSizeChange } from "@/utils/format";
+import { fileSizeChange, formatDate } from "@/utils/format";
 
 const loadingUpload = ref(false);
 const tableData = ref([]);
