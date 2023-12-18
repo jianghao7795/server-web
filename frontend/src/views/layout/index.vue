@@ -21,21 +21,23 @@
                     </n-list-item>
                   </n-list> -->
                 </div>
-                <n-tabs
-                  type="bar"
-                  animated
-                  :value="viewPage"
-                  size="small"
-                  :bar-width="28"
-                  justify-content="space-evenly"
-                  :tab-style="{ margin: '0 5px', fontWeight: 'bold' }"
-                  :on-update:value="(e: string) => changePath(e)"
-                >
-                  <n-tab name="/" tab="首页"></n-tab>
-                  <n-tab name="/articles" tab="文章"></n-tab>
-                  <n-tab name="/tags" tab="标签"></n-tab>
-                  <n-tab name="/about" tab="关于"></n-tab>
-                </n-tabs>
+                <div class="toopli">
+                  <n-tabs
+                    type="bar"
+                    animated
+                    :value="viewPage"
+                    size="small"
+                    :bar-width="28"
+                    justify-content="space-evenly"
+                    :tab-style="{ margin: '0 5px', fontWeight: 'bold' }"
+                    :on-update:value="(e: string) => changePath(e)"
+                  >
+                    <n-tab name="/" tab="首页"></n-tab>
+                    <n-tab name="/articles" tab="文章"></n-tab>
+                    <n-tab name="/tags" tab="标签"></n-tab>
+                    <n-tab name="/about" tab="关于"></n-tab>
+                  </n-tabs>
+                </div>
                 <div>
                   <n-switch v-model:value="darkTheme" v-bind:on-update:value="changeTheme" size="medium" :rail-style="railStyle">
                     <template #checked-icon>
@@ -590,5 +592,9 @@ const submit = () => {
 .visibleNo {
   transition: transform 1s;
   transform: translate3d(0);
+}
+
+.header-tag {
+  line-height: 1;
 }
 </style>
