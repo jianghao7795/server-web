@@ -32,6 +32,7 @@ var (
 // @in header
 // @name x-token
 // @BasePath /
+
 func main() {
 	global.VIP, err = core.Viper() // 初始化Viper 配置
 	if err != nil {
@@ -43,10 +44,11 @@ func main() {
 
 	db, err := initialize.Gorm() // gorm连接数据库
 	if err == nil {
-		global.LOG.Info("数据库链接成功")
+		global.LOG.Info("Database connection successful")
 		global.DB = db
 	} else {
-		global.LOG.Error(err.Error() + ": 数据库链接失败")
+		global.LOG.Error(err.Error() + ": Failed to connect to database")
+		panic(err)
 	}
 	// initialize.Timer() //定时清除数据库数据
 	// conn, err := global.Timer.FindCron("ClearDB")
