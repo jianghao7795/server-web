@@ -54,8 +54,7 @@
           </div>
         </template>
         <el-row :gutter="20">
-          <el-col v-for="(card, key) in toolCards" :key="key" :span="4" :xs="8" class="quick-entrance-items"
-            @click="toTarget(card.name)">
+          <el-col v-for="(card, key) in toolCards" :key="key" :span="4" :xs="8" class="quick-entrance-items" @click="toTarget(card.name)">
             <div class="quick-entrance-item">
               <div class="quick-entrance-item-icon" :style="{ backgroundColor: card.bg }">
                 <el-icon>
@@ -124,7 +123,7 @@
 
 <script setup>
 // import echartsLine from "@/view/dashboard/dashboardCharts/echartsLine.vue";
-import dashboardTable from "@/view/dashboard/dashboardTable/dashboardTable.vue";
+import dashboardTable from "@/views/dashboard/dashboardTable/dashboardTable.vue";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
@@ -158,16 +157,16 @@ onMounted(() => {
   const nowHours = useNow().value.getHours();
   if (nowHours <= 6) {
     period.value = "凌晨好";
-    timeNow.value = '一天'
+    timeNow.value = "一天";
   } else if (nowHours <= 12) {
     period.value = "上午好";
-    timeNow.value = '一天';
+    timeNow.value = "一天";
   } else if (nowHours <= 18) {
     period.value = "下午好";
-    timeNow.value = '下午';
+    timeNow.value = "下午";
   } else {
     period.value = "晚上好";
-    timeNow.value = '晚上';
+    timeNow.value = "晚上";
   }
   userCount().then((resp) => {
     if (resp?.code === 0) {
@@ -389,7 +388,7 @@ export default {
   .card-box {
     padding: 12px 16px;
 
-    &+.card-box {
+    & + .card-box {
       padding-top: 0px;
     }
   }
@@ -435,7 +434,7 @@ export default {
       }
 
       &-item {
-        +.top-card-left-item {
+        + .top-card-left-item {
           margin-top: 24px;
         }
 

@@ -8,17 +8,17 @@ const routes = [
   {
     path: "/init",
     name: "Init",
-    component: () => import("@/view/init/index.vue"),
+    component: () => import("@/views/init/index.vue"),
   },
   {
     path: "/login",
     name: "Login",
-    component: () => import("@/view/login/index.vue"),
+    component: () => import("@/views/login/index.vue"),
   },
   // {
   //   path: "/:catchAll(.*)",
   //   name: "404",
-  //   component: () => import("@/view/error/index.vue"),
+  //   component: () => import("@/views/error/index.vue"),
   // },
 ];
 

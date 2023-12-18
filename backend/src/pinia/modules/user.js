@@ -79,6 +79,7 @@ export const useUserStore = defineStore("user", () => {
     } catch (e) {
       loadingInstance.value.close();
     }
+    console.log("555555555");
     loadingInstance.value.close();
   };
   /* 登出*/

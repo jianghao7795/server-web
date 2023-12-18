@@ -73,9 +73,9 @@
 <script setup>
 import { getAuthorityList, deleteAuthority, createAuthority, updateAuthority, copyAuthority } from "@/api/authority";
 
-import Menus from "@/view/superAdmin/authority/components/menus.vue";
-import Apis from "@/view/superAdmin/authority/components/apis.vue";
-import Datas from "@/view/superAdmin/authority/components/datas.vue";
+import Menus from "@/views/superAdmin/authority/components/menus.vue";
+import Apis from "@/views/superAdmin/authority/components/apis.vue";
+import Datas from "@/views/superAdmin/authority/components/datas.vue";
 // import warningBar from "@/components/warningBar/warningBar.vue";
 
 import { ref, onMounted } from "vue";

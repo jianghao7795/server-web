@@ -19,7 +19,7 @@ export default {
 </script>
 
 <script setup>
-import AsideComponent from "@/view/layout/aside/asideComponent/index.vue";
+import AsideComponent from "@/views/layout/aside/asideComponent/index.vue";
 import { emitter } from "@/utils/bus.js";
 import { ref, watch, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";

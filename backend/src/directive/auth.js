@@ -7,8 +7,8 @@
 // 权限按钮展示指令 权限
 import { useUserStore } from "@/pinia/modules/user";
 export default {
-  install: (app, options) => {
-    console.log(options);
+  install: (app) => {
+    // console.log(options);
     const userStore = useUserStore();
     app.directive("auth", {
       // 当被绑定的元素插入到 DOM 中时……

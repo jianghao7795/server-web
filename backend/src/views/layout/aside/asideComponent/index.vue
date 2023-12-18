@@ -16,6 +16,7 @@ export default {
 import MenuItem from "./menuItem.vue";
 import AsyncSubmenu from "./asyncSubmenu.vue";
 import { computed } from "vue";
+
 const props = defineProps({
   routerInfo: {
     type: Object,

@@ -64,7 +64,7 @@ export default {
 <script setup>
 import { captcha } from "@/api/user";
 import { checkDB } from "@/api/initdb";
-import bootomInfo from "@/view/layout/bottomInfo/bottomInfo.vue";
+import bootomInfo from "@/views/layout/bottomInfo/bottomInfo.vue";
 import { reactive, ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";

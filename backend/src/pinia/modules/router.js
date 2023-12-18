@@ -49,7 +49,7 @@ export const useRouterStore = defineStore("router", () => {
       {
         path: "/layout",
         name: "layout",
-        component: "view/layout/index.vue",
+        component: "views/layout/index.vue",
         meta: {
           title: "layout",
         },
@@ -69,7 +69,7 @@ export const useRouterStore = defineStore("router", () => {
               title: "404",
               closeTab: true,
             },
-            component: "view/error/index.vue",
+            component: "views/error/index.vue",
           },
           {
             path: "reload",
@@ -79,7 +79,7 @@ export const useRouterStore = defineStore("router", () => {
               title: "",
               closeTab: true,
             },
-            component: "view/error/reload.vue",
+            component: "views/error/reload.vue",
           },
         );
       formatRouter(asyncRouter, routeMap);

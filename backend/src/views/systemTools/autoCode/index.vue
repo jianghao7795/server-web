@@ -46,11 +46,7 @@
           <el-input v-model="form.description" placeholder="中文描述作为自动api描述" />
         </el-form-item>
         <el-form-item label="文件名称" prop="packageName">
-          <el-input
-            v-model="form.packageName"
-            placeholder="生成文件的默认名称(建议为驼峰格式,首字母小写,如sysXxxXxxx)"
-            @blur="toLowerCaseFunc(form, 'packageName')"
-          />
+          <el-input v-model="form.packageName" placeholder="生成文件的默认名称(建议为驼峰格式,首字母小写,如sysXxxXxxx)" @blur="toLowerCaseFunc(form, 'packageName')" />
         </el-form-item>
         <el-form-item label="Package（包）" prop="packageName">
           <el-select v-model="form.package" style="width: 194px">
@@ -97,9 +93,7 @@
           <template #default="scope">
             <el-button size="small" link type="primary" icon="edit" @click="editAndAddField(scope.row)">编辑</el-button>
             <el-button size="small" link type="primary" :disabled="scope.$index === 0" @click="moveUpField(scope.$index)">上移</el-button>
-            <el-button size="small" link type="primary" :disabled="scope.$index + 1 === form.fields.length" @click="moveDownField(scope.$index)">
-              下移
-            </el-button>
+            <el-button size="small" link type="primary" :disabled="scope.$index + 1 === form.fields.length" @click="moveDownField(scope.$index)">下移</el-button>
             <el-popover v-model:visible="scope.row.visible" placement="top">
               <p>确定删除吗？</p>
               <div style="text-align: right; margin-top: 8px">
@@ -152,8 +146,8 @@
 </template>
 
 <script setup>
-import FieldDialog from "@/view/systemTools/autoCode/component/fieldDialog.vue";
-import PreviewCodeDialog from "@/view/systemTools/autoCode/component/previewCodeDialg.vue";
+import FieldDialog from "@/views/systemTools/autoCode/component/fieldDialog.vue";
+import PreviewCodeDialog from "@/views/systemTools/autoCode/component/previewCodeDialg.vue";
 import { toUpperCase, toHump, toSQLLine, toLowerCase } from "@/utils/stringFun";
 import { createTemp, getDB, getTable, getColumn, preview, getMeta, getPackageApi } from "@/api/autoCode";
 import { getDict } from "@/utils/dictionary";
