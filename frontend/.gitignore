@@ -28,4 +28,3 @@ coverage
 components.d.ts
 pnpm-lock.yaml
 auto-imports.d.ts
-Makefile

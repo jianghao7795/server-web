@@ -6,8 +6,8 @@ declare namespace API {
     content: string;
     desc: string;
     state: 1 | 0;
-    user?: ArticleUser;
-    tags?: Tag[];
+    user: ArticleUser;
+    tags: Tag[];
     title: string;
     user_id: number;
     reading_quantity: number;
@@ -18,6 +18,12 @@ declare namespace API {
     nickName: string;
     headerImg: string;
   };
+
+  export type initArticle = Partial<
+    Omit<Article, "ID" | "UpdatedAt" | "CreatedAt" | "content" | "desc" | "state" | "user" | "tags" | "title" | "user_id" | "reading_quantity">
+  >;
+
+  export type CreateArticleUser = Omit<ArticleUser, "userName" | "nickName" | "headerImg"> & Pick<ArticleUser, "userName" | "nickName" | "headerImg">;
 
   export interface User {
     ID: number;

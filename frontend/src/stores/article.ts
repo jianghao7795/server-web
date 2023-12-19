@@ -33,7 +33,7 @@ export const useArticleStore = defineStore("article", {
   state: (): {
     page: number;
     list: API.Article[];
-    detail: API.Article;
+    detail: API.initArticle;
     total: number;
     showMore: boolean;
     loading: boolean;
@@ -41,7 +41,7 @@ export const useArticleStore = defineStore("article", {
     return {
       page: 1,
       list: [],
-      detail: {} as API.Article,
+      detail: {},
       total: 0,
       showMore: true,
       loading: false,
@@ -54,7 +54,7 @@ export const useArticleStore = defineStore("article", {
       const resp = await getArticleList({ ...payload, page: this.page });
       this.loading = false;
       this.list = [...this.list, ...resp.data?.list];
-      this.total = resp.data?.total;
+      this.total = resp.data.total;
       if (resp.data?.list?.length === 10) {
         this.showMore = true;
         this.page++;
