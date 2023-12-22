@@ -28,7 +28,7 @@
       </n-list-item>
     </n-list>
     <div class="article-list-more">
-      <n-button block secondary strong v-if="article.showMore" @click="changePage">{{ isMore }}</n-button>
+      <n-button block secondary strong v-show="article.showMore" @click="changePage">{{ isMore }}</n-button>
     </div>
   </div>
 </template>
@@ -52,7 +52,7 @@ const router = useRouter();
 
 const isMore = computed(() => {
   if (article.loading) {
-    return h("span", {}, "加载中...");
+    return "加载中...";
   }
   return "查看更多";
 });
