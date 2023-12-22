@@ -66,10 +66,12 @@ const changePage = () => {
 };
 
 onMounted(async () => {
-  try {
-    await article.getList({ pageSize: 10 });
-  } catch (e) {
-    console.log(e);
+  if (article.list.length === 0) {
+    try {
+      await article.getList({ pageSize: 10 });
+    } catch (e) {
+      console.log(e);
+    }
   }
 });
 </script>
