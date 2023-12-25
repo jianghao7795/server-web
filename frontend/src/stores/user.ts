@@ -53,13 +53,13 @@ export const useUserStore = defineStore("user", {
         window.$message.error("注册失败, 请重试");
       }
     },
-    async logins(data: User.Login, callback: (imageString: string) => void) {
+    async logins(data: User.Login, callback: () => void) {
       this.loading = true;
       try {
         const info = await login(data);
         this.loading = false;
         this.currentUser = info.data;
-        callback(info.data.user.head_img);
+        callback();
         localStorage.setItem("token", info.data.token);
         window.$message.success("登陆成功");
       } catch (e) {

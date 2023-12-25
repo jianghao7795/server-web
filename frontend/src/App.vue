@@ -10,8 +10,8 @@ const isDark = useDark();
 const toggleDark = useToggle(isDark);
 const isDarkTheme = useOsTheme();
 const theme = ref<GlobalTheme | null>(isDarkTheme.value === "dark" ? darkTheme : null);
-const color = computed(() => (theme.value === null ? "#000" : "#fff"));
-const colorComment = computed(() => (theme.value === null ? "#999" : "#aaa"));
+// const color = computed(() => (theme.value === null ? "#000" : "#fff"));
+// const colorComment = computed(() => (theme.value === null ? "#999" : "#aaa"));
 
 provide("theme", theme);
 emitter.on("darkMode", () => {

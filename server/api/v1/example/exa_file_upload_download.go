@@ -40,9 +40,9 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *gin.Context) {
 	}
 	if header.Header.Get("content-type") == "image/svg+xml" {
 		var fileDimension fileDimensionReq.FileDimension
-		fileDimension.Height = 1
+		fileDimension.Height = 2
 		fileDimension.Width = 1
-		fileDimension.Proportion = 1.00
+		fileDimension.Proportion = 2.00
 		file, err = fileUploadAndDownloadService.UploadFile(header, noSave, fileDimension, isCropper) // 文件上传后拿到文件路径
 		if err != nil {
 			global.LOG.Error("修改数据库链接失败!", zap.Error(err))

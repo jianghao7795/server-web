@@ -69,7 +69,7 @@
               </span>
             </div>
           </template>
-          <div style="height: 350px"></div>
+          <div class="blankText"></div>
         </n-card>
       </n-layout-header>
       <!-- include exclude 包含和不包含 字符串是组件的name -->
@@ -400,7 +400,7 @@ const changeLogin = (status: boolean): void => {
 provide("changeLogin", changeLogin); // 传递方法给下级
 
 const login = () => {
-  userStore.logins({ username: userInfo.value.name, password: md5(userInfo.value.password) }, (imageString: string) => {
+  userStore.logins({ username: userInfo.value.name, password: md5(userInfo.value.password) }, () => {
     getImages().then((resp) => {
       if (resp) {
         bgImage.value = resp.data;
@@ -533,6 +533,7 @@ const submit = () => {
 }
 
 .darkStyle {
+  background-color: coral;
   background-image: v-bind(colorSet);
   background-position: center;
   height: auto;
@@ -593,8 +594,8 @@ const submit = () => {
   transition: transform 1s;
   transform: translate3d(0);
 }
-
-.header-tag {
-  line-height: 1;
+.blankText {
+  min-height: 400px;
+  max-height: 600px;
 }
 </style>
