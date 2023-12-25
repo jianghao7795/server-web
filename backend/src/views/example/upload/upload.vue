@@ -118,7 +118,7 @@ import UploadCommon from "@/components/upload/common.vue";
 import { formatDate } from "@/utils/format";
 import { VueCropper } from "vue-cropper";
 // import VueViewer from "v-viewer";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 
 const cropper = ref(null);
@@ -231,7 +231,9 @@ const getTableData = async () => {
     // console.log(table);
   }
 };
-getTableData();
+onMounted(() => {
+  getTableData();
+});
 
 const deleteFileFunc = async (row) => {
   ElMessageBox.confirm("此操作将永久文件, 是否继续?", "提示", {
