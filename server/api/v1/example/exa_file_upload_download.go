@@ -38,25 +38,38 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *gin.Context) {
 		response.FailWithMessage("接收文件失败", c)
 		return
 	}
-	ct, _, err1 := image.Decode(fileImages)
-	if err1 != nil {
-		global.LOG.Error("获取文件失败!", zap.Error(err))
-		response.FailWithMessage("获取文件失败", c)
-		return
+	if header.Header.Get("content-type") == "image/svg+xml" {
+		var fileDimension fileDimensionReq.FileDimension
+		fileDimension.Height = 1
+		fileDimension.Width = 1
+		fileDimension.Proportion = 1.00
+		file, err = fileUploadAndDownloadService.UploadFile(header, noSave, fileDimension, isCropper) // 文件上传后拿到文件路径
+		if err != nil {
+			global.LOG.Error("修改数据库链接失败!", zap.Error(err))
+			response.FailWithMessage("修改数据库链接失败", c)
+			return
+		}
+	} else {
+		ct, _, err := image.Decode(fileImages)
+		if err != nil {
+			global.LOG.Error("获取文件失败!", zap.Error(err))
+			response.FailWithMessage("获取文件失败", c)
+			return
+		}
+		fileCtx := ct.Bounds()
+		var fileDimension fileDimensionReq.FileDimension
+		fileDimension.Height = fileCtx.Dy()
+		fileDimension.Width = fileCtx.Dx()
+		fileDimension.Proportion = float64(fileCtx.Dx()) / float64(fileCtx.Dy())
 
+		file, err = fileUploadAndDownloadService.UploadFile(header, noSave, fileDimension, isCropper) // 文件上传后拿到文件路径
+		if err != nil {
+			global.LOG.Error("修改数据库链接失败!", zap.Error(err))
+			response.FailWithMessage("修改数据库链接失败", c)
+			return
+		}
 	}
-	fileCtx := ct.Bounds()
-	var fileDimension fileDimensionReq.FileDimension
-	fileDimension.Height = fileCtx.Dy()
-	fileDimension.Width = fileCtx.Dx()
-	fileDimension.Proportion = float64(fileCtx.Dx()) / float64(fileCtx.Dy())
 
-	file, err = fileUploadAndDownloadService.UploadFile(header, noSave, fileDimension, isCropper) // 文件上传后拿到文件路径
-	if err != nil {
-		global.LOG.Error("修改数据库链接失败!", zap.Error(err))
-		response.FailWithMessage("修改数据库链接失败", c)
-		return
-	}
 	response.OkWithDetailed(exampleRes.ExaFileResponse{File: file}, "上传成功", c)
 }
 
