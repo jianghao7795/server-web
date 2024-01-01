@@ -23,6 +23,12 @@ func RunServer() {
 	// time.Sleep(10 * time.Microsecond)
 	// global.LOG.Info("server run success on ", zap.String("address", address))
 	// fmt.Println(`欢迎使用 API接口`)
+	if global.DB != nil {
+		// initialize.RegisterTables(global.DB) // 初始化表
+		// 程序结束前关闭数据库链接
+		db, _ := global.DB.DB()
+		defer db.Close()
+	}
 	global.LOG.Error(s.ListenAndServe().Error())
 }
 
@@ -49,12 +55,6 @@ func comprehensive() server {
 	initialize.Tasks() //定时 执行任务
 	// initialize.DBList() // 数据库列表
 	utilsInit.TransInit("zh")
-	if global.DB != nil {
-		// initialize.RegisterTables(global.DB) // 初始化表
-		// 程序结束前关闭数据库链接
-		db, _ := global.DB.DB()
-		defer db.Close()
-	}
 
 	if global.CONFIG.System.UseMultipoint || global.CONFIG.System.UseRedis {
 		// 初始化redis服务
