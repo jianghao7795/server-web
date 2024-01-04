@@ -8,3 +8,5 @@ mod:
 	go mod tidy
 main:
 	go run main.go
+run:
+	go run .
