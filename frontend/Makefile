@@ -4,5 +4,5 @@ build-docker:
 	pnpm run build-pnponly
 build:
 	pnpm run build
-dev:
+run:
 	pnpm run dev
