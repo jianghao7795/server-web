@@ -34,6 +34,8 @@
               <el-input v-model="loginFormData.captcha" placeholder="请输入验证码" style="width: 60%" />
               <div class="vPic">
                 <img v-if="picPath" :src="picPath" alt="请输入验证码" @click="loginVerify()" />
+                <!-- <el-icon v-else @click="loginVerify()"><RefreshLeft /></el-icon> -->
+                <div v-else class="centerFont" @click="loginVerify()">刷新</div>
               </div>
             </div>
           </el-form-item>
@@ -197,4 +199,10 @@ const checkInit = async () => {
 
 <style lang="scss" scoped>
 @import "@/style/newLogin.scss";
+
+.centerFont {
+  text-align: center;
+  color: #4d70ff;
+  cursor: pointer;
+}
 </style>
