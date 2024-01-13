@@ -26,7 +26,7 @@ emitter.on("lightMode", () => {
 
 onMounted(() => {
   const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)"); // 是深色
-  if (isDarkTheme.media.includes("dark")) {
+  if (isDarkTheme.matches) {
     theme.value = darkTheme;
   } else {
     theme.value = null;
