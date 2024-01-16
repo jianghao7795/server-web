@@ -5,6 +5,7 @@ import App from "@/App.vue";
 import router from "@/router";
 import UndrawUi from "undraw-ui";
 import "undraw-ui/dist/style.css";
+import "./index.less";
 
 const app = createApp(App);
 

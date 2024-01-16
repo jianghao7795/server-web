@@ -1,24 +1,28 @@
 <template>
   <div class="article-list">
     <n-list clickable hoverable v-bind:style="{ marginButton: 10 }">
-      <n-list-item v-for="item in article.list" :key="item.ID" @click="changeUrl(item.ID)">
-        <n-thing content-style="margin-top: 10px;">
+      <n-list-item v-for="item in article.list" :key="item.ID">
+        <n-thing content-style="margin-top: 10px">
           <template #header>
             <div>
-              <h1>{{ item.title }}</h1>
+              <h1 class="post-title" @click="changeUrl(item.ID)">{{ item.title }}</h1>
             </div>
           </template>
           <template #description>
-            <div>
-              简述:
-              <span>{{ item.desc }}</span>
-              <div>阅读量: {{ item.reading_quantity }}</div>
-              <div>发布于：{{ calculationTime(item.CreatedAt) }}</div>
+            <div class="description">
+              <user-business theme="outline" size="12" fill="#b4b1b1" strokeLinejoin="miter" strokeLinecap="square" />
+              <a>{{ item.user.nickName }}</a>
+              <n-divider vertical />
+              <stopwatch-start theme="outline" size="12" fill="#b4b1b1" strokeLinejoin="miter" strokeLinecap="square" />
+              <a>{{ calculationTime(item.CreatedAt) }}</a>
+              <n-divider vertical />
+              <preview-open theme="outline" size="18" fill="#b4b1b1" strokeLinejoin="miter" strokeLinecap="square" />
+              <a>{{ item.reading_quantity.toLocaleString() }}</a>
             </div>
           </template>
           <!-- <md-editor v-model="item.content" preview-only /> -->
           <template #footer>
-            <n-space size="small">
+            <n-space size="small" justify="center">
               <n-tag v-for="i in item.tags" :key="i.ID" :bordered="false" :type="colorIndex(i.ID)" size="small">
                 {{ i.name }}
               </n-tag>
@@ -46,6 +50,7 @@ import { useRouter } from "vue-router";
 import { colorIndex } from "@/common/article";
 import { useArticleStore } from "@/stores/article";
 import { calculationTime } from "@/utils/date";
+import { UserBusiness, StopwatchStart, PreviewOpen } from "@icon-park/vue-next";
 
 const article = useArticleStore();
 const router = useRouter();
@@ -91,5 +96,15 @@ onMounted(async () => {
   margin: 50px;
   display: flex;
   justify-content: flex-end;
+}
+.description {
+  text-align: center;
+  a {
+    font-size: 13px;
+  }
+  .i-icon {
+    width: 12px;
+    height: 12px;
+  }
 }
 </style>

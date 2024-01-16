@@ -44,7 +44,7 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *gin.
 		if info.Title != "" {
 			db = db.Where("title like ?", strings.Join([]string{"%", info.Title, "%"}, ""))
 		}
-		err = db.Limit(limit).Offset(offset).Order("id desc").Preload("Tags").Find(&list).Error
+		err = db.Limit(limit).Offset(offset).Order("id desc").Preload("Tags").Preload("User").Find(&list).Error
 		if err != nil {
 			return list, 0, err
 		}
@@ -63,7 +63,6 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *gin.
 		if err != nil {
 			return list, 0, errors.New("redis 存储失败")
 		}
-
 	} else if err != nil {
 		return list, 0, err
 	} else {

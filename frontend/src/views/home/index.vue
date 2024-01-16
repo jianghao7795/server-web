@@ -5,18 +5,24 @@
         <n-thing content-style="margin-top: 10px;">
           <template #header>
             <div>
-              <h1>{{ item.title }}</h1>
+              <h1 class="post-title">{{ item.title }}</h1>
             </div>
           </template>
           <template #description>
-            <div>
-              简述:
-              <b>{{ item.desc }}</b>
+            <div class="description">
+              <user-business theme="outline" size="12" fill="#b4b1b1" strokeLinejoin="miter" strokeLinecap="square" />
+              <a>{{ item.user.nickName }}</a>
+              <n-divider vertical />
+              <stopwatch-start theme="outline" size="12" fill="#b4b1b1" strokeLinejoin="miter" strokeLinecap="square" />
+              <a>{{ calculationTime(item.CreatedAt) }}</a>
+              <n-divider vertical />
+              <preview-open theme="outline" size="18" fill="#b4b1b1" strokeLinejoin="miter" strokeLinecap="square" />
+              <a>{{ item.reading_quantity.toLocaleString() }}</a>
             </div>
           </template>
           <!-- <md-editor v-model="item.content" preview-only /> -->
           <template #footer>
-            <n-space size="small" style="margin-top: 4px">
+            <n-space size="small" justify="center">
               <n-tag :bordered="false" size="small" v-for="i in item.tags" :key="i.ID" :type="colorIndex(i.ID)">
                 {{ i.name }}
               </n-tag>
@@ -30,7 +36,7 @@
         <n-button size="small" type="primary" @click="changeLookOther">看看别的文章</n-button>
       </template>
     </n-empty>
-    <div class="pageNext">
+    <!-- <div class="pageNext">
       <n-space justify="space-between">
         <n-button v-show="page !== 1" icon-placement="left">
           <template #icon>
@@ -45,7 +51,7 @@
           </template>
         </n-button>
       </n-space>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -62,6 +68,7 @@ import { getArticleList } from "@/services/article";
 import { Right } from "@icon-park/vue-next";
 import { useRouter } from "vue-router";
 import { colorIndex } from "@/common/article";
+import { calculationTime } from "@/utils/date";
 
 const router = useRouter();
 
