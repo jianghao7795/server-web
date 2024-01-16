@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, defineComponent, h, onMounted, provide, ref } from "vue";
+import { defineComponent, h, onMounted, provide, ref } from "vue";
 import { RouterView } from "vue-router";
 import type { GlobalTheme } from "naive-ui";
 import { darkTheme, useLoadingBar, useMessage, useNotification, useOsTheme } from "naive-ui";
@@ -22,15 +22,6 @@ emitter.on("darkMode", () => {
 emitter.on("lightMode", () => {
   theme.value = null;
   toggleDark();
-});
-
-onMounted(() => {
-  const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)"); // 是深色
-  if (isDarkTheme.matches) {
-    theme.value = darkTheme;
-  } else {
-    theme.value = null;
-  }
 });
 
 function registerNaiveTools() {
