@@ -11,12 +11,15 @@
           <template #description>
             <div class="description">
               <user-business theme="outline" size="12" fill="#b4b1b1" strokeLinejoin="miter" strokeLinecap="square" />
+              &nbsp;
               <a>{{ item.user.nickName }}</a>
               <n-divider vertical />
               <stopwatch-start theme="outline" size="12" fill="#b4b1b1" strokeLinejoin="miter" strokeLinecap="square" />
+              &nbsp;
               <a>{{ calculationTime(item.CreatedAt) }}</a>
               <n-divider vertical />
               <preview-open theme="outline" size="18" fill="#b4b1b1" strokeLinejoin="miter" strokeLinecap="square" />
+              &nbsp;
               <a>{{ item.reading_quantity.toLocaleString() }}</a>
             </div>
           </template>

@@ -11,12 +11,15 @@
           <template #description>
             <div class="description">
               <user-business theme="outline" size="12" fill="#b4b1b1" strokeLinejoin="miter" strokeLinecap="square" />
+              &nbsp;
               <a>{{ item.user.nickName }}</a>
               <n-divider vertical />
               <stopwatch-start theme="outline" size="12" fill="#b4b1b1" strokeLinejoin="miter" strokeLinecap="square" />
+              &nbsp;
               <a>{{ calculationTime(item.CreatedAt) }}</a>
               <n-divider vertical />
               <preview-open theme="outline" size="18" fill="#b4b1b1" strokeLinejoin="miter" strokeLinecap="square" />
+              &nbsp;
               <a>{{ item.reading_quantity.toLocaleString() }}</a>
             </div>
           </template>
@@ -65,7 +68,7 @@ export default {
 // import { NList, NThing, NListItem, NSpace, NTag, NButton, NEmpty } from "naive-ui";
 import { ref, onMounted, computed } from "vue";
 import { getArticleList } from "@/services/article";
-import { Right } from "@icon-park/vue-next";
+import { PreviewOpen, StopwatchStart, UserBusiness } from "@icon-park/vue-next";
 import { useRouter } from "vue-router";
 import { colorIndex } from "@/common/article";
 import { calculationTime } from "@/utils/date";
@@ -73,8 +76,6 @@ import { calculationTime } from "@/utils/date";
 const router = useRouter();
 
 const data = ref<API.Article[]>([]);
-const page = ref<number>(1);
-const articleLength = computed(() => data.value.length);
 
 const changeUrl = (id: number) => {
   router.push(`/articles/${id}`);
@@ -99,5 +100,15 @@ const changeLookOther = () => {
 
 .pageNext {
   margin: 15px 0 45px 0;
+}
+.description {
+  text-align: center;
+  a {
+    font-size: 13px;
+  }
+  .i-icon {
+    width: 12px;
+    height: 12px;
+  }
 }
 </style>
