@@ -172,7 +172,9 @@ const headerStyle = `
 const visible = ref<boolean>(false);
 
 const changeScroll = (e: Event) => {
-  // console.log(e.target.scrollTop);
+  if (route.meta.title !== "文章详情") {
+    return;
+  }
   if ((e.target as HTMLElement).scrollTop - scrollSize > 150) {
     // console.log((e.target as HTMLElement).scrollTop - scrollSize < 150);
     scrollSize = (e.target as HTMLElement).scrollTop;
