@@ -8,6 +8,8 @@ import (
 
 	"strings"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type ArticleService struct{}
@@ -39,20 +41,21 @@ func (*ArticleService) UpdateArticle(article app.Article) (err error) {
 	if err != nil {
 		return
 	}
-	tx := global.DB.Begin()
-	tx = tx.Model(&app.ArticleTag{})
-	err = tx.Delete("article_id = ?", article.ID).Error
-	if err != nil {
-		tx.Rollback()
+	var tagCorrelation []app.ArticleTag
+	DB := global.DB.Model(&app.ArticleTag{})
+	err = DB.Where("article_id = ?", article.ID).Find(&tagCorrelation).Error
+	if err == gorm.ErrRecordNotFound {
+		err = DB.Delete("article_id = ?", article.ID).Error
+		if err != nil {
+			return err
+		}
+	} else if err != nil {
 		return err
 	}
-	tx.Commit()
+
 	err = global.DB.Save(&article).Error
 	if err != nil {
-		for _, item := range article.Tags {
-			_ = global.DB.Create(app.ArticleTag{ArticleId: article.ID, TagId: uint(item.ID)})
-		}
-		return err
+		global.DB.Create(tagCorrelation)
 	}
 	return nil
 }
