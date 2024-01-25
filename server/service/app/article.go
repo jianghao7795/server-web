@@ -48,7 +48,13 @@ func (*ArticleService) UpdateArticle(article app.Article) (err error) {
 	}
 	tx.Commit()
 	err = global.DB.Save(&article).Error
-	return err
+	if err != nil {
+		for _, item := range article.Tags {
+			_ = global.DB.Create(app.ArticleTag{ArticleId: article.ID, TagId: uint(item.ID)})
+		}
+		return err
+	}
+	return nil
 }
 
 // getDetail by id
@@ -73,7 +79,7 @@ func (*ArticleService) GetArticleInfoList(info appReq.ArticleSearch) (list inter
 			return
 		}
 		for _, item := range articleTag {
-			aritlceList = append(aritlceList, item.ArticleId)
+			aritlceList = append(aritlceList, int64(item.ArticleId))
 		}
 		db = db.Where("id in ?", aritlceList)
 	}
