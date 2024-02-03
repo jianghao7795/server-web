@@ -22,7 +22,7 @@ func RunServer() {
 	// In order to ensure that the text order output can be deleted
 	// time.Sleep(10 * time.Microsecond)
 	// global.LOG.Info("server run success on ", zap.String("address", address))
-	// fmt.Println(`欢迎使用 API接口`)
+	fmt.Println(`欢迎使用 API接口`)
 	if global.DB != nil {
 		// initialize.RegisterTables(global.DB) // 初始化表
 		// 程序结束前关闭数据库链接
@@ -64,6 +64,7 @@ func comprehensive() server {
 	// 从db加载jwt数据
 	if global.DB != nil {
 		system.LoadAll() // 加载所有的 拉黑的jwt数据 避免盗用jwt
+
 	}
 	Router := initialize.Routers()
 	Router.Static("/form-generator", "./resource/page")

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineComponent, h, onMounted, provide, ref } from "vue";
+import { defineComponent, h, provide, ref } from "vue";
 import { RouterView } from "vue-router";
 import type { GlobalTheme } from "naive-ui";
 import { darkTheme, useLoadingBar, useMessage, useNotification, useOsTheme } from "naive-ui";
@@ -30,6 +30,12 @@ function registerNaiveTools() {
   window.$notification = useNotification();
 }
 
+const themeOverrides = {
+  common: {
+    textColorBase: "#73ffd0",
+  },
+};
+
 const NaiveProviderContent = defineComponent({
   name: "NaiveProviderContent",
   setup() {
@@ -42,7 +48,7 @@ const NaiveProviderContent = defineComponent({
 </script>
 
 <template>
-  <NConfigProvider :theme="theme">
+  <NConfigProvider :theme="theme" :theme-overrides="themeOverrides">
     <NLoadingBarProvider :loading-bar-style="{ loading: { height: '4px' } }">
       <div class="view-dark view-comment">
         <NNotificationProvider>
