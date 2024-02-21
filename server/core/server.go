@@ -22,14 +22,13 @@ func RunServer() {
 	// In order to ensure that the text order output can be deleted
 	// time.Sleep(10 * time.Microsecond)
 	// global.LOG.Info("server run success on ", zap.String("address", address))
-	fmt.Println(`欢迎使用 API接口`)
 	if global.DB != nil {
-		// initialize.RegisterTables(global.DB) // 初始化表
 		// 程序结束前关闭数据库链接
 		db, _ := global.DB.DB()
 		defer db.Close()
 	}
 	global.LOG.Error(s.ListenAndServe().Error())
+	fmt.Println(`欢迎使用 API接口`)
 }
 
 func comprehensive() server {
@@ -66,10 +65,10 @@ func comprehensive() server {
 		system.LoadAll() // 加载所有的 拉黑的jwt数据 避免盗用jwt
 
 	}
-	Router := initialize.Routers()
-	Router.Static("/form-generator", "./resource/page")
+	router := initialize.Routers()
+	router.Static("/form-generator", "./resource/page")
 
 	address := fmt.Sprintf("%s:%d", global.CONFIG.System.Domain, global.CONFIG.System.Addr)
-	s := initServer(address, Router)
+	s := initServer(address, router)
 	return s
 }
