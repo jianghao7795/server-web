@@ -38,8 +38,14 @@ func (e *ExcelApi) ExportExcel(c *gin.Context) {
 		response.FailWithMessage("包含非法字符", c)
 		return
 	}
+	err := excelService.GetMenuData(&excelInfo.InfoList)
+	if err != nil {
+		global.LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+		return
+	}
 	filePath := global.CONFIG.Excel.Dir + excelInfo.FileName
-	err := excelService.ParseInfoList2Excel(excelInfo.InfoList, filePath)
+	err = excelService.ParseInfoList2Excel(excelInfo.InfoList, filePath)
 	if err != nil {
 		global.LOG.Error("转换Excel失败!", zap.Error(err))
 		response.FailWithMessage("转换Excel失败", c)

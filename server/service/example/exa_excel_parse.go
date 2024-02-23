@@ -18,11 +18,11 @@ type ExcelService struct{}
 
 func (exa *ExcelService) ParseInfoList2Excel(infoList []system.SysBaseMenu, filePath string) error {
 	excel := excelize.NewFile()
-	excel.SetSheetRow("Sheet1", "A1", &[]string{"ID", "路由Name", "路由Path", "是否隐藏", "父节点", "排序", "文件名称"})
+	excel.SetSheetRow("router", "A1", &[]string{"ID", "路由Name", "路由Path", "是否隐藏", "父节点", "排序", "文件名称"})
 	b := 0
 	for i, menu := range infoList {
 		axis := fmt.Sprintf("A%d", i+b+2)
-		excel.SetSheetRow("Sheet1", axis, &[]interface{}{
+		excel.SetSheetRow("router", axis, &[]interface{}{
 			menu.ID,
 			menu.Name,
 			menu.Path,
@@ -35,7 +35,7 @@ func (exa *ExcelService) ParseInfoList2Excel(infoList []system.SysBaseMenu, file
 			for _, m := range menu.Children {
 				b += 1
 				a := fmt.Sprintf("A%d", i+b+2)
-				excel.SetSheetRow("Sheet1", a, &[]interface{}{
+				excel.SetSheetRow("router", a, &[]interface{}{
 					m.ID,
 					m.Name,
 					m.Path,
@@ -152,4 +152,9 @@ func (exa *ExcelService) DeleteFile(id int64) error {
 		return err
 	}
 	return nil
+}
+
+func (exa *ExcelService) GetMenuData(lists *[]system.SysBaseMenu) (err error) {
+	db := global.DB.Model(&system.SysBaseMenu{})
+	return db.Find(lists).Error
 }

@@ -5,8 +5,8 @@
         <el-upload class="excel-btn" :show-file-list="false" accept=".xls,.xlsx,.csv" v-bind:http-request="uploadFile" :loading="loadingUpload">
           <el-button size="small" type="primary" icon="upload">导入</el-button>
         </el-upload>
-        <!-- <el-button class="excel-btn" size="small" type="primary" icon="download" @click="handleExcelExport('ExcelExport.xlsx')">导出</el-button>
-        <el-button class="excel-btn" size="small" type="success" icon="download" @click="downloadExcelTemplate()">下载模板</el-button> -->
+        <el-button class="excel-btn" size="small" type="primary" icon="download" @click="handleExcelExport('ExcelExport.xlsx')">导出</el-button>
+        <!-- <el-button class="excel-btn" size="small" type="success" icon="download" @click="downloadExcelTemplate()">下载模板</el-button> -->
       </div>
       <el-table :data="tableData" row-key="ID">
         <el-table-column align="left" label="ID" width="50" prop="ID" />
@@ -48,8 +48,9 @@ export default {
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { importExcel, getFileList, deleteFile } from "@/api/excel";
+import { importExcel, getFileList, deleteFile, exportExcel } from "@/api/excel";
 import { fileSizeChange, formatDate } from "@/utils/format";
+import { useUserStore } from "@/pinia/modules/user";
 
 const loadingUpload = ref(false);
 const tableData = ref([]);
@@ -97,17 +98,17 @@ const handleSizeChange = (val) => {
   pageSize.value = val;
   getTableData();
 };
-// const userStore = useUserStore();
+const userStore = useUserStore();
 
-// const handleExcelExport = (fileName) => {
-//   if (!fileName || typeof fileName !== "string") {
-//     fileName = "ExcelExport.xlsx";
-//   }
-//   exportExcel(tableData.value, fileName);
-// };
-// const loadExcel = async () => {
-//   await getTableData();
-// };
+const handleExcelExport = (fileName) => {
+  if (!!fileName) {
+    fileName = "ExcelExport.xlsx";
+  }
+  exportExcel(tableData.value, fileName);
+};
+const loadExcel = async () => {
+  await getTableData();
+};
 const fileDownload = (path) => {
   window.open("/backend/" + path);
 };
