@@ -32,12 +32,9 @@ func main() {
 	if err == nil {
 		global.DB = db
 	} else {
-		global.LOG.Error(err.Error() + ": 数据库链接失败")
+		global.LOG.Error("数据库链接失败: " + err.Error())
 	}
-	// initialize.Timer() //定时清除数据库数据
-	// conn, err := global.Timer.FindCron("ClearDB")
 	initialize.Tasks() //定时 执行任务
-	// initialize.DBList()
 	utilsInit.TransInit("zh")
 	if global.DB != nil {
 		// initialize.RegisterTables(global.DB) // 初始化表
