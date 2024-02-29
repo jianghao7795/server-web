@@ -24,7 +24,10 @@ func RunServer() {
 	// global.LOG.Info("server run success on ", zap.String("address", address))
 	if global.DB != nil {
 		// 程序结束前关闭数据库链接
-		db, _ := global.DB.DB()
+		db, err := global.DB.DB()
+		if err != nil {
+			panic("数据库初始化失败！")
+		}
 		defer db.Close()
 	}
 	global.LOG.Error(s.ListenAndServe().Error())
