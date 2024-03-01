@@ -2,12 +2,6 @@ package main
 
 import (
 	"server-fiber/core"
-	"server-fiber/global"
-	"server-fiber/initialize"
-
-	utilsInit "server-fiber/utils"
-
-	"go.uber.org/zap"
 )
 
 //go:generate go env -w GO111MODULE=on
@@ -23,24 +17,6 @@ import (
 // @name x-token
 // @BasePath /
 func main() {
-	global.VIP = core.Viper() // 初始化Viper 配置
-	global.LOG = core.Zap()   // 初始化zap日志库
-	// global.Logger = core.InitLogger() // 初始化 log 让log标准输出
-	zap.ReplaceGlobals(global.LOG) // 部署到全局
 
-	db, err := initialize.Gorm() // gorm连接数据库
-	if err == nil {
-		global.DB = db
-	} else {
-		global.LOG.Error("数据库链接失败: " + err.Error())
-	}
-	initialize.Tasks() //定时 执行任务
-	utilsInit.TransInit("zh")
-	if global.DB != nil {
-		// initialize.RegisterTables(global.DB) // 初始化表
-		// 程序结束前关闭数据库链接
-		db, _ := global.DB.DB()
-		defer db.Close()
-	}
 	core.RunWindowsServer()
 }
