@@ -2,6 +2,7 @@ package core
 
 import (
 	"fmt"
+	"time"
 
 	"server/global"
 	"server/initialize"
@@ -9,6 +10,8 @@ import (
 
 	utilsInit "server/utils"
 
+	"github.com/fvbock/endless"
+	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
@@ -73,5 +76,13 @@ func comprehensive() server {
 
 	address := fmt.Sprintf("%s:%d", global.CONFIG.System.Domain, global.CONFIG.System.Addr)
 	s := initServer(address, router)
+	return s
+}
+
+func initServer(address string, router *gin.Engine) server {
+	s := endless.NewServer(address, router)
+	s.ReadHeaderTimeout = 20 * time.Second
+	s.WriteTimeout = 20 * time.Second
+	s.MaxHeaderBytes = 1 << 20
 	return s
 }

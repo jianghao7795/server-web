@@ -10,7 +10,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func RunWindowsServer() {
+func RunServer() {
 	global.VIP = Viper() // 初始化Viper 配置
 	global.LOG = Zap()   // 初始化zap日志库
 	// global.Logger = core.InitLogger() // 初始化 log 让log标准输出
