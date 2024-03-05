@@ -33,10 +33,8 @@ func RunServer() {
 	if global.CONFIG.System.UseMultipoint || global.CONFIG.System.UseRedis {
 		initialize.Redis()
 	}
-
 	Router := initialize.Routers()
 	Router.Static("/form-generator", "./resource/page")
-
 	address := fmt.Sprintf(":%d", global.CONFIG.System.Addr)
 	global.LOG.Info("server run success on ", zap.String("address", address))
 	fmt.Println(`欢迎使用 API接口`)
