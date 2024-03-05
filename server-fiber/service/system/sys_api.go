@@ -7,6 +7,7 @@ import (
 	"server-fiber/global"
 	"server-fiber/model/common/request"
 	"server-fiber/model/system"
+	systemReq "server-fiber/model/system/request"
 
 	"gorm.io/gorm"
 )
@@ -46,26 +47,26 @@ func (apiService *ApiService) DeleteApi(api system.SysApi) (err error) {
 //@param: api model.SysApi, info request.PageInfo, order string, desc bool
 //@return: err error
 
-func (apiService *ApiService) GetAPIInfoList(api system.SysApi, info request.PageInfo, order string, desc bool) (list []system.SysApi, total int64, err error) {
+func (apiService *ApiService) GetAPIInfoList(info systemReq.SearchApiParams) (list []system.SysApi, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.DB.Model(&system.SysApi{})
 	var apiList []system.SysApi
 
-	if api.Path != "" {
-		db = db.Where("path LIKE ?", "%"+api.Path+"%")
+	if info.Path != "" {
+		db = db.Where("path LIKE ?", "%"+info.Path+"%")
 	}
 
-	if api.Description != "" {
-		db = db.Where("description LIKE ?", "%"+api.Description+"%")
+	if info.Description != "" {
+		db = db.Where("description LIKE ?", "%"+info.Description+"%")
 	}
 
-	if api.Method != "" {
-		db = db.Where("method = ?", api.Method)
+	if info.Method != "" {
+		db = db.Where("method = ?", info.Method)
 	}
 
-	if api.ApiGroup != "" {
-		db = db.Where("api_group = ?", api.ApiGroup)
+	if info.ApiGroup != "" {
+		db = db.Where("api_group = ?", info.ApiGroup)
 	}
 	err = db.Count(&total).Error
 
@@ -73,31 +74,41 @@ func (apiService *ApiService) GetAPIInfoList(api system.SysApi, info request.Pag
 		return apiList, total, err
 	} else {
 		db = db.Limit(limit).Offset(offset)
-		if order != "" {
-			var OrderStr string
-			// 设置有效排序key 防止sql注入
-			// 感谢 Tom4t0 提交漏洞信息
-			orderMap := make(map[string]bool, 5)
-			orderMap["id"] = true
-			orderMap["path"] = true
-			orderMap["api_group"] = true
-			orderMap["description"] = true
-			orderMap["method"] = true
-			if orderMap[order] {
-				if desc {
-					OrderStr = order + " desc"
-				} else {
-					OrderStr = order
-				}
-
-			} else { // didn't matched any order key in `orderMap`
-				err = fmt.Errorf("非法的排序字段: %v", order)
-				return apiList, total, err
+		var sort = "api_group"
+		if info.OrderKey != "" {
+			if info.Desc == "true" {
+				sort = fmt.Sprintf("%s %s", info.OrderKey, "desc")
+			} else {
+				sort = info.OrderKey
 			}
-			err = db.Order(OrderStr).Find(&apiList).Error
-		} else {
-			err = db.Order("api_group").Find(&apiList).Error
+
 		}
+		err = db.Order(sort).Find(&apiList).Error
+		// if order != "" {
+		// 	var OrderStr string
+		// 	// 设置有效排序key 防止sql注入
+		// 	// 感谢 Tom4t0 提交漏洞信息
+		// 	orderMap := make(map[string]bool, 5)
+		// 	orderMap["id"] = true
+		// 	orderMap["path"] = true
+		// 	orderMap["api_group"] = true
+		// 	orderMap["description"] = true
+		// 	orderMap["method"] = true
+		// 	if orderMap[order] {
+		// 		if desc {
+		// 			OrderStr = order + " desc"
+		// 		} else {
+		// 			OrderStr = order
+		// 		}
+
+		// 	} else { // didn't matched any order key in `orderMap`
+		// 		err = fmt.Errorf("非法的排序字段: %v", order)
+		// 		return apiList, total, err
+		// 	}
+		// err = db.Order(OrderStr).Find(&apiList).Error
+		// } else {
+		// 	// err = db.Order("api_group").Find(&apiList).Error
+		// }
 	}
 	return apiList, total, err
 }

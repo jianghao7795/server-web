@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"errors"
 	"time"
 
 	"server-fiber/global"
@@ -9,20 +8,13 @@ import (
 
 	"crypto/rsa"
 
-	jwt "github.com/golang-jwt/jwt/v4"
+	jwt "github.com/golang-jwt/jwt/v5"
 )
 
 type JWT struct {
 	PrivateKey *rsa.PrivateKey
 	PublicKey  *rsa.PublicKey
 }
-
-var (
-	ErrTokenExpired     = errors.New("token is expired")
-	ErrTokenNotValidYet = errors.New("token not active yet")
-	ErrTokenMalformed   = errors.New("that's not even a token")
-	ErrTokenInvalid     = errors.New("couldn't handle this token")
-)
 
 func NewJWT() *JWT {
 	return &JWT{
@@ -71,27 +63,16 @@ func (j *JWT) ParseToken(tokenString string) (*request.CustomClaims, error) {
 	})
 	// global.Logger.Println(err)
 	if err != nil {
-		if ve, ok := err.(*jwt.ValidationError); ok {
-			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
-				return nil, ErrTokenMalformed
-			} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
-				// Token is expired
-				return nil, ErrTokenExpired
-			} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
-				return nil, ErrTokenNotValidYet
-			} else {
-				return nil, ErrTokenInvalid
-			}
-		}
+		return nil, ReportError(err)
 	}
 	// global.Logger.Println(err)
 	if token != nil {
 		if claims, ok := token.Claims.(*request.CustomClaims); ok && token.Valid {
 			return claims, nil
 		}
-		return nil, ErrTokenInvalid
+		return nil, ReportError(err)
 
 	} else {
-		return nil, ErrTokenInvalid
+		return nil, ReportError(err)
 	}
 }

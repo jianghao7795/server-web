@@ -1,0 +1,22 @@
+package system
+
+import (
+	v1 "server-fiber/api/v1"
+	"server-fiber/middleware"
+
+	"github.com/gofiber/fiber/v2"
+)
+
+type CasbinRouter struct{}
+
+func (s *CasbinRouter) InitCasbinRouter(Router *fiber.App) {
+	casbinRouter := Router.Group("casbin").Use(middleware.OperationRecord())
+	casbinRouterWithoutRecord := Router.Group("casbin")
+	casbinApi := v1.ApiGroupApp.SystemApiGroup.CasbinApi
+	{
+		casbinRouter.Post("updateCasbin", casbinApi.UpdateCasbin)
+	}
+	{
+		casbinRouterWithoutRecord.Get("GetPolicyPathByAuthorityId/:id", casbinApi.GetPolicyPathByAuthorityId)
+	}
+}

@@ -14,7 +14,7 @@ import (
 	"server-fiber/model/frontend"
 	frontendReq "server-fiber/model/frontend/request"
 
-	"github.com/go-redis/redis/v8"
+	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
 )
 
@@ -29,9 +29,9 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *fibe
 		return list, 0, errors.New("总数请求失败")
 	}
 	if info.IsImportant != 0 {
-		articleStr, err = global.REDIS.Get(c.Context(), "article-list-home").Result()
+		articleStr, err = global.REDIS.Get(c, "article-list-home").Result()
 	} else {
-		articleStr, err = global.REDIS.Get(c.Context(), "article-list"+strconv.Itoa(info.Page)).Result()
+		articleStr, err = global.REDIS.Get(c, "article-list"+strconv.Itoa(info.Page)).Result()
 	}
 
 	if err == redis.Nil {
@@ -44,7 +44,7 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *fibe
 		if info.Title != "" {
 			db = db.Where("title like ?", strings.Join([]string{"%", info.Title, "%"}, ""))
 		}
-		err = db.Limit(limit).Offset(offset).Order("id desc").Preload("Tags").Find(&list).Error
+		err = db.Limit(limit).Offset(offset).Order("id desc").Preload("Tags").Preload("User").Find(&list).Error
 		if err != nil {
 			return list, 0, err
 		}
@@ -54,16 +54,15 @@ func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *fibe
 
 		if info.IsImportant != 0 {
 			// articleStr, err = global.REDIS.Get(c, "article-list-home").Result()
-			err = global.REDIS.Set(c.Context(), "article-list-home", strList, time.Duration(cacheTime)*time.Second).Err()
+			err = global.REDIS.Set(c, "article-list-home", strList, time.Duration(cacheTime)*time.Second).Err()
 		} else {
-			_ = global.REDIS.Set(c.Context(), "article-list-total", totalStr, time.Duration(cacheTime)*time.Second).Err()
-			err = global.REDIS.Set(c.Context(), "article-list-"+strconv.Itoa(info.Page), strList, time.Duration(cacheTime)*time.Second).Err()
+			_ = global.REDIS.Set(c, "article-list-total", totalStr, time.Duration(cacheTime)*time.Second).Err()
+			err = global.REDIS.Set(c, "article-list-"+strconv.Itoa(info.Page), strList, time.Duration(cacheTime)*time.Second).Err()
 		}
 
 		if err != nil {
 			return list, 0, errors.New("redis 存储失败")
 		}
-
 	} else if err != nil {
 		return list, 0, err
 	} else {

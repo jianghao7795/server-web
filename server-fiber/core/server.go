@@ -5,7 +5,7 @@ import (
 
 	"server-fiber/global"
 	"server-fiber/initialize"
-	utilsInit "server/utils"
+	utilsInit "server-fiber/utils"
 
 	"go.uber.org/zap"
 )
@@ -40,5 +40,5 @@ func RunServer() {
 	address := fmt.Sprintf(":%d", global.CONFIG.System.Addr)
 	global.LOG.Info("server run success on ", zap.String("address", address))
 	fmt.Println(`欢迎使用 API接口`)
-	global.LOG.Error(Router.Listen("3800").Error())
+	global.LOG.Error(Router.Listen(address).Error())
 }

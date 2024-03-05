@@ -8,10 +8,18 @@ import (
 	"server-fiber/model/frontend"
 	frontendRequest "server-fiber/model/frontend/request"
 	frontendResponse "server-fiber/model/frontend/response"
+	"server-fiber/utils"
 	"time"
 
-	jwt "github.com/golang-jwt/jwt/v4"
+	jwt "github.com/golang-jwt/jwt/v5"
 	"gorm.io/gorm"
+)
+
+var (
+	ErrTokenExpired     = errors.New("token is expired")
+	ErrTokenNotValidYet = errors.New("token not active yet")
+	ErrTokenMalformed   = errors.New("that's not even a token")
+	ErrTokenInvalid     = errors.New("couldn't handle this token")
 )
 
 type MyClaims struct {
@@ -131,17 +139,18 @@ func Secret() jwt.Keyfunc {
 func ParseToken(tokenss string) (*MyClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenss, &MyClaims{}, Secret())
 	if err != nil {
-		if ve, ok := err.(*jwt.ValidationError); ok {
-			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
-				return nil, errors.New("that's not even a token")
-			} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
-				return nil, errors.New("token is expired")
-			} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
-				return nil, errors.New("token not active yet")
-			} else {
-				return nil, errors.New("couldn't handle this token")
-			}
-		}
+		// if ve, ok := err.(*jwt.ValidationError); ok {
+		// 	if ve.Errors&jwt.ValidationErrorMalformed != 0 {
+		// 		return nil, errors.New("that's not even a token")
+		// 	} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
+		// 		return nil, errors.New("token is expired")
+		// 	} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
+		// 		return nil, errors.New("token not active yet")
+		// 	} else {
+		// 		return nil, errors.New("couldn't handle this token")
+		// 	}
+		// }
+		return nil, utils.ReportError(err)
 	}
 	if claims, ok := token.Claims.(*MyClaims); ok && token.Valid {
 		return claims, nil

@@ -11,8 +11,8 @@ import (
 )
 
 func GetClaims(c *fiber.Ctx) (*systemReq.CustomClaims, error) {
-	tokenString := c.Request().Header.Peek("Authorization")
-	tokenValue := strings.Split(string(tokenString), " ")
+	tokenString := c.Get("Authorization")
+	tokenValue := strings.Split(tokenString, " ")
 	if tokenValue[0] != "Bearer" {
 		return nil, errors.New("token 错误")
 	}
@@ -27,40 +27,36 @@ func GetClaims(c *fiber.Ctx) (*systemReq.CustomClaims, error) {
 
 // 从Gin的Context中获取从jwt解析出来的用户ID
 func GetUserID(c *fiber.Ctx) uint {
-	cl, err := GetClaims(c)
-	if err != nil {
+	if cl, err := GetClaims(c); err != nil {
 		return 0
+	} else {
+		return uint(cl.BaseClaims.ID)
 	}
-	return uint(cl.BaseClaims.ID)
-
 }
 
 // 从Gin的Context中获取从jwt解析出来的用户UUID
 func GetUserUuid(c *fiber.Ctx) uuid.UUID {
-	cl, err := GetClaims(c)
-	if err != nil {
+	if cl, err := GetClaims(c); err != nil {
 		return uuid.UUID{}
+	} else {
+		return cl.UUID
 	}
-	return cl.UUID
-
 }
 
 // 从Gin的Context中获取从jwt解析出来的用户角色id
 func GetUserAuthorityId(c *fiber.Ctx) string {
-	cl, err := GetClaims(c)
-	if err != nil {
+	if cl, err := GetClaims(c); err != nil {
 		return ""
+	} else {
+		return cl.AuthorityId
 	}
-	return cl.AuthorityId
-
 }
 
 // 从Gin的Context中获取从jwt解析出来的用户角色id
 func GetUserInfo(c *fiber.Ctx) *systemReq.CustomClaims {
-	cl, err := GetClaims(c)
-	if err != nil {
+	if cl, err := GetClaims(c); err != nil {
 		return nil
+	} else {
+		return cl
 	}
-	return cl
-
 }
