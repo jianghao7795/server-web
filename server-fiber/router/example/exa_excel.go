@@ -8,7 +8,7 @@ import (
 
 type ExcelRouter struct{}
 
-func (e *ExcelRouter) InitExcelRouter(Router *fiber.App) {
+func (e *ExcelRouter) InitExcelRouter(Router fiber.Router) {
 	excelRouter := Router.Group("excel")
 	exaExcelApi := v1.ApiGroupApp.ExampleApiGroup.ExcelApi
 	{

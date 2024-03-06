@@ -16,16 +16,20 @@ import (
 // 初始化总路由
 
 func Routers() *fiber.App {
-	Router := fiber.New()
+	Router := fiber.New(fiber.Config{
+		CaseSensitive: true,
+		BodyLimit:     10 * 1024 * 1024,
+		AppName:       "sever-fiber",
+	})
 	systemRouter := router.RouterGroupApp.System
 	Router.Static("/api/uploads/", "uploads/")     // 本地的frontend api文件路由转化
 	Router.Static("/backend/uploads/", "uploads/") // 本地的backend文件路由转化
 	Router.Static("/mobile/uploads/", "uploads/")  // 本地的mobile文件路由转化
 	Router.Static("/backend/form-generator", "resource/page")
-	// backendRooter := Router.Group("/api") //.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
 	{
-		systemRouter.InitBaseRouter(Router) // 注册基础功能路由 不做鉴权
-		systemRouter.InitInitRouter(Router) // 自动初始化相关
+		backendRooter := Router.Group("/backend")
+		systemRouter.InitBaseRouter(backendRooter) // 注册基础功能路由 不做鉴权
+		systemRouter.InitInitRouter(backendRooter) // 自动初始化相关
 	}
 
 	return Router

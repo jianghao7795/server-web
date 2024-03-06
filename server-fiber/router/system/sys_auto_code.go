@@ -8,7 +8,7 @@ import (
 
 type AutoCodeRouter struct{}
 
-func (s *AutoCodeRouter) InitAutoCodeRouter(Router *fiber.App) {
+func (s *AutoCodeRouter) InitAutoCodeRouter(Router fiber.Router) {
 	autoCodeRouter := Router.Group("autoCode")
 	autoCodeApi := v1.ApiGroupApp.SystemApiGroup.AutoCodeApi
 	{

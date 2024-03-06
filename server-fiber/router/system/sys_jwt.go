@@ -8,7 +8,7 @@ import (
 
 type JwtRouter struct{}
 
-func (s *JwtRouter) InitJwtRouter(Router *fiber.App) {
+func (s *JwtRouter) InitJwtRouter(Router fiber.Router) {
 	jwtRouter := Router.Group("jwt")
 	jwtApi := v1.ApiGroupApp.SystemApiGroup.JwtApi
 	{

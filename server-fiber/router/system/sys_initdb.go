@@ -8,7 +8,7 @@ import (
 
 type InitRouter struct{}
 
-func (s *InitRouter) InitInitRouter(Router *fiber.App) {
+func (s *InitRouter) InitInitRouter(Router fiber.Router) {
 	initRouter := Router.Group("init")
 	dbApi := v1.ApiGroupApp.SystemApiGroup.DBApi
 	{

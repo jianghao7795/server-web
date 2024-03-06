@@ -8,7 +8,7 @@ import (
 
 type TaskRouter struct{}
 
-func (t *TaskRouter) InitTaskRouter(Router *fiber.App) {
+func (t *TaskRouter) InitTaskRouter(Router fiber.Router) {
 	// articleRouter := Router.Group("article").Use(middleware.OperationRecord())
 	taskRouterWithoutRecord := Router.Group("tasking")
 	var taskApi = v1.ApiGroupApp.AppApiGroup.TaskNameApi

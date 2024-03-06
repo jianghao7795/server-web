@@ -8,7 +8,7 @@ import (
 
 type ProblemRouter struct{}
 
-func (*ProblemRouter) InitProblemRouter(Router *fiber.App) {
+func (*ProblemRouter) InitProblemRouter(Router fiber.Router) {
 	problemRouter := Router.Group("problem")
 	var problemApi = v1.ApiGroupApp.SystemApiGroup.UserProblem
 	{

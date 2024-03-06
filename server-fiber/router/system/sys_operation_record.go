@@ -8,7 +8,7 @@ import (
 
 type OperationRecordRouter struct{}
 
-func (s *OperationRecordRouter) InitSysOperationRecordRouter(Router *fiber.App) {
+func (s *OperationRecordRouter) InitSysOperationRecordRouter(Router fiber.Router) {
 	operationRecordRouter := Router.Group("sysOperationRecord")
 	authorityMenuApi := v1.ApiGroupApp.SystemApiGroup.OperationRecordApi
 	{

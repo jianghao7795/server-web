@@ -25,7 +25,7 @@ import (
 // @Router /base/login [post]
 func (b *BaseApi) Login(c *fiber.Ctx) error {
 	var l systemReq.Login
-	_ = c.QueryParser(&l)
+	_ = c.BodyParser(&l)
 	if err := utils.Verify(l, utils.LoginVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}

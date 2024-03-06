@@ -17,7 +17,7 @@ import (
 type BaseMessageRouter struct{}
 
 // InitArticleRouter 初始化 base_message 路由信息
-func (r *BaseMessageRouter) InitBaseMessageRouter(c *fiber.App) {
+func (r *BaseMessageRouter) InitBaseMessageRouter(c fiber.Router) {
 	baseMessageRouter := c.Group("base_message").Use(middleware.OperationRecord())
 	baseMessageRouterWithoutRecord := c.Group("base_message")
 	var baseMessageApi = v1.ApiGroupApp.AppApiGroup.BaseMessageApi

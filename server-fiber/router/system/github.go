@@ -9,7 +9,7 @@ import (
 
 type GithubRouter struct{}
 
-func (g *GithubRouter) InitGithubRouter(Router *fiber.App) {
+func (g *GithubRouter) InitGithubRouter(Router fiber.Router) {
 	githubRouter := Router.Group("github").Use(middleware.OperationRecord())
 	githubRouterRecord := Router.Group("github")
 

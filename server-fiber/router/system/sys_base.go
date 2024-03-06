@@ -8,7 +8,7 @@ import (
 
 type BaseRouter struct{}
 
-func (s *BaseRouter) InitBaseRouter(Router *fiber.App) {
+func (s *BaseRouter) InitBaseRouter(Router fiber.Router) {
 	baseRouter := Router.Group("base")
 	baseApi := v1.ApiGroupApp.SystemApiGroup.BaseApi
 	{

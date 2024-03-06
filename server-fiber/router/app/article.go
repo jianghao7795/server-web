@@ -10,7 +10,7 @@ import (
 type ArticltRouter struct{}
 
 // InitArticleRouter 初始化 article 路由信息
-func (s *ArticltRouter) InitArticleRouter(Router *fiber.App) {
+func (s *ArticltRouter) InitArticleRouter(Router fiber.Router) {
 	articleRouter := Router.Use(middleware.OperationRecord())
 
 	var articleApi = v1.ApiGroupApp.AppApiGroup.ArticleApi

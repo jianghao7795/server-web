@@ -9,7 +9,7 @@ import (
 
 type DictionaryDetailRouter struct{}
 
-func (s *DictionaryDetailRouter) InitSysDictionaryDetailRouter(Router *fiber.App) {
+func (s *DictionaryDetailRouter) InitSysDictionaryDetailRouter(Router fiber.Router) {
 	dictionaryDetailRouter := Router.Group("sysDictionaryDetail").Use(middleware.OperationRecord())
 	dictionaryDetailRouterWithoutRecord := Router.Group("sysDictionaryDetail")
 	sysDictionaryDetailApi := v1.ApiGroupApp.SystemApiGroup.DictionaryDetailApi

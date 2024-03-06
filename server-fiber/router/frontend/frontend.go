@@ -8,7 +8,7 @@ import (
 
 type FrontendRouter struct{}
 
-func (s *FrontendRouter) InitFrontendRouter(Router *fiber.App) {
+func (s *FrontendRouter) InitFrontendRouter(Router fiber.Router) {
 	frontend := Router.Group("")
 	var frontendTagApi = v1.ApiGroupApp.FrontendApiGroup.FrontendTagApi
 	{

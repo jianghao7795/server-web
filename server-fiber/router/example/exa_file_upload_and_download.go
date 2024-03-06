@@ -8,7 +8,7 @@ import (
 
 type FileUploadAndDownloadRouter struct{}
 
-func (e *FileUploadAndDownloadRouter) InitFileUploadAndDownloadRouter(Router *fiber.App) {
+func (e *FileUploadAndDownloadRouter) InitFileUploadAndDownloadRouter(Router fiber.Router) {
 	fileUploadAndDownloadRouter := Router.Group("fileUploadAndDownload")
 	exaFileUploadAndDownloadApi := v1.ApiGroupApp.ExampleApiGroup.FileUploadAndDownloadApi
 	{

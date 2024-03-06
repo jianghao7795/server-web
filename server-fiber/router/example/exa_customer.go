@@ -9,7 +9,7 @@ import (
 
 type CustomerRouter struct{}
 
-func (e *CustomerRouter) InitCustomerRouter(Router *fiber.App) {
+func (e *CustomerRouter) InitCustomerRouter(Router fiber.Router) {
 	customerRouter := Router.Group("customer").Use(middleware.OperationRecord())
 	customerRouterWithoutRecord := Router.Group("customer")
 	exaCustomerApi := v1.ApiGroupApp.ExampleApiGroup.CustomerApi
