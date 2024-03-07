@@ -1,11 +1,12 @@
 package middleware
 
 import (
-	"server/model/common/response"
+	"server-fiber/model/common/response"
 	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 )
 
 type TokenBucket struct {
@@ -35,19 +36,16 @@ func (tb *TokenBucket) Allow() bool {
 	}
 }
 
-func LimitHandler(maxConn int64) gin.HandlerFunc {
+func LimitHandler(c *fiber.Ctx) error {
 	tb := &TokenBucket{
-		capacity:  maxConn,
+		capacity:  1000,
 		rate:      1.0,
 		tokens:    0,
 		lastToken: time.Now(),
 	}
-	return func(c *gin.Context) {
-		if !tb.Allow() {
-			response.FailWithDetailed(gin.H{"msg": "服务器需要休息一下，请等几分钟"}, "加载中", c)
-			c.Abort()
-			return
-		}
-		c.Next()
+	if !tb.Allow() {
+		return response.FailWithDetailed(gin.H{"msg": "服务器需要休息一下，请等几分钟"}, "加载中", c)
 	}
+	c.Next()
+	return nil
 }

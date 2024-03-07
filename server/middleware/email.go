@@ -19,32 +19,31 @@ import (
 
 var userService = service.ServiceGroupApp.SystemServiceGroup.UserService
 
-func ErrorToEmail() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		var username string
-		claims, _ := utils2.GetClaims(c)
-		if claims.Username != "" {
-			username = claims.Username
+func ErrorToEmail(c *gin.Context) gin.HandlerFunc {
+	var username string
+	claims, _ := utils2.GetClaims(c)
+	if claims.Username != "" {
+		username = claims.Username
+	} else {
+		id, _ := strconv.Atoi(c.Request.Header.Get("x-user-id"))
+		user, err := userService.FindUserById(id)
+		if err != nil {
+			username = "Unknown"
 		} else {
-			id, _ := strconv.Atoi(c.Request.Header.Get("x-user-id"))
-			user, err := userService.FindUserById(id)
-			if err != nil {
-				username = "Unknown"
-			} else {
-				username = user.Username
-			}
+			username = user.Username
 		}
-		body, _ := ioutil.ReadAll(c.Request.Body)
-		// 再重新写回请求体body中，ioutil.ReadAll会清空c.Request.Body中的数据
-		c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(body))
-		record := system.SysOperationRecord{
-			Ip:     c.ClientIP(),
-			Method: c.Request.Method,
-			Path:   c.Request.URL.Path,
-			Agent:  c.Request.UserAgent(),
-			Body:   string(body),
-		}
-		now := time.Now()
+	}
+	body, _ := ioutil.ReadAll(c.Request.Body)
+	// 再重新写回请求体body中，ioutil.ReadAll会清空c.Request.Body中的数据
+	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(body))
+	record := system.SysOperationRecord{
+		Ip:     c.ClientIP(),
+		Method: c.Request.Method,
+		Path:   c.Request.URL.Path,
+		Agent:  c.Request.UserAgent(),
+		Body:   string(body),
+	}
+	now := time.Now()
 
 		c.Next()
 

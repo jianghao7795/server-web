@@ -8,6 +8,7 @@ package initialize
 
 import (
 	// "server-fiber/middleware"
+	"server-fiber/middleware"
 	"server-fiber/router"
 
 	"github.com/gofiber/fiber/v2"
@@ -26,6 +27,7 @@ func Routers() *fiber.App {
 	Router.Static("/backend/uploads/", "uploads/") // 本地的backend文件路由转化
 	Router.Static("/mobile/uploads/", "uploads/")  // 本地的mobile文件路由转化
 	Router.Static("/backend/form-generator", "resource/page")
+	Router.Use(middleware.LimitHandler)
 	{
 		backendRooter := Router.Group("/backend")
 		systemRouter.InitBaseRouter(backendRooter) // 注册基础功能路由 不做鉴权
