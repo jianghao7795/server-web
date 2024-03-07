@@ -43,8 +43,8 @@ func comprehensive() server {
 	if err != nil {
 		global.LOG.Error(err.Error() + ": 配置文件读取失败")
 	}
-	global.LOG = Zap()             // 初始化zap日志库
-	global.Logger = InitLogger()   // 初始化 log 让log标准输出
+	global.LOG = Zap() // 初始化zap日志库
+	// global.Logger = InitLogger()   // 初始化 log 让log标准输出
 	zap.ReplaceGlobals(global.LOG) // 部署到全局
 
 	db, err := initialize.Gorm() // gorm连接数据库

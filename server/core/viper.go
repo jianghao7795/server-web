@@ -64,24 +64,24 @@ func Viper(path ...string) (*viper.Viper, error) {
 	publicKeyByte, err := os.ReadFile("./rsa_public_key.pem")
 	// global.Logger.Println("public key: ", err)
 	if err != nil {
-		global.Logger.Error(err.Error())
+		// global.Logger.Error(err.Error())
 		return nil, err
 	}
 	publickey, err := jwt.ParseRSAPublicKeyFromPEM(publicKeyByte)
 	if err != nil {
-		global.Logger.Error(err.Error())
+		// global.Logger.Error(err.Error())
 		return nil, err
 	}
 	privatekeyByte, err := os.ReadFile("./private_key.pem")
 	if err != nil {
-		global.Logger.Error(err.Error())
+		// global.Logger.Error(err.Error())
 
 		return nil, err
 	}
 	privatekey, err := jwt.ParseRSAPrivateKeyFromPEM(privatekeyByte)
 	if err != nil {
 		// fmt.Println(err)
-		global.Logger.Error(err.Error())
+		// global.Logger.Error(err.Error())
 		return nil, err
 	}
 	// jwt

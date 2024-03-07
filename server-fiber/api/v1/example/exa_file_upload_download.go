@@ -50,7 +50,8 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 			return response.FailWithMessage("修改数据库链接失败", c)
 		}
 	} else {
-		ct, _, err := image.Decode(fileImages)
+		reader, _ := fileImages.Open()
+		ct, _, err := image.Decode(reader)
 		if err != nil {
 			global.LOG.Error("获取文件失败!", zap.Error(err))
 			return response.FailWithMessage("获取文件失败", c)

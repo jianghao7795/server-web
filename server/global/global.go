@@ -1,7 +1,6 @@
 package global
 
 import (
-	"log/slog"
 	"server/config"
 	"server/utils/timer"
 
@@ -32,7 +31,7 @@ var (
 	Validate   ut.Translator
 	// 缓存
 	// Cache config.Cache
-	Logger *slog.Logger // 用处 打印log
+	// Logger *slog.Logger // 用处 打印log
 )
 
 // GetGlobalDBByDBName 通过名称获取db list中的db
