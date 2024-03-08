@@ -2,6 +2,7 @@ package system
 
 import (
 	"errors"
+	"log"
 	"sync"
 
 	"server/global"
@@ -91,7 +92,8 @@ var (
 
 func (casbinService *CasbinService) Casbin() *casbin.SyncedEnforcer {
 	once.Do(func() {
-		a, _ := gormadapter.NewAdapterByDB(global.DB)
+		a, err := gormadapter.NewAdapterByDB(global.DB)
+		log.Println("Model: ", global.CONFIG.Casbin.ModelPath, a, err)
 		syncedEnforcer, _ = casbin.NewSyncedEnforcer(global.CONFIG.Casbin.ModelPath, a)
 	})
 	_ = syncedEnforcer.LoadPolicy()
