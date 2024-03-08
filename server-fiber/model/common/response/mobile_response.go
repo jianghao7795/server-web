@@ -14,9 +14,9 @@ const (
 	ERROR401 = 401
 )
 
-func ResultMobile(code int, data interface{}, msg string, c *fiber.Ctx) {
+func ResultMobile(code int, data interface{}, msg string, c *fiber.Ctx) error {
 	// 开始时间
-	c.JSON(Response{
+	return c.Status(fiber.StatusOK).JSON(Response{
 		code,
 		data,
 		msg,
@@ -24,17 +24,17 @@ func ResultMobile(code int, data interface{}, msg string, c *fiber.Ctx) {
 }
 
 // 返回400 错误信息
-func FailWithDetailed401(data interface{}, message string, c *fiber.Ctx) {
-	Result400(ERROR401, data, message, c)
+func FailWithDetailed401(data interface{}, message string, c *fiber.Ctx) error {
+	return Result400(ERROR401, data, message, c)
 }
 
-func FailWithMessage401(message string, c *fiber.Ctx) {
-	Result400(ERROR401, map[string]interface{}{}, message, c)
+func FailWithMessage401(message string, c *fiber.Ctx) error {
+	return Result400(ERROR401, map[string]interface{}{}, message, c)
 }
 
 func Result4001(code int, data interface{}, msg string, c *fiber.Ctx) {
 	// 开始时间
-	c.JSON(ResponseMobile{
+	c.Status(fiber.StatusOK).JSON(ResponseMobile{
 		code,
 		data,
 		msg,

@@ -10,7 +10,7 @@ import (
 type GithubRouter struct{}
 
 func (g *GithubRouter) InitGithubRouter(Router fiber.Router) {
-	githubRouter := Router.Group("github").Use(middleware.OperationRecord())
+	githubRouter := Router.Group("github").Use(middleware.OperationRecord)
 	githubRouterRecord := Router.Group("github")
 
 	githubRouterApi := v1.ApiGroupApp.SystemApiGroup.SystemGithubApi

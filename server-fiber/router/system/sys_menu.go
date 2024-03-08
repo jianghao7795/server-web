@@ -10,7 +10,7 @@ import (
 type MenuRouter struct{}
 
 func (s *MenuRouter) InitMenuRouter(Router fiber.Router) {
-	menuRouter := Router.Group("menu").Use(middleware.OperationRecord())
+	menuRouter := Router.Group("menu").Use(middleware.OperationRecord)
 	menuRouterWithoutRecord := Router.Group("menu")
 	authorityMenuApi := v1.ApiGroupApp.SystemApiGroup.AuthorityMenuApi
 	{

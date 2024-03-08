@@ -3,20 +3,19 @@ package middleware
 import (
 	"context"
 	"errors"
-	"net/http"
 	"time"
 
 	"go.uber.org/zap"
 
-	"server/global"
-	"server/model/common/response"
+	"server-fiber/global"
+	"server-fiber/model/common/response"
 
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 )
 
 type LimitConfig struct {
 	// GenerationKey 根据业务生成key 下面CheckOrMark查询生成
-	GenerationKey func(c *gin.Context) string
+	GenerationKey func(c *fiber.Ctx) string
 	// 检查函数,用户可修改具体逻辑,更加灵活
 	CheckOrMark func(key string, expire int, limit int) error
 	// Expire key 过期时间
@@ -25,21 +24,18 @@ type LimitConfig struct {
 	Limit int
 }
 
-func (l LimitConfig) LimitWithTime() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		if err := l.CheckOrMark(l.GenerationKey(c), l.Expire, l.Limit); err != nil {
-			c.JSON(http.StatusOK, gin.H{"code": response.ERROR, "msg": err})
-			c.Abort()
-			return
-		} else {
-			c.Next()
-		}
+func (l LimitConfig) LimitWithTime(c *fiber.Ctx) error {
+	if err := l.CheckOrMark(l.GenerationKey(c), l.Expire, l.Limit); err != nil {
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{"code": response.ERROR, "msg": err})
+
 	}
+	return c.Next()
+
 }
 
 // DefaultGenerationKey 默认生成key
-func DefaultGenerationKey(c *gin.Context) string {
-	return "Limit" + c.ClientIP()
+func DefaultGenerationKey(c *fiber.Ctx) string {
+	return "Limit" + c.IP()
 }
 
 func DefaultCheckOrMark(key string, expire int, limit int) (err error) {
@@ -53,14 +49,14 @@ func DefaultCheckOrMark(key string, expire int, limit int) (err error) {
 	return err
 }
 
-func DefaultLimit() gin.HandlerFunc {
-	return LimitConfig{
-		GenerationKey: DefaultGenerationKey,
-		CheckOrMark:   DefaultCheckOrMark,
-		Expire:        global.CONFIG.System.LimitTimeIP,
-		Limit:         global.CONFIG.System.LimitCountIP,
-	}.LimitWithTime()
-}
+// func DefaultLimit() gin.HandlerFunc {
+// 	return LimitConfig{
+// 		GenerationKey: DefaultGenerationKey,
+// 		CheckOrMark:   DefaultCheckOrMark,
+// 		Expire:        global.CONFIG.System.LimitTimeIP,
+// 		Limit:         global.CONFIG.System.LimitCountIP,
+// 	}.LimitWithTime()
+// }
 
 // SetLimitWithTime 设置访问次数
 func SetLimitWithTime(key string, limit int, expiration time.Duration) error {

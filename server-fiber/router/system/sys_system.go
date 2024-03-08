@@ -10,7 +10,7 @@ import (
 type SysRouter struct{}
 
 func (s *SysRouter) InitSystemRouter(Router fiber.Router) {
-	sysRouter := Router.Group("system").Use(middleware.OperationRecord())
+	sysRouter := Router.Group("system").Use(middleware.OperationRecord)
 	sysGetRouter := Router.Group("system")
 	systemApi := v1.ApiGroupApp.SystemApiGroup.SystemApi
 	{

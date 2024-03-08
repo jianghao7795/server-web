@@ -10,7 +10,7 @@ import (
 type MobileUserRouter struct{}
 
 func (m *MobileUserRouter) InitMobileRouter(Router fiber.Router) {
-	moblieUserRouter := Router.Group("mobile").Use(middleware.OperationRecord())
+	moblieUserRouter := Router.Group("mobile").Use(middleware.OperationRecord)
 	moblieUserRouterWithoutRecord := Router.Group("mobile")
 	var mobileUserApi = v1.ApiGroupApp.MobileApiGroup.MobileUserApi
 	{

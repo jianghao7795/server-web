@@ -10,7 +10,7 @@ import (
 type DictionaryRouter struct{}
 
 func (s *DictionaryRouter) InitSysDictionaryRouter(Router fiber.Router) {
-	sysDictionaryRouter := Router.Group("sysDictionary").Use(middleware.OperationRecord())
+	sysDictionaryRouter := Router.Group("sysDictionary").Use(middleware.OperationRecord)
 	sysDictionaryRouterWithoutRecord := Router.Group("sysDictionary")
 	sysDictionaryApi := v1.ApiGroupApp.SystemApiGroup.DictionaryApi
 	{

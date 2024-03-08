@@ -1,38 +1,30 @@
 package middleware
 
 import (
-	"server/model/common/response"
-	"server/utils"
+	"server-fiber/model/common/response"
+	"server-fiber/utils"
 	"strings"
 
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 )
 
-func JWTAuthMobileMiddleware() func(c *gin.Context) {
-	return func(c *gin.Context) {
-		authHeader := c.Request.Header.Get("Authorization")
+func JWTAuthMobileMiddleware() func(c *fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
+		authHeader := c.Get("Authorization")
 		if authHeader == "" {
-			response.FailWithMessage401("token 失效", c)
-			c.Abort()
-			return
+			return response.FailWithMessage401("token 失效", c)
 		}
 
 		parts := strings.SplitN(authHeader, " ", 2)
 		if !(len(parts) == 2 && parts[0] == "Bearer") {
-			response.FailWithMessage401("token 不正确", c)
-			c.Abort()
-			return
+			return response.FailWithMessage401("token 不正确", c)
 		}
 		j := utils.NewJWT()
 		user, err := j.ParseTokenMobile(parts[1])
 		if err != nil {
-
-			response.FailWithMessage401("token 失效， 请重新登录", c)
-			c.Abort()
-			return
+			return response.FailWithMessage401("token 失效， 请重新登录", c)
 		}
-		// global.Logger.Println("user :", user.ID)
-		c.Set("user_id", uint(user.ID))
-		c.Next() // 后续的处理函数可以用过c.Get("username")来获取当前请求的用户信息
+		c.Locals("user_id", uint(user.ID))
+		return c.Next() // 后续的处理函数可以用过c.Get("username")来获取当前请求的用户信息
 	}
 }

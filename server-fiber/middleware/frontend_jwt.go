@@ -1,36 +1,30 @@
 package middleware
 
 import (
-	"server/model/common/response"
-	"server/service/frontend"
+	"server-fiber/model/common/response"
+	"server-fiber/service/frontend"
 	"strings"
 
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 )
 
-func JWTAuthMiddleware() func(c *gin.Context) {
-	return func(c *gin.Context) {
-		authHeader := c.Request.Header.Get("Authorization")
-		if authHeader == "" {
-			response.FailWithMessage("token 失效", c)
-			c.Abort()
-			return
-		}
+func JWTAuthMiddleware(c *fiber.Ctx) error {
+	authHeader := c.Get("Authorization")
+	if authHeader == "" {
+		return response.FailWithMessage("token 失效", c)
 
-		parts := strings.SplitN(authHeader, " ", 2)
-		if !(len(parts) == 2 && parts[0] == "Bearer") {
-			response.FailWithMessage("token 不正确", c)
-			c.Abort()
-			return
-		}
-
-		_, err := frontend.ParseToken(parts[1])
-		if err != nil {
-			response.FailWithMessage("token 失效， 请重新登录", c)
-			c.Abort()
-			return
-		}
-
-		c.Next() // 后续的处理函数可以用过c.Get("username")来获取当前请求的用户信息
 	}
+
+	parts := strings.SplitN(authHeader, " ", 2)
+	if !(len(parts) == 2 && parts[0] == "Bearer") {
+		response.FailWithMessage("token 不正确", c)
+
+	}
+
+	_, err := frontend.ParseToken(parts[1])
+	if err != nil {
+		return response.FailWithMessage("token 失效， 请重新登录", c)
+	}
+
+	return c.Next() //
 }

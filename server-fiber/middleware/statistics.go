@@ -1,9 +1,9 @@
 package middleware
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gofiber/fiber/v2"
+)
 
-func Statistics() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		ctx.Next()
-	}
+func Statistics(ctx *fiber.Ctx) error {
+	return ctx.Next()
 }

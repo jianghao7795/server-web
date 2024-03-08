@@ -10,7 +10,7 @@ import (
 type ApiRouter struct{}
 
 func (s *ApiRouter) InitApiRouter(Router fiber.Router) {
-	apiRouter := Router.Group("api").Use(middleware.OperationRecord())
+	apiRouter := Router.Group("api").Use(middleware.OperationRecord)
 	apiRouterWithoutRecord := Router.Group("api")
 	apiRouterApi := v1.ApiGroupApp.SystemApiGroup.SystemApiApi
 	{

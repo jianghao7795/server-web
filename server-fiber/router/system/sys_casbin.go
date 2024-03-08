@@ -10,7 +10,7 @@ import (
 type CasbinRouter struct{}
 
 func (s *CasbinRouter) InitCasbinRouter(Router fiber.Router) {
-	casbinRouter := Router.Group("casbin").Use(middleware.OperationRecord())
+	casbinRouter := Router.Group("casbin").Use(middleware.OperationRecord)
 	casbinRouterWithoutRecord := Router.Group("casbin")
 	casbinApi := v1.ApiGroupApp.SystemApiGroup.CasbinApi
 	{
